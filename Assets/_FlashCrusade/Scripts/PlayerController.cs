@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,4 +14,14 @@ public class PlayerController : MonoBehaviour
     {
         
     }
+
+
+	#region INPUTS
+
+    public void OnFire(InputAction.CallbackContext context)
+    {
+
+    }
+
+	#endregion
 }

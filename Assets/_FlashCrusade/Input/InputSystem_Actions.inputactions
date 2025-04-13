@@ -6,7 +6,7 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "Fire",
+                    "name": "FireWeapon1",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "",
@@ -15,25 +15,34 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ForwardThrust",
+                    "name": "FireWeapon2",
                     "type": "Button",
+                    "id": "70206573-ef22-4d64-a4c8-f856d7c36a97",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FireWeapon3",
+                    "type": "Button",
+                    "id": "4e4bd9a3-6953-48c2-a4df-3ccc993ba993",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Thrust",
+                    "type": "Value",
                     "id": "c65f0e43-d69a-499c-bba0-4ece42b02935",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "ReverseThrust",
-                    "type": "Button",
-                    "id": "f8717129-ab34-44a2-b301-529bbcc2f83e",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SideThrust",
+                    "name": "Turn",
                     "type": "Value",
                     "id": "9a9eb3b6-16f3-4cc4-9494-6c1ed77fcef0",
                     "expectedControlType": "Axis",
@@ -42,31 +51,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Strafe",
-                    "type": "Value",
-                    "id": "fe13c9b8-4d6a-4614-9344-104ef283c0df",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "ForwardBoost",
+                    "name": "Boost",
                     "type": "Button",
                     "id": "4f7d317f-612b-4db3-a2b2-b95de8fb4764",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ReverseBoost",
-                    "type": "Button",
-                    "id": "007aab28-6856-484b-bb8c-67b9be104acb",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "SetFleetFormation",
@@ -86,29 +77,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Fire",
+                    "action": "FireWeapon1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "cc664e82-3702-43cd-b956-164864f2ed91",
-                    "path": "<Keyboard>/w",
+                    "id": "146c94df-9179-4cb7-b3c8-caa11c95d377",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ForwardThrust",
+                    "action": "FireWeapon2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "57ed654d-3b29-44e6-b3e5-ecf5d549cccb",
-                    "path": "<Keyboard>/s",
+                    "id": "2a3c4865-7a4c-40f5-8324-a3e61b0563f0",
+                    "path": "<Keyboard>/n",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ReverseThrust",
+                    "action": "FireWeapon3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -119,29 +110,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SideThrust",
+                    "action": "Turn",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "negative",
                     "id": "38e9b565-c6cf-45f4-9d9b-b365549f405b",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SideThrust",
+                    "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
                     "id": "fcde9175-c2d0-486c-b3b1-e6eb969b9cd1",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SideThrust",
+                    "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -256,57 +247,68 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "1c5a43df-c7cc-4205-8976-e803b10e3f1b",
-                    "path": "1DAxis",
+                    "name": "2D Vector",
+                    "id": "fc92b65a-8f13-4bf9-aa81-0bfb5d7f63a5",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Strafe",
+                    "action": "Thrust",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "22de2b6d-b763-4983-beca-ca86f535dfae",
-                    "path": "<Keyboard>/j",
+                    "name": "up",
+                    "id": "e273d503-f00b-4050-bb9c-3bbb2d20906a",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Strafe",
+                    "action": "Thrust",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "ae2c0369-a580-43c6-9081-752f69935b53",
-                    "path": "<Keyboard>/l",
+                    "name": "down",
+                    "id": "8c67947b-d35c-42ee-abf7-1a697794c05e",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Strafe",
+                    "action": "Thrust",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "c17ddfe8-21f9-4b60-9ae6-97fb6689e2bc",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thrust",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "df955e59-4e82-4904-8a01-bbd68b120b3f",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Thrust",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "a77cd579-70ac-4f18-b6b9-9c9a6e825890",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ForwardBoost",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d20afb5c-0174-4b97-9c54-44535b9bde81",
+                    "id": "df4fdae2-1ddc-46ac-920e-d8928c0012be",
                     "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ReverseBoost",
+                    "action": "Boost",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

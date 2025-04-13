@@ -699,7 +699,7 @@ public class SuperTextMesh : MonoBehaviour, ILayoutElement, IMaskable { //Maskab
 	private static void AttachToCanvas(Transform thisTransform, MenuCommand menuCommand)
 	{
 		//force-attach to canvas if it exists, or auto-create new one.
-		Canvas myCanvas = (Canvas)FindObjectOfType(typeof(Canvas)); //find a canvas in the scene
+		Canvas myCanvas = (Canvas)FindFirstObjectByType(typeof(Canvas)); //find a canvas in the scene
 		//just in case this is a prefab canvas
 		if(myCanvas == null)
 		{
@@ -1670,7 +1670,7 @@ public class SuperTextMesh : MonoBehaviour, ILayoutElement, IMaskable { //Maskab
 		}
 	}
 	public static void RebuildAll(){ //this uses FindObjectsOfType and is very intensive! Only use when loading.
-		SuperTextMesh[] allSTMs = FindObjectsOfType<SuperTextMesh>();
+		SuperTextMesh[] allSTMs = FindObjectsByType<SuperTextMesh>(FindObjectsSortMode.InstanceID);
 		for(int i=0, iL=allSTMs.Length; i<iL; i++){
 			allSTMs[i].Rebuild();
 		}

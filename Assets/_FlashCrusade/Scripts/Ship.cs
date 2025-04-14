@@ -12,32 +12,35 @@ public class Ship : MonoBehaviour
 	[SerializeField, Tooltip("Limits how fast ship can change velocity")]
 	private float maxAcceleration = 10f;
 
-	[SerializeField, Tooltip("Cap for linear velocity magnitude for regular thrust")]
+	[SerializeField, Tooltip("Cap for linear velocity magnitude for regular thrust.")]
 	private float maxSpeed = 5f;
 
-	[SerializeField, Tooltip("Limits how fast ship can change velocity while boosting")]
+	[SerializeField, Tooltip("Limits how fast ship can change velocity while boosting.")]
 	private float maxBoostAcceleration = 20f;
 
-	[SerializeField, Tooltip("Cap for linear velocity magnitude for boost")]
+	[SerializeField, Tooltip("Cap for linear velocity magnitude for boost.")]
 	private float maxBoostSpeed = 10f;
 
-	[SerializeField, Tooltip("How long the ship can boost in seconds")]
+	[SerializeField, Tooltip("How long the ship can boost in seconds.")]
 	private float maxBoostFuel = 5f;
 
-	[SerializeField, Tooltip("How long it takes to start recovering boost after boosting stops")]
+	[SerializeField, Tooltip("How long it takes to start recovering boost after boosting stops.")]
 	private float recoverBoostDelay;
 
-	[SerializeField, Tooltip("How long it takes to fully accelerate")]
+	[SerializeField, Tooltip("How long it takes to fully accelerate.")]
 	private float accelerationTime = 0.5f;
 
-	[SerializeField, Tooltip("Controls ramp-up behaviour")]
+	[SerializeField, Tooltip("Controls ramp-up behaviour.")]
 	private AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-	[SerializeField, Tooltip("Angle per second for rotation")]
+	[SerializeField, Tooltip("Angle per second for rotation.")]
 	private float turnSpeed = 90f;
 
-	private bool acceleratingLastFrame = false;
-	private float accelTimer;
+	[SerializeField, Tooltip("How many seconds it takes to fully stop from current speed when not accelerating.")]
+	private float stopDuration = 2f;
+
+	private bool usingThrustersLastFrame = false;
+	private float accelerateTimer;
 	private Vector2 velocity;
 	private float currentMaxAcceleration;
 	private float currentMaxSpeed;
@@ -67,9 +70,7 @@ public class Ship : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log(boosting);
-		Debug.Log(boostFuel);
-		Thrust(currentInputData.thrustInput);
+		Thrust(currentInputData.thrustInput)) // Process thrust input. Returns truw when not Vector2.zero
 		Turn(currentInputData.turnInput);
 	}
 
@@ -81,27 +82,30 @@ public class Ship : MonoBehaviour
 	/// Thrust ship in any of the 8 directions
 	/// </summary>
 	/// <param name="direction">Direction of thrust</param>
-	public void Thrust(Vector2 direction) // default W-A-S-D
+	public bool Thrust(Vector2 direction) // default W-A-S-D
 	{
 		Vector2 worldDirection = (Vector2)objToMove.transform.up * direction.y + (Vector2)objToMove.transform.right * direction.x;
 
 		worldDirection.Normalize();
 
-		bool isAccelerating = worldDirection != Vector2.zero;
+		bool usingThrusters = worldDirection != Vector2.zero;
 		Vector2 targetVelocity = worldDirection.normalized * currentMaxSpeed;
 
-		if (isAccelerating)
+		if (usingThrusters)
 		{
-			if (!acceleratingLastFrame) accelTimer = 0f;
-			accelTimer += Time.deltaTime;
-			accelTimer = Mathf.Min(accelTimer, accelerationTime);
+			if (!usingThrustersLastFrame) accelerateTimer = 0f;
+			accelerateTimer += Time.deltaTime;
+			accelerateTimer = Mathf.Min(accelerateTimer, accelerationTime);
 		}
 		else
 		{
-			accelTimer = 0f;
+			accelerateTimer = 0f;
+
+			float frameDrag = Mathf.Pow(0.01f, Time.deltaTime / stopDuration); // Drag calculated from duration to frame multiplier
+			velocity *= frameDrag;
 		}
 
-		float accelProgress = accelerationTime > 0 ? accelTimer / accelerationTime : 1f;
+		float accelProgress = accelerationTime > 0 ? accelerateTimer / accelerationTime : 1f;
 		float curveMultiplier = accelerationCurve.Evaluate(accelProgress);
 
 		float extraTurnboost = 1;
@@ -115,7 +119,9 @@ public class Ship : MonoBehaviour
 		velocity += acceleration * Time.deltaTime;
 
 		objToMove.transform.position += (Vector3)(velocity * Time.deltaTime);
-		acceleratingLastFrame = isAccelerating;
+		usingThrustersLastFrame = usingThrusters;
+
+		return usingThrusters;
 	}
 
 	/// <summary>
@@ -123,21 +129,23 @@ public class Ship : MonoBehaviour
 	/// </summary>
 	public void Boost(bool on) // default K
 	{
-        if (!on && boosting)
-        { // turn off boost
-			boosting = false;
-			if(boostFuel < maxBoostFuel) StartRecoveringBoost();
+        if (on)
+        { // turn on boost
 
-			currentMaxAcceleration = maxAcceleration;
-			currentMaxSpeed = maxSpeed;
-        }
-		else if(on && !boosting && boostFuel > 1)
-		{ // turn on boost
+			if (recoverBoostRoutine != null) RecoverEarlyStop();
 			boosting = true;
 			StartDepletingBoost();
 
 			currentMaxAcceleration = maxBoostAcceleration;
 			currentMaxSpeed = maxBoostSpeed;
+        }
+		else if(boosting && boostFuel > 1)
+		{ // turn off boost
+			boosting = false;
+			if (boostFuel < maxBoostFuel) StartRecoveringBoost();
+
+			currentMaxAcceleration = maxAcceleration;
+			currentMaxSpeed = maxSpeed;
 		}
     }
 
@@ -174,15 +182,13 @@ public class Ship : MonoBehaviour
 
 	private void StartDepletingBoost()
 	{
-		if(depleteBoostRoutine != null) StopCoroutine(depleteBoostRoutine);
-		if(recoverBoostRoutine != null) StopCoroutine(recoverBoostRoutine);
+		StopBothBoostRoutines();
 		depleteBoostRoutine = StartCoroutine(DepleteBoostRoutine());
 	}
 
 	private void StartRecoveringBoost()
 	{
-		if (depleteBoostRoutine != null) StopCoroutine(depleteBoostRoutine);
-		if (recoverBoostRoutine != null) StopCoroutine(recoverBoostRoutine);
+		StopBothBoostRoutines();
 		recoverBoostRoutine = StartCoroutine(RecoverBoostRoutine(2));
 	}
 
@@ -210,13 +216,36 @@ public class Ship : MonoBehaviour
 		{
 			boostFuel += Time.deltaTime;
 
-			if (currentInputData.holdingBoost && currentInputData.thrustInput != Vector2.zero) Boost(true);
+			if (currentInputData.holdingBoost && currentInputData.thrustInput != Vector2.zero)
+			{
+				Boost(true);
+			}
 
 			yield return null;
 		}
 		recoverJustStarted = true; // reset
 		boostFuel = maxBoostFuel;
 		recoverBoostRoutine = null;
+	}
+
+	private void RecoverEarlyStop()
+	{
+		recoverJustStarted = true;
+		StopCoroutine(recoverBoostRoutine);
+		recoverBoostRoutine = null;
+	}
+
+	private void StopBothBoostRoutines()
+	{
+		if (depleteBoostRoutine != null)
+		{
+			StopCoroutine(depleteBoostRoutine);
+			depleteBoostRoutine = null;
+		}
+		if (recoverBoostRoutine != null)
+		{
+			RecoverEarlyStop();
+		}
 	}
 
 

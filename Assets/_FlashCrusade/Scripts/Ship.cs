@@ -70,7 +70,7 @@ public class Ship : MonoBehaviour
 
 	private void Update()
 	{
-		Thrust(currentInputData.thrustInput)) // Process thrust input. Returns truw when not Vector2.zero
+		Thrust(currentInputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
 		Turn(currentInputData.turnInput);
 	}
 

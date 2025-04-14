@@ -645,13 +645,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objToMove: {fileID: 935974569}
-  maxAcceleration: 10
+  maxAcceleration: 20
   maxSpeed: 20
   maxBoostAcceleration: 20
   maxBoostSpeed: 40
   maxBoostFuel: 5
   recoverBoostDelay: 0
-  accelerationTime: 0.5
+  accelerationTime: 0.3
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -677,6 +677,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   turnSpeed: 90
+  stopDuration: 2
   weapon1: {fileID: 0}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}

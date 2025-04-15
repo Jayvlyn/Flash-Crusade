@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-	public ShipInputData currentInputData = new ShipInputData();
+	public ShipInputData inputData = new ShipInputData();
 
 	[Header("Movement")]
 	[SerializeField, Tooltip("Gameobject in heirarchy that ship will translate position of with movement (aka, parent of ship body)")]
@@ -70,8 +70,8 @@ public class Ship : MonoBehaviour
 
 	private void Update()
 	{
-		Thrust(currentInputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
-		Turn(currentInputData.turnInput);
+		Thrust(inputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
+		Turn(inputData.turnInput);
 	}
 
 	#endregion
@@ -109,7 +109,7 @@ public class Ship : MonoBehaviour
 		float curveMultiplier = accelerationCurve.Evaluate(accelProgress);
 
 		float extraTurnboost = 1;
-		if (currentInputData.turnInput != 0)
+		if (inputData.turnInput != 0)
 		{
 			extraTurnboost = 3;
 		}
@@ -216,7 +216,7 @@ public class Ship : MonoBehaviour
 		{
 			boostFuel += Time.deltaTime;
 
-			if (currentInputData.holdingBoost && currentInputData.thrustInput != Vector2.zero)
+			if (inputData.holdingBoost && inputData.thrustInput != Vector2.zero)
 			{
 				Boost(true);
 			}

@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Ship ship;
-	private ShipInputData inputData = new ShipInputData();
 
 	#region INPUTS
 
@@ -12,13 +11,11 @@ public class PlayerController : MonoBehaviour
     {
 		if (context.started)
 		{
-			inputData.holdingFireWeapon1 = true;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon1 = true;
 		}
 		else if (context.canceled)
 		{
-			inputData.holdingFireWeapon1 = false;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon1 = false;
 		}
 	}
 	
@@ -26,13 +23,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			inputData.holdingFireWeapon2 = true;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon2 = true;
 		}
 		else if (context.canceled)
 		{
-			inputData.holdingFireWeapon2 = false;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon2 = false;
 		}
 	}
 
@@ -40,13 +35,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			inputData.holdingFireWeapon3 = true;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon3 = true;
 		}
 		else if (context.canceled)
 		{
-			inputData.holdingFireWeapon3 = false;
-			ship.currentInputData = inputData;
+			ship.inputData.holdingFireWeapon3 = false;
 		}
 	}
 
@@ -55,11 +48,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.performed || context.canceled)
 		{
-			inputData.thrustInput = context.ReadValue<Vector2>();
-			ship.currentInputData = inputData;
+			ship.inputData.thrustInput = context.ReadValue<Vector2>();
 
-			if (inputData.thrustInput != Vector2.zero && inputData.holdingBoost) ship.Boost(true);
-			else if (inputData.thrustInput == Vector2.zero && inputData.holdingBoost) ship.Boost(false);
+			if (ship.inputData.thrustInput != Vector2.zero && ship.inputData.holdingBoost) ship.Boost(true);
+			else if (ship.inputData.thrustInput == Vector2.zero && ship.inputData.holdingBoost) ship.Boost(false);
 		}
 	}
 
@@ -67,15 +59,13 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			inputData.holdingBoost = true;
-			if(inputData.thrustInput != Vector2.zero) ship.Boost(true);
-			ship.currentInputData = inputData;
+			ship.inputData.holdingBoost = true;
+			if(ship.inputData.thrustInput != Vector2.zero) ship.Boost(true);
 		}
 		else if (context.canceled)
 		{
-			inputData.holdingBoost = false;
+			ship.inputData.holdingBoost = false;
 			ship.Boost(false);
-			ship.currentInputData = inputData;
 		}
 	}
 
@@ -84,8 +74,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.performed || context.canceled)
 		{
-			inputData.turnInput = context.ReadValue<float>();
-			ship.currentInputData = inputData;
+			ship.inputData.turnInput = context.ReadValue<float>();
 		}
 	}
 
@@ -114,7 +103,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!hasFocus) // lost focus
 		{
-			inputData.Clear();
+			ship.inputData.Clear();
 		}
 	}
 

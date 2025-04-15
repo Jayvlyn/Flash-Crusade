@@ -14,7 +14,7 @@ public abstract class AIAgent : MonoBehaviour
         }
         else
         {
-            tickTimer -= 0;
+            tickTimer -= Time.deltaTime;
         }
     }
 

@@ -3,7 +3,6 @@ using UnityEngine;
 public class Enemy : AIAgent
 {
     [SerializeField] private Ship ship;
-    private ShipInputData inputData = new ShipInputData();
 
     protected override void Update()
     {
@@ -13,5 +12,7 @@ public class Enemy : AIAgent
     protected override void Tick()
     {
         base.Tick();
+
+        ship.inputData.thrustInput = new Vector2(0, 1);
     }
 }

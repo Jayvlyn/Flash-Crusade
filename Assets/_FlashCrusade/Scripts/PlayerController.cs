@@ -88,6 +88,14 @@ public class PlayerController : MonoBehaviour
 			ship.currentInputData = inputData;
 		}
 	}
+
+	public void OnSetFleetFormation(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+
+		}
+	}
 	#endregion
 
 	#region INPUT HOLD HANDLING

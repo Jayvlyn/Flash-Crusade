@@ -70,8 +70,6 @@ public class Ship : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log(boosting);
-		Debug.Log(boostFuel);
 		Thrust(currentInputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
 		Turn(currentInputData.turnInput);
 	}

@@ -8,6 +8,7 @@ public class ShipInputData
 	public Vector2 thrustInput = Vector2.zero;
 	public bool holdingBoost = false;
 	public float turnInput = 0;
+	public int fleetFormation = 0;
 
 	public void Clear()
     {
@@ -17,5 +18,6 @@ public class ShipInputData
 		holdingBoost = false;
 		thrustInput = Vector2.zero;
 		turnInput = 0;
+		fleetFormation = 0;
 	}
 }

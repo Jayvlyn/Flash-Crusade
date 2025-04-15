@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      large-seagreen-04_0: -7360720881709827876
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

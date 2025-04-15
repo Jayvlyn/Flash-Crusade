@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      vertical-thrust-01-sheet_0: 7091068034235316898
+      vertical-thrust-01-sheet_1: 2985822994797339847
+      vertical-thrust-01-sheet_2: 3870568190334254679
+      vertical-thrust-01-sheet_3: -7552645890108213370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

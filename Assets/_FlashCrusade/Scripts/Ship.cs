@@ -70,6 +70,8 @@ public class Ship : MonoBehaviour
 
 	private void Update()
 	{
+		Debug.Log(boosting);
+		Debug.Log(boostFuel);
 		Thrust(currentInputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
 		Turn(currentInputData.turnInput);
 	}
@@ -129,7 +131,7 @@ public class Ship : MonoBehaviour
 	/// </summary>
 	public void Boost(bool on) // default K
 	{
-        if (on)
+        if (on && boostFuel > 1)
         { // turn on boost
 
 			if (recoverBoostRoutine != null) RecoverEarlyStop();
@@ -139,7 +141,7 @@ public class Ship : MonoBehaviour
 			currentMaxAcceleration = maxBoostAcceleration;
 			currentMaxSpeed = maxBoostSpeed;
         }
-		else if(boosting && boostFuel > 1)
+		else if(boosting)
 		{ // turn off boost
 			boosting = false;
 			if (boostFuel < maxBoostFuel) StartRecoveringBoost();

@@ -897,7 +897,38 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      explosion-01-sheet_0: -1935055007474316266
+      explosion-01-sheet_1: 7208847489612555704
+      explosion-01-sheet_10: 8968922463462132017
+      explosion-01-sheet_11: 8149428317388997494
+      explosion-01-sheet_12: -2379468873704017586
+      explosion-01-sheet_13: -4496789000350549116
+      explosion-01-sheet_14: -2542549585132681261
+      explosion-01-sheet_15: 613003216328233102
+      explosion-01-sheet_16: -5387090984023440125
+      explosion-01-sheet_17: -9186135072615799711
+      explosion-01-sheet_18: 6742843248320544121
+      explosion-01-sheet_19: 1457473449827434267
+      explosion-01-sheet_2: 7505503678045262299
+      explosion-01-sheet_20: 1947528752399133277
+      explosion-01-sheet_21: 5137337644929145807
+      explosion-01-sheet_22: -6344093175831787609
+      explosion-01-sheet_23: -3641306231203336671
+      explosion-01-sheet_24: -1572423903938198867
+      explosion-01-sheet_25: 3576885018054888834
+      explosion-01-sheet_26: -8371592422492797590
+      explosion-01-sheet_27: 4295317434349447648
+      explosion-01-sheet_28: 4537107550451951684
+      explosion-01-sheet_29: -1997389737302602971
+      explosion-01-sheet_3: 1615917266025226391
+      explosion-01-sheet_30: -8571318417019370465
+      explosion-01-sheet_4: 8847822833471369174
+      explosion-01-sheet_5: -6348882117356617457
+      explosion-01-sheet_6: 3034971327586232263
+      explosion-01-sheet_7: -8068303320079523063
+      explosion-01-sheet_8: 7895678082730832816
+      explosion-01-sheet_9: 1003695532623435493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

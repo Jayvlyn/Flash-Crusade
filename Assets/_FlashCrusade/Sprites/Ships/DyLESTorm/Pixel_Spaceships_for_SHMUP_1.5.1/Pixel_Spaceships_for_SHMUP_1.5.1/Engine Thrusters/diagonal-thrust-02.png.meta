@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      diagonal-thrust-02_0: 7214614085905309518
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

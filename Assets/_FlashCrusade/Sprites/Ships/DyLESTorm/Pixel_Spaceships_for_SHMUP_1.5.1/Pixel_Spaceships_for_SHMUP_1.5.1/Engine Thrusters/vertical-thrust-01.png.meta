@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      vertical-thrust-01_0: -2878115772142129307
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

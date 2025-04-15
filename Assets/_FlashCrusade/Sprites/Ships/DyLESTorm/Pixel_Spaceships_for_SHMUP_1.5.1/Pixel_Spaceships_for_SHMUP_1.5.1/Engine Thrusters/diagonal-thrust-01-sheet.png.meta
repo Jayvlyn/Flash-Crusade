@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      diagonal-thrust-01-sheet_0: -1326524401820155845
+      diagonal-thrust-01-sheet_1: 4538645457858275449
+      diagonal-thrust-01-sheet_2: -3810398213972413447
+      diagonal-thrust-01-sheet_3: 7214147305776335611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

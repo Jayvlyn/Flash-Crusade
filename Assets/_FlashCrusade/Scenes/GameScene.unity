@@ -677,7 +677,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   turnSpeed: 90
-  stopDuration: 2
+  stopDuration: 10
   weapon1: {fileID: 0}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}

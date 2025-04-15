@@ -18,5 +18,11 @@ public class Weapon : ScriptableObject
 
     [Tooltip("Multiplier that will be applied to the damage of the fired bullet.")]
     public float damageMultiplier = 1;
+
+    [Tooltip("How many bullets can be fired before reload is required")]
+    public int ammo = 30;
+
+    [Tooltip("Time it takes to reload weapon")]
+    public float reloadTime = 3;
 }
 

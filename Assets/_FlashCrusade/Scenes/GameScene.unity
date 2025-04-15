@@ -187,6 +187,10 @@ MonoBehaviour:
   weapon1: {fileID: 0}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}
+  firepoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!58 &282283875
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -709,7 +713,7 @@ Transform:
   m_GameObject: {fileID: 1061330028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.391, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -852,9 +856,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   turnSpeed: 90
   stopDuration: 10
-  weapon1: {fileID: 0}
+  weapon1: {fileID: 11400000, guid: 243c3e54ceb4f38428d3b75704ac12f8, type: 2}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}
+  firepoints:
+  - {x: 0, y: 0.45, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!1 &1493388513
 GameObject:
   m_ObjectHideFlags: 0

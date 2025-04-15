@@ -1,16 +1,22 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "Weapon", menuName = "Game Data/Weapon")]
+public class Weapon : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Tooltip("Bullet to fire from this weapon.")]
+    public Bullet bullet;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Tooltip("Rate of fire in bullets per second.")]
+    public float fireRate = 10;
+
+    [Tooltip("False will make semi-automatic, required re-press for another fire. \n" +
+             "Automatic lets ship hold down input to continuously fire.")]
+    public bool automatic = true;
+
+    [Tooltip("Initial forward velocity the fired bullet will have.")]
+    public float muzzleVelocity = 10;
+
+    [Tooltip("Multiplier that will be applied to the damage of the fired bullet.")]
+    public float damageMultiplier = 1;
 }
+

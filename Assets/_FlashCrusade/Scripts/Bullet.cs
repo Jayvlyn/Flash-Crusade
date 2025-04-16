@@ -39,4 +39,9 @@ public class Bullet : MonoBehaviour
 
         transform.position += (Vector3)(velocity * Time.deltaTime);
     }
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		
+	}
 }

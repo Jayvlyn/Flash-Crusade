@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8961541188041805645}
   - component: {fileID: 3234010224777556025}
   - component: {fileID: 2686081490257849056}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GreenLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}

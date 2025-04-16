@@ -13,12 +13,12 @@ TagManager:
   - UI
   - Ally
   - Enemy
-  - PlayerBullet
-  - AllyBullet
+  - FriendlyBullet
   - EnemyBullet
   - Scrap
   - FriendlyDoor
   - EnemyDoor
+  - 
   - 
   - 
   - 

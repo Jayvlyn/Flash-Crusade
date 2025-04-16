@@ -55,7 +55,6 @@ public class Ship : MonoBehaviour
 	[SerializeField] private Weapon weapon1;
 	[SerializeField] private Weapon weapon2;
 	[SerializeField] private Weapon weapon3;
-	[SerializeField] private Vector3[] firepoints = new Vector3[3];
 
     #endregion
 
@@ -77,6 +76,9 @@ public class Ship : MonoBehaviour
 	{
 		Thrust(inputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
 		Turn(inputData.turnInput);
+		if (inputData.holdingFireWeapon1 && weapon1 != null) weapon1.Fire();
+		if (inputData.holdingFireWeapon2 && weapon2 != null) weapon2.Fire();
+		if (inputData.holdingFireWeapon3 && weapon3 != null) weapon3.Fire();
 	}
 
 	#endregion
@@ -166,25 +168,6 @@ public class Ship : MonoBehaviour
 
 	#endregion
 
-	#region WEAPONS
-
-	public void FireWeapon1()
-	{
-
-	}
-
-	public void FireWeapon2()
-	{
-
-	}
-
-	public void FireWeapon3()
-	{
-
-	}
-
-    #endregion
-
     #region BOOST FUEL
 
     private void StartDepletingBoost()
@@ -256,60 +239,6 @@ public class Ship : MonoBehaviour
 	}
 
     #endregion
-
-    private void OnDrawGizmosSelected()
-	{
-#if UNITY_EDITOR
-		for(int i = 0; i<3;  i++)
-		{
-			Color arrowColor = Color.yellow;
-			if(i == 0)
-			{
-				if (weapon1 == null) continue;
-			}
-			else if (i == 1)
-			{
-				if (weapon2 == null) continue;
-				arrowColor = Color.red;
-			}
-			else if (i == 2)
-			{
-				if (weapon3 == null) continue;
-				arrowColor = Color.cyan;
-
-			}
-
-			Vector3 localPos = new Vector3(firepoints[i].x, firepoints[i].y, 0f);
-			float localRot = firepoints[i].z;
-
-			// Convert local to world position
-			Vector3 worldPos = transform.TransformPoint(localPos);
-
-			// Total rotation (local + ship's rotation)
-			float totalRotation = transform.eulerAngles.z + localRot;
-
-			// Direction vector from angle
-			Vector3 direction = Quaternion.Euler(0, 0, totalRotation) * Vector3.up;
-
-			// Arrow length
-			float length = 1f;
-
-			// Line end point
-			Vector3 endPos = worldPos + direction * length;
-
-
-			DrawArrow.ForGizmo(worldPos, direction, arrowColor, 0.25f, 20, 0.5f);
-		}
-#endif
-	}
-
-
-
-
-
-
-
-
 
 
 

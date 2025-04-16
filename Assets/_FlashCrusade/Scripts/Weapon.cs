@@ -1,28 +1,48 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Game Data/Weapon")]
-public class Weapon : ScriptableObject
+public class Weapon : MonoBehaviour
 {
-    [Tooltip("Bullet to fire from this weapon.")]
-    public Bullet bullet;
+	[Header("Weapon Data")]
+    [SerializeField] private WeaponData weaponData;
+	[SerializeField] private Vector3 firepoint;
 
-    [Tooltip("Rate of fire in bullets per second.")]
-    public float fireRate = 10;
+	[Header("Arrow Gizmo")]
+	[SerializeField] private Color gizmoColor = Color.cyan;
+	[SerializeField] private float arrowLength = 0.5f;
 
-    [Tooltip("False will make semi-automatic, required re-press for another fire. \n" +
-             "Automatic lets ship hold down input to continuously fire.")]
-    public bool automatic = true;
+	private float FireCooldown { get { return 1 / weaponData.fireRate; } }
+	private Vector3 FirepointLocalPosition {  get { return new Vector3(firepoint.x, firepoint.y, 0f); } }
+	private float FirepointRotation { get { return transform.eulerAngles.z + firepoint.z; } }
+	private float fireRateTimer;
 
-    [Tooltip("Initial forward velocity the fired bullet will have.")]
-    public float muzzleVelocity = 10;
+	public void Fire()
+	{
+		if(fireRateTimer <= 0)
+		{
 
-    [Tooltip("Multiplier that will be applied to the damage of the fired bullet.")]
-    public float damageMultiplier = 1;
 
-    [Tooltip("How many bullets can be fired before reload is required")]
-    public int ammo = 30;
+			fireRateTimer = FireCooldown;
+		}
+	}
 
-    [Tooltip("Time it takes to reload weapon")]
-    public float reloadTime = 3;
+	private void Update()
+	{
+		if (fireRateTimer > 0) fireRateTimer -= Time.deltaTime;
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+#if UNITY_EDITOR
+		for (int i = 0; i < 3; i++)
+		{
+			// Convert local to world position
+			Vector3 worldPos = transform.TransformPoint(FirepointLocalPosition);
+
+			// Direction vector from angle
+			Vector3 direction = Quaternion.Euler(0, 0, FirepointRotation) * Vector3.up;
+
+			DrawArrow.ForGizmo(worldPos, direction, gizmoColor, 0.25f, 20, arrowLength);
+		}
+#endif
+	}
 }
-

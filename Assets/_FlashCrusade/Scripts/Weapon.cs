@@ -19,9 +19,14 @@ public class Weapon : MonoBehaviour
 	{
 		if(fireRateTimer <= 0)
 		{
+            Vector3 worldPos = transform.TransformPoint(FirepointLocalPosition);
 
+            Quaternion rot = Quaternion.Euler(0, 0, FirepointRotation);
 
-			fireRateTimer = FireCooldown;
+            Bullet bullet = Instantiate(weaponData.bullet, worldPos, rot);
+			bullet.SetInitialVelocity(bullet.transform.up * weaponData.muzzleVelocity);
+
+            fireRateTimer = FireCooldown;
 		}
 	}
 
@@ -35,10 +40,8 @@ public class Weapon : MonoBehaviour
 #if UNITY_EDITOR
 		for (int i = 0; i < 3; i++)
 		{
-			// Convert local to world position
 			Vector3 worldPos = transform.TransformPoint(FirepointLocalPosition);
 
-			// Direction vector from angle
 			Vector3 direction = Quaternion.Euler(0, 0, FirepointRotation) * Vector3.up;
 
 			DrawArrow.ForGizmo(worldPos, direction, gizmoColor, 0.25f, 20, arrowLength);

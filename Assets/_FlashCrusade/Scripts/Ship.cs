@@ -240,8 +240,6 @@ public class Ship : MonoBehaviour
 
     #endregion
 
-
-
     //if(boostToggleTimer!=null) StopCoroutine(boostToggleTimer);
     //boostToggleTimer = StartCoroutine(BoostToggleTimer(1f));
 

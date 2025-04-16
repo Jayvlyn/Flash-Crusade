@@ -1,19 +1,28 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Bullet", menuName = "Game Data/Bullet")]
-public class Bullet : ScriptableObject
+public class Bullet : MonoBehaviour
 {
-    public Sprite sprite;
+    [SerializeField, Tooltip("Damage dealt to a ship hit by this bullet.")]
+    private float damage = 10;
 
-    [Tooltip("Damage dealt to a ship hit by this bullet.")]
-    public float damage = 10;
+    [SerializeField, Tooltip("How many ships this bullet can pass through before being destroyed."),Range(0,20)]
+    private int piercing = 0;
 
-    [Tooltip("How many ships this bullet can pass through before being destroyed."),Range(0,20)]
-    public int piercing = 0;
+    [SerializeField, Tooltip("How long the bullet will stay airborne before being destroyed.")]
+    private float lifetime = 20;
 
-    [Tooltip("How long the bullet will stay airborne before being destroyed.")]
-    public float lifetime = 20;
+    [SerializeField, Tooltip("How fast bullets turn and move towards targets (0 = No homing)"), Range(0, 30)]
+    private float homing = 0;
 
-    [Tooltip("How fast bullets turn and move towards targets (0 = No homing)"), Range(0, 30)]
-    public float homing = 0;
+	private Vector2 velocity;
+
+	private void Update()
+	{
+		
+	}
+
+	private void Move()
+	{
+		
+	}
 }

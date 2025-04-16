@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon", menuName = "Game Data/Weapon")]
 public class WeaponData : ScriptableObject
 {
-    [Tooltip("Bullet to fire from this weapon.")]
+    [Tooltip("Bullet PREFAB fire from this weapon.")]
     public Bullet bullet;
 
     [Tooltip("Rate of fire in bullets per second.")]

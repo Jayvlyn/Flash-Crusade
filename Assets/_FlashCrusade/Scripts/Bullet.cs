@@ -4,9 +4,11 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField, Tooltip("Damage dealt to a ship hit by this bullet.")]
     private float damage = 10;
+    private float damageMult;
 
     [SerializeField, Tooltip("How many ships this bullet can pass through before being destroyed."),Range(0,20)]
     private int piercing = 0;
+    private int piercingLeft;
 
     [SerializeField, Tooltip("How long the bullet will stay airborne before being destroyed.")]
     private float lifetime = 20;
@@ -19,14 +21,42 @@ public class Bullet : MonoBehaviour
 
 	private Vector2 velocity;
 
-	private void Update()
+    public Vector2 hurtbox = new Vector2(1f, 0.2f);
+    public LayerMask enemyLayer;
+
+    private void Start()
+    {
+        piercingLeft = piercing;
+    }
+
+    private void Update()
 	{
         Move();//transform.up);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, hurtbox, 0f, enemyLayer);
+        foreach (var hit in hits)
+        {
+            if (hit.TryGetComponent<IDamageable>(out var damageable))
+            {
+                int finalDamage = Mathf.RoundToInt(damage * damageMult);
+                damageable.TakeDamage(finalDamage);
+                if (piercingLeft-- < 0)
+                {
+                    Destroy(gameObject);
+                    break; // stop processing if bullet is destroyed
+                }
+            }
+        }
     }
 
     public void SetInitialVelocity(Vector2 velocity)
     {
         this.velocity = velocity;
+    }
+
+    public void SetDamageMultiplier(float multiplier)
+    {
+        this.damageMult = multiplier;
     }
 
 	//private void Move(Vector2 direction)
@@ -40,8 +70,9 @@ public class Bullet : MonoBehaviour
         transform.position += (Vector3)(velocity * Time.deltaTime);
     }
 
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		
-	}
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, hurtbox);
+    }
 }

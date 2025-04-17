@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 641213027}
   m_Layer: 7
   m_Name: Ship
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,6 +234,7 @@ MonoBehaviour:
   weapon1: {fileID: 0}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}
+  maxHealth: 100
 --- !u!58 &641213027
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -903,6 +904,7 @@ MonoBehaviour:
   weapon1: {fileID: 1061330033}
   weapon2: {fileID: 0}
   weapon3: {fileID: 0}
+  maxHealth: 100
 --- !u!114 &1061330033
 MonoBehaviour:
   m_ObjectHideFlags: 0

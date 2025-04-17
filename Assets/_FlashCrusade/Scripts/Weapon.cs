@@ -25,6 +25,7 @@ public class Weapon : MonoBehaviour
 
             Bullet bullet = Instantiate(weaponData.bullet, worldPos, rot);
 			bullet.SetInitialVelocity(bullet.transform.up * weaponData.muzzleVelocity);
+			bullet.SetDamageMultiplier(weaponData.damageMultiplier);
 
             fireRateTimer = FireCooldown;
 		}

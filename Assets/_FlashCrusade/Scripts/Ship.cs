@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+public class Ship : MonoBehaviour, IDamageable
 {
     #region VARIABLES
     public ShipInputData inputData = new ShipInputData();
@@ -56,12 +56,17 @@ public class Ship : MonoBehaviour
 	[SerializeField] private Weapon weapon2;
 	[SerializeField] private Weapon weapon3;
 
+	[Header("Health")]
+	[SerializeField] private int maxHealth = 100;
+	private int health;
+
     #endregion
 
     #region UNITY METHODS
 
     private void Start()
 	{
+		health = maxHealth;
 		currentMaxSpeed = maxSpeed;
 		currentMaxAcceleration = maxAcceleration;
 		boostFuel = maxBoostFuel;
@@ -237,33 +242,20 @@ public class Ship : MonoBehaviour
 			RecoverEarlyStop();
 		}
 	}
-
     #endregion
 
-    //if(boostToggleTimer!=null) StopCoroutine(boostToggleTimer);
-    //boostToggleTimer = StartCoroutine(BoostToggleTimer(1f));
+    public void TakeDamage(int damage)
+    {
+		health -= damage;
+		if (health < 0)
+		{
+			health = 0;
+			OnDeath();
+		}
+    }
 
-    //private Coroutine boostToggleTimer;
-    //private IEnumerator BoostToggleTimer(float time)
-    //{
-    //	float startMaxAcceleration = currentMaxAcceleration;
-    //	float startMaxSpeed = currentMaxSpeed;
-
-    //	float elapsedTime = 0;
-    //	while (elapsedTime < time)
-    //	{
-    //		elapsedTime += Time.deltaTime;
-    //		if(boosting)
-    //		{
-    //			currentMaxAcceleration = Mathf.Lerp(startMaxAcceleration, maxBoostAcceleration, elapsedTime/time);
-    //			currentMaxSpeed = Mathf.Lerp(startMaxSpeed, maxBoostSpeed, elapsedTime/time);
-    //		}
-    //		else
-    //		{
-    //			currentMaxAcceleration = Mathf.Lerp(startMaxAcceleration, maxAcceleration, elapsedTime / time);
-    //			currentMaxSpeed = Mathf.Lerp(startMaxSpeed, maxSpeed, elapsedTime / time);
-    //		}
-    //		yield return null;
-    //	}
-    //}
+	public virtual void OnDeath()
+	{
+		Destroy(gameObject);
+	}
 }

@@ -176,6 +176,8 @@ GameObject:
   m_Component:
   - component: {fileID: 641213029}
   - component: {fileID: 641213026}
+  - component: {fileID: 641213031}
+  - component: {fileID: 641213030}
   - component: {fileID: 641213028}
   - component: {fileID: 641213027}
   m_Layer: 7
@@ -341,6 +343,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 441139922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &641213030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641213025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b56b6064275a14fafc72ff372752eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 0}
+  firepoint: {x: 0, y: 0, z: 0}
+  gizmoColor: {r: 0, g: 1, b: 1, a: 1}
+  arrowLength: 0.5
+--- !u!114 &641213031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641213025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b56b6064275a14fafc72ff372752eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 0}
+  firepoint: {x: 0, y: 0, z: 0}
+  gizmoColor: {r: 0, g: 1, b: 1, a: 1}
+  arrowLength: 0.5
 --- !u!1 &695542166
 GameObject:
   m_ObjectHideFlags: 0

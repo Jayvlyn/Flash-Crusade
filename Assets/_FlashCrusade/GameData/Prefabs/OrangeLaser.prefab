@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7968694176722488539}
   - component: {fileID: 8961541188041805645}
   - component: {fileID: 3234010224777556025}
-  m_Layer: 8
-  m_Name: GreenLaser
+  m_Layer: 9
+  m_Name: OrangeLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   hurtbox: {x: 0.15, y: 0.53}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 72
 --- !u!212 &3234010224777556025
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,10 +94,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -623076055
-  m_SortingLayer: 3
+  m_SortingLayerID: 1595859431
+  m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c3b08f6154d86b94b80f556602020965, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2580bd83b296df4ba4437765a301f68, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

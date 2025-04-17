@@ -15,9 +15,31 @@ public class Weapon : MonoBehaviour
 	private float FirepointRotation { get { return transform.eulerAngles.z + firepoint.z; } }
 	private float fireRateTimer;
 
+
+	private int currentAmmo;
+	private float reloadTimer;
+
+    private void Start()
+    {
+		currentAmmo = weaponData.ammo;
+    }
+
+    private void Update()
+	{
+		if (fireRateTimer > 0) fireRateTimer -= Time.deltaTime;
+		if (reloadTimer > 0)
+		{ // reloading
+			reloadTimer -= Time.deltaTime;
+			if(reloadTimer <= 0)
+			{ // finish reload
+				currentAmmo = weaponData.ammo;
+			}
+		}
+	}
+
 	public void Fire()
 	{
-		if(fireRateTimer <= 0)
+		if(fireRateTimer <= 0 && currentAmmo > 0)
 		{
             Vector3 worldPos = transform.TransformPoint(FirepointLocalPosition);
 
@@ -28,12 +50,18 @@ public class Weapon : MonoBehaviour
 			bullet.SetDamageMultiplier(weaponData.damageMultiplier);
 
             fireRateTimer = FireCooldown;
+
+			currentAmmo--;
+			if(currentAmmo <= 0)
+			{
+				Reload();
+			}
 		}
 	}
 
-	private void Update()
+	private void Reload()
 	{
-		if (fireRateTimer > 0) fireRateTimer -= Time.deltaTime;
+		reloadTimer = weaponData.reloadTime;
 	}
 
 	private void OnDrawGizmosSelected()

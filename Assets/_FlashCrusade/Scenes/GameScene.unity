@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b057ae4d0d88649999b291b44cca89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickInterval: 0.5
+  tickInterval: 3
   ship: {fileID: 641213026}
 --- !u!4 &441139922
 Transform:

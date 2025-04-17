@@ -13,8 +13,9 @@ public class Enemy : AIAgent
     {
         base.Tick();
 
-        ship.inputData.thrustInput = new Vector2(0, 1);
-        ship.inputData.holdingFireWeapon1 = true;
-        ship.inputData.holdingFireWeapon2 = true;
+        ship.inputData.thrustInput = Random.insideUnitCircle;
+        ship.inputData.holdingFireWeapon1 = Random.Range(0, 2) == 1;
+		ship.inputData.holdingFireWeapon2 = Random.Range(0, 2) == 1;
+        ship.inputData.turnInput = Random.Range(-1, 2);
     }
 }

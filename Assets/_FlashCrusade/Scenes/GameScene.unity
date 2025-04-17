@@ -233,8 +233,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   turnSpeed: 90
   stopDuration: 10
-  weapon1: {fileID: 0}
-  weapon2: {fileID: 0}
+  weapon1: {fileID: 641213031}
+  weapon2: {fileID: 641213030}
   weapon3: {fileID: 0}
   maxHealth: 100
 --- !u!58 &641213027
@@ -355,9 +355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b56b6064275a14fafc72ff372752eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 0}
-  firepoint: {x: 0, y: 0, z: 0}
-  gizmoColor: {r: 0, g: 1, b: 1, a: 1}
+  weaponData: {fileID: 11400000, guid: f82f35c31ecf35b438410cbb8f8a6e53, type: 2}
+  firepoint: {x: 0.53, y: 1.37, z: 0}
+  gizmoColor: {r: 0.9908947, g: 1, b: 0, a: 1}
   arrowLength: 0.5
 --- !u!114 &641213031
 MonoBehaviour:
@@ -371,8 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b56b6064275a14fafc72ff372752eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 0}
-  firepoint: {x: 0, y: 0, z: 0}
+  weaponData: {fileID: 11400000, guid: f82f35c31ecf35b438410cbb8f8a6e53, type: 2}
+  firepoint: {x: -0.53, y: 1.39, z: 0}
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
   arrowLength: 0.5
 --- !u!1 &695542166

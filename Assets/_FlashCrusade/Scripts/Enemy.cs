@@ -14,5 +14,7 @@ public class Enemy : AIAgent
         base.Tick();
 
         ship.inputData.thrustInput = new Vector2(0, 1);
+        ship.inputData.holdingFireWeapon1 = true;
+        ship.inputData.holdingFireWeapon2 = true;
     }
 }

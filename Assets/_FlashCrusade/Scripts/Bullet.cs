@@ -21,8 +21,10 @@ public class Bullet : MonoBehaviour
 
 	private Vector2 velocity;
 
-    public Vector2 hurtbox = new Vector2(1f, 0.2f);
+    //public Vector2 hurtbox = new Vector2(1f, 0.2f);
+    public Bounds hurtbox;
     public LayerMask enemyLayer;
+
 
     private void Start()
     {
@@ -33,7 +35,7 @@ public class Bullet : MonoBehaviour
 	{
         Move();//transform.up);
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, hurtbox, 0f, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, hurtbox.size, 0f, enemyLayer);
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent<IDamageable>(out var damageable))
@@ -73,6 +75,6 @@ public class Bullet : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, hurtbox);
+        Gizmos.DrawWireCube(transform.position + hurtbox.center, hurtbox.size);
     }
 }

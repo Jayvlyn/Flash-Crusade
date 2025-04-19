@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Ship ship;
+    [SerializeField] private Leader leader;
 
 	#region INPUTS
 

@@ -6,7 +6,12 @@ public abstract class AIAgent : MonoBehaviour
     private float tickTimer = 0;
 
     [SerializeField] private Transform currentTarget;
+
     [SerializeField] private Transform leader;
+    public Transform Leader { get; set; }
+
+    private bool freeFly;
+    public bool FreeFly{ get; set; }
 
     protected virtual void Update()
     {

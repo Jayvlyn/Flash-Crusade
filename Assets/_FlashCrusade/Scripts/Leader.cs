@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class Leader : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+	private Fleet fleet;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private bool freeFly = false;
+
+	private void Start()
+	{
+		fleet = new Fleet(this.transform);
+	}
+
+	#region COMMANDS
+
+	public void ToggleFreeFly()
+	{
+		freeFly = !freeFly;
+
+		foreach(AIAgent ship in fleet.ships)
+		{
+			ship.FreeFly = freeFly;
+		}
+	}
+
+	#endregion
 }

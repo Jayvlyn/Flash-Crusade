@@ -47,7 +47,10 @@ public class Weapon : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0, 0, FirepointRotation);
 
             Bullet bullet = Instantiate(weaponData.bullet, worldPos, rot);
-			bullet.SetInitialVelocity(bullet.transform.up * weaponData.muzzleVelocity);
+
+			Vector2 initialBulletVelocity = ((Vector2)bullet.transform.up * weaponData.muzzleVelocity) + shipVelocity;
+
+			bullet.SetInitialVelocity(initialBulletVelocity);
 			bullet.SetDamageMultiplier(weaponData.damageMultiplier);
 
             fireRateTimer = FireCooldown;

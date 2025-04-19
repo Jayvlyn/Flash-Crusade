@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField, Tooltip("How fast bullets turn and move towards targets (0 = No homing)"), Range(0, 30)]
     private float homing = 0;
+    public float Homing { get { return homing; } }
 
     //[SerializeField, Tooltip("Max speed that the bullet can reach")]
     //private float maxSpeed = 40;

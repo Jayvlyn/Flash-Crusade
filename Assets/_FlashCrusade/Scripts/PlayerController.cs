@@ -5,17 +5,22 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Ship ship;
 
+	private void Start()
+	{
+		ship.inputData.holdingFireWeapons = new bool[3];
+	}
+
 	#region INPUTS
 
-    public void OnFireWeapon1(InputAction.CallbackContext context)
+	public void OnFireWeapon1(InputAction.CallbackContext context)
     {
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapon1 = true;
+			ship.inputData.holdingFireWeapons[0] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapon1 = false;
+			ship.inputData.holdingFireWeapons[0] = false;
 		}
 	}
 	
@@ -23,11 +28,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapon2 = true;
+			ship.inputData.holdingFireWeapons[1] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapon2 = false;
+			ship.inputData.holdingFireWeapons[1] = false;
 		}
 	}
 
@@ -35,11 +40,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapon3 = true;
+			ship.inputData.holdingFireWeapons[2] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapon3 = false;
+			ship.inputData.holdingFireWeapons[2] = false;
 		}
 	}
 

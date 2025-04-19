@@ -15,9 +15,10 @@ public class Weapon : MonoBehaviour
 	private float FirepointRotation { get { return transform.eulerAngles.z + firepoint.z; } }
 	private float fireRateTimer;
 
-
 	private int currentAmmo;
 	private float reloadTimer;
+
+	private Vector2 shipVelocity;
 
     private void Start()
     {
@@ -62,6 +63,11 @@ public class Weapon : MonoBehaviour
 	private void Reload()
 	{
 		reloadTimer = weaponData.reloadTime;
+	}
+
+	public void SetShipVelocity(Vector2 velocity)
+	{
+		shipVelocity = velocity;
 	}
 
 	private void OnDrawGizmosSelected()

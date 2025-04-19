@@ -43,18 +43,28 @@ public class Ship : MonoBehaviour, IDamageable
 
 	private bool usingThrustersLastFrame = false;
 	private float accelerateTimer;
-	private Vector2 velocity;
 	private float currentMaxAcceleration;
 	private float currentMaxSpeed;
 	private bool boosting = false;
 	private float boostFuel;
 
+	private Vector2 velocity;
+	public Vector2 Velocity
+	{
+		get { return velocity; }
+		set
+		{
+			velocity = value;
+			foreach(Weapon weapon in weapons)
+			{
+				weapon.SetShipVelocity(velocity);
+			}
+		}
+	}
 
 	[Header("Weapons")]
 
-	[SerializeField] private Weapon weapon1;
-	[SerializeField] private Weapon weapon2;
-	[SerializeField] private Weapon weapon3;
+	[SerializeField] private Weapon[] weapons;
 
 	[Header("Health")]
 	[SerializeField] private int maxHealth = 100;
@@ -81,9 +91,10 @@ public class Ship : MonoBehaviour, IDamageable
 	{
 		Thrust(inputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
 		Turn(inputData.turnInput);
-		if (inputData.holdingFireWeapon1 && weapon1 != null) weapon1.Fire();
-		if (inputData.holdingFireWeapon2 && weapon2 != null) weapon2.Fire();
-		if (inputData.holdingFireWeapon3 && weapon3 != null) weapon3.Fire();
+		for(int i = 0; i < inputData.holdingFireWeapons.Length; i++)
+		{
+			if(inputData.holdingFireWeapons[i]) weapons[i].Fire();
+		}
 	}
 
 	#endregion
@@ -114,7 +125,7 @@ public class Ship : MonoBehaviour, IDamageable
 			accelerateTimer = 0f;
 
 			float frameDrag = Mathf.Pow(0.01f, Time.deltaTime / stopDuration); // Drag calculated from duration to frame multiplier
-			velocity *= frameDrag;
+			Velocity *= frameDrag;
 		}
 
 		float accelProgress = accelerationTime > 0 ? accelerateTimer / accelerationTime : 1f;
@@ -126,11 +137,11 @@ public class Ship : MonoBehaviour, IDamageable
 			extraTurnboost = 3;
 		}
 
-		Vector2 velocityDelta = targetVelocity - velocity;
+		Vector2 velocityDelta = targetVelocity - Velocity;
 		Vector2 acceleration = Vector2.ClampMagnitude(velocityDelta / Time.deltaTime, currentMaxAcceleration * curveMultiplier * extraTurnboost);
-		velocity += acceleration * Time.deltaTime;
+		Velocity += acceleration * Time.deltaTime;
 
-		objToMove.transform.position += (Vector3)(velocity * Time.deltaTime);
+		objToMove.transform.position += (Vector3)(Velocity * Time.deltaTime);
 		usingThrustersLastFrame = usingThrusters;
 
 		return usingThrusters;

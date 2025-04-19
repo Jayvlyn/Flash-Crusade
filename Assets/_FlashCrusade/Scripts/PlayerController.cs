@@ -5,11 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Ship ship;
 
-	private void Start()
-	{
-		ship.inputData.holdingFireWeapons = new bool[3];
-	}
-
 	#region INPUTS
 
 	public void OnFireWeapon1(InputAction.CallbackContext context)

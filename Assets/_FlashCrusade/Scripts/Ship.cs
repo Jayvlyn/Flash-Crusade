@@ -80,11 +80,8 @@ public class Ship : MonoBehaviour, IDamageable
 		currentMaxSpeed = maxSpeed;
 		currentMaxAcceleration = maxAcceleration;
 		boostFuel = maxBoostFuel;
-
-		if (objToMove == null)
-		{
-			objToMove = this.gameObject;
-		}
+		inputData.holdingFireWeapons = new bool[weapons.Length];
+		if (objToMove == null) objToMove = this.gameObject;
 	}
 
 	private void Update()

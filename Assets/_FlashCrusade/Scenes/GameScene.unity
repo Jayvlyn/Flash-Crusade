@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tickInterval: 3
+  currentTarget: {fileID: 0}
+  leader: {fileID: 0}
   ship: {fileID: 641213026}
 --- !u!4 &441139922
 Transform:
@@ -233,9 +235,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   turnSpeed: 90
   stopDuration: 10
-  weapon1: {fileID: 641213031}
-  weapon2: {fileID: 641213030}
-  weapon3: {fileID: 0}
+  weapons:
+  - {fileID: 641213031}
+  - {fileID: 641213030}
   maxHealth: 100
 --- !u!58 &641213027
 CircleCollider2D:
@@ -935,9 +937,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   turnSpeed: 90
   stopDuration: 10
-  weapon1: {fileID: 1061330033}
-  weapon2: {fileID: 0}
-  weapon3: {fileID: 0}
+  weapons:
+  - {fileID: 1061330033}
   maxHealth: 100
 --- !u!114 &1061330033
 MonoBehaviour:

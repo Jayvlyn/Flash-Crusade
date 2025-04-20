@@ -2,7 +2,12 @@ using UnityEngine;
 
 public abstract class AIAgent : MonoBehaviour
 {
-    [SerializeField] private float tickInterval = 0.5f;
+	[SerializeField] private Ship ship;
+    public Ship Ship { get { return ship; } 
+        set { ship = value; }
+    }
+
+	[SerializeField] private float tickInterval = 0.5f;
     private float tickTimer = 0;
 
     [SerializeField] private Transform currentTarget;

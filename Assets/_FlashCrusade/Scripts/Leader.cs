@@ -1,3 +1,6 @@
+
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Leader : MonoBehaviour
@@ -10,6 +13,17 @@ public class Leader : MonoBehaviour
 	private void Start()
 	{
 		fleet = new Fleet(this.transform, fleetShipSpacing);
+
+		Ally[] allyComps = FindObjectsByType<Ally>(FindObjectsSortMode.None);
+		fleet.ships = allyComps.Cast<AIAgent>().ToList();
+	}
+
+	public void UpdateFleetInputs(ShipInputData inputData)
+	{
+		for (int i = 0; i < fleet.ships.Count; i++)
+		{
+			fleet.ships[i].Ship.inputData = inputData;
+		}
 	}
 
 	#region COMMANDS

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -74,6 +75,12 @@ public class Fleet
 			case FleetFormation.SHIELD:
 				SetShieldFormation();
 				break;
+		}
+
+		//TEMP FOR TESTING
+		for(int i = 0; i < ships.Count; i++)
+		{
+			ships[i].transform.position = (Vector2)leaderTransform.position + localFleetPositions[i];
 		}
 	}
 

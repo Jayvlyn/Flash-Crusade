@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Enemy : AIAgent
 {
-    [SerializeField] private Ship ship;
-
     protected override void Update()
     {
         base.Update();

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -42,86 +42,111 @@ public class Fleet
 	public void SetFleetFormation(FleetFormation formation)
 	{
 		activeFleetFormation = formation;
-		//localFleetPositions = new Vector2[ships.Count];
-		localFleetPositions = new Vector2[4];
-		if (localFleetPositions.Length <= 0) return;
+		UpdateLocalFleetPositions();
+	}
+
+	private void UpdateLocalFleetPositions()
+	{
+		localFleetPositions = new Vector2[ships.Count];
 		switch (activeFleetFormation)
 		{
 			case FleetFormation.VIC:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-					int x = Utilities.RoundHalfUp((i + 1) * 0.5f); // increment every 2
-					int y = -x;
-					if (i % 2 == 1) x *= -1; // odd x is on left
-					localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing);
-				}
+				SetVicFormation();
 				break;
 			case FleetFormation.REVERSE_VIC:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-					int x = Utilities.RoundHalfUp((i + 1) * 0.5f); // increment every 2
-					int y = x;
-					if (i % 2 == 1) x *= -1; // odd x is on left
-					localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing);
-				}
+				SetVicFormation(true);
 				break;
 			case FleetFormation.ECHELON:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-					int x = i + 1;
-					int y = -x;
-					localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing);
-				}
+				SetEchelonFormation();
 				break;
 			case FleetFormation.LINE_ABREAST:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-					int x = Utilities.RoundHalfUp((i + 1) * 0.5f); // increment every 2
-					if (i % 2 == 1) x *= -1; // odd x is on left
-					localFleetPositions[i] = new Vector2(x * shipSpacing, 0);
-				}
+				SetLineAbreastFormation();
 				break;
 			case FleetFormation.WEDGE:
-				int placed = 0;
-				int layer = 2; // start at second layer since leader is not included
-
-				while (placed < localFleetPositions.Length)
-				{
-					float y = -layer * shipSpacing; // layer 2 with 2 ships offset back by 10 with shipSpacing of 5, so move everything up by shipSpacing at end
-
-					for (int i = 0; i < layer; i++) // foreach ship on layer
-					{
-						if (placed >= localFleetPositions.Length) break;  // break out when not enough ships to finish layer
-
-						float x = (i - (layer - 1) / 2f) * shipSpacing; // Take the current ship's index in the row, subtract the row's center, then scale by shipSpacing to get its position in world space
-						localFleetPositions[placed] = new Vector2(x, y + shipSpacing);
-						placed++;
-					}
-
-					layer++;
-				}
+				SetWedgeFormation();
 				break;
 			case FleetFormation.COLUMN:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-					int y = -(i + 1);
-					localFleetPositions[i] = new Vector2(0, y * shipSpacing);
-				}
+				SetColumnFormation();
 				break;
 			case FleetFormation.BUBBLE:
 				SetBubbleFormation();
 				break;
 			case FleetFormation.SHIELD:
-				for (int i = 0; i < localFleetPositions.Length; i++)
-				{
-
-				}
+				SetShieldFormation();
 				break;
+		}
+	}
+
+	private void SetVicFormation(bool reversed = false)
+	{
+		if (localFleetPositions.Length <= 0) return;
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			int x = Utilities.RoundHalfUp((i + 1) * 0.5f); // increment every 2
+			int y = reversed ? x : -x;
+			if (i % 2 == 1) x *= -1; // odd x is on left
+			localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing);
+		}
+	}
+
+	private void SetEchelonFormation()
+	{
+		if (localFleetPositions.Length <= 0) return;
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			int x = i + 1;
+			int y = -x;
+			localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing);
+		}
+	}
+
+	private void SetLineAbreastFormation()
+	{
+		if (localFleetPositions.Length <= 0) return;
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			int x = Utilities.RoundHalfUp((i + 1) * 0.5f); // increment every 2
+			if (i % 2 == 1) x *= -1; // odd x is on left
+			localFleetPositions[i] = new Vector2(x * shipSpacing, 0);
+		}
+	}
+
+	private void SetColumnFormation()
+	{
+		if (localFleetPositions.Length <= 0) return;
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			int y = -(i + 1);
+			localFleetPositions[i] = new Vector2(0, y * shipSpacing);
+		}
+	}
+
+	private void SetWedgeFormation()
+	{
+		if (localFleetPositions.Length <= 0) return;
+		int placed = 0;
+		int layer = 2; // start at second layer since leader is not included
+
+		while (placed < localFleetPositions.Length)
+		{
+			float y = -layer * shipSpacing; // layer 2 with 2 ships offset back by 10 with shipSpacing of 5, so move everything up by shipSpacing at end
+
+			for (int i = 0; i < layer; i++) // foreach ship on layer
+			{
+				if (placed >= localFleetPositions.Length) break;  // break out when not enough ships to finish layer
+
+				float x = (i - (layer - 1) / 2f) * shipSpacing; // Take the current ship's index in the row, subtract the row's center, then scale by shipSpacing to get its position in world space
+				localFleetPositions[placed] = new Vector2(x, y + shipSpacing);
+				placed++;
+			}
+
+			layer++;
 		}
 	}
 
 	private void SetBubbleFormationSimple()
 	{
+		if (localFleetPositions.Length <= 0) return;
 		int count = localFleetPositions.Length;
 
 		float circumference = shipSpacing * count;
@@ -136,8 +161,9 @@ public class Fleet
 		}
 	}
 
-	private void SetBubbleFormationReadable()
+	private void SetBubbleFormation()
 	{
+		if (localFleetPositions.Length <= 0) return;
 		int total = localFleetPositions.Length;
 
 		float minSpacing = shipSpacing;
@@ -182,8 +208,9 @@ public class Fleet
 		}
 	}
 
-	private void SetBubbleFormation()
+	private void SetBubbleFormationReadable()
 	{
+		if (localFleetPositions.Length <= 0) return;
 		int totalShips = localFleetPositions.Length;
 
 		float minSpacing = shipSpacing;
@@ -230,6 +257,21 @@ public class Fleet
 				float y = Mathf.Sin(angle) * radius;
 				localFleetPositions[placed++] = new Vector2(x, y);
 			}
+		}
+	}
+
+	private void SetShieldFormation()
+	{
+		if (localFleetPositions.Length <= 0) return;
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			int layer = (i / 12) + 1;
+			int posInLayer = i % 12;
+
+			int x = Utilities.RoundHalfUp((posInLayer) * 0.5f); // increment every 2
+			float y = -x * 0.2f;
+			if (i % 2 == 1) x *= -1; // odd x is on left
+			localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing + shipSpacing * layer);
 		}
 	}
 }

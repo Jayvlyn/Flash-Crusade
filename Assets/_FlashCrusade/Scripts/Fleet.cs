@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Fleet
@@ -43,12 +41,8 @@ public class Fleet
 	public void SetFleetFormation(FleetFormation formation)
 	{
 		activeFleetFormation = formation;
-		UpdateLocalFleetPositions();
-	}
-
-	private void UpdateLocalFleetPositions()
-	{
-		localFleetPositions = new Vector2[ships.Count];
+		localFleetPositions = new Vector2[11];
+		//localFleetPositions = new Vector2[ships.Count];
 		switch (activeFleetFormation)
 		{
 			case FleetFormation.VIC:
@@ -77,13 +71,21 @@ public class Fleet
 				break;
 		}
 
-		//TEMP FOR TESTING
-		for(int i = 0; i < ships.Count; i++)
+		UpdateLocalFleetPositions();
+	}
+
+	public void UpdateLocalFleetPositions()
+	{
+		float angle = leaderTransform.eulerAngles.z;
+		Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+		for (int i = 0; i < localFleetPositions.Length; i++)
 		{
-			ships[i].transform.position = (Vector2)leaderTransform.position + localFleetPositions[i];
+			localFleetPositions[i] = rotation * localFleetPositions[i];
 		}
 	}
 
+	#region FORMATION METHODS
 	private void SetVicFormation(bool reversed = false)
 	{
 		if (localFleetPositions.Length <= 0) return;
@@ -171,53 +173,6 @@ public class Fleet
 	private void SetBubbleFormation()
 	{
 		if (localFleetPositions.Length <= 0) return;
-		int total = localFleetPositions.Length;
-
-		float minSpacing = shipSpacing;
-		float ringSpacing = shipSpacing * 1.5f;
-		int index = 0, ring = 0;
-
-		while (index < total)
-		{
-			float radius = (ring + 1) * ringSpacing;
-			int maxThisRing = Mathf.FloorToInt((2 * Mathf.PI * radius) / minSpacing);
-			int remaining = total - index;
-
-			if (remaining < 8 && index > 0)
-			{
-				int backfill = remaining;
-				int prevStart = index;
-				for (int r = ring - 1; r >= 0 && backfill > 0; r--)
-				{
-					float prevRadius = (r + 1) * ringSpacing;
-					int prevCount = Mathf.FloorToInt((2 * Mathf.PI * prevRadius) / minSpacing);
-					int used = Mathf.Min(backfill, prevCount);
-					float angleStep = 2 * Mathf.PI / (used + prevCount);
-					for (int i = 0; i < used; i++)
-					{
-						float a = angleStep * (prevCount + i);
-						localFleetPositions[prevStart - prevCount + i] = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * prevRadius;
-					}
-					backfill -= used;
-					prevStart -= prevCount;
-				}
-				break;
-			}
-
-			int count = Mathf.Min(remaining, maxThisRing);
-			float step = 2 * Mathf.PI / count;
-			for (int i = 0; i < count; i++)
-			{
-				float a = i * step;
-				localFleetPositions[index++] = new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * radius;
-			}
-			ring++;
-		}
-	}
-
-	private void SetBubbleFormationReadable()
-	{
-		if (localFleetPositions.Length <= 0) return;
 		int totalShips = localFleetPositions.Length;
 
 		float minSpacing = shipSpacing;
@@ -281,6 +236,7 @@ public class Fleet
 			localFleetPositions[i] = new Vector2(x * shipSpacing, y * shipSpacing + shipSpacing * layer);
 		}
 	}
+	#endregion
 }
 
 public enum FleetFormation

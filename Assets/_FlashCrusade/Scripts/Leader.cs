@@ -18,6 +18,11 @@ public class Leader : MonoBehaviour
 		fleet.ships = allyComps.Cast<AIAgent>().ToList();
 	}
 
+	private void Update()
+	{
+		fleet.SetFleetFormation(FleetFormation.BUBBLE);
+	}
+
 	public void UpdateFleetInputs(ShipInputData inputData)
 	{
 		for (int i = 0; i < fleet.ships.Count; i++)

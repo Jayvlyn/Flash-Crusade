@@ -11,6 +11,11 @@ public abstract class AIAgent : MonoBehaviour
     private float tickTimer = 0;
 
     [SerializeField] private Transform currentTarget;
+    private Vector2 moveTarget;
+    public Vector2 MoveTarget { 
+        get { return moveTarget; } 
+        set { moveTarget = value; } 
+    }
 
     [SerializeField] private Transform leader;
     public Transform Leader { get; set; }
@@ -29,9 +34,20 @@ public abstract class AIAgent : MonoBehaviour
         {
             tickTimer -= Time.deltaTime;
         }
+
+
+        if (!freeFly)
+        {
+            MoveToTarget(moveTarget);
+        }
     }
 
     protected virtual void Tick()
+    {
+
+    }
+
+    protected virtual void MoveToTarget(Vector2 target)
     {
 
     }

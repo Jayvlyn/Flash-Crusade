@@ -73,17 +73,81 @@ public class PlayerController : MonoBehaviour
 
 	public void OnTurn(InputAction.CallbackContext context) // default J-L
 	{
-		if (context.performed || context.canceled)
+		if (context.started || context.canceled)
 		{
 			ship.inputData.turnInput = context.ReadValue<float>();
 		}
 	}
 
-	public void OnSetFleetFormation(InputAction.CallbackContext context)
+	public void OnToggleFreeFly(InputAction.CallbackContext context)
+	{
+		if(context.started)
+		{
+			leader.ToggleFreeFly();
+		}
+	}
+
+	public void OnFormation1(InputAction.CallbackContext context)
+	{
+		if(context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.VIC);
+		}
+	}
+
+	public void OnFormation2(InputAction.CallbackContext context)
 	{
 		if (context.started)
 		{
+			leader.fleet.SetFleetFormation(FleetFormation.REVERSE_VIC);
+		}
+	}
 
+	public void OnFormation3(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.ECHELON);
+		}
+	}
+
+	public void OnFormation4(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.LINE_ABREAST);
+		}
+	}
+
+	public void OnFormation5(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.WEDGE);
+		}
+	}
+
+	public void OnFormation6(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.COLUMN);
+		}
+	}
+
+	public void OnFormation7(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.BUBBLE);
+		}
+	}
+
+	public void OnFormation8(InputAction.CallbackContext context)
+	{
+		if (context.started)
+		{
+			leader.fleet.SetFleetFormation(FleetFormation.SHIELD);
 		}
 	}
 	#endregion

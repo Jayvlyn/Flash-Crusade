@@ -60,9 +60,81 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SetFleetFormation",
+                    "name": "ToggleFreeFly",
                     "type": "Button",
                     "id": "86ff8c73-6bd4-4498-95e1-1dd231c4d30b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation1",
+                    "type": "Button",
+                    "id": "72033441-f5ab-4315-adcd-215eb4255049",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation2",
+                    "type": "Button",
+                    "id": "9ae44f2b-eded-400d-86b2-ebd4630c6048",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation3",
+                    "type": "Button",
+                    "id": "adca63c7-8a84-4219-902d-7452cc1ea9ee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation4",
+                    "type": "Button",
+                    "id": "36712ae9-ca66-4020-a29a-2ee63a1a8c56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation5",
+                    "type": "Button",
+                    "id": "74a334fd-883b-42e3-b398-d603846760c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation6",
+                    "type": "Button",
+                    "id": "816503c0-3667-4564-bd2c-ddddb740b989",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation7",
+                    "type": "Button",
+                    "id": "4ef5b036-f246-41c9-a66a-57a36e365cd7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Formation8",
+                    "type": "Button",
+                    "id": "8bb54f80-d280-46b9-9cfd-c8201285e1a7",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -139,110 +211,11 @@
                 {
                     "name": "",
                     "id": "d250b492-0af2-44e7-afc1-8703997a35be",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cf51fcb8-e438-484b-b9a9-c2047516c884",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "114b8f82-8d73-4da5-b9e1-9b60c4e334f1",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "01e41b46-6313-42a3-90f2-cc6e8d86815f",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "edd91f82-09ac-4c04-9788-3975b9d759f3",
-                    "path": "<Keyboard>/5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2f4b6e35-5a14-4d1c-b456-856675e3565e",
-                    "path": "<Keyboard>/6",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c97f7ea-cbd4-43db-96f9-47d6d79cacf3",
-                    "path": "<Keyboard>/7",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e7bdaba-782f-4c99-8192-939c76040d9c",
-                    "path": "<Keyboard>/8",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "39ffd887-bec6-4280-b9bd-082f6eeea7f8",
-                    "path": "<Keyboard>/9",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8645ac6a-4449-4e01-a23e-2aeedec60bd9",
-                    "path": "<Keyboard>/0",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SetFleetFormation",
+                    "action": "ToggleFreeFly",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -309,6 +282,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53c2289c-cf6d-424c-bdcd-76f639e37661",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "335f6dae-b6f4-4f41-b8db-c423daa481e6",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6c7c211-7446-4e9c-b86a-7053b3a672b4",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "537a07a4-2362-4189-9ebd-73126fa75262",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acc5a351-1bd8-413b-930a-91fcacd9bf4a",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0cf8ff8-0147-4bb2-9a42-63397ecffa1c",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3796db10-6185-44f2-8f2b-c6074bb0b779",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation7",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b733f20-2094-4fe5-8ca6-915796963a79",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Formation8",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

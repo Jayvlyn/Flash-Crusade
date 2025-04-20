@@ -67,11 +67,24 @@ public class PlayerController : MonoBehaviour
 		{
 			ship.inputData.holdingBoost = true;
 			if(ship.inputData.thrustInput != Vector2.zero) ship.Boost(true);
+
+			for(int i = 0; i < leader.fleet.ships.Count; i++)
+			{
+				if(leader.fleet.ships[i].Ship.inputData.thrustInput != Vector2.zero)
+				{
+					leader.fleet.ships[i].Ship.Boost(true);
+				}
+			}
 		}
 		else if (context.canceled)
 		{
 			ship.inputData.holdingBoost = false;
+
 			ship.Boost(false);
+			for (int i = 0; i < leader.fleet.ships.Count; i++)
+			{
+				leader.fleet.ships[i].Ship.Boost(false);
+			}
 		}
 	}
 

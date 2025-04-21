@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public abstract class AIAgent : MonoBehaviour
@@ -34,21 +35,24 @@ public abstract class AIAgent : MonoBehaviour
         {
             tickTimer -= Time.deltaTime;
         }
-
-
-        if (!freeFly)
-        {
-            MoveToTarget(moveTarget);
-        }
     }
 
     protected virtual void Tick()
     {
-
-    }
+		if (!freeFly)
+		{
+			MoveToTarget(moveTarget);
+		}
+	}
 
     protected virtual void MoveToTarget(Vector2 target)
     {
+        Vector2 directionToTarget = (target - (Vector2)transform.position).normalized;
 
+
+		ship.inputData.thrustInput.x = Mathf.Sign(directionToTarget.x);
+		ship.inputData.thrustInput.y = Mathf.Sign(directionToTarget.y);
+        
+        Debug.Log(ship.inputData.thrustInput);
     }
 }

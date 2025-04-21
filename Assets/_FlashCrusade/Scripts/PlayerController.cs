@@ -6,11 +6,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Ship ship;
     [SerializeField] private Leader leader;
 
-	private void Update()
-	{
-		leader.UpdateFleetInputs(ship.inputData);
-	}
-
 	#region INPUTS
 
 	public void OnFireWeapon1(InputAction.CallbackContext context)

@@ -20,14 +20,18 @@ public class Leader : MonoBehaviour
 
 	private void Update()
 	{
-		fleet.SetFleetFormation(FleetFormation.BUBBLE);
+		fleet.UpdateLocalFleetPositions();
+		UpdateFleetMoveTargets();
+		//fleet.SetFleetFormation(FleetFormation.BUBBLE);
 	}
 
-	public void UpdateFleetInputs(ShipInputData inputData)
+	public void UpdateFleetMoveTargets()
 	{
 		for (int i = 0; i < fleet.ships.Count; i++)
 		{
-			fleet.ships[i].Ship.inputData = inputData;
+			Vector2 worldPos = (Vector2)transform.position + fleet.localFleetPositions[i];
+
+			fleet.ships[i].MoveTarget = worldPos;
 		}
 	}
 

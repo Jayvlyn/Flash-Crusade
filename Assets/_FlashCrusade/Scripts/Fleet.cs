@@ -41,7 +41,13 @@ public class Fleet
 	public void SetFleetFormation(FleetFormation formation)
 	{
 		activeFleetFormation = formation;
-		localFleetPositions = new Vector2[11];
+
+		UpdateLocalFleetPositions();
+	}
+
+	public void UpdateLocalFleetPositions()
+	{
+		localFleetPositions = new Vector2[50];
 		//localFleetPositions = new Vector2[ships.Count];
 		switch (activeFleetFormation)
 		{
@@ -71,11 +77,7 @@ public class Fleet
 				break;
 		}
 
-		UpdateLocalFleetPositions();
-	}
 
-	public void UpdateLocalFleetPositions()
-	{
 		float angle = leaderTransform.eulerAngles.z;
 		Quaternion rotation = Quaternion.Euler(0, 0, angle);
 

@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
 
 	[Header("Arrow Gizmo")]
 	[SerializeField] private Color gizmoColor = Color.cyan;
-	[SerializeField] private float arrowLength = 0.5f;
+	[SerializeField] private float arrowLength = 10f;
 
 	private float FireCooldown { get { return 1 / weaponData.fireRate; } }
 	private Vector3 FirepointLocalPosition {  get { return new Vector3(firepoint.x, firepoint.y, 0f); } }
@@ -82,7 +82,7 @@ public class Weapon : MonoBehaviour
 
 			Vector3 direction = Quaternion.Euler(0, 0, FirepointRotation) * Vector3.up;
 
-			DrawArrow.ForGizmo(worldPos, direction, gizmoColor, 0.25f, 20, arrowLength);
+			DrawArrow.ForGizmo(worldPos, direction, gizmoColor, 5, 20, arrowLength);
 		}
 #endif
 	}

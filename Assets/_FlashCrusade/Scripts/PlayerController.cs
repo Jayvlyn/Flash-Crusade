@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviour
 		{
 			ship.inputData.thrustInput = context.ReadValue<Vector2>();
 
-			if (ship.inputData.thrustInput != Vector2.zero && ship.inputData.holdingBoost) ship.Boost(true);
-			else if (ship.inputData.thrustInput == Vector2.zero && ship.inputData.holdingBoost) ship.Boost(false);
+			if (ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(true);
+			else if (!ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(false);
 		}
 	}
 
@@ -61,25 +61,13 @@ public class PlayerController : MonoBehaviour
 		if (context.started)
 		{
 			ship.inputData.holdingBoost = true;
-			if(ship.inputData.thrustInput != Vector2.zero) ship.Boost(true);
-
-			for(int i = 0; i < leader.fleet.ships.Count; i++)
-			{
-				if(leader.fleet.ships[i].Ship.inputData.thrustInput != Vector2.zero)
-				{
-					leader.fleet.ships[i].Ship.Boost(true);
-				}
-			}
+			if(ship.inputData.isMovingOrTurning) ship.Boost(true);
 		}
 		else if (context.canceled)
 		{
 			ship.inputData.holdingBoost = false;
 
 			ship.Boost(false);
-			for (int i = 0; i < leader.fleet.ships.Count; i++)
-			{
-				leader.fleet.ships[i].Ship.Boost(false);
-			}
 		}
 	}
 
@@ -89,7 +77,10 @@ public class PlayerController : MonoBehaviour
 		if (context.started || context.canceled)
 		{
 			ship.inputData.turnInput = context.ReadValue<float>();
-		}
+
+            if (ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(true);
+            else if (!ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(false);
+        }
 	}
 
 	public void OnToggleFreeFly(InputAction.CallbackContext context)

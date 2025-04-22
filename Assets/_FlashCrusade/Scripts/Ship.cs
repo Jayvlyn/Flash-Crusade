@@ -12,19 +12,19 @@ public class Ship : MonoBehaviour, IDamageable
 	private GameObject objToMove;
 
 	[SerializeField, Tooltip("Limits how fast ship can change velocity")]
-	private float maxAcceleration = 10f;
+	private float maxAcceleration = 1000f;
 
 	[SerializeField, Tooltip("Cap for linear velocity magnitude for regular thrust.")]
-	private float maxSpeed = 5f;
+	private float maxSpeed = 500f;
 
 	[SerializeField, Tooltip("Limits how fast ship can change velocity while boosting.")]
-	private float maxBoostAcceleration = 20f;
+	private float maxBoostAcceleration = 2000f;
 
 	[SerializeField, Tooltip("Cap for linear velocity magnitude for boost.")]
-	private float maxBoostSpeed = 10f;
+	private float maxBoostSpeed = 10000f;
 
 	[SerializeField, Tooltip("How long the ship can boost in seconds.")]
-	private float maxBoostFuel = 5f;
+	private float maxBoostFuel = 7f;
 
 	[SerializeField, Tooltip("How long it takes to start recovering boost after boosting stops.")]
 	private float recoverBoostDelay;
@@ -37,6 +37,9 @@ public class Ship : MonoBehaviour, IDamageable
 
 	[SerializeField, Tooltip("Angle per second for rotation.")]
 	private float turnSpeed = 90f;
+
+	[SerializeField, Tooltip("Angle per second for rotation while boosting.")]
+	private float boostTurnSpeed = 180f;
 
 	[SerializeField, Tooltip("How many seconds it takes to fully stop from current speed when not accelerating.")]
 	private float stopDuration = 2f;
@@ -175,7 +178,9 @@ public class Ship : MonoBehaviour, IDamageable
 	/// <param name="direction">-1=turn left | 1=turn right</param>
 	private void Turn(float direction) // default J-L
 	{
-		float angle = direction * turnSpeed * Time.deltaTime;
+		float speed = boosting ? boostTurnSpeed : turnSpeed;
+		float angle = direction * speed * Time.deltaTime;
+
 		objToMove.transform.Rotate(0f, 0f, -angle);
 	}
 

@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b057ae4d0d88649999b291b44cca89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 5435324727935296189}
   tickInterval: 3
   currentTarget: {fileID: 0}
   leader: {fileID: 0}
-  ship: {fileID: 5435324727935296189}
 --- !u!1 &8137703379446332566
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objToMove: {fileID: 5626154369096108588}
-  maxAcceleration: 20
-  maxSpeed: 20
-  maxBoostAcceleration: 20
-  maxBoostSpeed: 40
-  maxBoostFuel: 5
-  recoverBoostDelay: 0
+  maxAcceleration: 1000
+  maxSpeed: 500
+  maxBoostAcceleration: 2000
+  maxBoostSpeed: 1000
+  maxBoostFuel: 7
+  recoverBoostDelay: 1
   accelerationTime: 0.3
   accelerationCurve:
     serializedVersion: 2
@@ -130,6 +130,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   turnSpeed: 90
+  boostTurnSpeed: 90
   stopDuration: 10
   weapons:
   - {fileID: 6616534005126803730}
@@ -148,9 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: f82f35c31ecf35b438410cbb8f8a6e53, type: 2}
-  firepoint: {x: -0.53, y: 1.39, z: 0}
+  firepoint: {x: -8.5, y: 22, z: 0}
   gizmoColor: {r: 0, g: 1, b: 1, a: 1}
-  arrowLength: 0.5
+  arrowLength: 10
 --- !u!114 &1264408767167689365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,9 +165,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: f82f35c31ecf35b438410cbb8f8a6e53, type: 2}
-  firepoint: {x: 0.53, y: 1.37, z: 0}
+  firepoint: {x: 8.5, y: 22, z: 0}
   gizmoColor: {r: 0.9908947, g: 1, b: 0, a: 1}
-  arrowLength: 0.5
+  arrowLength: 10
 --- !u!212 &6288090959645313586
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -256,5 +257,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.5484152}
-  m_Radius: 0.93026924
+  m_Offset: {x: 0, y: -5.0484133}
+  m_Radius: 15.430272

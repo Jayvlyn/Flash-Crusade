@@ -15,13 +15,13 @@ public static class DrawArrow
         DrawArrowHead(pos, direction * lineLengthMultiplier, arrowHeadLength, arrowHeadAngle, isGizmo: true);
     }
 
-    public static void ForDebug(Vector3 pos, Vector3 direction, float arrowHeadLength = 0.25f, float arrowHeadAngle = 20.0f, float lineLengthMultiplier = 1)
+    public static void ForDebug(Vector3 pos, Vector3 direction, float arrowHeadLength = 5f, float arrowHeadAngle = 20.0f, float lineLengthMultiplier = 1)
     {
         Debug.DrawLine(pos, pos + direction * lineLengthMultiplier);
         DrawArrowHead(pos, direction * lineLengthMultiplier, arrowHeadLength, arrowHeadAngle, isGizmo: false);
     }
 
-    public static void ForDebug(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 0.25f, float arrowHeadAngle = 20.0f, float lineLengthMultiplier = 1)
+    public static void ForDebug(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 5f, float arrowHeadAngle = 20.0f, float lineLengthMultiplier = 1)
     {
         Debug.DrawLine(pos, pos + direction * lineLengthMultiplier, color);
         DrawArrowHead(pos, direction * lineLengthMultiplier, arrowHeadLength, arrowHeadAngle, isGizmo: false, color: color);

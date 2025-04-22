@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ShipInputData
@@ -7,6 +8,8 @@ public class ShipInputData
 	public bool holdingBoost = false;
 	public float turnInput = 0;
 	public int fleetFormation = 0;
+
+	public bool isMovingOrTurning { get {  return (thrustInput != Vector2.zero || turnInput != 0); } }
 
 	public void Clear()
     {

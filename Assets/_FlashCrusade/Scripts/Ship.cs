@@ -1,4 +1,6 @@
+using NaughtyAttributes;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -65,13 +67,14 @@ public class Ship : MonoBehaviour, IDamageable
 		}
 	}
 
-	[Header("Weapons")]
-
 	[SerializeField] private Weapon[] weapons;
 
 	[Header("Health")]
 	[SerializeField] private int maxHealth = 100;
 	private int health;
+	
+    [InfoBox("Order thrusters in list as the following: Front, Left, Right")]
+    [SerializeField] private List<Thruster> thrusters = new();
 
     #endregion
 
@@ -271,4 +274,24 @@ public class Ship : MonoBehaviour, IDamageable
 	{
 		Destroy(gameObject);
 	}
+
+
+    [Button("Find Thrusters")]
+    private void SetInactive()
+    {
+        thrusters.Clear();
+
+        foreach (Transform child in GetComponentsInChildren<Transform>(true)) // true = include inactive
+        {
+            if (child.name.ToLower().Contains("thruster"))
+            {
+                Thruster found = child.GetComponent<Thruster>();
+                if (found != null && !thrusters.Contains(found))
+                {
+                    thrusters.Add(found);
+                    Debug.Log($"Added thruster: {found.name}");
+                }
+            }
+        }
+    }
 }

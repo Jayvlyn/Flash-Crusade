@@ -10,23 +10,7 @@ public class Thruster : MonoBehaviour
 
     public float activateSpeed = 0.2f;
 
-    private bool active;
-
-    [Button("Active1")]
-    public void Activate1()
-    {
-        StartCoroutine(ActivateCoroutine(activateSpeed, 0));
-
-        active = true;
-    }
-
-    [Button("Active2")]
-    public void Activate2()
-    {
-        StartCoroutine(ActivateCoroutine(activateSpeed, 1));
-
-        active = true;
-    }
+    [HideInInspector] public bool active;
 
     public void Activate(int posIndex)
     {        
@@ -35,7 +19,6 @@ public class Thruster : MonoBehaviour
         active = true;
     }
 
-    [Button("Deactive")]
     public void Deactivate()
     {
         StartCoroutine(DeactivateCoroutine(activateSpeed));

@@ -575,30 +575,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.0000076
-      objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 10.000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.70710576
-      objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5679574778441092904, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071078
-      objectReference: {fileID: 0}
     - target: {fileID: 6332572403587196594, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
       propertyPath: fleet.ships.Array.size
       value: 4

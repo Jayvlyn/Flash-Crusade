@@ -50,9 +50,9 @@ public abstract class AIAgent : MonoBehaviour
         Vector2 directionToTarget = (target - (Vector2)transform.position).normalized;
 
 
-		ship.inputData.thrustInput.x = Mathf.Sign(directionToTarget.x);
-		ship.inputData.thrustInput.y = Mathf.Sign(directionToTarget.y);
+		ship.InputData.thrustInput.x = Mathf.Sign(directionToTarget.x);
+		ship.InputData.thrustInput.y = Mathf.Sign(directionToTarget.y);
         
-        Debug.Log(ship.inputData.thrustInput);
+        Debug.Log(ship.InputData.thrustInput);
     }
 }

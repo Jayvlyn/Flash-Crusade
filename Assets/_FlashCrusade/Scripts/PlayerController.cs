@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour
     {
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapons[0] = true;
+			ship.InputData.holdingFireWeapons[0] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapons[0] = false;
+			ship.InputData.holdingFireWeapons[0] = false;
 		}
 	}
 	
@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapons[1] = true;
+			ship.InputData.holdingFireWeapons[1] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapons[1] = false;
+			ship.InputData.holdingFireWeapons[1] = false;
 		}
 	}
 
@@ -36,11 +36,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			ship.inputData.holdingFireWeapons[2] = true;
+			ship.InputData.holdingFireWeapons[2] = true;
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingFireWeapons[2] = false;
+			ship.InputData.holdingFireWeapons[2] = false;
 		}
 	}
 
@@ -49,10 +49,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.performed || context.canceled)
 		{
-			ship.inputData.thrustInput = context.ReadValue<Vector2>();
+			ship.InputData.thrustInput = context.ReadValue<Vector2>();
 
-			if (ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(true);
-			else if (!ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(false);
+			if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
+			else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
 		}
 	}
 
@@ -60,12 +60,12 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started)
 		{
-			ship.inputData.holdingBoost = true;
-			if(ship.inputData.isMovingOrTurning) ship.Boost(true);
+			ship.InputData.holdingBoost = true;
+			if(ship.InputData.isMovingOrTurning) ship.Boost(true);
 		}
 		else if (context.canceled)
 		{
-			ship.inputData.holdingBoost = false;
+			ship.InputData.holdingBoost = false;
 
 			ship.Boost(false);
 		}
@@ -76,10 +76,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (context.started || context.canceled)
 		{
-			ship.inputData.turnInput = context.ReadValue<float>();
+			ship.InputData.turnInput = context.ReadValue<float>();
 
-            if (ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(true);
-            else if (!ship.inputData.isMovingOrTurning && ship.inputData.holdingBoost) ship.Boost(false);
+            if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
+            else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
         }
 	}
 
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!hasFocus) // lost focus
 		{
-			ship.inputData.Clear();
+			ship.InputData.Clear();
 		}
 	}
 

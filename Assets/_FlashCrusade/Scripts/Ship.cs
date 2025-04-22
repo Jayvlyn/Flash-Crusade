@@ -7,7 +7,15 @@ using UnityEngine;
 public class Ship : MonoBehaviour, IDamageable
 {
     #region VARIABLES
-    public ShipInputData inputData = new ShipInputData();
+    private ShipInputData inputData = new ShipInputData();
+	public ShipInputData InputData { 
+		get { return inputData; } 
+		set { 
+			inputData = value;
+			UpdateActiveThrusters();
+		
+		}	
+	}
 
 	[Header("Movement")]
 	[SerializeField, Tooltip("Gameobject in heirarchy that ship will translate position of with movement (aka, parent of ship body)")]
@@ -73,8 +81,11 @@ public class Ship : MonoBehaviour, IDamageable
 	[SerializeField] private int maxHealth = 100;
 	private int health;
 	
-    [InfoBox("Order thrusters in list as the following: Front, Left, Right")]
+    [InfoBox("Order thrusters in list as the following: Left, Top, Right")]
     [SerializeField] private List<Thruster> thrusters = new();
+	private Thruster LeftThruster { get {  return thrusters[0]; } }
+	private Thruster TopThruster { get {  return thrusters[1]; } }
+	private Thruster RightThruster { get {  return thrusters[2]; } }
 
     #endregion
 
@@ -86,17 +97,19 @@ public class Ship : MonoBehaviour, IDamageable
 		currentMaxSpeed = maxSpeed;
 		currentMaxAcceleration = maxAcceleration;
 		boostFuel = maxBoostFuel;
-		inputData.holdingFireWeapons = new bool[weapons.Length];
+		InputData.holdingFireWeapons = new bool[weapons.Length];
 		if (objToMove == null) objToMove = this.gameObject;
 	}
 
 	private void Update()
 	{
-		Thrust(inputData.thrustInput);// Process thrust input. Returns truw when not Vector2.zero
-		Turn(inputData.turnInput);
-		for(int i = 0; i < inputData.holdingFireWeapons.Length; i++)
+		Thrust(InputData.thrustInput);
+
+		if(InputData.turnInput != 0) Turn(InputData.turnInput);
+
+		for(int i = 0; i < InputData.holdingFireWeapons.Length; i++)
 		{
-			if(inputData.holdingFireWeapons[i]) weapons[i].Fire();
+			if(InputData.holdingFireWeapons[i]) weapons[i].Fire();
 		}
 	}
 
@@ -135,7 +148,7 @@ public class Ship : MonoBehaviour, IDamageable
 		float curveMultiplier = accelerationCurve.Evaluate(accelProgress);
 
 		float extraTurnboost = 1;
-		if (inputData.turnInput != 0)
+		if (InputData.turnInput != 0)
 		{
 			extraTurnboost = 3;
 		}
@@ -227,7 +240,7 @@ public class Ship : MonoBehaviour, IDamageable
 		{
 			boostFuel += Time.deltaTime;
 
-			if (inputData.holdingBoost && inputData.thrustInput != Vector2.zero)
+			if (InputData.holdingBoost && InputData.thrustInput != Vector2.zero)
 			{
 				Boost(true);
 			}
@@ -275,9 +288,9 @@ public class Ship : MonoBehaviour, IDamageable
 		Destroy(gameObject);
 	}
 
-
+    #region THRUSTER VISUALS
     [Button("Find Thrusters")]
-    private void SetInactive()
+    private void FindThrusters()
     {
         thrusters.Clear();
 
@@ -294,4 +307,26 @@ public class Ship : MonoBehaviour, IDamageable
             }
         }
     }
+
+	private void UpdateActiveThrusters()
+	{
+		if(inputData.isMovingOrTurning)
+		{
+
+		}
+		else
+		{
+			DeactivateAllThrusters();
+		}
+	}
+
+	private void DeactivateAllThrusters()
+	{
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.active) thruster.Deactivate();
+        }
+    }
+
+    #endregion
 }

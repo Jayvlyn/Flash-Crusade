@@ -64,12 +64,16 @@ public class PlayerController : MonoBehaviour
 		{
 			ship.InputData.holdingBoost = true;
 			if(ship.InputData.isMovingOrTurning) ship.Boost(true);
+
+			ship.UpdateActiveThrusters();
 		}
 		else if (context.canceled)
 		{
 			ship.InputData.holdingBoost = false;
 
 			ship.Boost(false);
+
+			ship.UpdateActiveThrusters();
 		}
 	}
 
@@ -82,7 +86,9 @@ public class PlayerController : MonoBehaviour
 
             if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
             else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
-        }
+
+			ship.UpdateActiveThrusters();
+		}
 	}
 
 	public void OnToggleFreeFly(InputAction.CallbackContext context)

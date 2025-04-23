@@ -5,12 +5,24 @@ using UnityEngine;
 
 public class Thruster : MonoBehaviour
 {
-    public List<ThrusterPose> thrusterPositions = new();
+    private enum State
+    {
+        INACTIVE,
+        ACTIVATING,
+        ACTIVE,
+        DEACTIVATING
+    }
+    private State currentState;
+
+    private void ChangeThrusterState(State state)
+    {
+        currentState = state;
+	}
+
+	public List<ThrusterPose> thrusterPositions = new();
     private int activatedIndex;
 
     public float activateSpeed = 0.2f;
-
-    [HideInInspector] public bool active;
 
 	/// <summary>
 	/// Activate thruster in position. If already active in that position will do nothing.
@@ -21,63 +33,59 @@ public class Thruster : MonoBehaviour
 	/// <param name="posIndex">Index in this order: Left, Top, Down, Right</param>
 	public void Activate(int posIndex)
     {
-        if (activatedIndex == posIndex && active && deactivateRoutine == null) return;
+        if ((currentState == State.ACTIVE || currentState == State.ACTIVATING) && activatedIndex == posIndex) return; // tryig to activate what is already active/activating
+		if(activateCoroutine != null) StopCoroutine(activateCoroutine); // shouldn't be running but just in case
         activateCoroutine = StartCoroutine(ActivateCoroutine(activateSpeed, posIndex));
     }
 
     public void Deactivate()
     {
-        if(!active) return;
-        deactivateRoutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
+        if(currentState == State.INACTIVE || currentState == State.DEACTIVATING) return; // trying to do what is already doing/done
+		if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine); // shouldn't be running but just in case
+		deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
     }
 
     private Coroutine activateCoroutine;
     private IEnumerator ActivateCoroutine(float activateTime, int index)
     {
-        // if was already active, deactivate prev state before
-        if (active)
-        {
-            if(deactivateRoutine == null)
-            {
-                deactivateRoutine = StartCoroutine(DeactivateCoroutine(activateTime));
-            }
-            yield return deactivateRoutine;
-        }
-        activatedIndex = index;
 
+        activatedIndex = index;
+        ChangeThrusterState(State.ACTIVATING);
         float t = 0;
         transform.localRotation = Quaternion.Euler(0, 0, thrusterPositions[activatedIndex].zRotation);
-        transform.localPosition = thrusterPositions[activatedIndex].inactivePos;
+        Vector2 initialPosition = transform.localPosition;
         while(t < activateTime)
         {
             t += Time.deltaTime;
 
-            transform.localPosition = Vector2.Lerp(thrusterPositions[activatedIndex].inactivePos, thrusterPositions[activatedIndex].activePos, t / activateTime);
+            transform.localPosition = Vector2.Lerp(initialPosition, thrusterPositions[activatedIndex].activePos, t / activateTime);
 
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].activePos;
-		active = true;
+        ChangeThrusterState(State.ACTIVE);
 		activateCoroutine = null;
     }
 
-    public Coroutine deactivateRoutine;
+    public Coroutine deactivateCoroutine;
     private IEnumerator DeactivateCoroutine(float deactivateTime)
     {
+        ChangeThrusterState(State.DEACTIVATING);
         float t = 0;
         transform.localRotation = Quaternion.Euler(0, 0, thrusterPositions[activatedIndex].zRotation);
-        transform.localPosition = thrusterPositions[activatedIndex].activePos;
-        while (t < deactivateTime)
+		Vector2 initialPosition = transform.localPosition;
+		while (t < deactivateTime)
         {
             t += Time.deltaTime;
 
-            transform.localPosition = Vector2.Lerp(thrusterPositions[activatedIndex].activePos, thrusterPositions[activatedIndex].inactivePos, t / deactivateTime);
+            transform.localPosition = Vector2.Lerp(initialPosition, thrusterPositions[activatedIndex].inactivePos, t / deactivateTime);
 
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].inactivePos;
-		active = false;
-		deactivateRoutine = null;
+        ChangeThrusterState(State.INACTIVE);
+        activatedIndex = -1;
+		deactivateCoroutine = null;
     }
 
     [Button("Set Inactive Position")]

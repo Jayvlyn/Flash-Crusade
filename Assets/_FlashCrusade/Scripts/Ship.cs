@@ -349,7 +349,7 @@ public class Ship : MonoBehaviour, IDamageable
 	{
         foreach (Thruster thruster in thrusters)
         {
-            if (thruster.active) thruster.Deactivate();
+            thruster.Deactivate();
         }
     }
     #endregion

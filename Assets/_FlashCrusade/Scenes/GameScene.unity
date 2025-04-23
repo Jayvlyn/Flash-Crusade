@@ -575,6 +575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5097187862751752067, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
+      propertyPath: maxBoostSpeed
+      value: 1001.82
+      objectReference: {fileID: 0}
     - target: {fileID: 6332572403587196594, guid: 0fb6e6b5e8c631e4d8211606deaedef5, type: 3}
       propertyPath: fleet.ships.Array.size
       value: 4

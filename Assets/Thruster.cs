@@ -12,25 +12,36 @@ public class Thruster : MonoBehaviour
 
     [HideInInspector] public bool active;
 
-    public void Activate(int posIndex)
-    {        
-        StartCoroutine(ActivateCoroutine(activateSpeed, posIndex));
-
-        active = true;
+	/// <summary>
+	/// Activate thruster in position. If already active in that position will do nothing.
+	/// <para />Top thruster: Left - Right
+	/// <para />Left thruster: Left - Top - Down
+	/// <para />Right thruster: Top - Down - Right
+	/// </summary>
+	/// <param name="posIndex">Index in this order: Left, Top, Down, Right</param>
+	public void Activate(int posIndex)
+    {
+        if (activatedIndex == posIndex && active && deactivateRoutine == null) return;
+        activateCoroutine = StartCoroutine(ActivateCoroutine(activateSpeed, posIndex));
     }
 
     public void Deactivate()
     {
-        StartCoroutine(DeactivateCoroutine(activateSpeed));
-        active = false;
+        if(!active) return;
+        deactivateRoutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
     }
 
+    private Coroutine activateCoroutine;
     private IEnumerator ActivateCoroutine(float activateTime, int index)
     {
         // if was already active, deactivate prev state before
         if (active)
         {
-            yield return StartCoroutine(DeactivateCoroutine(activateTime));
+            if(deactivateRoutine == null)
+            {
+                deactivateRoutine = StartCoroutine(DeactivateCoroutine(activateTime));
+            }
+            yield return deactivateRoutine;
         }
         activatedIndex = index;
 
@@ -46,8 +57,11 @@ public class Thruster : MonoBehaviour
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].activePos;
+		active = true;
+		activateCoroutine = null;
     }
 
+    public Coroutine deactivateRoutine;
     private IEnumerator DeactivateCoroutine(float deactivateTime)
     {
         float t = 0;
@@ -62,6 +76,8 @@ public class Thruster : MonoBehaviour
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].inactivePos;
+		active = false;
+		deactivateRoutine = null;
     }
 
     [Button("Set Inactive Position")]

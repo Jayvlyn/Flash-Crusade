@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
 			if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
 			else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
+
+			ship.UpdateActiveThrusters();
 		}
 	}
 

@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,11 +10,11 @@ public class Ship : MonoBehaviour, IDamageable
     #region VARIABLES
     private ShipInputData inputData = new ShipInputData();
 	public ShipInputData InputData { 
-		get { return inputData; } 
+		get {
+			return inputData; 
+		} 
 		set { 
 			inputData = value;
-			UpdateActiveThrusters();
-		
 		}	
 	}
 
@@ -308,11 +309,35 @@ public class Ship : MonoBehaviour, IDamageable
         }
     }
 
-	private void UpdateActiveThrusters()
+	public void UpdateActiveThrusters()
 	{
+		
 		if(inputData.isMovingOrTurning)
 		{
-
+			if (inputData.thrustInput == Vector2.left)
+			{
+				TopThruster.Activate(1); // point right (propelling left)
+				RightThruster.Activate(2); // point right
+				LeftThruster.Deactivate();
+			}
+			else if (inputData.thrustInput == Vector2.right)
+			{
+				TopThruster.Activate(0); // point left
+				LeftThruster.Activate(0); // point left
+				RightThruster.Deactivate();
+			}
+			else if (inputData.thrustInput == Vector2.up)
+			{
+				TopThruster.Activate(1);
+				RightThruster.Activate(2);
+				LeftThruster.Deactivate();
+			}
+			else if (inputData.thrustInput == Vector2.down)
+			{
+				TopThruster.Activate(1);
+				RightThruster.Activate(2);
+				LeftThruster.Deactivate();
+			}
 		}
 		else
 		{
@@ -327,6 +352,5 @@ public class Ship : MonoBehaviour, IDamageable
             if (thruster.active) thruster.Deactivate();
         }
     }
-
     #endregion
 }

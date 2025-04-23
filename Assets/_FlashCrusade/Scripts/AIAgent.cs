@@ -53,6 +53,5 @@ public abstract class AIAgent : MonoBehaviour
 		ship.InputData.thrustInput.x = Mathf.Sign(directionToTarget.x);
 		ship.InputData.thrustInput.y = Mathf.Sign(directionToTarget.y);
         
-        Debug.Log(ship.InputData.thrustInput);
     }
 }

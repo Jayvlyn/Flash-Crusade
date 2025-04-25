@@ -59,6 +59,7 @@ public abstract class AIAgent : MonoBehaviour
 
         // Stopping distance = projected speed * stopDuration / ln(100)
         float stoppingDistance = Mathf.Abs(speedTowardTarget) * stopDuration / Mathf.Log(100);
+        Debug.Log(stoppingDistance);
 
         if (distance <= stoppingDistance)
         {

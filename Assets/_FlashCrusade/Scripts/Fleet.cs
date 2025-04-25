@@ -45,6 +45,23 @@ public class Fleet
 		UpdateLocalFleetPositions();
 	}
 
+	public void GiveFleetLatestPoints()
+	{
+		float angle = leaderTransform.eulerAngles.z;
+		Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+		for (int i = 0; i < localFleetPositions.Length; i++)
+		{
+			localFleetPositions[i] = rotation * localFleetPositions[i];
+
+			if (i >= ships.Count) continue;
+
+			Vector2 worldPos = (Vector2)leaderTransform.position + localFleetPositions[i];
+
+			ships[i].MoveTarget = worldPos;
+		}
+	}
+
 	public void UpdateLocalFleetPositions()
 	{
 		//localFleetPositions = new Vector2[50];
@@ -76,21 +93,7 @@ public class Fleet
 				SetShieldFormation();
 				break;
 		}
-
-
-		float angle = leaderTransform.eulerAngles.z;
-		Quaternion rotation = Quaternion.Euler(0, 0, angle);
-
-		for (int i = 0; i < localFleetPositions.Length; i++)
-		{
-			localFleetPositions[i] = rotation * localFleetPositions[i];
-
-			if (i >= ships.Count) continue;
-
-            Vector2 worldPos = (Vector2)leaderTransform.position + localFleetPositions[i];
-
-            ships[i].MoveTarget = worldPos;
-        }
+		GiveFleetLatestPoints();
 	}
 
 	#region FORMATION METHODS

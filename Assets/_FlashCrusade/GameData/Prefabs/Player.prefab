@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4609759354006066728}
   - component: {fileID: 6052403391430018639}
   m_Layer: 0
-  m_Name: Thruster
+  m_Name: LeftThruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdcaf5c5cc38bf41b6756da996d5893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fleetPosTick: 0.5
   ship: {fileID: 5097187862751752067}
   fleetShipSpacing: 75
 --- !u!1 &1922941120926113175
@@ -736,8 +737,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5679574778441092904}
   - {fileID: 6813005231580127735}
+  - {fileID: 5679574778441092904}
   - {fileID: 5933253802731345159}
   m_Father: {fileID: 8788664464684122584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -788,6 +789,7 @@ MonoBehaviour:
   turnSpeed: 90
   boostTurnSpeed: 90
   stopDuration: 10
+  currentMaxAcceleration: 0
   weapons:
   - {fileID: 1801770650026925828}
   maxHealth: 100

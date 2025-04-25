@@ -35,11 +35,7 @@ public class Leader : MonoBehaviour
 		}
 		else
 		{
-			if (ship.isTurning)
-			{
-				fleet.UpdateLocalFleetPositions();
-				//UpdateFleetMoveTargets();
-			}
+			fleet.UpdateLocalFleetPositions();
 
 			fleetPosTickTimer = fleetPosTick;
 		}

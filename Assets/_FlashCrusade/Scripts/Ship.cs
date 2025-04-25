@@ -105,6 +105,7 @@ public class Ship : MonoBehaviour, IDamageable
 
 	private void Update()
 	{
+		Thrust(inputData.thrustInput);
 		//Debug.Log(gameObject.GetInstanceID() + " " + inputData.thrustInput);
 
 		if (isTurning)

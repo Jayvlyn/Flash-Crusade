@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Leader : MonoBehaviour
 {
+	public float fleetPosTick = 0.5f;
+	private float fleetPosTickTimer;
+
+
+	public Ship ship;
 	public Fleet fleet;
 	public float fleetShipSpacing = 5f;
 
@@ -16,13 +21,27 @@ public class Leader : MonoBehaviour
 
 		Ally[] allyComps = FindObjectsByType<Ally>(FindObjectsSortMode.None);
 		fleet.ships = allyComps.Cast<AIAgent>().ToList();
-	}
+
+        fleet.UpdateLocalFleetPositions();
+        UpdateFleetMoveTargets();
+    }
 
 	private void Update()
 	{
-		fleet.UpdateLocalFleetPositions();
-		UpdateFleetMoveTargets();
-		//fleet.SetFleetFormation(FleetFormation.BUBBLE);
+		if(fleetPosTickTimer > 0)
+		{
+			fleetPosTickTimer -= Time.deltaTime;
+		}
+		else
+		{
+			if (ship.isTurning)
+			{
+				fleet.UpdateLocalFleetPositions();
+				//UpdateFleetMoveTargets();
+			}
+
+			fleetPosTickTimer = fleetPosTick;
+		}
 	}
 
 	public void UpdateFleetMoveTargets()
@@ -55,7 +74,7 @@ public class Leader : MonoBehaviour
 		Gizmos.color = Color.cyan;
 		foreach (Vector2 position in fleet.localFleetPositions)
 		{
-			Gizmos.DrawSphere(transform.position + (Vector3)position, 0.2f);
+			Gizmos.DrawSphere(transform.position + (Vector3)position, 10);
 		}
 	}
 }

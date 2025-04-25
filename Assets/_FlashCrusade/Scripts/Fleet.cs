@@ -84,7 +84,13 @@ public class Fleet
 		for (int i = 0; i < localFleetPositions.Length; i++)
 		{
 			localFleetPositions[i] = rotation * localFleetPositions[i];
-		}
+
+			if (i >= ships.Count) continue;
+
+            Vector2 worldPos = (Vector2)leaderTransform.position + localFleetPositions[i];
+
+            ships[i].MoveTarget = worldPos;
+        }
 	}
 
 	#region FORMATION METHODS

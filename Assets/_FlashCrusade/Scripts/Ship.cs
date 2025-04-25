@@ -55,12 +55,13 @@ public class Ship : MonoBehaviour, IDamageable
 	[SerializeField, Tooltip("How many seconds it takes to fully stop from current speed when not accelerating.")]
 	private float stopDuration = 2f;
 
-	private bool usingThrustersLastFrame = false;
+	private bool usingThrustersLastFrame;
 	private float accelerateTimer;
 	private float currentMaxAcceleration;
 	private float currentMaxSpeed;
-	private bool boosting = false;
+	private bool boosting;
 	private float boostFuel;
+	public bool isTurning { get { return InputData.turnInput != 0; } }
 
 	private Vector2 velocity;
 	public Vector2 Velocity
@@ -106,7 +107,10 @@ public class Ship : MonoBehaviour, IDamageable
 	{
 		Thrust(InputData.thrustInput);
 
-		if(InputData.turnInput != 0) Turn(InputData.turnInput);
+		if (isTurning)
+		{
+			Turn(InputData.turnInput);
+		}
 
 		for(int i = 0; i < InputData.holdingFireWeapons.Length; i++)
 		{

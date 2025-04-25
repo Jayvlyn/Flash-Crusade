@@ -58,6 +58,7 @@ public class Ship : MonoBehaviour, IDamageable
 	private bool usingThrustersLastFrame;
 	private float accelerateTimer;
 	[HideInInspector] public float currentMaxAcceleration;
+	[HideInInspector] public Vector2 acceleration;
 	private float currentMaxSpeed;
 	private bool boosting;
 	private float boostFuel;
@@ -160,7 +161,7 @@ public class Ship : MonoBehaviour, IDamageable
 		}
 
 		Vector2 velocityDelta = targetVelocity - Velocity;
-		Vector2 acceleration = Vector2.ClampMagnitude(velocityDelta / Time.deltaTime, currentMaxAcceleration * curveMultiplier * extraTurnboost);
+		acceleration = Vector2.ClampMagnitude(velocityDelta / Time.deltaTime, currentMaxAcceleration * curveMultiplier * extraTurnboost);
 		Velocity += acceleration * Time.deltaTime;
 
 		objToMove.transform.position += (Vector3)(Velocity * Time.deltaTime);

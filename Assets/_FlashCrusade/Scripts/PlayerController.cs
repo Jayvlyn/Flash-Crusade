@@ -87,6 +87,13 @@ public class PlayerController : MonoBehaviour
             if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
             else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
 
+			if(!leader.FreeFlyOn)
+			{
+				foreach(AIAgent ship in leader.fleet.ships)
+				{
+					ship.Ship.InputData.turnInput = this.ship.InputData.turnInput;
+				}
+			}
 			//ship.UpdateActiveThrusters();
 
 			if(context.canceled)

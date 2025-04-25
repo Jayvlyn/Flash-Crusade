@@ -14,6 +14,7 @@ public class Leader : MonoBehaviour
 	public float fleetShipSpacing = 5f;
 
 	private bool freeFly = false;
+	public bool FreeFlyOn { get { return freeFly; } }
 
 	private void Start()
 	{

@@ -47,11 +47,29 @@ public abstract class AIAgent : MonoBehaviour
 
     protected virtual void MoveToTarget(Vector2 target)
     {
-        Vector2 directionToTarget = (target - (Vector2)transform.position).normalized;
+        Vector2 position = transform.position;
+        Vector2 toTarget = target - position;
+        float distance = toTarget.magnitude;
 
+        Vector2 velocity = ship.Velocity;
+        Vector2 dirToTarget = toTarget.normalized;
 
-		ship.InputData.thrustInput.x = Mathf.Sign(directionToTarget.x);
-		ship.InputData.thrustInput.y = Mathf.Sign(directionToTarget.y);
-        
+        float speedTowardTarget = Vector2.Dot(velocity, dirToTarget);
+        float stopDuration = ship.stopDuration;
+
+        // Stopping distance = projected speed * stopDuration / ln(100)
+        float stoppingDistance = Mathf.Abs(speedTowardTarget) * stopDuration / Mathf.Log(100);
+
+        if (distance <= stoppingDistance)
+        {
+            ship.InputData.thrustInput = Vector2.zero;
+        }
+        else
+        {
+            ship.InputData.thrustInput = new Vector2(
+                Mathf.Sign(toTarget.x),
+                Mathf.Sign(toTarget.y)
+            );
+        }
     }
 }

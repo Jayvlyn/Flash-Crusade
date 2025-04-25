@@ -53,11 +53,11 @@ public class Ship : MonoBehaviour, IDamageable
 	private float boostTurnSpeed = 180f;
 
 	[SerializeField, Tooltip("How many seconds it takes to fully stop from current speed when not accelerating.")]
-	private float stopDuration = 2f;
+	public float stopDuration = 2f;
 
 	private bool usingThrustersLastFrame;
 	private float accelerateTimer;
-	private float currentMaxAcceleration;
+	[HideInInspector] public float currentMaxAcceleration;
 	private float currentMaxSpeed;
 	private bool boosting;
 	private float boostFuel;
@@ -105,7 +105,7 @@ public class Ship : MonoBehaviour, IDamageable
 
 	private void Update()
 	{
-		Thrust(InputData.thrustInput);
+		//Debug.Log(gameObject.GetInstanceID() + " " + inputData.thrustInput);
 
 		if (isTurning)
 		{

@@ -47,8 +47,8 @@ public class Fleet
 
 	public void UpdateLocalFleetPositions()
 	{
-		localFleetPositions = new Vector2[50];
-		//localFleetPositions = new Vector2[ships.Count];
+		//localFleetPositions = new Vector2[50];
+		localFleetPositions = new Vector2[ships.Count];
 		switch (activeFleetFormation)
 		{
 			case FleetFormation.VIC:

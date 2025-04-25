@@ -23,7 +23,8 @@ public class Leader : MonoBehaviour
 		fleet.ships = allyComps.Cast<AIAgent>().ToList();
 
         fleet.UpdateLocalFleetPositions();
-        UpdateFleetMoveTargets();
+
+        //UpdateFleetMoveTargets();
     }
 
 	private void Update()

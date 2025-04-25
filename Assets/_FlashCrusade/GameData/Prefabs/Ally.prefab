@@ -87,6 +87,7 @@ MonoBehaviour:
   - {fileID: 46015382293165267}
   - {fileID: 3639120739554570562}
   maxHealth: 100
+  thrusters: []
 --- !u!114 &46015382293165267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3497172743948703593}
-  - component: {fileID: 9036927843653537767}
+  - component: {fileID: 7090408680199773786}
   m_Layer: 7
   m_Name: Ally
   m_TagString: Untagged
@@ -243,7 +244,7 @@ Transform:
   - {fileID: 2502045396747407311}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9036927843653537767
+--- !u!114 &7090408680199773786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,10 +253,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6177580227253832398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b057ae4d0d88649999b291b44cca89, type: 3}
+  m_Script: {fileID: 11500000, guid: e941f8253d732be4aaae90f2f35400f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 1069032881627134889}
-  tickInterval: 3
+  tickInterval: 0.5
   currentTarget: {fileID: 0}
   leader: {fileID: 0}

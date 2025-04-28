@@ -334,17 +334,41 @@ public class Ship : MonoBehaviour, IDamageable
 			}
 			else if (inputData.thrustInput == Vector2.up)
 			{
-				TopThruster.Activate(1);
-				RightThruster.Activate(2);
-				LeftThruster.Deactivate();
+				TopThruster.Deactivate();
+				RightThruster.Activate(1);
+				LeftThruster.Activate(2);
 			}
 			else if (inputData.thrustInput == Vector2.down)
 			{
-				TopThruster.Activate(1);
-				RightThruster.Activate(2);
-				LeftThruster.Deactivate();
+				LeftThruster.Activate(1);
+				RightThruster.Activate(0);
+				TopThruster.Deactivate();
 			}
-		}
+			else if (inputData.thrustInput == new Vector2(-1, -1))
+			{
+                LeftThruster.Activate(1);
+                RightThruster.Activate(2);
+                TopThruster.Deactivate();
+            }
+            else if (inputData.thrustInput == new Vector2(1, 1))
+            {
+                LeftThruster.Activate(0);
+                RightThruster.Activate(1);
+                TopThruster.Deactivate();
+            }
+            else if (inputData.thrustInput == new Vector2(1, -1))
+            {
+                LeftThruster.Activate(0);
+                RightThruster.Activate(0);
+                TopThruster.Deactivate();
+            }
+            else if (inputData.thrustInput == new Vector2(-1, 1))
+            {
+                LeftThruster.Activate(2);
+                RightThruster.Activate(2);
+                TopThruster.Deactivate();
+            }
+        }
 		else
 		{
 			DeactivateAllThrusters();

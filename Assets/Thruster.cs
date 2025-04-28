@@ -26,9 +26,9 @@ public class Thruster : MonoBehaviour
 
 	/// <summary>
 	/// Activate thruster in position. If already active in that position will do nothing.
-	/// <para />Top thruster: Left - Right
-	/// <para />Left thruster: Left - Top - Down
-	/// <para />Right thruster: Top - Down - Right
+	/// <para />Top thruster: 0:Left - 1:Right
+	/// <para />Left thruster: 0:Left - 1:Top - 2:Down
+	/// <para />Right thruster: 0:Top - 1:Down - 2:Right
 	/// </summary>
 	/// <param name="posIndex">Index in this order: Left, Top, Down, Right</param>
 	public void Activate(int posIndex)
@@ -42,6 +42,7 @@ public class Thruster : MonoBehaviour
     {
         if(currentState == State.INACTIVE || currentState == State.DEACTIVATING) return; // trying to do what is already doing/done
 		if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine); // shouldn't be running but just in case
+        if (activateCoroutine != null) StopCoroutine(activateCoroutine);
 		deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
     }
 
@@ -54,9 +55,10 @@ public class Thruster : MonoBehaviour
             {
                 yield return activateCoroutine;
             }
+            if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine);
             deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
         }
-        if (deactivateCoroutine != null)
+        else if (deactivateCoroutine != null)
         {
             yield return deactivateCoroutine;
         }

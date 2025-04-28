@@ -48,6 +48,18 @@ public class Thruster : MonoBehaviour
     private Coroutine activateCoroutine;
     private IEnumerator ActivateCoroutine(float activateTime, int index)
     {
+        if(currentState == State.ACTIVE || currentState == State.ACTIVATING)
+        {
+            if(activateCoroutine != null)
+            {
+                yield return activateCoroutine;
+            }
+            deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
+        }
+        if (deactivateCoroutine != null)
+        {
+            yield return deactivateCoroutine;
+        }
 
         activatedIndex = index;
         ChangeThrusterState(State.ACTIVATING);
@@ -70,6 +82,11 @@ public class Thruster : MonoBehaviour
     public Coroutine deactivateCoroutine;
     private IEnumerator DeactivateCoroutine(float deactivateTime)
     {
+        if(currentState == State.ACTIVATING)
+        {
+            yield return activateCoroutine;
+        }
+
         ChangeThrusterState(State.DEACTIVATING);
         float t = 0;
         transform.localRotation = Quaternion.Euler(0, 0, thrusterPositions[activatedIndex].zRotation);

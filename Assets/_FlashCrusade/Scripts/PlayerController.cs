@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 			if (ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(true);
 			else if (!ship.InputData.isMovingOrTurning && ship.InputData.holdingBoost) ship.Boost(false);
 
-			//ship.UpdateActiveThrusters();
+			ship.UpdateActiveThrusters();
 		}
 	}
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 			ship.InputData.holdingBoost = true;
 			if(ship.InputData.isMovingOrTurning) ship.Boost(true);
 
-			//ship.UpdateActiveThrusters();
+			ship.UpdateActiveThrusters();
 		}
 		else if (context.canceled)
 		{
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
 			ship.Boost(false);
 
-			//ship.UpdateActiveThrusters();
+			ship.UpdateActiveThrusters();
 		}
 	}
 
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 					ship.Ship.InputData.turnInput = this.ship.InputData.turnInput;
 				}
 			}
-			//ship.UpdateActiveThrusters();
+			ship.UpdateActiveThrusters();
 
 			if(context.canceled)
 			{

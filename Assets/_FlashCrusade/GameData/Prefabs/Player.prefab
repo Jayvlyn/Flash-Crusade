@@ -790,6 +790,7 @@ MonoBehaviour:
   boostTurnSpeed: 90
   stopDuration: 10
   currentMaxAcceleration: 0
+  acceleration: {x: 0, y: 0}
   weapons:
   - {fileID: 1801770650026925828}
   maxHealth: 100

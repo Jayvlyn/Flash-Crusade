@@ -320,52 +320,52 @@ public class Ship : MonoBehaviour, IDamageable
 		
 		if(inputData.isMovingOrTurning)
 		{
-			if (inputData.thrustInput == Vector2.left)
+			if (inputData.thrustInput == Vector2.left) // on left input, point right
 			{
-				TopThruster.Activate(1); // point right (propelling left)
-				RightThruster.Activate(2); // point right
+				TopThruster.Activate(Thruster.ThrusterDir.RIGHT);
+				RightThruster.Activate(Thruster.ThrusterDir.RIGHT);
 				LeftThruster.Deactivate();
 			}
-			else if (inputData.thrustInput == Vector2.right)
+			else if (inputData.thrustInput == Vector2.right) // on right input, point left
 			{
-				TopThruster.Activate(0); // point left
-				LeftThruster.Activate(0); // point left
+				TopThruster.Activate(Thruster.ThrusterDir.LEFT);
+				LeftThruster.Activate(Thruster.ThrusterDir.LEFT);
 				RightThruster.Deactivate();
 			}
 			else if (inputData.thrustInput == Vector2.up)
 			{
 				TopThruster.Deactivate();
-				RightThruster.Activate(1);
-				LeftThruster.Activate(2);
+				RightThruster.Activate(Thruster.ThrusterDir.DOWN);
+				LeftThruster.Activate(Thruster.ThrusterDir.DOWN);
 			}
 			else if (inputData.thrustInput == Vector2.down)
 			{
-				LeftThruster.Activate(1);
-				RightThruster.Activate(0);
+				LeftThruster.Activate(Thruster.ThrusterDir.UP);
+				RightThruster.Activate(Thruster.ThrusterDir.UP);
 				TopThruster.Deactivate();
 			}
 			else if (inputData.thrustInput == new Vector2(-1, -1))
 			{
-                LeftThruster.Activate(1);
-                RightThruster.Activate(2);
+                LeftThruster.Activate(Thruster.ThrusterDir.UP);
+                RightThruster.Activate(Thruster.ThrusterDir.RIGHT);
                 TopThruster.Deactivate();
             }
             else if (inputData.thrustInput == new Vector2(1, 1))
             {
-                LeftThruster.Activate(0);
-                RightThruster.Activate(1);
+                LeftThruster.Activate(Thruster.ThrusterDir.LEFT);
+                RightThruster.Activate(Thruster.ThrusterDir.DOWN);
                 TopThruster.Deactivate();
             }
             else if (inputData.thrustInput == new Vector2(1, -1))
             {
-                LeftThruster.Activate(0);
-                RightThruster.Activate(0);
+                LeftThruster.Activate(Thruster.ThrusterDir.LEFT);
+                RightThruster.Activate(Thruster.ThrusterDir.UP);
                 TopThruster.Deactivate();
             }
             else if (inputData.thrustInput == new Vector2(-1, 1))
             {
-                LeftThruster.Activate(2);
-                RightThruster.Activate(2);
+                LeftThruster.Activate(Thruster.ThrusterDir.DOWN);
+                RightThruster.Activate(Thruster.ThrusterDir.RIGHT);
                 TopThruster.Deactivate();
             }
         }

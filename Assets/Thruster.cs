@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Thruster : MonoBehaviour
 {
+    [SerializeField] private ThrusterType thrusterType;
+    public enum ThrusterType
+    {
+        TOP,
+        LEFT,
+        RIGHT
+    }
+
     private enum State
     {
         INACTIVE,
@@ -19,52 +27,99 @@ public class Thruster : MonoBehaviour
         currentState = state;
 	}
 
+    public enum ThrusterDir
+    {
+        UP, DOWN, LEFT, RIGHT
+    }
+
 	public List<ThrusterPose> thrusterPositions = new();
     private int activatedIndex;
 
     public float activateSpeed = 0.2f;
 
-	/// <summary>
-	/// Activate thruster in position. If already active in that position will do nothing.
-	/// <para />Top thruster: 0:Left - 1:Right
-	/// <para />Left thruster: 0:Left - 1:Top - 2:Down
-	/// <para />Right thruster: 0:Top - 1:Down - 2:Right
-	/// </summary>
-	/// <param name="posIndex">Index in this order: Left, Top, Down, Right</param>
-	public void Activate(int posIndex)
+
+	public void Activate(ThrusterDir thrusterDir) // Indexes in order of left, up, down, right // only 0-2
     {
-        if ((currentState == State.ACTIVE || currentState == State.ACTIVATING) && activatedIndex == posIndex) return; // tryig to activate what is already active/activating
-		if(activateCoroutine != null) StopCoroutine(activateCoroutine); // shouldn't be running but just in case
-        activateCoroutine = StartCoroutine(ActivateCoroutine(activateSpeed, posIndex));
+		switch (thrusterDir)
+		{
+			case ThrusterDir.UP: // POINT UP
+                if(thrusterType == ThrusterType.LEFT)
+                {
+                    StartActivateCoroutine(1);
+                }
+				else if (thrusterType == ThrusterType.RIGHT)
+				{
+                    StartActivateCoroutine(2);
+				}
+				else // top
+				{
+                    StartActivateCoroutine(0);
+				}
+				break;
+			case ThrusterDir.DOWN: // POINT DOWN
+				if (thrusterType == ThrusterType.LEFT)
+				{
+                    StartActivateCoroutine(2);
+				}
+				else if (thrusterType == ThrusterType.RIGHT)
+				{
+					StartActivateCoroutine(1);
+				}
+				else // top
+				{
+                    StartDeactivateCoroutine(); // invalid
+				}
+				break;
+			case ThrusterDir.LEFT: // POINT LEFT
+				if (thrusterType == ThrusterType.LEFT)
+				{
+					StartActivateCoroutine(0);
+				}
+				else if (thrusterType == ThrusterType.RIGHT)
+				{
+                    StartDeactivateCoroutine(); // invalid
+				}
+				else // top
+				{
+                    StartActivateCoroutine(0);
+				}
+				break;
+			case ThrusterDir.RIGHT: // POINT RIGHT
+				if (thrusterType == ThrusterType.LEFT)
+				{
+					StartDeactivateCoroutine();
+				}
+				else if (thrusterType == ThrusterType.RIGHT)
+				{
+					StartActivateCoroutine(2);
+				}
+				else // top
+				{
+					StartActivateCoroutine(2);
+				}
+				break;
+		}
+	}
+
+	public void Deactivate()
+    {
+        StartDeactivateCoroutine();
     }
 
-    public void Deactivate()
+	#region COROUTINES
+
+	private void StartActivateCoroutine(int index)
     {
-        if(currentState == State.INACTIVE || currentState == State.DEACTIVATING) return; // trying to do what is already doing/done
-		if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine); // shouldn't be running but just in case
-        if (activateCoroutine != null) StopCoroutine(activateCoroutine);
-		deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
+        if(activateCoroutine != null) StopCoroutine(activateCoroutine);
+        activateCoroutine = StartCoroutine(ActivateCoroutine(0.2f, index));
     }
 
     private Coroutine activateCoroutine;
     private IEnumerator ActivateCoroutine(float activateTime, int index)
     {
-        if(currentState == State.ACTIVE || currentState == State.ACTIVATING)
-        {
-            if(activateCoroutine != null)
-            {
-                yield return activateCoroutine;
-            }
-            if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine);
-            deactivateCoroutine = StartCoroutine(DeactivateCoroutine(activateSpeed));
-        }
-        else if (deactivateCoroutine != null)
-        {
-            yield return deactivateCoroutine;
-        }
+
 
         activatedIndex = index;
-        ChangeThrusterState(State.ACTIVATING);
         float t = 0;
         transform.localRotation = Quaternion.Euler(0, 0, thrusterPositions[activatedIndex].zRotation);
         Vector2 initialPosition = transform.localPosition;
@@ -77,19 +132,18 @@ public class Thruster : MonoBehaviour
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].activePos;
-        ChangeThrusterState(State.ACTIVE);
 		activateCoroutine = null;
     }
 
-    public Coroutine deactivateCoroutine;
+	private void StartDeactivateCoroutine()
+	{
+		if (deactivateCoroutine != null) StopCoroutine(deactivateCoroutine);
+		deactivateCoroutine = StartCoroutine(DeactivateCoroutine(0.2f));
+	}
+
+	public Coroutine deactivateCoroutine;
     private IEnumerator DeactivateCoroutine(float deactivateTime)
     {
-        if(currentState == State.ACTIVATING)
-        {
-            yield return activateCoroutine;
-        }
-
-        ChangeThrusterState(State.DEACTIVATING);
         float t = 0;
         transform.localRotation = Quaternion.Euler(0, 0, thrusterPositions[activatedIndex].zRotation);
 		Vector2 initialPosition = transform.localPosition;
@@ -102,12 +156,13 @@ public class Thruster : MonoBehaviour
             yield return null;
         }
         transform.localPosition = thrusterPositions[activatedIndex].inactivePos;
-        ChangeThrusterState(State.INACTIVE);
         activatedIndex = -1;
 		deactivateCoroutine = null;
     }
 
-    [Button("Set Inactive Position")]
+	#endregion
+
+	[Button("Set Inactive Position")]
     private void SetInactive()
     {
         var thisPos = thrusterPositions[^1];

@@ -1,4 +1,5 @@
-using System.IO;
+﻿using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 public abstract class AIAgent : MonoBehaviour
@@ -18,15 +19,18 @@ public abstract class AIAgent : MonoBehaviour
         set { moveTarget = value; } 
     }
 
-    [SerializeField] private Transform leader;
-    public Transform Leader { get; set; }
+    [SerializeField] private Ship leader;
+    public Ship Leader { get; set; }
 
     private bool freeFly;
     public bool FreeFly{ get; set; }
 
     protected virtual void Update()
     {
-        MoveToTarget(moveTarget);
+        if (!freeFly)
+        {
+            MoveToTarget(moveTarget);
+        }
         if (tickTimer <= 0)
         {
             Tick();
@@ -40,80 +44,90 @@ public abstract class AIAgent : MonoBehaviour
 
     protected virtual void Tick()
     {
-		if (!freeFly)
-		{
-			//MoveToTarget(moveTarget);
-		}
 	}
 
-	//protected virtual void MoveToTarget(Vector2 target)
-	//{
-	//	Vector2 position = transform.position;
-	//	Vector2 toTarget = target - position;
-	//	float distance = toTarget.magnitude;
+    public float deadzoneRadius = 1f; // Adjust this value to control the deadzone size
 
-	//	Vector2 velocity = ship.Velocity;
-	//	Vector2 dirToTarget = toTarget.normalized;
+    protected virtual void MoveToTarget(Vector2 target)
+    {
+        Vector2 targetVelocity = leader.Velocity;
+        Vector2 relativeVelocity = ship.Velocity - targetVelocity;
+        Vector2 toTarget = target - (Vector2)transform.position;
+        float distance = toTarget.magnitude;
+        Vector2 direction = toTarget.normalized;
 
-	//	float speedTowardTarget = Vector2.Dot(velocity, dirToTarget);
-	//	float stopDuration = ship.stopDuration;
+        // Transform the direction to local space based on the ship's rotation
+        Vector2 localDirection = transform.InverseTransformDirection(direction);
 
-	//	// Stopping distance = projected speed * stopDuration / ln(100)
-	//	float stoppingDistance = Mathf.Abs(speedTowardTarget) * stopDuration / Mathf.Log(100);
+        float approachSpeed = Mathf.Abs(Vector2.Dot(relativeVelocity, direction));
 
-	//	if (distance <= stoppingDistance)
-	//	{
-	//		ship.InputData.thrustInput = Vector2.zero;
-	//	}
-	//	else
-	//	{
-	//		// Convert world direction to local direction
-	//		Vector2 localDirToTarget = transform.InverseTransformDirection(dirToTarget);
+        float estimatedTimeToReach = distance / approachSpeed;
 
-	//		// Now input is aligned with ship's local forward (y) and right (x)
-	//		ship.InputData.thrustInput = new Vector2(
-	//			Mathf.Sign(localDirToTarget.x),
-	//			Mathf.Sign(localDirToTarget.y)
-	//		);
-	//	}
-	//}
+        float relativeSpeed = relativeVelocity.magnitude;
+        float maxDeceleration = -ship.maxAcceleration;
 
-	protected virtual void MoveToTarget(Vector2 target)
-	{
-		Vector2 position = transform.position;
-		Vector2 toTarget = target - position;
-		float distance = toTarget.magnitude;
+        float stoppingDistance = (relativeSpeed * relativeSpeed) / (2 * Mathf.Abs(maxDeceleration)); // d = s^2 / 2a
 
-		Vector2 velocity = ship.Velocity;
-		Vector2 dirToTarget = toTarget.normalized;
+        // Check if we're far enough to apply thrust
+        if (distance > stoppingDistance)
+        {
+            if (distance > deadzoneRadius)
+            {
+                Debug.Log("thrust");
+                ship.InputData.thrustInput = localDirection;
+            }
+            else
+            {
+                ship.InputData.thrustInput = Vector2.zero;
+            }
+            // Use the local direction for thrust input, which respects ship's rotation
+        }
+        else
+        {
+            // Check if the ship is moving towards the target using the dot product
+            float dotProduct = Vector2.Dot(ship.Velocity, direction);
 
-		// Convert world-space direction to local space
-		Vector2 localDirToTarget = transform.InverseTransformDirection(dirToTarget);
-		Vector2 localVelocity = transform.InverseTransformDirection(velocity);
+            // If dotProduct is positive, it means the ship is still moving towards the target
+            if (dotProduct > 0)
+            {
+                // The ship is moving towards the target, so continue applying reverse thrust
+                Debug.Log("reverse thrust");
+                ship.InputData.thrustInput = -localDirection;
+            }
+            else
+            {
+                // The ship has passed the target or is moving away from it
+                ship.InputData.thrustInput = Vector2.zero;
+            }
+        }
+    }
 
-		// Calculate stopping distance: v^2 / (2a)
-		float acceleration = ship.acceleration.magnitude; // You should define this on your ship
-		float speedTowardTarget = Vector2.Dot(velocity, dirToTarget);
-		float stoppingDistance = (speedTowardTarget * speedTowardTarget) / (2f * acceleration);
 
-		// Decide if we should apply forward or reverse thrust
-		if (distance <= stoppingDistance)
-		{
-			// Apply reverse thrust to stop more quickly
-			Vector2 reverseDir = -localVelocity.normalized;
-			ship.InputData.thrustInput = new Vector2(
-				Mathf.Sign(reverseDir.x),
-				Mathf.Sign(reverseDir.y)
-			);
-		}
-		else
-		{
-			// Apply thrust toward the target
-			ship.InputData.thrustInput = new Vector2(
-				Mathf.Sign(localDirToTarget.x),
-				Mathf.Sign(localDirToTarget.y)
-			);
-		}
-	}
+    //protected virtual void MoveToTarget(Vector2 target)
+    //{
+    //    Vector2 position = transform.position;
+    //    Vector2 toTarget = target - position;
+    //    float distance = toTarget.magnitude;
 
+    //    Vector2 velocity = ship.Velocity;
+    //    Vector2 dirToTarget = toTarget.normalized;
+
+    //    float speedTowardTarget = Vector2.Dot(velocity, dirToTarget);
+    //    float stopDuration = ship.stopDuration;
+
+    //    // Stopping distance = projected speed * stopDuration / ln(100)
+    //    float stoppingDistance = Mathf.Abs(speedTowardTarget) * stopDuration / Mathf.Log(100);
+
+    //    if (distance <= stoppingDistance)
+    //    {
+    //        ship.InputData.thrustInput = Vector2.zero;
+    //    }
+    //    else
+    //    {
+    //        ship.InputData.thrustInput = new Vector2(
+    //            Mathf.Sign(toTarget.x),
+    //            Mathf.Sign(toTarget.y)
+    //        );
+    //    }
+    //}
 }

@@ -23,7 +23,7 @@ public class Ship : MonoBehaviour, IDamageable
 	private GameObject objToMove;
 
 	[SerializeField, Tooltip("Limits how fast ship can change velocity")]
-	private float maxAcceleration = 1000f;
+	public float maxAcceleration = 1000f;
 
 	[SerializeField, Tooltip("Cap for linear velocity magnitude for regular thrust.")]
 	private float maxSpeed = 500f;

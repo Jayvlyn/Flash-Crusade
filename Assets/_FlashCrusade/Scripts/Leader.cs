@@ -18,7 +18,7 @@ public class Leader : MonoBehaviour
 
 	private void Start()
 	{
-		fleet = new Fleet(this.transform, fleetShipSpacing);
+		fleet = new Fleet(this.ship, fleetShipSpacing);
 
 		Ally[] allyComps = FindObjectsByType<Ally>(FindObjectsSortMode.None);
 		fleet.ships = allyComps.Cast<AIAgent>().ToList();
@@ -36,10 +36,10 @@ public class Leader : MonoBehaviour
 		}
 		else
 		{
-			fleet.UpdateLocalFleetPositions();
 
 			fleetPosTickTimer = fleetPosTick;
 		}
+		fleet.UpdateLocalFleetPositions(); // move back into tick later
 	}
 
 	public void UpdateFleetMoveTargets()

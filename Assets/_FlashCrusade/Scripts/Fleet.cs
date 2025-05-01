@@ -6,21 +6,21 @@ public class Fleet
 {
 	public List<AIAgent> ships;
 	private FleetFormation activeFleetFormation;
-	private Transform leaderTransform;
+	private Ship leader;
 	public Vector2[] localFleetPositions; // positions of fleet relative to leader
 	public float shipSpacing;
 
-	public Fleet(Transform leaderTransform, float shipSpacing = 5f)
+	public Fleet(Ship leader, float shipSpacing = 5f)
 	{
-		this.leaderTransform = leaderTransform;
+		this.leader = leader;
 		this.shipSpacing = shipSpacing;
 		localFleetPositions = new Vector2[0];
 		ships = new List<AIAgent>();
 	}
 
-	public Fleet(Transform leaderTransform, List<AIAgent> ships, float shipSpacing = 5f)
+	public Fleet(Ship leaderTransform, List<AIAgent> ships, float shipSpacing = 5f)
 	{
-		this.leaderTransform = leaderTransform;
+		this.leader = leaderTransform;
 		this.shipSpacing = shipSpacing;
 		localFleetPositions = new Vector2[0];
 		this.ships = ships;
@@ -29,7 +29,7 @@ public class Fleet
 	private void AddToFleet(AIAgent ship)
 	{
 		ships.Add(ship);
-		ship.Leader = leaderTransform;
+		ship.Leader = leader;
 	}
 
 	private void RemoveFromFleet(AIAgent ship)
@@ -47,7 +47,7 @@ public class Fleet
 
 	public void GiveFleetLatestPoints()
 	{
-		float angle = leaderTransform.eulerAngles.z;
+		float angle = leader.transform.eulerAngles.z;
 		Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
 		for (int i = 0; i < localFleetPositions.Length; i++)
@@ -56,7 +56,7 @@ public class Fleet
 
 			if (i >= ships.Count) continue;
 
-			Vector2 worldPos = (Vector2)leaderTransform.position + localFleetPositions[i];
+			Vector2 worldPos = (Vector2)leader.transform.position + localFleetPositions[i];
 
 			ships[i].MoveTarget = worldPos;
 		}
@@ -238,8 +238,8 @@ public class Fleet
 		if (localFleetPositions.Length <= 0) return;
 		for (int i = 0; i < localFleetPositions.Length; i++)
 		{
-			int layer = (i / 12) + 1;
-			int posInLayer = i % 12;
+			int layer = (i / 11) + 1;
+			int posInLayer = i % 11;
 
 			int x = Utilities.RoundHalfUp((posInLayer) * 0.5f); // increment every 2
 			float y = -x * 0.2f;

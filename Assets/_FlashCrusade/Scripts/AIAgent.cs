@@ -68,7 +68,6 @@ public abstract class AIAgent : MonoBehaviour
 
         float stoppingDistance = (relativeSpeed * relativeSpeed) / (2 * Mathf.Abs(maxDeceleration)); // d = s^2 / 2a
 
-        // Check if we're far enough to apply thrust
         if (distance > stoppingDistance)
         {
             if (distance > deadzoneRadius)
@@ -80,23 +79,18 @@ public abstract class AIAgent : MonoBehaviour
             {
                 ship.InputData.thrustInput = Vector2.zero;
             }
-            // Use the local direction for thrust input, which respects ship's rotation
         }
         else
         {
-            // Check if the ship is moving towards the target using the dot product
             float dotProduct = Vector2.Dot(ship.Velocity, direction);
 
-            // If dotProduct is positive, it means the ship is still moving towards the target
             if (dotProduct > 0)
             {
-                // The ship is moving towards the target, so continue applying reverse thrust
                 Debug.Log("reverse thrust");
                 ship.InputData.thrustInput = -localDirection;
             }
             else
             {
-                // The ship has passed the target or is moving away from it
                 ship.InputData.thrustInput = Vector2.zero;
             }
         }

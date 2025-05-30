@@ -56,11 +56,19 @@ public class Leader : MonoBehaviour
 
 	public void ToggleFreeFly()
 	{
+		Debug.Log("Toggle free fly");
 		freeFly = !freeFly;
 
 		foreach(AIAgent ship in fleet.ships)
 		{
-			ship.FreeFly = freeFly;
+			if(freeFly)
+			{
+				ship.sm.ChangeState(ship.freeFlyState);
+			}
+			else
+			{
+				ship.sm.ChangeState(ship.followState);
+			}
 		}
 	}
 

@@ -5,16 +5,18 @@ using UnityEngine;
 public abstract class AIAgent : MonoBehaviour
 {
 	[SerializeField] private Ship ship;
-    public Ship Ship { get { return ship; } 
+    public Ship Ship 
+    { 
+        get { return ship; } 
         set { ship = value; }
     }
 
 	[SerializeField] private float tickInterval = 0.5f;
     private float tickTimer = 0;
 
-    [SerializeField] private Transform currentTarget;
     private Vector2 moveTarget;
-    public Vector2 MoveTarget { 
+    public Vector2 MoveTarget 
+    { 
         get { return moveTarget; } 
         set { moveTarget = value; } 
     }
@@ -50,7 +52,15 @@ public abstract class AIAgent : MonoBehaviour
 
     protected virtual void MoveToTarget(Vector2 target)
     {
-        Vector2 targetVelocity = leader.Velocity;
+        Vector2 targetVelocity;
+        if (leader != null)
+        {
+            targetVelocity = leader.Velocity;
+        }
+        else
+        {
+            targetVelocity = Vector2.zero;
+        }
         Vector2 relativeVelocity = ship.Velocity - targetVelocity;
         Vector2 toTarget = target - (Vector2)transform.position;
         float distance = toTarget.magnitude;

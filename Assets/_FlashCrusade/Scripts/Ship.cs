@@ -9,11 +9,14 @@ public class Ship : MonoBehaviour, IDamageable
 {
     #region VARIABLES
     private ShipInputData inputData = new ShipInputData();
-	public ShipInputData InputData { 
-		get {
+	public ShipInputData InputData 
+	{ 
+		get 
+		{
 			return inputData; 
 		} 
-		set { 
+		set 
+		{ 
 			inputData = value;
 		}	
 	}
@@ -292,7 +295,8 @@ public class Ship : MonoBehaviour, IDamageable
 
 	public virtual void OnDeath()
 	{
-		Destroy(gameObject);
+		Destroy(transform.parent.gameObject);
+		GameManager.I.AddPoints(10);
 	}
 
     #region THRUSTER VISUALS

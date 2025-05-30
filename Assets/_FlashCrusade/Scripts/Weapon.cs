@@ -48,7 +48,7 @@ public class Weapon : MonoBehaviour
 
             Bullet bullet = Instantiate(weaponData.bullet, worldPos, rot);
 
-			Vector2 initialBulletVelocity = ((Vector2)bullet.transform.up * weaponData.muzzleVelocity) + shipVelocity;
+			Vector2 initialBulletVelocity = ((Vector2)bullet.transform.up * weaponData.muzzleVelocity);// + shipVelocity;
 
 			bullet.SetInitialVelocity(initialBulletVelocity);
 			bullet.SetDamageMultiplier(weaponData.damageMultiplier);

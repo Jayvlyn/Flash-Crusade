@@ -24,15 +24,19 @@ public abstract class AIAgent : MonoBehaviour
     [SerializeField] private Ship leader;
     public Ship Leader { get; set; }
 
-    private bool freeFly;
-    public bool FreeFly{ get; set; }
+    public StateMachine sm;
+    public FreeFlyState freeFlyState => new FreeFlyState(this);
+    public FollowState followState => new FollowState(this);
+
+    private void Awake()
+    {
+        sm = new StateMachine();
+        sm.ChangeState(followState);
+    }
 
     protected virtual void Update()
     {
-        if (!freeFly)
-        {
-            MoveToTarget(moveTarget);
-        }
+        sm.Update();
         if (tickTimer <= 0)
         {
             Tick();
@@ -50,7 +54,7 @@ public abstract class AIAgent : MonoBehaviour
 
     public float deadzoneRadius = 1f; // Adjust this value to control the deadzone size
 
-    protected virtual void MoveToTarget(Vector2 target)
+    public virtual void MoveToTarget(Vector2 target)
     {
         Vector2 targetVelocity;
         if (leader != null)
@@ -105,33 +109,51 @@ public abstract class AIAgent : MonoBehaviour
             }
         }
     }
+}
+
+public class FreeFlyState : IState
+{
+    AIAgent agent;
+
+    public FreeFlyState(AIAgent agent)
+    {
+        this.agent = agent;
+    }
+
+    public void OnEnter()
+    {
+        agent.Ship.InputData.thrustInput = Vector2.zero;
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void OnUpdate()
+    {
+    }
+}
+
+public class FollowState : IState
+{
+    AIAgent agent;
+
+    public FollowState(AIAgent agent)
+    {
+        this.agent = agent;
+    }
 
 
-    //protected virtual void MoveToTarget(Vector2 target)
-    //{
-    //    Vector2 position = transform.position;
-    //    Vector2 toTarget = target - position;
-    //    float distance = toTarget.magnitude;
+    public void OnEnter()
+    {
+    }
 
-    //    Vector2 velocity = ship.Velocity;
-    //    Vector2 dirToTarget = toTarget.normalized;
+    public void OnExit()
+    {
+    }
 
-    //    float speedTowardTarget = Vector2.Dot(velocity, dirToTarget);
-    //    float stopDuration = ship.stopDuration;
-
-    //    // Stopping distance = projected speed * stopDuration / ln(100)
-    //    float stoppingDistance = Mathf.Abs(speedTowardTarget) * stopDuration / Mathf.Log(100);
-
-    //    if (distance <= stoppingDistance)
-    //    {
-    //        ship.InputData.thrustInput = Vector2.zero;
-    //    }
-    //    else
-    //    {
-    //        ship.InputData.thrustInput = new Vector2(
-    //            Mathf.Sign(toTarget.x),
-    //            Mathf.Sign(toTarget.y)
-    //        );
-    //    }
-    //}
+    public void OnUpdate()
+    {
+        agent.MoveToTarget(agent.MoveTarget);
+    }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   bullet: {fileID: 8961541188041805645, guid: 68baae425294f034d81c49da74385e44, type: 3}
   fireRate: 5
   automatic: 1
-  muzzleVelocity: 40
+  muzzleVelocity: 400
   damageMultiplier: 1
   ammo: 30
   reloadTime: 3

@@ -99,7 +99,7 @@ public class PlayerController : Singleton<PlayerController>
 			if(context.canceled)
 			{
                 leader.fleet.UpdateLocalFleetPositions();
-                leader.UpdateFleetMoveTargets();
+                leader.fleetManager.UpdateFleetMoveTargets();
             }
 		}
 	}

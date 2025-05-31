@@ -89,7 +89,7 @@ public class PlayerController : Singleton<PlayerController>
 
 			if(!leader.FreeFlyOn)
 			{
-				foreach(AIAgent ship in leader.fleet.ships)
+				foreach(AIAgent ship in leader.fleetManager.fleet.ships)
 				{
 					ship.Ship.InputData.turnInput = this.ship.InputData.turnInput;
 				}
@@ -98,7 +98,7 @@ public class PlayerController : Singleton<PlayerController>
 
 			if(context.canceled)
 			{
-                leader.fleet.UpdateLocalFleetPositions();
+                leader.fleetManager.fleet.UpdateLocalFleetPositions();
                 leader.fleetManager.UpdateFleetMoveTargets();
             }
 		}
@@ -116,7 +116,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if(context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.VIC);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.VIC);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.REVERSE_VIC);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.REVERSE_VIC);
 		}
 	}
 
@@ -132,7 +132,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.ECHELON);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.ECHELON);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.LINE_ABREAST);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.LINE_ABREAST);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.WEDGE);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.WEDGE);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.COLUMN);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.COLUMN);
 		}
 	}
 
@@ -164,7 +164,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.BUBBLE);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.BUBBLE);
 		}
 	}
 
@@ -172,7 +172,7 @@ public class PlayerController : Singleton<PlayerController>
 	{
 		if (context.started)
 		{
-			leader.fleet.SetFleetFormation(FleetFormation.SHIELD);
+			leader.fleetManager.fleet.SetFleetFormation(FleetFormation.SHIELD);
 		}
 	}
 	#endregion

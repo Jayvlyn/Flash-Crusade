@@ -15,8 +15,8 @@ Material:
   - EFFECT_SCALING
   - PIXELSNAP_ON
   - SDF_MODE
-  m_InvalidKeywords:
-  - _EFFECT_NONE
+  - _EFFECT_OUTLINE
+  m_InvalidKeywords: []
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

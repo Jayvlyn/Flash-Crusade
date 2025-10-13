@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class SpaceObject : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Vector2 velocity;
+    public Vector2 Velocity { get; private set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Vector2 angularVelocity;
+    public Vector2 AngularVelocity { get; private set; }
+
 }

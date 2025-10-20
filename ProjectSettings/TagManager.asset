@@ -8,16 +8,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - PlayerShip
   - Water
   - UI
-  - Ally
-  - Enemy
-  - FriendlyBullet
-  - EnemyBullet
-  - Scrap
-  - FriendlyDoor
-  - EnemyDoor
+  - AllyShip
+  - EnemyShip
+  - FriendlyProjectile
+  - EnemyProjectile
+  - CelestialBody
+  - 
+  - 
   - 
   - 
   - 
@@ -44,59 +44,26 @@ TagManager:
   - name: UI
     uniqueID: 1762990731
     locked: 0
-  - name: Player
+  - name: PlayerShip
     uniqueID: 175713521
     locked: 0
-  - name: PlayerProjectile
-    uniqueID: 3671891241
-    locked: 0
-  - name: Ally1
+  - name: AllyShip
     uniqueID: 3337914345
     locked: 0
-  - name: Ally2
-    uniqueID: 2164874159
-    locked: 0
-  - name: Ally2
-    uniqueID: 3273453971
-    locked: 0
-  - name: AllyProjectile
+  - name: FriendlyProjectile
     uniqueID: 1185545059
     locked: 0
-  - name: Enemy1
-    uniqueID: 3838883227
-    locked: 0
-  - name: Enemy2
-    uniqueID: 3207322185
-    locked: 0
-  - name: Enemy3
-    uniqueID: 621619111
-    locked: 0
-  - name: Enemy4
-    uniqueID: 1627154947
-    locked: 0
-  - name: Enemy5
+  - name: EnemyShip
     uniqueID: 2835525979
     locked: 0
   - name: EnemyProjectile
     uniqueID: 1595859431
     locked: 0
-  - name: Scrap1
+  - name: CelestialBody
     uniqueID: 3526954119
-    locked: 0
-  - name: Scrap2
-    uniqueID: 3877458331
-    locked: 0
-  - name: Scrap3
-    uniqueID: 1068511805
     locked: 0
   - name: Background
     uniqueID: 3093560753
-    locked: 0
-  - name: Background2
-    uniqueID: 2420850627
-    locked: 0
-  - name: Background3
-    uniqueID: 3160559033
     locked: 0
   m_RenderingLayers:
   - Default

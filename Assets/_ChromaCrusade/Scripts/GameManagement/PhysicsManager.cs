@@ -8,14 +8,6 @@ public class PhysicsManager : MonoBehaviour
 
     public List<SpaceObject> objects = new();
 
-    private void Start()
-    {
-        foreach (SpaceObject obj in objects)
-        {
-            obj.AddForce(Vector2.up * 10);
-        }
-    }
-
     private void FixedUpdate()
     {
         foreach(SpaceObject obj in objects)
@@ -24,9 +16,11 @@ public class PhysicsManager : MonoBehaviour
             {
                 float dist = Vector2.Distance(obj.transform.position, player.position);
 
+                // temporary segments
                 float step = dist < 20f ? 0.02f :
                              dist < 50f ? 0.04f :
                              0.08f;
+                //-------------------
 
                 obj.SetUpdateInterval(step);
             }

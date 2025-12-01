@@ -19,12 +19,12 @@ public class NavItem : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    public void OnHighlighted()
+    public virtual void OnHighlighted()
     {
         onHighlighted?.Invoke();
     }
 
-    public void OnSelected()
+    public virtual void OnSelected()
     {
         onSelected?.Invoke();
     }

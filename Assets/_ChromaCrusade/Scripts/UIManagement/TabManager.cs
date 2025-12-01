@@ -1,36 +1,63 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TabManager : MonoBehaviour
 {
-    public GameObject[] tabs;
-    public Image[] tabButtons;
-    public Sprite inactiveTab, activeTab;
+    public NavTab[] tabs;
     public Vector2 inactiveTabSize, activeTabSize;
+    public NavVisualizer navVisualizer;
 
-    private void Start()
+    private NavTab activeTab;
+    private NavTab lastActiveTab;
+
+    private void Awake()
     {
-        foreach (Image im in tabButtons)
-        {
-            im.sprite = inactiveTab;
-            im.rectTransform.sizeDelta = inactiveTabSize;
-        }
+        foreach (var t in tabs)
+            t.owner = this;
     }
 
-    public void SwitchToTab(int tabId)
+    public void SwitchToTab(NavTab newTab)
     {
-        //foreach (GameObject go in tabs)
-        //{
-        //    go.SetActive(false);
-        //}
-        //tabs[tabId].SetActive(true);
+        lastActiveTab = activeTab;
+        activeTab = newTab;
 
-        foreach (Image im in tabButtons)
+        if(lastActiveTab) lastActiveTab.selected = false;
+
+        if(tabRoutine != null)
+            StopCoroutine(tabRoutine);
+
+        tabRoutine = StartCoroutine(LerpTabs());
+    }
+
+    private Coroutine tabRoutine;
+    private IEnumerator LerpTabs()
+    {
+        float duration = 0.15f;
+        float t = 0f;
+
+        Vector2 startActiveSize = activeTab.rect.sizeDelta;
+        Vector2 startInactiveSize = lastActiveTab ? lastActiveTab.rect.sizeDelta : Vector2.zero;
+
+        while (t < 1f)
         {
-            im.sprite = inactiveTab;
-            im.rectTransform.sizeDelta = inactiveTabSize;
+            t += Time.unscaledDeltaTime / duration;
+            float s = Mathf.SmoothStep(0, 1, t);
+
+            activeTab.rect.sizeDelta = Vector2.Lerp(startActiveSize, activeTabSize, s);
+            navVisualizer.UpdateCurrentItemImmediate(activeTab);
+
+            if (lastActiveTab)
+                lastActiveTab.rect.sizeDelta = Vector2.Lerp(startInactiveSize, inactiveTabSize, s);
+
+
+            yield return null;
         }
-        tabButtons[tabId].sprite = activeTab;
-        tabButtons[tabId].rectTransform.sizeDelta = activeTabSize;
+
+        activeTab.rect.sizeDelta = activeTabSize;
+        navVisualizer.UpdateCurrentItemImmediate(activeTab);
+
+        if (lastActiveTab)
+            lastActiveTab.rect.sizeDelta = inactiveTabSize;
     }
 }

@@ -7,6 +7,8 @@ public class NavVisualizer : MonoBehaviour
     public float transitionDuration = 0.12f;
 
     private RectTransform rect;
+    private NavItem currentItem;
+    private Coroutine lerpRoutine;
 
     private void Awake()
     {
@@ -15,14 +17,58 @@ public class NavVisualizer : MonoBehaviour
 
     public void OnHighlightNew(NavItem newItem)
     {
-        Vector2 targetPos;
-        Vector2 targetSize;
-        GetWorldRectValues(newItem.rect, out targetPos, out targetSize);
+        currentItem = newItem;
 
         if (lerpRoutine != null)
             StopCoroutine(lerpRoutine);
 
-        lerpRoutine = StartCoroutine(LerpTo(targetPos, targetSize, transitionDuration));
+        lerpRoutine = StartCoroutine(LerpToCurrentItem());
+    }
+
+    private IEnumerator LerpToCurrentItem()
+    {
+        RectTransform startRect = rect;
+
+        Vector2 startPos = rect.anchoredPosition;
+        Vector2 startSize = rect.sizeDelta;
+
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            if (currentItem == null)
+                yield break;
+
+            GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
+
+            t += Time.unscaledDeltaTime / transitionDuration;
+            float s = Mathf.SmoothStep(0, 1, t);
+
+            rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
+
+            Vector2 newSize = Vector2.Lerp(startSize, targetSize, s);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newSize.x);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newSize.y);
+
+            yield return null;
+        }
+
+        GetWorldRectValues(currentItem.rect, out Vector2 finalPos, out Vector2 finalSize);
+        rect.anchoredPosition = finalPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalSize.y);
+
+        lerpRoutine = null;
+    }
+
+    public void UpdateCurrentItemImmediate(NavItem item)
+    {
+        currentItem = item;
+        GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
+
+        rect.anchoredPosition = targetPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
     private void GetWorldRectValues(RectTransform target, out Vector2 pos, out Vector2 size)
@@ -40,32 +86,5 @@ public class NavVisualizer : MonoBehaviour
 
         size = tr - bl;
         pos = bl + size * 0.5f;
-    }
-
-    private Coroutine lerpRoutine;
-    private IEnumerator LerpTo(Vector2 targetPos, Vector2 targetSize, float duration)
-    {
-        Vector2 startPos = rect.anchoredPosition;
-        Vector2 startSize = rect.sizeDelta;
-
-        float t = 0f;
-
-        while (t < 1f)
-        {
-            t += Time.unscaledDeltaTime / duration;
-            float s = Mathf.SmoothStep(0, 1, t);
-
-            rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
-
-            Vector2 newSize = Vector2.Lerp(startSize, targetSize, s);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newSize.x);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newSize.y);
-
-            yield return null;
-        }
-
-        rect.anchoredPosition = targetPos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 }

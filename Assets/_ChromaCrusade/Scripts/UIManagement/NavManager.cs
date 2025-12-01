@@ -19,31 +19,37 @@ public class NavManager : MonoBehaviour
     private Vector2 navInput;
     private float nextRepeatTime;
 
+    public struct DisableNavigationEvent { }
+    public struct EnableNavigationEvent { }
+
     private void OnEnable()
     {
         navigateAction.action.Enable();
         submitAction.action.Enable();
 
-        navigateAction.action.performed += OnNavigatePerformed;
-        navigateAction.action.canceled += OnNavigateCanceled;
+        SubscribeToInputs();
 
-        submitAction.action.performed += OnSubmitPerformed;
+        EventBus.Subscribe<DisableNavigationEvent>(OnDisableNavigation);
+        EventBus.Subscribe<EnableNavigationEvent>(OnEnableNavigation);
+    }
+
+
+    private void OnDisable()
+    {
+        UnsubscribeFromInputs();
+
+        visualizer.gameObject.SetActive(false);
+
+        EventBus.Unsubscribe<DisableNavigationEvent>(OnDisableNavigation);
+        EventBus.Unsubscribe<EnableNavigationEvent>(OnEnableNavigation);
     }
 
     private void Start()
     {
         visualizer.gameObject.SetActive(true);
-        if(hoveredItem) visualizer.OnHighlightNew(hoveredItem);        
-    }
-
-    private void OnDisable()
-    {
-        navigateAction.action.performed -= OnNavigatePerformed;
-        navigateAction.action.canceled -= OnNavigateCanceled;
-
-        submitAction.action.performed -= OnSubmitPerformed;
-
-        visualizer.gameObject.SetActive(false);
+        hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
+        if (hoveredItem)
+            visualizer.OnHighlightNew(hoveredItem);
     }
 
     private void Update()
@@ -95,5 +101,29 @@ public class NavManager : MonoBehaviour
         hoveredItem = next;
         hoveredItem.OnHighlighted();
         visualizer.OnHighlightNew(hoveredItem);
+    }
+
+    private void OnDisableNavigation(DisableNavigationEvent e)
+    {
+        UnsubscribeFromInputs();
+    }
+
+    private void OnEnableNavigation(EnableNavigationEvent e)
+    {
+        SubscribeToInputs();
+    }
+
+    private void SubscribeToInputs()
+    {
+        navigateAction.action.performed += OnNavigatePerformed;
+        navigateAction.action.canceled += OnNavigateCanceled;
+        submitAction.action.performed += OnSubmitPerformed;
+    }
+
+    private void UnsubscribeFromInputs()
+    {
+        navigateAction.action.performed -= OnNavigatePerformed;
+        navigateAction.action.canceled -= OnNavigateCanceled;
+        submitAction.action.performed -= OnSubmitPerformed;
     }
 }

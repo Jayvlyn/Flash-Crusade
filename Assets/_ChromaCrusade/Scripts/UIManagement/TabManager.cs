@@ -24,9 +24,16 @@ public class TabManager : MonoBehaviour
 
         if(lastActiveTab) lastActiveTab.selected = false;
 
-        if (tabRoutine != null)
-            StopCoroutine(tabRoutine);
-        tabRoutine = StartCoroutine(LerpTabs());
+        if(UIManager.Smoothing)
+        {
+            if (tabRoutine != null)
+                StopCoroutine(tabRoutine);
+            tabRoutine = StartCoroutine(LerpTabs());
+        }
+        else
+        {
+            SnapTabs();
+        }
     }
 
     private Coroutine tabRoutine;
@@ -59,6 +66,7 @@ public class TabManager : MonoBehaviour
     private void SnapTabs()
     {
         activeTab.rect.sizeDelta = activeTabSize;
+        Canvas.ForceUpdateCanvases();
         navVisualizer.UpdateCurrentItemImmediate(activeTab);
 
         if (lastActiveTab)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class NavManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class NavManager : MonoBehaviour
     [Header("Navigation Input")]
     public InputActionReference navigateAction;
     public InputActionReference submitAction;
+    public InputActionReference cancelAction;
 
     [Header("Settings")]
     public float inputRepeatDelay = 0.35f;
@@ -26,6 +28,7 @@ public class NavManager : MonoBehaviour
     {
         navigateAction.action.Enable();
         submitAction.action.Enable();
+        cancelAction.action.Enable();
 
         SubscribeToInputs();
 
@@ -83,6 +86,12 @@ public class NavManager : MonoBehaviour
         hoveredItem?.OnSelected();
     }
 
+    private void OnCancelPerformed(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("firing");
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
     private void TriggerNav(Vector2 dir)
     {
         if (hoveredItem == null)
@@ -105,12 +114,12 @@ public class NavManager : MonoBehaviour
 
     private void OnDisableNavigation(DisableNavigationEvent e)
     {
-        UnsubscribeFromInputs();
+        LimitInputs();
     }
 
     private void OnEnableNavigation(EnableNavigationEvent e)
     {
-        SubscribeToInputs();
+        UnlimitInputs();
     }
 
     private void SubscribeToInputs()
@@ -118,6 +127,7 @@ public class NavManager : MonoBehaviour
         navigateAction.action.performed += OnNavigatePerformed;
         navigateAction.action.canceled += OnNavigateCanceled;
         submitAction.action.performed += OnSubmitPerformed;
+        cancelAction.action.performed += OnCancelPerformed;
     }
 
     private void UnsubscribeFromInputs()
@@ -125,5 +135,21 @@ public class NavManager : MonoBehaviour
         navigateAction.action.performed -= OnNavigatePerformed;
         navigateAction.action.canceled -= OnNavigateCanceled;
         submitAction.action.performed -= OnSubmitPerformed;
+        cancelAction.action.performed -= OnCancelPerformed;
     }
+
+    private void LimitInputs()
+    {
+        navigateAction.action.performed -= OnNavigatePerformed;
+        navigateAction.action.canceled -= OnNavigateCanceled;
+        submitAction.action.performed -= OnSubmitPerformed;
+    }
+
+    private void UnlimitInputs()
+    {
+        navigateAction.action.performed += OnNavigatePerformed;
+        navigateAction.action.canceled += OnNavigateCanceled;
+        submitAction.action.performed += OnSubmitPerformed;
+    }
+
 }

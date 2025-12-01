@@ -19,10 +19,17 @@ public class NavVisualizer : MonoBehaviour
     {
         currentItem = newItem;
 
-        if (lerpRoutine != null)
-            StopCoroutine(lerpRoutine);
 
-        lerpRoutine = StartCoroutine(LerpToCurrentItem());
+        if (UIManager.Smoothing)
+        {
+            if (lerpRoutine != null)
+                StopCoroutine(lerpRoutine);
+            lerpRoutine = StartCoroutine(LerpToCurrentItem());            
+        }
+        else
+        {
+            UpdateCurrentItemImmediate();
+        }
     }
 
     private IEnumerator LerpToCurrentItem()
@@ -64,6 +71,11 @@ public class NavVisualizer : MonoBehaviour
     public void UpdateCurrentItemImmediate(NavItem item)
     {
         currentItem = item;
+        UpdateCurrentItemImmediate();
+    }
+
+    public void UpdateCurrentItemImmediate()
+    {
         GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
 
         rect.anchoredPosition = targetPos;

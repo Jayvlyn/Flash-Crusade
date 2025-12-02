@@ -88,7 +88,6 @@ public class NavManager : MonoBehaviour
 
     private void OnCancelPerformed(InputAction.CallbackContext ctx)
     {
-        Debug.Log("firing");
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -107,7 +106,12 @@ public class NavManager : MonoBehaviour
         if (next == null)
             return;
 
-        hoveredItem = next;
+        NavToItem(next);
+    }
+
+    private void NavToItem(NavItem item)
+    {
+        hoveredItem = item;
         hoveredItem.OnHighlighted();
         visualizer.OnHighlightNew(hoveredItem);
     }

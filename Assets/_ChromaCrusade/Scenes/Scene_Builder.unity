@@ -5000,9 +5000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b451f6626a6df4793db0ceb1b00e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TabManager
-  orientation: 1
+  orientation: 0
   inactiveSize: 0.1
-  activeSize: 0.2
+  activeSize: 0.15
   tabMargin: 0.01
   tabs:
   - {fileID: 295307811}

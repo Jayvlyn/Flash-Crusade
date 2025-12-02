@@ -51,6 +51,33 @@ public class TabManager : MonoBehaviour
         }
     }
 
+    #region Anchor Helpers
+
+    private void ApplyAnchors(RectTransform rect, Vector2 min, Vector2 max)
+    {
+        rect.anchorMin = min;
+        rect.anchorMax = max;
+        rect.anchoredPosition = Vector2.zero;
+        rect.sizeDelta = Vector2.zero;
+    }
+
+    private void SetTabState(NavTab tab, bool active)
+    {
+        if (active)
+            ApplyAnchors(tab.rect, tab.anchorMinActive, tab.anchorMaxActive);
+        else
+            ApplyAnchors(tab.rect, tab.anchorMinInactive, tab.anchorMaxInactive);
+    }
+
+    private void LerpAnchors(RectTransform rect, Vector2 startMin, Vector2 startMax, Vector2 targetMin, Vector2 targetMax, float t)
+    {
+        Vector2 min = Vector2.Lerp(startMin, targetMin, t);
+        Vector2 max = Vector2.Lerp(startMax, targetMax, t);
+        ApplyAnchors(rect, min, max);
+    }
+
+    #endregion
+
     private void UpdateTabAnchors()
     {
         int count = tabs.Length;
@@ -62,13 +89,10 @@ public class TabManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var tab = tabs[i];
-            float totalTabHeight = axisSize * count + tabMargin * (count + 1);
-            float startPos = 1f - tabMargin - (i + 1) * axisSize - i * tabMargin;
 
             if (orientation == Orientation.Vertical)
             {
-                tab.rect.anchorMin = new Vector2(0f, startPos);
-                tab.rect.anchorMax = new Vector2(inactiveSize, startPos + axisSize);
+                float startPos = 1f - tabMargin - (i + 1) * axisSize - i * tabMargin;
 
                 tab.anchorMinInactive = new Vector2(0f, startPos);
                 tab.anchorMaxInactive = new Vector2(inactiveSize, startPos + axisSize);
@@ -78,8 +102,7 @@ public class TabManager : MonoBehaviour
             }
             else
             {
-                tab.rect.anchorMin = new Vector2(startPos, 0f);
-                tab.rect.anchorMax = new Vector2(startPos + axisSize, inactiveSize);
+                float startPos = tabMargin + i * (axisSize + tabMargin);
 
                 tab.anchorMinInactive = new Vector2(startPos, 0f);
                 tab.anchorMaxInactive = new Vector2(startPos + axisSize, inactiveSize);
@@ -88,11 +111,7 @@ public class TabManager : MonoBehaviour
                 tab.anchorMaxActive = new Vector2(startPos + axisSize, activeSize);
             }
 
-            tab.rect.anchorMin = tab.anchorMinInactive;
-            tab.rect.anchorMax = tab.anchorMaxInactive;
-
-            tab.rect.anchoredPosition = Vector2.zero;
-            tab.rect.sizeDelta = Vector2.zero;
+            ApplyAnchors(tab.rect, tab.anchorMinInactive, tab.anchorMaxInactive);
         }
     }
 
@@ -111,18 +130,10 @@ public class TabManager : MonoBehaviour
             t += Time.unscaledDeltaTime / duration;
             float s = Mathf.SmoothStep(0, 1, t);
 
-            activeTab.rect.anchorMin = Vector2.Lerp(startMin, activeTab.anchorMinActive, s);
-            activeTab.rect.anchorMax = Vector2.Lerp(startMax, activeTab.anchorMaxActive, s);
-            activeTab.rect.anchoredPosition = Vector2.zero;
-            activeTab.rect.sizeDelta = Vector2.zero;
+            LerpAnchors(activeTab.rect, startMin, startMax, activeTab.anchorMinActive, activeTab.anchorMaxActive, s);
 
-            if (lastActiveTab)
-            {
-                lastActiveTab.rect.anchorMin = Vector2.Lerp(lastMin, lastActiveTab.anchorMinInactive, s);
-                lastActiveTab.rect.anchorMax = Vector2.Lerp(lastMax, lastActiveTab.anchorMaxInactive, s);
-                lastActiveTab.rect.anchoredPosition = Vector2.zero;
-                lastActiveTab.rect.sizeDelta = Vector2.zero;
-            }
+            if (lastActiveTab != null)
+                LerpAnchors(lastActiveTab.rect, lastMin, lastMax, lastActiveTab.anchorMinInactive, lastActiveTab.anchorMaxInactive, s);
 
             navVisualizer.UpdateCurrentItemImmediate(activeTab);
             yield return null;
@@ -133,21 +144,8 @@ public class TabManager : MonoBehaviour
 
     private void SnapTabs()
     {
-        if (activeTab != null)
-        {
-            activeTab.rect.anchorMin = activeTab.anchorMinActive;
-            activeTab.rect.anchorMax = activeTab.anchorMaxActive;
-            activeTab.rect.anchoredPosition = Vector2.zero;
-            activeTab.rect.sizeDelta = Vector2.zero;
-        }
-
-        if (lastActiveTab != null)
-        {
-            lastActiveTab.rect.anchorMin = lastActiveTab.anchorMinInactive;
-            lastActiveTab.rect.anchorMax = lastActiveTab.anchorMaxInactive;
-            lastActiveTab.rect.anchoredPosition = Vector2.zero;
-            lastActiveTab.rect.sizeDelta = Vector2.zero;
-        }
+        if (activeTab != null) SetTabState(activeTab, true);
+        if (lastActiveTab != null) SetTabState(lastActiveTab, false);
 
         Canvas.ForceUpdateCanvases();
         if (activeTab != null) navVisualizer.UpdateCurrentItemImmediate(activeTab);

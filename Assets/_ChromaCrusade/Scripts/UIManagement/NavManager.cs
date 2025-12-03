@@ -78,8 +78,9 @@ public class NavManager : MonoBehaviour
     private void ProcessNavInput()
     {
         if (!allowMovement) return;
-        
-        Vector2 input = navigateAction.action.ReadValue<Vector2>();
+
+        Vector2 raw = navigateAction.action.ReadValue<Vector2>();
+        Vector2 input = FilterDiagonalTransitions(raw);
 
         if (input == Vector2.zero)
         {
@@ -96,6 +97,67 @@ public class NavManager : MonoBehaviour
             nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }
+    }
+
+    private Vector2 prevStableInput = Vector2.zero;
+    private Vector2 pendingCardinal = Vector2.zero;
+    private float pendingTime = 0f;
+    private const float pendingWindow = 0.05f; // 50ms window to detect diagonal transitions
+
+    private Vector2 FilterDiagonalTransitions(Vector2 raw)
+    {
+        bool rawIsNeutral = raw.sqrMagnitude < 0.01f;
+        bool rawIsCardinal = (Mathf.Abs(raw.x) > 0.1f) ^ (Mathf.Abs(raw.y) > 0.1f);
+        bool rawIsDiagonal = (Mathf.Abs(raw.x) > 0.1f) && (Mathf.Abs(raw.y) > 0.1f);
+
+        // Handle diagonal directly
+        if (rawIsDiagonal)
+        {
+            // If we had a pending cardinal just before this, ignore the cardinal
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = raw;
+        }
+
+        // Handle neutral
+        if (rawIsNeutral)
+        {
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = Vector2.zero;
+        }
+
+        // Handle cardinal (problem case)
+        if (rawIsCardinal)
+        {
+            // If previous input was diagonal, suppress cardinal for one frame
+            if (IsDiagonal(prevStableInput))
+                return prevStableInput;
+
+            // Start a pending window in case diagonal comes next frame
+            if (pendingCardinal == Vector2.zero)
+            {
+                pendingCardinal = raw;
+                pendingTime = Time.time;
+                return prevStableInput; // ignore for now
+            }
+
+            // If still within pending window, ignore cardinal
+            if (Time.time - pendingTime < pendingWindow)
+            {
+                return prevStableInput;
+            }
+
+            // Cardinal seems legit now
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = raw;
+        }
+
+        // Fallback safety
+        return prevStableInput;
+    }
+
+    private bool IsDiagonal(Vector2 v)
+    {
+        return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
     }
 
     private void TriggerNav(Vector2 dir)
@@ -131,7 +193,6 @@ public class NavManager : MonoBehaviour
         NavToItem(next);
     }
 
-    // Currently limitless nav, no bounds
     private void TriggerNavGrid(Vector2 dir)
     {
         Vector3Int offset = Vector3Int.zero;

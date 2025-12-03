@@ -82,7 +82,7 @@ public class NavManager : MonoBehaviour
             return;
         }
 
-        if (allowMovement && input != lastMoveInput || Time.time >= nextRepeatTime)
+        if (allowMovement && (input != lastMoveInput || Time.time >= nextRepeatTime))
         {
             TriggerNav(input);
             nextRepeatTime = Time.time + (input != lastMoveInput ? inputRepeatDelay : inputRepeatRate);

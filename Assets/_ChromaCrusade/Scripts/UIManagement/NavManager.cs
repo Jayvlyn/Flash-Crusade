@@ -4,10 +4,19 @@ using UnityEngine.InputSystem;
 
 public class NavManager : MonoBehaviour
 {
+    [Header("Mode")]
+    public NavMode mode = NavMode.Item;
+    public enum NavMode { Item, Grid };
+
+    [Header("Grid Navigation")]
+    public Grid grid;
+    public Transform gridRoot;
+    public Vector3Int currentGridCell = new Vector3Int(0,0,0);
+
     [Header("Visualization")]
     public NavVisualizer visualizer;
 
-    [Header("Navigation Input")]
+    [Header("Input")]
     public InputActionReference navigateAction;
     public InputActionReference submitAction;
     public InputActionReference cancelAction;
@@ -30,7 +39,7 @@ public class NavManager : MonoBehaviour
         submitAction.action.Enable();
         cancelAction.action.Enable();
 
-        SubscribeToInputs();
+        SubToInputs();
 
         EventBus.Subscribe<DisableNavigationEvent>(OnDisableNavigation);
         EventBus.Subscribe<EnableNavigationEvent>(OnEnableNavigation);
@@ -39,7 +48,7 @@ public class NavManager : MonoBehaviour
 
     private void OnDisable()
     {
-        UnsubscribeFromInputs();
+        UnsubFromInputs();
 
         visualizer.gameObject.SetActive(false);
 
@@ -50,9 +59,20 @@ public class NavManager : MonoBehaviour
     private void Start()
     {
         visualizer.gameObject.SetActive(true);
-        hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
-        if (hoveredItem)
-            visualizer.OnHighlightNew(hoveredItem);
+
+
+        if (mode == NavMode.Item)
+        {
+            hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
+            if (hoveredItem)
+                visualizer.OnHighlightItem(hoveredItem);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            hoveredItem = null;
+            Vector3 worldPos = grid.CellToWorld(currentGridCell);
+            visualizer.OnHighlightGridCell(grid, currentGridCell);
+        }
     }
 
     private void Update()
@@ -67,31 +87,22 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    private void OnNavigatePerformed(InputAction.CallbackContext ctx)
-    {
-        navInput = ctx.ReadValue<Vector2>();
-
-        TriggerNav(navInput);
-
-        nextRepeatTime = Time.time + inputRepeatDelay;
-    }
-
-    private void OnNavigateCanceled(InputAction.CallbackContext ctx)
-    {
-        navInput = Vector2.zero;
-    }
-
-    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
-    {
-        hoveredItem?.OnSelected();
-    }
-
-    private void OnCancelPerformed(InputAction.CallbackContext ctx)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-    }
-
     private void TriggerNav(Vector2 dir)
+    {
+        if (mode == NavMode.Item)
+        {
+            TriggerNavItem(dir);
+            return;
+        }
+
+        if (mode == NavMode.Grid)
+        {
+            TriggerNavGrid(dir);
+            return;
+        }
+    }
+
+    private void TriggerNavItem(Vector2 dir)
     {
         if (hoveredItem == null)
             return;
@@ -109,51 +120,103 @@ public class NavManager : MonoBehaviour
         NavToItem(next);
     }
 
+    // Currently limitless nav, no bounds
+    private void TriggerNavGrid(Vector2 dir)
+    {
+        Vector3Int offset = Vector3Int.zero;
+
+        if (dir.y > 0.5f) offset.y += 1;
+        if (dir.y < -0.5f) offset.y -= 1;
+        if (dir.x < -0.5f) offset.x -= 1;
+        if (dir.x > 0.5f) offset.x += 1;
+
+        if (offset == Vector3Int.zero)
+            return;
+
+        Vector3Int newCell = currentGridCell + offset;
+
+        currentGridCell = newCell;
+
+        visualizer.OnHighlightGridCell(grid, currentGridCell);
+    }
+
     private void NavToItem(NavItem item)
     {
         hoveredItem = item;
         hoveredItem.OnHighlighted();
-        visualizer.OnHighlightNew(hoveredItem);
+        visualizer.OnHighlightItem(hoveredItem);
     }
+
+    #region Input Actions
+
+    private void OnNavigatePerformed(InputAction.CallbackContext ctx)
+    {
+        navInput = ctx.ReadValue<Vector2>();
+        if(navInput == Vector2.zero) return;
+        //Debug.Log("perf " + navInput.ToString());
+
+        TriggerNav(navInput);
+
+        nextRepeatTime = Time.time + inputRepeatDelay;
+    }
+
+    private void OnNavigateCanceled(InputAction.CallbackContext ctx)
+    {
+        navInput = Vector2.zero;
+    }
+
+    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        hoveredItem?.OnSelected();
+    }
+
+    private void OnCancelPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    #endregion
+
+    #region Input Management
 
     private void OnDisableNavigation(DisableNavigationEvent e)
     {
-        LimitInputs();
+        UnsubFromMainInputs();
     }
 
     private void OnEnableNavigation(EnableNavigationEvent e)
     {
-        UnlimitInputs();
+        SubToMainInputs();
     }
 
-    private void SubscribeToInputs()
+    private void SubToInputs()
     {
-        navigateAction.action.performed += OnNavigatePerformed;
-        navigateAction.action.canceled += OnNavigateCanceled;
-        submitAction.action.performed += OnSubmitPerformed;
+        SubToMainInputs();
         cancelAction.action.performed += OnCancelPerformed;
     }
 
-    private void UnsubscribeFromInputs()
+    private void UnsubFromInputs()
     {
-        navigateAction.action.performed -= OnNavigatePerformed;
-        navigateAction.action.canceled -= OnNavigateCanceled;
-        submitAction.action.performed -= OnSubmitPerformed;
+        UnsubFromMainInputs();
         cancelAction.action.performed -= OnCancelPerformed;
     }
 
-    private void LimitInputs()
+    private void UnsubFromMainInputs()
     {
         navigateAction.action.performed -= OnNavigatePerformed;
         navigateAction.action.canceled -= OnNavigateCanceled;
         submitAction.action.performed -= OnSubmitPerformed;
     }
 
-    private void UnlimitInputs()
+    private void SubToMainInputs()
     {
         navigateAction.action.performed += OnNavigatePerformed;
         navigateAction.action.canceled += OnNavigateCanceled;
         submitAction.action.performed += OnSubmitPerformed;
     }
+
+    #endregion
 
 }

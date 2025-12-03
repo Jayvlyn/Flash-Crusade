@@ -2021,9 +2021,12 @@ MonoBehaviour:
   navigateAction: {fileID: -8784545083839296357, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   submitAction: {fileID: 392368643174621059, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   cancelAction: {fileID: 7727032971491509709, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  modeAction: {fileID: 1565305987308768294, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  resetAction: {fileID: 1279934112125055030, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}
+  exitItem: {fileID: 1054526086}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3395,6 +3398,7 @@ GameObject:
   - component: {fileID: 1036409155}
   - component: {fileID: 1036409154}
   - component: {fileID: 1036409153}
+  - component: {fileID: 1036409156}
   m_Layer: 5
   m_Name: NavVisualizer
   m_TagString: Untagged
@@ -3472,6 +3476,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavVisualizer
   transitionDuration: 0.12
+--- !u!114 &1036409156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036409151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6236e203f5cc2c648b04eb1ba2850a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageBlinker
+  color1: {r: 1, g: 1, b: 1, a: 1}
+  color2: {r: 1, g: 1, b: 1, a: 0.16078432}
+  blinkRate: 0.5
 --- !u!224 &1054526082 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}

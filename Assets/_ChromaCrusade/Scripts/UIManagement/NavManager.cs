@@ -1,10 +1,6 @@
-using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static NavManager;
 
 public class NavManager : MonoBehaviour
 {
@@ -25,6 +21,8 @@ public class NavManager : MonoBehaviour
     public InputActionReference navigateAction;
     public InputActionReference submitAction;
     public InputActionReference cancelAction;
+    public InputActionReference modeAction;
+    public InputActionReference resetAction;
 
     [Header("Settings")]
     public float inputRepeatDelay = 0.35f;
@@ -32,25 +30,27 @@ public class NavManager : MonoBehaviour
 
     private NavItem hoveredItem;
     public NavItem initialHoveredItem;
+    public NavItem exitItem;
 
-    //private Vector2 navInput;
     private float nextRepeatTime;
+
+    private bool inInputField = false;
+
+    private Vector2 lastMoveInput = Vector2.zero;
 
     public struct DisableNavigationEvent { }
     public struct EnableNavigationEvent { }
+    public struct EnterInputFieldEvent { }
 
     private void OnEnable()
     {
-        navigateAction.action.Enable();
-        submitAction.action.Enable();
-        cancelAction.action.Enable();
-
+        EnableActions();
         EnableInputs();
 
         EventBus.Subscribe<DisableNavigationEvent>(OnDisableNavigation);
         EventBus.Subscribe<EnableNavigationEvent>(OnEnableNavigation);
+        EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
     }
-
 
     private void OnDisable()
     {
@@ -60,16 +60,15 @@ public class NavManager : MonoBehaviour
 
         EventBus.Unsubscribe<DisableNavigationEvent>(OnDisableNavigation);
         EventBus.Unsubscribe<EnableNavigationEvent>(OnEnableNavigation);
+        EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
     }
 
     private void Start()
     {
         visualizer.gameObject.SetActive(true);
 
-        OnEnterNewNavMode();
+        InitNav();
     }
-
-    private Vector2 lastMoveInput = Vector2.zero;
 
     private void Update()
     {
@@ -145,11 +144,17 @@ public class NavManager : MonoBehaviour
 
     private void NavToItem(NavItem item)
     {
+        if(item == null) return;
         hoveredItem = item;
         hoveredItem.OnHighlighted();
         visualizer.OnHighlightItem(hoveredItem);
     }
 
+    public void ToggleNavMode()
+    {
+        if (mode == NavMode.Item)      SwitchToGridMode();
+        else if (mode == NavMode.Grid) SwitchToItemMode();
+    }
     public void SwitchNavMode(NavMode newMode)
     {
         if (mode == newMode) return;
@@ -159,20 +164,54 @@ public class NavManager : MonoBehaviour
     public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
 
+    private void InitItemNav()
+    {
+        NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
+    }
+
+    private void InitGridNav()
+    {
+        currentGridCell = new Vector3Int(0, 0, 0);
+        ReturnToGridNav();
+    }
+
+    private void ReturnToGridNav()
+    {
+        hoveredItem = null;
+        visualizer.OnHighlightGridCell(grid, currentGridCell);
+    }
+
     private void OnEnterNewNavMode()
     {
         if (mode == NavMode.Item)
+            InitItemNav();
+        else if (mode == NavMode.Grid)
+            ReturnToGridNav();
+    }
+
+    private void InitNav()
+    {
+        if (mode == NavMode.Item)
+            InitItemNav();
+        else if (mode == NavMode.Grid)
+            InitGridNav();
+    }
+
+    private void GoBack()
+    {
+        if (inInputField)
         {
-            //hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
-            hoveredItem = initialHoveredItem ?? GetComponentInChildren<NavItem>();
-            if (hoveredItem)
-                visualizer.OnHighlightItem(hoveredItem);
+            inInputField = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else if (mode == NavMode.Item)
+        {
+            if (hoveredItem == exitItem) exitItem.OnSelected();
+            else NavToItem(exitItem);
         }
         else if (mode == NavMode.Grid)
         {
-            hoveredItem = null;
-            Vector3 worldPos = grid.CellToWorld(currentGridCell);
-            visualizer.OnHighlightGridCell(grid, currentGridCell);
+            SwitchToItemMode();
         }
     }
 
@@ -190,8 +229,19 @@ public class NavManager : MonoBehaviour
     private void OnCancelPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        EventSystem.current.SetSelectedGameObject(null);
-        SwitchToItemMode();
+        GoBack();
+    }
+
+    private void OnModePerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        ToggleNavMode();
+    }
+
+    private void OnResetPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        InitNav();
     }
 
     #endregion
@@ -208,16 +258,34 @@ public class NavManager : MonoBehaviour
         EnableMainInputs();
     }
 
+    private void OnEnterInputField(EnterInputFieldEvent e)
+    {
+        inInputField = true;   
+    }
+
+    private void EnableActions()
+    {
+        navigateAction.action.Enable();
+        submitAction.action.Enable();
+        cancelAction.action.Enable();
+        modeAction.action.Enable();
+        resetAction.action.Enable();
+    }
+
     private void EnableInputs()
     {
         EnableMainInputs();
         cancelAction.action.performed += OnCancelPerformed;
+        modeAction.action.performed += OnModePerformed;
+        resetAction.action.performed += OnResetPerformed;
     }
 
     private void DisableInputs()
     {
         DisableMainInputs();
         cancelAction.action.performed -= OnCancelPerformed;
+        modeAction.action.performed -= OnModePerformed;
+        resetAction.action.performed -= OnResetPerformed;
     }
 
     private void EnableMainInputs()

@@ -2022,7 +2022,7 @@ MonoBehaviour:
   submitAction: {fileID: 392368643174621059, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   cancelAction: {fileID: 7727032971491509709, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
-  inputRepeatRate: 0.1
+  inputRepeatRate: 0.15
   hoveredItem: {fileID: 1054526086}
 --- !u!1 &619394800
 GameObject:

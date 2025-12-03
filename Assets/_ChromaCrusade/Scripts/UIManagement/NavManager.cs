@@ -17,6 +17,7 @@ public class NavManager : MonoBehaviour
     public NavVisualizer visualizer;
 
     [Header("Input")]
+    private bool allowMovement;
     public InputActionReference navigateAction;
     public InputActionReference submitAction;
     public InputActionReference cancelAction;
@@ -27,7 +28,7 @@ public class NavManager : MonoBehaviour
 
     public NavItem hoveredItem;
 
-    private Vector2 navInput;
+    //private Vector2 navInput;
     private float nextRepeatTime;
 
     public struct DisableNavigationEvent { }
@@ -39,7 +40,7 @@ public class NavManager : MonoBehaviour
         submitAction.action.Enable();
         cancelAction.action.Enable();
 
-        SubToInputs();
+        EnableInputs();
 
         EventBus.Subscribe<DisableNavigationEvent>(OnDisableNavigation);
         EventBus.Subscribe<EnableNavigationEvent>(OnEnableNavigation);
@@ -48,7 +49,7 @@ public class NavManager : MonoBehaviour
 
     private void OnDisable()
     {
-        UnsubFromInputs();
+        DisableInputs();
 
         visualizer.gameObject.SetActive(false);
 
@@ -75,15 +76,24 @@ public class NavManager : MonoBehaviour
         }
     }
 
+    private Vector2 lastMoveInput = Vector2.zero;
+
     private void Update()
     {
-        if (navInput == Vector2.zero)
-            return;
+        Vector2 input = navigateAction.action.ReadValue<Vector2>();
 
-        if (Time.time >= nextRepeatTime)
+        if (input == Vector2.zero)
         {
-            TriggerNav(navInput);
-            nextRepeatTime = Time.time + inputRepeatRate;
+            lastMoveInput = Vector2.zero;
+            nextRepeatTime = 0f;
+            return;
+        }
+
+        if (allowMovement && input != lastMoveInput || Time.time >= nextRepeatTime)
+        {
+            TriggerNav(input);
+            nextRepeatTime = Time.time + (input != lastMoveInput ? inputRepeatDelay : inputRepeatRate);
+            lastMoveInput = input;
         }
     }
 
@@ -149,21 +159,8 @@ public class NavManager : MonoBehaviour
 
     #region Input Actions
 
-    private void OnNavigatePerformed(InputAction.CallbackContext ctx)
-    {
-        navInput = ctx.ReadValue<Vector2>();
-        if(navInput == Vector2.zero) return;
-        //Debug.Log("perf " + navInput.ToString());
-
-        TriggerNav(navInput);
-
-        nextRepeatTime = Time.time + inputRepeatDelay;
-    }
-
-    private void OnNavigateCanceled(InputAction.CallbackContext ctx)
-    {
-        navInput = Vector2.zero;
-    }
+    // For our navigation composite we dont use input action anymore, because simulatious directional
+    // movement was impossible, now we poll the value of the navigation action
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
     {
@@ -183,38 +180,36 @@ public class NavManager : MonoBehaviour
 
     private void OnDisableNavigation(DisableNavigationEvent e)
     {
-        UnsubFromMainInputs();
+        DisableMainInputs();
     }
 
     private void OnEnableNavigation(EnableNavigationEvent e)
     {
-        SubToMainInputs();
+        EnableMainInputs();
     }
 
-    private void SubToInputs()
+    private void EnableInputs()
     {
-        SubToMainInputs();
+        EnableMainInputs();
         cancelAction.action.performed += OnCancelPerformed;
     }
 
-    private void UnsubFromInputs()
+    private void DisableInputs()
     {
-        UnsubFromMainInputs();
+        DisableMainInputs();
         cancelAction.action.performed -= OnCancelPerformed;
     }
 
-    private void UnsubFromMainInputs()
+    private void EnableMainInputs()
     {
-        navigateAction.action.performed -= OnNavigatePerformed;
-        navigateAction.action.canceled -= OnNavigateCanceled;
-        submitAction.action.performed -= OnSubmitPerformed;
+        allowMovement = true;
+        submitAction.action.performed += OnSubmitPerformed;
     }
 
-    private void SubToMainInputs()
+    private void DisableMainInputs()
     {
-        navigateAction.action.performed += OnNavigatePerformed;
-        navigateAction.action.canceled += OnNavigateCanceled;
-        submitAction.action.performed += OnSubmitPerformed;
+        allowMovement = false;
+        submitAction.action.performed -= OnSubmitPerformed;
     }
 
     #endregion

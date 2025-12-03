@@ -72,6 +72,13 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
+        ProcessNavInput();
+    }
+
+    private void ProcessNavInput()
+    {
+        if (!allowMovement) return;
+        
         Vector2 input = navigateAction.action.ReadValue<Vector2>();
 
         if (input == Vector2.zero)
@@ -81,10 +88,12 @@ public class NavManager : MonoBehaviour
             return;
         }
 
-        if (allowMovement && (input != lastMoveInput || Time.time >= nextRepeatTime))
+        bool newInput = input != lastMoveInput;
+
+        if (newInput || Time.time >= nextRepeatTime)
         {
             TriggerNav(input);
-            nextRepeatTime = Time.time + (input != lastMoveInput ? inputRepeatDelay : inputRepeatRate);
+            nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }
     }

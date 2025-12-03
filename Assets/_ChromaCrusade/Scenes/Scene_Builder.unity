@@ -2013,7 +2013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6242520b48024446a77b316e107cdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
-  mode: 1
+  mode: 0
   grid: {fileID: 304803347}
   gridRoot: {fileID: 304803348}
   currentGridCell: {x: 0, y: 0, z: 0}
@@ -2024,6 +2024,7 @@ MonoBehaviour:
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   hoveredItem: {fileID: 1054526086}
+  initialHoveredItem: {fileID: 1809799018}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,7 +5523,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.65
+  m_fontSize: 21.7
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5931,7 +5932,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 579940310}
+        m_TargetAssemblyTypeName: NavManager, Assembly-CSharp
+        m_MethodName: SwitchToGridMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
 --- !u!1 &1824871811
 GameObject:
@@ -6723,7 +6736,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.1
+  m_fontSize: 38.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

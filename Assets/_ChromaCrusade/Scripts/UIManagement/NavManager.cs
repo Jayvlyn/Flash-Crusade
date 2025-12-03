@@ -1,6 +1,10 @@
+using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static NavManager;
 
 public class NavManager : MonoBehaviour
 {
@@ -26,7 +30,8 @@ public class NavManager : MonoBehaviour
     public float inputRepeatDelay = 0.35f;
     public float inputRepeatRate = 0.1f;
 
-    public NavItem hoveredItem;
+    private NavItem hoveredItem;
+    public NavItem initialHoveredItem;
 
     //private Vector2 navInput;
     private float nextRepeatTime;
@@ -61,19 +66,7 @@ public class NavManager : MonoBehaviour
     {
         visualizer.gameObject.SetActive(true);
 
-
-        if (mode == NavMode.Item)
-        {
-            hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
-            if (hoveredItem)
-                visualizer.OnHighlightItem(hoveredItem);
-        }
-        else if (mode == NavMode.Grid)
-        {
-            hoveredItem = null;
-            Vector3 worldPos = grid.CellToWorld(currentGridCell);
-            visualizer.OnHighlightGridCell(grid, currentGridCell);
-        }
+        OnEnterNewNavMode();
     }
 
     private Vector2 lastMoveInput = Vector2.zero;
@@ -157,6 +150,32 @@ public class NavManager : MonoBehaviour
         visualizer.OnHighlightItem(hoveredItem);
     }
 
+    public void SwitchNavMode(NavMode newMode)
+    {
+        if (mode == newMode) return;
+        mode = newMode;
+        OnEnterNewNavMode();
+    }
+    public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
+    public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
+
+    private void OnEnterNewNavMode()
+    {
+        if (mode == NavMode.Item)
+        {
+            //hoveredItem = hoveredItem ?? GetComponentInChildren<NavItem>();
+            hoveredItem = initialHoveredItem ?? GetComponentInChildren<NavItem>();
+            if (hoveredItem)
+                visualizer.OnHighlightItem(hoveredItem);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            hoveredItem = null;
+            Vector3 worldPos = grid.CellToWorld(currentGridCell);
+            visualizer.OnHighlightGridCell(grid, currentGridCell);
+        }
+    }
+
     #region Input Actions
 
     // For our navigation composite we dont use input action anymore, because simulatious directional
@@ -172,6 +191,7 @@ public class NavManager : MonoBehaviour
     {
         if (ctx.canceled) return;
         EventSystem.current.SetSelectedGameObject(null);
+        SwitchToItemMode();
     }
 
     #endregion

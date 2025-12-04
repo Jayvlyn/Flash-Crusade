@@ -65,8 +65,6 @@ public class NavManager : MonoBehaviour
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
-
         visualizer.gameObject.SetActive(true);
 
         InitNav();
@@ -105,7 +103,6 @@ public class NavManager : MonoBehaviour
     private Vector2 prevStableInput = Vector2.zero;
     private Vector2 pendingCardinal = Vector2.zero;
     private float pendingTime = 0f;
-    private const float pendingWindow = 0.05f;
 
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
@@ -127,7 +124,7 @@ public class NavManager : MonoBehaviour
 
         if (rawIsCardinal)
         {
-            //float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.08f, 0.12f);
+            float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
 
             if (IsDiagonal(prevStableInput))
                 return prevStableInput; // deny first cardinal after diagonal

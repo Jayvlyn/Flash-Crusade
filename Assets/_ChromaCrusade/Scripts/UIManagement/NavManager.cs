@@ -65,6 +65,8 @@ public class NavManager : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
+
         visualizer.gameObject.SetActive(true);
 
         InitNav();
@@ -80,6 +82,7 @@ public class NavManager : MonoBehaviour
         if (!allowMovement) return;
 
         Vector2 raw = navigateAction.action.ReadValue<Vector2>();
+        Debug.Log(raw);
         Vector2 input = FilterDiagonalTransitions(raw);
 
         if (input == Vector2.zero)
@@ -102,62 +105,59 @@ public class NavManager : MonoBehaviour
     private Vector2 prevStableInput = Vector2.zero;
     private Vector2 pendingCardinal = Vector2.zero;
     private float pendingTime = 0f;
-    private const float pendingWindow = 0.05f; // 50ms window to detect diagonal transitions
+    //private const float pendingWindow = 0.05f;
 
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
-        bool rawIsNeutral = raw.sqrMagnitude < 0.01f;
-        bool rawIsCardinal = (Mathf.Abs(raw.x) > 0.1f) ^ (Mathf.Abs(raw.y) > 0.1f);
-        bool rawIsDiagonal = (Mathf.Abs(raw.x) > 0.1f) && (Mathf.Abs(raw.y) > 0.1f);
+        bool rawIsNeutral = IsNeutral(raw);
+        bool rawIsCardinal = IsCardinal(raw);
+        bool rawIsDiagonal = IsDiagonal(raw);
 
-        // Handle diagonal directly
         if (rawIsDiagonal)
         {
-            // If we had a pending cardinal just before this, ignore the cardinal
             pendingCardinal = Vector2.zero;
-            return prevStableInput = raw;
+            return prevStableInput = raw; // always accept diag
         }
 
-        // Handle neutral
         if (rawIsNeutral)
         {
             pendingCardinal = Vector2.zero;
-            return prevStableInput = Vector2.zero;
+            return prevStableInput = Vector2.zero; // always accept neutral
         }
 
-        // Handle cardinal (problem case)
         if (rawIsCardinal)
         {
-            // If previous input was diagonal, suppress cardinal for one frame
-            if (IsDiagonal(prevStableInput))
-                return prevStableInput;
+            float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.12f);
 
-            // Start a pending window in case diagonal comes next frame
+            if (IsDiagonal(prevStableInput))
+                return prevStableInput; // deny first cardinal after diagonal
+
+            // Special case: cardinal sandwiched between neutrals
+            if (IsNeutral(prevStableInput))
+            {
+                // Next frame, if we return to neutral, this should still be accepted
+                // So immediately accept this cardinal press
+                pendingCardinal = Vector2.zero;
+                return prevStableInput = raw;
+            }
+
             if (pendingCardinal == Vector2.zero)
             {
                 pendingCardinal = raw;
                 pendingTime = Time.time;
-                return prevStableInput; // ignore for now
+                return prevStableInput; // new pending cardinal, keep using previous
             }
 
-            // If still within pending window, ignore cardinal
             if (Time.time - pendingTime < pendingWindow)
             {
-                return prevStableInput;
+                return prevStableInput; // cardinal still pending, keep using previous
             }
 
-            // Cardinal seems legit now
             pendingCardinal = Vector2.zero;
-            return prevStableInput = raw;
+            return prevStableInput = raw; // cardinal accepted after pending
         }
 
-        // Fallback safety
         return prevStableInput;
-    }
-
-    private bool IsDiagonal(Vector2 v)
-    {
-        return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
     }
 
     private void TriggerNav(Vector2 dir)
@@ -372,4 +372,20 @@ public class NavManager : MonoBehaviour
 
     #endregion
 
+    #region Helpers
+    private bool IsDiagonal(Vector2 v)
+    {
+        return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
+    }
+
+    private bool IsCardinal(Vector2 v)
+    {
+        return Mathf.Abs(v.x) > 0.1f ^ Mathf.Abs(v.y) > 0.1f;
+    }
+
+    private bool IsNeutral(Vector2 v)
+    {
+        return v.sqrMagnitude < 0.01f;
+    }
+    #endregion
 }

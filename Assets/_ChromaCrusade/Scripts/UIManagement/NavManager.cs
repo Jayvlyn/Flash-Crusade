@@ -80,7 +80,6 @@ public class NavManager : MonoBehaviour
         if (!allowMovement) return;
 
         Vector2 raw = navigateAction.action.ReadValue<Vector2>();
-        Debug.Log(raw);
         Vector2 input = FilterDiagonalTransitions(raw);
 
         if (input == Vector2.zero)

@@ -346,6 +346,7 @@ public class NavManager : MonoBehaviour
     private int stuckHits;
     private int stuckHitThreshold = 5; // could make this frame-dependent like pendingWindow
     private float cardinalHoldTime;
+    private float diagonalHoldTime;
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
         bool rawIsNeutral = IsNeutral(raw);
@@ -354,11 +355,14 @@ public class NavManager : MonoBehaviour
         float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
         if (rawIsDiagonal)
         {
+            diagonalHoldTime += Time.deltaTime;
+
             if (IsCardinal(prevStableInput))
             {
-                if(cardinalHoldTime > 0.2f)
+                if(cardinalHoldTime > 0.2f || diagonalHoldTime > 0.2f)
                 {
                     cardinalHoldTime = 0;
+                    diagonalHoldTime = 0;
                     return prevStableInput = raw; // accept diagonal after being stuck
                 }
                 return prevStableInput; // deny diagonal
@@ -383,6 +387,7 @@ public class NavManager : MonoBehaviour
         if (rawIsNeutral)
         {
             cardinalHoldTime = 0;
+            diagonalHoldTime = 0;
             pendingCardinal = Vector2.zero;
             return prevStableInput = Vector2.zero; // always accept neutral
         }

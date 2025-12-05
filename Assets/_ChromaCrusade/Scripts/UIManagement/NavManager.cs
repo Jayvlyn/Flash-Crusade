@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class NavManager : MonoBehaviour
 {
+    #region Variables
+
     [Header("Mode")]
     public NavMode mode = NavMode.Item;
     public enum NavMode { Item, Grid };
@@ -42,10 +44,15 @@ public class NavManager : MonoBehaviour
     [SerializeField] private NavItem initialHoveredItem;
     [SerializeField] private NavItem exitItem;
 
+    #endregion
 
+    #region Events
     public struct DisableNavigationEvent { }
     public struct EnableNavigationEvent { }
     public struct EnterInputFieldEvent { }
+    #endregion
+
+    #region Lifecycle
 
     private void OnEnable()
     {
@@ -73,13 +80,17 @@ public class NavManager : MonoBehaviour
         visualizer.gameObject.SetActive(true);
         visualizer.centerGridCell = centerGridCell;
 
-        EnterNavMode(true);
+        InitNavMode(true);
     }
 
     private void Update()
     {
         ProcessNavInput();
     }
+
+    #endregion
+
+    #region Navigation
 
     private float nextRepeatTime;
     private void ProcessNavInput()
@@ -104,60 +115,6 @@ public class NavManager : MonoBehaviour
             nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }
-    }
-
-    private Vector2 prevStableInput = Vector2.zero;
-    private Vector2 pendingCardinal = Vector2.zero;
-    private float pendingTime = 0f;
-    private int prevStableDiagonalHits = 0; // fix for direct transition from diag to card
-    private int hitThreshold = 5; // could make this frame-dependent like pendingWindow
-    private Vector2 FilterDiagonalTransitions(Vector2 raw)
-    {
-        bool rawIsNeutral = IsNeutral(raw);
-        bool rawIsCardinal = IsCardinal(raw);
-        bool rawIsDiagonal = IsDiagonal(raw);
-
-        if (rawIsDiagonal)
-        {
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = raw; // always accept diag
-        }
-
-        if (rawIsNeutral)
-        {
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = Vector2.zero; // always accept neutral
-        }
-
-        if (rawIsCardinal)
-        {
-            float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
-
-            if (IsDiagonal(prevStableInput))
-            {
-                prevStableDiagonalHits++;
-                if (prevStableDiagonalHits > hitThreshold) return prevStableInput = raw;
-                return prevStableInput; // deny first cardinal
-            }
-            prevStableDiagonalHits = 0;
-
-            if (pendingCardinal == Vector2.zero)
-            {
-                pendingCardinal = raw;
-                pendingTime = Time.time;
-                return prevStableInput; // new pending cardinal, keep using previous
-            }
-
-            if (Time.time - pendingTime < pendingWindow)
-            {
-                return prevStableInput; // cardinal still pending, keep using previous
-            }
-
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = raw; // cardinal accepted after pending
-        }
-
-        return prevStableInput;
     }
 
     private void TriggerNav(Vector2 dir)
@@ -230,38 +187,12 @@ public class NavManager : MonoBehaviour
     {
         if (mode == newMode) return;
         mode = newMode;
-        EnterNavMode(false);
+        InitNavMode(false);
     }
 
     public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
 
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
-
-    private void InitItemNav()
-    {
-        NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
-    }
-    
-    private void ReturnToGridNav()
-    {
-        hoveredItem = null;
-        visualizer.OnHighlightGridCell(currentGridCell);
-    }
-
-    private void EnterNavMode(bool resetGrid)
-    {
-        switch (mode)
-        {
-            case NavMode.Item:
-                InitItemNav();
-                break;
-
-            case NavMode.Grid:
-                if (resetGrid) currentGridCell = Vector3Int.zero;
-                ReturnToGridNav();
-                break;
-        }
-    }
 
     private void GoBack()
     {
@@ -280,6 +211,38 @@ public class NavManager : MonoBehaviour
             SwitchToItemMode();
         }
     }
+
+    #endregion
+
+    #region Initialization
+
+    private void InitItemNav()
+    {
+        NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
+    }
+    
+    private void InitGridNav()
+    {
+        hoveredItem = null;
+        visualizer.OnHighlightGridCell(currentGridCell);
+    }
+
+    private void InitNavMode(bool resetGrid)
+    {
+        switch (mode)
+        {
+            case NavMode.Item:
+                InitItemNav();
+                break;
+
+            case NavMode.Grid:
+                if (resetGrid) currentGridCell = Vector3Int.zero;
+                InitGridNav();
+                break;
+        }
+    }
+
+    #endregion
 
     #region Input Actions
 
@@ -310,7 +273,7 @@ public class NavManager : MonoBehaviour
     private void OnResetPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        EnterNavMode(true);
+        InitNavMode(true);
     }
 
     #endregion
@@ -375,6 +338,60 @@ public class NavManager : MonoBehaviour
     #endregion
 
     #region Helpers
+
+    private Vector2 prevStableInput = Vector2.zero;
+    private Vector2 pendingCardinal = Vector2.zero;
+    private float pendingTime = 0f;
+    private int prevStableDiagonalHits = 0; // fix for direct transition from diag to card
+    private int hitThreshold = 5; // could make this frame-dependent like pendingWindow
+    private Vector2 FilterDiagonalTransitions(Vector2 raw)
+    {
+        bool rawIsNeutral = IsNeutral(raw);
+        bool rawIsCardinal = IsCardinal(raw);
+        bool rawIsDiagonal = IsDiagonal(raw);
+
+        if (rawIsDiagonal)
+        {
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = raw; // always accept diag
+        }
+
+        if (rawIsNeutral)
+        {
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = Vector2.zero; // always accept neutral
+        }
+
+        if (rawIsCardinal)
+        {
+            float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
+
+            if (IsDiagonal(prevStableInput))
+            {
+                prevStableDiagonalHits++;
+                if (prevStableDiagonalHits > hitThreshold) return prevStableInput = raw;
+                return prevStableInput; // deny first cardinal
+            }
+            prevStableDiagonalHits = 0;
+
+            if (pendingCardinal == Vector2.zero)
+            {
+                pendingCardinal = raw;
+                pendingTime = Time.time;
+                return prevStableInput; // new pending cardinal, keep using previous
+            }
+
+            if (Time.time - pendingTime < pendingWindow)
+            {
+                return prevStableInput; // cardinal still pending, keep using previous
+            }
+
+            pendingCardinal = Vector2.zero;
+            return prevStableInput = raw; // cardinal accepted after pending
+        }
+
+        return prevStableInput;
+    }
 
     private bool IsDiagonal(Vector2 v)
     {

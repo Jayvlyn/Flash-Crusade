@@ -1591,6 +1591,7 @@ MonoBehaviour:
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}
   exitItem: {fileID: 1054526086}
+  buildArea: {fileID: 227269908}
 --- !u!1 &581878685
 GameObject:
   m_ObjectHideFlags: 0

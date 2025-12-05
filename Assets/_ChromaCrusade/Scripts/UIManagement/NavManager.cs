@@ -45,6 +45,7 @@ public class NavManager : MonoBehaviour
     private NavItem hoveredItem;
     [SerializeField] private NavItem initialHoveredItem;
     [SerializeField] private NavItem exitItem;
+    [SerializeField] private Transform buildArea;
 
     #endregion
 
@@ -266,7 +267,10 @@ public class NavManager : MonoBehaviour
     private void OnZoomPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
-        ZoomLevel += Mathf.RoundToInt(input);
+        ZoomLevel -= Mathf.RoundToInt(input);
+        float s = zoomScales[zoomLevel];
+        buildArea.localScale = new Vector3(s, s, s);
+        visualizer.UpdateGridCellImmediate(currentGridCell);
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)

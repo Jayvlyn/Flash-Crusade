@@ -71,6 +71,15 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
 
+    //public void UpdateCellImmediate(RectTransform targetRT, Vector3Int cell)
+    //{
+    //    GetWorldRectValues(targetRT, out Vector2 targetPos, out Vector2 targetSize);
+
+    //    rect.anchoredPosition = targetPos;
+    //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+    //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+    //}
+
     public void UpdateCurrentItemImmediate()
     {
         if (currentItem == null) return;
@@ -82,7 +91,7 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    private void UpdateGridCellImmediate(Vector3Int cell)
+    public void UpdateGridCellImmediate(Vector3Int cell)
     {
         GetCellRectValues(centerGridCell, cell, out var p, out var s);
 

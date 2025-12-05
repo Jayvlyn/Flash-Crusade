@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -264,13 +265,40 @@ public class NavManager : MonoBehaviour
 
     #region Input Actions
 
+    private Coroutine zoomRoutine;
+    private Vector3 targetZoomScale;
     private void OnZoomPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
         ZoomLevel -= Mathf.RoundToInt(input);
         float s = zoomScales[zoomLevel];
-        buildArea.localScale = new Vector3(s, s, s);
-        visualizer.UpdateGridCellImmediate(currentGridCell);
+        targetZoomScale = new Vector3(s, s, s);
+
+        if (UIManager.Smoothing)
+        {
+            if (zoomRoutine != null) StopCoroutine(zoomRoutine);
+            zoomRoutine = StartCoroutine(LerpZoom(targetZoomScale));
+        }
+        else
+        {
+            buildArea.localScale = new Vector3(s, s, s);
+            visualizer.UpdateGridCellImmediate(currentGridCell);
+        }
+    }
+    private IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
+    {
+        float t = 0f;
+        Vector3 start = buildArea.localScale;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            buildArea.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
+            visualizer.UpdateGridCellImmediate(currentGridCell);
+
+            yield return null;
+        }
+        buildArea.localScale = target;
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)

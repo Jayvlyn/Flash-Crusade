@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(RectTransform))]
 public class NavVisualizer : MonoBehaviour
 {
     public float transitionDuration = 0.12f;
+    public float cellSize = 32;
 
+    [HideInInspector] public RectTransform centerGridCell;
     private RectTransform rect;
     private NavItem currentItem;
     private Coroutine lerpRoutine;
@@ -30,14 +33,14 @@ public class NavVisualizer : MonoBehaviour
             UpdateCurrentItemImmediate();
     }
 
-    public void OnHighlightGridCell(Grid grid, Vector3Int cell)
+    public void OnHighlightGridCell(Vector3Int cell)
     {
         currentItem = null;
 
         if (UIManager.Smoothing)
-            LerpToGridCell(grid, cell);
+            LerpToGridCell(cell);
         else
-            UpdateGridCellImmediate(grid, cell);
+            UpdateGridCellImmediate(cell);
     }
 
     private void LerpToCurrentItem()
@@ -54,14 +57,14 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
     
-    private void LerpToGridCell(Grid grid, Vector3Int cell)
+    private void LerpToGridCell(Vector3Int cell)
     {
         CancelLerp();
 
         lerpRoutine = StartCoroutine(LerpToTarget(
             getTarget: () =>
             {
-                GetGridCellRect(grid, cell, out var p, out var s);
+                GetCellRectValues(centerGridCell, cell, out var p, out var s);
                 return (p, s);
             },
             shouldAbort: () => currentItem != null
@@ -79,13 +82,13 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    private void UpdateGridCellImmediate(Grid grid, Vector3Int cell)
+    private void UpdateGridCellImmediate(Vector3Int cell)
     {
-        GetGridCellRect(grid, cell, out Vector2 pos, out Vector2 size);
+        GetCellRectValues(centerGridCell, cell, out var p, out var s);
 
-        rect.anchoredPosition = pos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+        rect.anchoredPosition = p;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
     }
 
     private void GetWorldRectValues(RectTransform target, out Vector2 pos, out Vector2 size)
@@ -105,36 +108,11 @@ public class NavVisualizer : MonoBehaviour
         pos = bl + size * 0.5f;
     }
 
-    private void GetGridCellRect(Grid grid, Vector3Int cell, out Vector2 pos, out Vector2 size)
+    private void GetCellRectValues(RectTransform target, Vector3Int cell, out Vector2 pos, out Vector2 size)
     {
-        Vector3 p0 = grid.CellToWorld(cell);
-        Vector3 p1 = grid.CellToWorld(cell + new Vector3Int(1, 0, 0));
-        Vector3 p2 = grid.CellToWorld(cell + new Vector3Int(1, 1, 0));
-        Vector3 p3 = grid.CellToWorld(cell + new Vector3Int(0, 1, 0));
-
-        Vector3[] worldCorners = { p0, p1, p2, p3 };
-        Vector2[] canvasLocal = new Vector2[4];
-
-        Canvas canvas = rect.GetComponentInParent<Canvas>();
-        RectTransform canvasRect = canvas.transform as RectTransform;
-
-        for (int i = 0; i < 4; i++)
-        {
-            Vector3 screenPoint = Camera.main.WorldToScreenPoint(worldCorners[i]);
-
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                screenPoint,
-                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-                out canvasLocal[i]
-            );
-        }
-
-        Vector2 bl = canvasLocal[0];
-        Vector2 tr = canvasLocal[2];
-
-        size = tr - bl;
-        pos = bl + size * 0.5f;
+        GetWorldRectValues(target, out var p, out var s);
+        pos = new Vector2(p.x + cell.x * s.x, p.y + cell.y * s.y);
+        size = s;
     }
 
     private IEnumerator LerpToTarget(

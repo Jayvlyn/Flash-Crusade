@@ -9,9 +9,8 @@ public class NavManager : MonoBehaviour
     public enum NavMode { Item, Grid };
 
     [Header("Grid Navigation")]
-    public Grid grid;
-    public Transform gridRoot;
     public Vector3Int currentGridCell = new Vector3Int(0,0,0);
+    public RectTransform centerGridCell;
 
     [Header("Visualization")]
     public NavVisualizer visualizer;
@@ -66,6 +65,7 @@ public class NavManager : MonoBehaviour
     private void Start()
     {
         visualizer.gameObject.SetActive(true);
+        visualizer.centerGridCell = centerGridCell;
 
         InitNav();
     }
@@ -196,7 +196,7 @@ public class NavManager : MonoBehaviour
 
         currentGridCell = newCell;
 
-        visualizer.OnHighlightGridCell(grid, currentGridCell);
+        visualizer.OnHighlightGridCell(currentGridCell);
     }
 
     private void NavToItem(NavItem item)
@@ -235,7 +235,7 @@ public class NavManager : MonoBehaviour
     private void ReturnToGridNav()
     {
         hoveredItem = null;
-        visualizer.OnHighlightGridCell(grid, currentGridCell);
+        visualizer.OnHighlightGridCell(currentGridCell);
     }
 
     private void OnEnterNewNavMode()

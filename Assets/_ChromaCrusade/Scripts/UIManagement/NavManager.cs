@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -20,6 +21,7 @@ public class NavManager : MonoBehaviour
         get => zoomLevel;
         set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
     }
+    private Dictionary<int,float> zoomScales = new Dictionary<int,float>();
 
     [Header("Visualization")]
     [SerializeField] private NavVisualizer visualizer;
@@ -73,6 +75,21 @@ public class NavManager : MonoBehaviour
         EventBus.Unsubscribe<DisableNavigationEvent>(OnDisableNavigation);
         EventBus.Unsubscribe<EnableNavigationEvent>(OnEnableNavigation);
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
+    }
+
+    private void Awake()
+    {
+        // based on 16:9 ratio
+        zoomScales.Add(1, 1.48f);
+        zoomScales.Add(2, 0.89f);
+        zoomScales.Add(3, 0.635f);
+        zoomScales.Add(4, 0.493f);
+        zoomScales.Add(5, 0.403f);
+        zoomScales.Add(6, 0.3415f);
+        zoomScales.Add(7, 0.29597f);
+        zoomScales.Add(8, 0.26114f);
+        zoomScales.Add(9, 0.23365f);
+        zoomScales.Add(10,0.21141f);
     }
 
     private void Start()

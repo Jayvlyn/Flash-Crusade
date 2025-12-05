@@ -352,15 +352,14 @@ public class NavManager : MonoBehaviour
         bool rawIsCardinal = IsCardinal(raw);
         bool rawIsDiagonal = IsDiagonal(raw);
         float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
-
         if (rawIsDiagonal)
         {
             if (IsCardinal(prevStableInput))
             {
-                if(Time.time - cardinalHoldTime > 0.2f)
+                if(cardinalHoldTime > 0.2f)
                 {
                     cardinalHoldTime = 0;
-                    return prevStableInput = raw;
+                    return prevStableInput = raw; // accept diagonal after being stuck
                 }
                 return prevStableInput; // deny diagonal
             }
@@ -390,15 +389,17 @@ public class NavManager : MonoBehaviour
 
         if (rawIsCardinal)
         {
+            cardinalHoldTime += Time.deltaTime;
+
             if (IsDiagonal(prevStableInput))
             {
                 stuckHits++;
                 if (stuckHits > stuckHitThreshold)
                 {
                     stuckHits = 0;
-                    return prevStableInput = raw;
+                    return prevStableInput = raw; // accept cardinal after being stuck
                 }
-                return prevStableInput;
+                return prevStableInput; // deny cardinal
             }
             stuckHits = 0;
 
@@ -415,7 +416,6 @@ public class NavManager : MonoBehaviour
             }
 
             pendingCardinal = Vector2.zero;
-            cardinalHoldTime = Time.time;
             return prevStableInput = raw; // cardinal accepted after pending
         }
 

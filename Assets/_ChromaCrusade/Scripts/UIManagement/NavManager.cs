@@ -73,7 +73,7 @@ public class NavManager : MonoBehaviour
         visualizer.gameObject.SetActive(true);
         visualizer.centerGridCell = centerGridCell;
 
-        InitNav();
+        EnterNavMode(true);
     }
 
     private void Update()

@@ -11,7 +11,10 @@ public class FixedRatioGrid : MonoBehaviour
     [Header("Layout Tuning")]
     [Range(0f, 0.5f)]
     public float spacingRatio = 0.05f;
-    public float minimumPadding = 10f; // pixels
+    public float minimumPaddingH = 10f;
+    public float minimumPaddingW = 10f;
+    public float heightFactor = 0.01f;
+    public float heightFactor2 = 0.01f;
     public float cellReduction = 0.01f;
 
     private RectTransform rectTransform;
@@ -42,13 +45,10 @@ public class FixedRatioGrid : MonoBehaviour
         float aspectGrid = (float)columns / rows;
         float aspectPanel = w / h;
 
-        // First determine limiting axis
         bool heightLimited = aspectPanel > aspectGrid;
 
-        // Determine a provisional cell size ignoring padding
         float rawCellSize = heightLimited ? h / rows : w / columns;
 
-        // Calculate spacing based on cell scale
         float spacing = rawCellSize * spacingRatio;
         grid.spacing = new Vector2(spacing, spacing);
 
@@ -58,31 +58,31 @@ public class FixedRatioGrid : MonoBehaviour
         float availableW = w;
         float availableH = h;
 
-        // Padding applied later will reduce this space
         float cellSize = heightLimited
             ? (availableH - totalSpacingY) / rows
             : (availableW - totalSpacingX) / columns;
 
-        // Now compute padding leftover for both axes
         float usedWidth = cellSize * columns + totalSpacingX;
         float usedHeight = cellSize * rows + totalSpacingY;
 
         float leftoverW = availableW - usedWidth;
         float leftoverH = availableH - usedHeight;
 
-        // Compute padding evenly
         int padLeft = Mathf.RoundToInt(leftoverW * 0.5f);
         int padRight = padLeft;
-        int padTop = Mathf.RoundToInt(leftoverH * 0.5f);
+        int padTop = heightLimited
+            ? Mathf.RoundToInt(leftoverH * 0.5f) + (int)(h * heightFactor)
+            : Mathf.RoundToInt(leftoverH * 0.5f) + (int)(h * heightFactor2);
         int padBottom = padTop;
 
-        // **Clamp padding on all sides**
-        padLeft = Mathf.Max(padLeft, (int)minimumPadding);
-        padRight = Mathf.Max(padRight, (int)minimumPadding);
-        padTop = Mathf.Max(padTop, (int)minimumPadding);
-        padBottom = Mathf.Max(padBottom, (int)minimumPadding);
+        padLeft = Mathf.Max(padLeft, (int)minimumPaddingW);
+        padRight = Mathf.Max(padRight, (int)minimumPaddingW);
+        //padTop = Mathf.Max(padTop, (int)minimumPadding);
+        padTop = heightLimited
+            ? Mathf.Max(padTop, (int)minimumPaddingH) + (int)(h * heightFactor)
+            : Mathf.Max(padTop, (int)minimumPaddingH) + (int)(h * heightFactor2);
+        padBottom = Mathf.Max(padBottom, (int)minimumPaddingH);
 
-        // Now that padding changed, we must recompute cell size properly:
         float effectiveW = w - padLeft - padRight - totalSpacingX;
         float effectiveH = h - padTop - padBottom - totalSpacingY;
 
@@ -90,8 +90,7 @@ public class FixedRatioGrid : MonoBehaviour
             ? effectiveH / rows - cellReduction
             : effectiveW / columns - cellReduction;
 
-        // Assign final values
         grid.cellSize = new Vector2(cellSize, cellSize);
-        grid.padding = new RectOffset(padLeft, padRight, padTop, padBottom);
+        grid.padding = new RectOffset(padLeft, padRight, padTop, 0);
     }
 }

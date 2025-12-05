@@ -102,6 +102,8 @@ public class NavManager : MonoBehaviour
     private Vector2 prevStableInput = Vector2.zero;
     private Vector2 pendingCardinal = Vector2.zero;
     private float pendingTime = 0f;
+    private int prevStableDiagonalHits = 0; // fix for direct transition from diag to card
+    private int hitThreshold = 5; // could make this frame-dependent like pendingWindow
 
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
@@ -126,7 +128,12 @@ public class NavManager : MonoBehaviour
             float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
 
             if (IsDiagonal(prevStableInput))
-                return prevStableInput; // deny first cardinal after diagonal
+            {
+                prevStableDiagonalHits++;
+                if (prevStableDiagonalHits > hitThreshold) return prevStableInput = raw;
+                return prevStableInput; // deny first cardinal
+            }
+            prevStableDiagonalHits = 0;
 
             if (pendingCardinal == Vector2.zero)
             {

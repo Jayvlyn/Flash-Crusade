@@ -9,33 +9,39 @@ public class NavManager : MonoBehaviour
     public enum NavMode { Item, Grid };
 
     [Header("Grid Navigation")]
-    public Vector3Int currentGridCell = new Vector3Int(0,0,0);
-    public RectTransform centerGridCell;
+    [SerializeField] private Vector3Int currentGridCell = new Vector3Int(0,0,0);
+    [SerializeField] private RectTransform centerGridCell;
+    [SerializeField] private int zoomLevel = 3;
+    [SerializeField] private Vector2 zoomRange = new Vector2(1, 10);
+    public int ZoomLevel
+    {
+        get => zoomLevel;
+        set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
+    }
 
     [Header("Visualization")]
-    public NavVisualizer visualizer;
+    [SerializeField] private NavVisualizer visualizer;
 
     [Header("Input")]
+    [SerializeField] private InputActionReference navigateAction;
+    [SerializeField] private InputActionReference submitAction;
+    [SerializeField] private InputActionReference cancelAction;
+    [SerializeField] private InputActionReference modeAction;
+    [SerializeField] private InputActionReference resetAction;
+    [SerializeField] private InputActionReference zoomAction;
+    private Vector2 lastMoveInput = Vector2.zero;
+    private bool inInputField = false;
     private bool allowMovement;
-    public InputActionReference navigateAction;
-    public InputActionReference submitAction;
-    public InputActionReference cancelAction;
-    public InputActionReference modeAction;
-    public InputActionReference resetAction;
 
     [Header("Settings")]
-    public float inputRepeatDelay = 0.35f;
-    public float inputRepeatRate = 0.1f;
+    [SerializeField] private float inputRepeatDelay = 0.35f;
+    [SerializeField] private float inputRepeatRate = 0.1f;
 
+    [Header("Other Refs")]
     private NavItem hoveredItem;
-    public NavItem initialHoveredItem;
-    public NavItem exitItem;
+    [SerializeField] private NavItem initialHoveredItem;
+    [SerializeField] private NavItem exitItem;
 
-    private float nextRepeatTime;
-
-    private bool inInputField = false;
-
-    private Vector2 lastMoveInput = Vector2.zero;
 
     public struct DisableNavigationEvent { }
     public struct EnableNavigationEvent { }
@@ -75,6 +81,7 @@ public class NavManager : MonoBehaviour
         ProcessNavInput();
     }
 
+    private float nextRepeatTime;
     private void ProcessNavInput()
     {
         if (!allowMovement) return;
@@ -104,7 +111,6 @@ public class NavManager : MonoBehaviour
     private float pendingTime = 0f;
     private int prevStableDiagonalHits = 0; // fix for direct transition from diag to card
     private int hitThreshold = 5; // could make this frame-dependent like pendingWindow
-
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
         bool rawIsNeutral = IsNeutral(raw);
@@ -219,46 +225,42 @@ public class NavManager : MonoBehaviour
         if (mode == NavMode.Item)      SwitchToGridMode();
         else if (mode == NavMode.Grid) SwitchToItemMode();
     }
+
     public void SwitchNavMode(NavMode newMode)
     {
         if (mode == newMode) return;
         mode = newMode;
-        OnEnterNewNavMode();
+        EnterNavMode(false);
     }
+
     public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
+
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
 
     private void InitItemNav()
     {
         NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
     }
-
-    private void InitGridNav()
-    {
-        currentGridCell = new Vector3Int(0, 0, 0);
-        ReturnToGridNav();
-    }
-
+    
     private void ReturnToGridNav()
     {
         hoveredItem = null;
         visualizer.OnHighlightGridCell(currentGridCell);
     }
 
-    private void OnEnterNewNavMode()
+    private void EnterNavMode(bool resetGrid)
     {
-        if (mode == NavMode.Item)
-            InitItemNav();
-        else if (mode == NavMode.Grid)
-            ReturnToGridNav();
-    }
+        switch (mode)
+        {
+            case NavMode.Item:
+                InitItemNav();
+                break;
 
-    private void InitNav()
-    {
-        if (mode == NavMode.Item)
-            InitItemNav();
-        else if (mode == NavMode.Grid)
-            InitGridNav();
+            case NavMode.Grid:
+                if (resetGrid) currentGridCell = Vector3Int.zero;
+                ReturnToGridNav();
+                break;
+        }
     }
 
     private void GoBack()
@@ -281,8 +283,11 @@ public class NavManager : MonoBehaviour
 
     #region Input Actions
 
-    // For our navigation composite we dont use input action anymore, because simulatious directional
-    // movement was impossible, now we poll the value of the navigation action
+    private void OnZoomPerformed(InputAction.CallbackContext ctx)
+    {
+        float input = ctx.ReadValue<float>();
+        ZoomLevel += Mathf.RoundToInt(input);
+    }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
     {
@@ -305,7 +310,7 @@ public class NavManager : MonoBehaviour
     private void OnResetPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        InitNav();
+        EnterNavMode(true);
     }
 
     #endregion
@@ -334,6 +339,7 @@ public class NavManager : MonoBehaviour
         cancelAction.action.Enable();
         modeAction.action.Enable();
         resetAction.action.Enable();
+        zoomAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -342,6 +348,7 @@ public class NavManager : MonoBehaviour
         cancelAction.action.performed += OnCancelPerformed;
         modeAction.action.performed += OnModePerformed;
         resetAction.action.performed += OnResetPerformed;
+        zoomAction.action.performed += OnZoomPerformed;
     }
 
     private void DisableInputs()
@@ -350,6 +357,7 @@ public class NavManager : MonoBehaviour
         cancelAction.action.performed -= OnCancelPerformed;
         modeAction.action.performed -= OnModePerformed;
         resetAction.action.performed -= OnResetPerformed;
+        zoomAction.action.performed -= OnZoomPerformed;
     }
 
     private void EnableMainInputs()
@@ -367,6 +375,7 @@ public class NavManager : MonoBehaviour
     #endregion
 
     #region Helpers
+
     private bool IsDiagonal(Vector2 v)
     {
         return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
@@ -381,5 +390,6 @@ public class NavManager : MonoBehaviour
     {
         return v.sqrMagnitude < 0.01f;
     }
+
     #endregion
 }

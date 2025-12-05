@@ -5,8 +5,8 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(RectTransform))]
 public class NavVisualizer : MonoBehaviour
 {
-    public float transitionDuration = 0.12f;
-    public float cellSize = 32;
+    [Header("Settings")] 
+    float transitionDuration = 0.12f;
 
     [HideInInspector] public RectTransform centerGridCell;
     private RectTransform rect;

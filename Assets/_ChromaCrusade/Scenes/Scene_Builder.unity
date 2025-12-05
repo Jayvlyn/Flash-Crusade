@@ -1222,6 +1222,7 @@ MonoBehaviour:
   cancelAction: {fileID: 7727032971491509709, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   modeAction: {fileID: 1565305987308768294, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   resetAction: {fileID: 1279934112125055030, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  zoomAction: {fileID: 2056815540720684418, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}
@@ -2861,7 +2862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2603773, g: 0.1645781, b: 0.1645781, a: 1}
+  m_Color: {r: 0.16226411, g: 0.01928799, b: 0.02439426, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

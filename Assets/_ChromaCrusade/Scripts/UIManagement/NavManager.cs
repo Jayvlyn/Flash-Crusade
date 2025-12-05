@@ -341,19 +341,38 @@ public class NavManager : MonoBehaviour
 
     private Vector2 prevStableInput = Vector2.zero;
     private Vector2 pendingCardinal = Vector2.zero;
+    private Vector2 pendingDiagonal = Vector2.zero;
     private float pendingTime = 0f;
-    private int prevStableDiagonalHits = 0; // fix for direct transition from diag to card
-    private int hitThreshold = 5; // could make this frame-dependent like pendingWindow
+    private int stuckHits = 0;
+    private int stuckHitThreshold = 5; // could make this frame-dependent like pendingWindow
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
         bool rawIsNeutral = IsNeutral(raw);
         bool rawIsCardinal = IsCardinal(raw);
         bool rawIsDiagonal = IsDiagonal(raw);
+        float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
 
         if (rawIsDiagonal)
         {
+            if (IsCardinal(prevStableInput))
+            {
+                return prevStableInput;
+            }
+
+            if (pendingDiagonal == Vector2.zero)
+            {
+                pendingDiagonal = raw;
+                pendingTime = Time.time;
+                return prevStableInput; // new pending diag, use prev
+            }
+
+            if (Time.time - pendingTime < pendingWindow)
+            {
+                return prevStableInput; // diag still pending, keep using previous
+            }
+
             pendingCardinal = Vector2.zero;
-            return prevStableInput = raw; // always accept diag
+            return prevStableInput = raw; // accept diag after pending
         }
 
         if (rawIsNeutral)
@@ -364,15 +383,17 @@ public class NavManager : MonoBehaviour
 
         if (rawIsCardinal)
         {
-            float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
-
             if (IsDiagonal(prevStableInput))
             {
-                prevStableDiagonalHits++;
-                if (prevStableDiagonalHits > hitThreshold) return prevStableInput = raw;
-                return prevStableInput; // deny first cardinal
+                stuckHits++;
+                if (stuckHits > stuckHitThreshold)
+                {
+                    stuckHits = 0;
+                    return prevStableInput = raw;
+                }
+                return prevStableInput;
             }
-            prevStableDiagonalHits = 0;
+            stuckHits = 0;
 
             if (pendingCardinal == Vector2.zero)
             {

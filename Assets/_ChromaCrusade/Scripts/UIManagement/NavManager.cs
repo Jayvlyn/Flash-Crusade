@@ -342,9 +342,10 @@ public class NavManager : MonoBehaviour
     private Vector2 prevStableInput = Vector2.zero;
     private Vector2 pendingCardinal = Vector2.zero;
     private Vector2 pendingDiagonal = Vector2.zero;
-    private float pendingTime = 0f;
-    private int stuckHits = 0;
+    private float pendingTime;
+    private int stuckHits;
     private int stuckHitThreshold = 5; // could make this frame-dependent like pendingWindow
+    private float cardinalHoldTime;
     private Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
         bool rawIsNeutral = IsNeutral(raw);
@@ -356,7 +357,12 @@ public class NavManager : MonoBehaviour
         {
             if (IsCardinal(prevStableInput))
             {
-                return prevStableInput;
+                if(Time.time - cardinalHoldTime > 0.2f)
+                {
+                    cardinalHoldTime = 0;
+                    return prevStableInput = raw;
+                }
+                return prevStableInput; // deny diagonal
             }
 
             if (pendingDiagonal == Vector2.zero)
@@ -377,6 +383,7 @@ public class NavManager : MonoBehaviour
 
         if (rawIsNeutral)
         {
+            cardinalHoldTime = 0;
             pendingCardinal = Vector2.zero;
             return prevStableInput = Vector2.zero; // always accept neutral
         }
@@ -408,6 +415,7 @@ public class NavManager : MonoBehaviour
             }
 
             pendingCardinal = Vector2.zero;
+            cardinalHoldTime = Time.time;
             return prevStableInput = raw; // cardinal accepted after pending
         }
 

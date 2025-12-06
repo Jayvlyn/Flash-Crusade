@@ -23,27 +23,12 @@ public class EditorBuildArea : MonoBehaviour
         if(!CellsAvailable(centerCell, part)) return false;
         Debug.Log("Cells available");
 
-        for (int y = 0; y < 3; y++)
+        ForEachSegment(part, centerCell, cell =>
         {
-            for (int x = 0; x < 3; x++)
-            {
-                var segment = part.segments[x, y];
-                if (segment == null)
-                    continue;
-
-                // offset relative to center
-                int offsetX = x - 1;
-                int offsetY = y - 1;
-
-                Vector2Int targetCell = new Vector2Int(
-                    centerCell.x + offsetX,
-                    centerCell.y + offsetY
-                );
-
-                occupiedCells.Add(targetCell, part);
-                Debug.Log("added at " + targetCell);
-            }
-        }
+            Debug.Log("Placing at " + cell);
+            occupiedCells[cell] = part;
+            return true; // keep iterating
+        });
 
         return true;
     }
@@ -53,32 +38,25 @@ public class EditorBuildArea : MonoBehaviour
         EditorShipPart partAtCell = GetPartAtCell(cell);
         if (partAtCell != null)
         {
-            for (int y = 0; y < 3; y++)
+            ForEachSegment(partAtCell, partAtCell.position, cell =>
             {
-                for (int x = 0; x < 3; x++)
-                {
-                    var segment = partAtCell.segments[x, y];
-                    if (segment == null)
-                        continue;
-
-                    // offset relative to center
-                    int offsetX = x - 1;
-                    int offsetY = y - 1;
-
-                    Vector2Int targetCell = new Vector2Int(
-                        cell.x + offsetX,
-                        cell.y + offsetY
-                    );
-
-                    occupiedCells.Remove(targetCell);
-                }
-            }
+                occupiedCells.Remove(cell);
+                return true; // keep iterating
+            });
             return partAtCell;
         }
         return null; // no part to grab here
     }
 
     public bool CellsAvailable(Vector2Int centerCell, EditorShipPart part)
+    {
+        return ForEachSegment(part, centerCell, cell =>
+            !occupiedCells.ContainsKey(cell)
+        );
+    }
+
+
+    private bool ForEachSegment(EditorShipPart part, Vector2Int centerCell, System.Func<Vector2Int, bool> callback)
     {
         for (int y = 0; y < 3; y++)
         {
@@ -88,21 +66,14 @@ public class EditorBuildArea : MonoBehaviour
                 if (segment == null)
                     continue;
 
-                // offset relative to center
-                int offsetX = x - 1;
-                int offsetY = y - 1;
-
                 Vector2Int targetCell = new Vector2Int(
-                    centerCell.x + offsetX,
-                    centerCell.y + offsetY
+                    centerCell.x + (x - 1),
+                    centerCell.y + (1 - y)
                 );
 
-                if (occupiedCells.ContainsKey(targetCell))
-                    return false;
+                if (!callback(targetCell)) return false;
             }
         }
         return true;
     }
-
-
 }

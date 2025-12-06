@@ -101,7 +101,9 @@ public class NavManager : MonoBehaviour
     private void Start()
     {
         //TESTING
-        buildArea.PlacePart(new Vector2Int(6, 6), testPart);
+        Vector2Int testPos = new Vector2Int(6, 6);
+        buildArea.PlacePart(testPos, testPart);
+        testPart.OnPlaced(testPos);
         //----
 
         visualizer.gameObject.SetActive(true);
@@ -115,6 +117,11 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("---");
+        foreach(var k in buildArea.occupiedCells)
+        {
+            Debug.Log(k.ToString());
+        }
         ProcessNavInput();
     }
 

@@ -5,34 +5,43 @@ public class EditorShipPart : MonoBehaviour
     public enum PartState { Inventory, Grabbed, PlacedConnected, PlacedDisconnected}
     private PartState partState;
 
-    private EditorPartSegment TopLeftSegment,    TopMiddleSegment,    TopRightSegment;
-    private EditorPartSegment MiddleLeftSegment, MiddleSegment,       MiddleRightSegment;
-    private EditorPartSegment BottomLeftSegment, BottomMiddleSegment, BottomRightSegment;
-    #region Shortcuts
-    private EditorPartSegment TLS => TopLeftSegment;
-    private EditorPartSegment TMS => TopMiddleSegment;
-    private EditorPartSegment TRS => TopRightSegment;
-    private EditorPartSegment MLS => MiddleLeftSegment;
-    private EditorPartSegment MS  => MiddleSegment;
-    private EditorPartSegment MRS => MiddleRightSegment;
-    private EditorPartSegment BLS => BottomLeftSegment;
-    private EditorPartSegment BMS => BottomMiddleSegment;
-    private EditorPartSegment BRS => BottomRightSegment;
-    #endregion
+    public EditorPartSegment[,] segments = new EditorPartSegment[3,3];
+    /*
+        (0,0) (1,0) (2,0)
+        (0,1) (1,1) (2,1)
+        (0,2) (1,2) (2,2)
+    */
+
+    public Vector2Int position; // center segment
+    public static readonly Vector2Int[] offsets =
+    {
+        new(-1, -1), new(0, -1), new(1, -1),
+        new(-1,  0), new(0,  0), new(1,  0),
+        new(-1,  1), new(0,  1), new(1,  1),
+    }; // when using center position, this will be useful
 
     private bool xFlipped;
     private bool yFlipped;
 
     private float rotation;
 
-    private Vector2Int position; // center segment
 
+    public RectTransform rect;
     public RectTransformFollower rtf;
 
     private void Awake()
     {
+        rect = GetComponent<RectTransform>();
         rtf = GetComponent<RectTransformFollower>();
         rtf.enabled = false;
+
+        //for testing:
+        segments[0,0] = new EditorPartSegment();
+        segments[0,1] = new EditorPartSegment();
+        segments[1,1] = new EditorPartSegment();
+        segments[0,2] = new EditorPartSegment();
+        segments[1,2] = new EditorPartSegment();
+        segments[2,2] = new EditorPartSegment();
     }
 
     public void Rotate(bool cw)
@@ -47,15 +56,42 @@ public class EditorShipPart : MonoBehaviour
         // lerp transform.rotation to rotation
     }
 
-    public void ChangeState(PartState newState)
+    private void ChangeState(PartState newState)
     {
+        OnExitState();
         partState = newState;
+        OnEnterState();
 
-        switch(newState)
+    }
+    private void OnExitState()
+    {
+        switch (partState)
+        {
+            case PartState.Grabbed:
+                rtf.enabled = false;
+                rtf.target = null;
+                break;
+        }
+    }
+    private void OnEnterState()
+    {
+        switch (partState)
         {
             case PartState.Grabbed:
                 rtf.enabled = true;
                 break;
         }
+    }
+
+    public void OnGrabbed(RectTransform visualizerRect)
+    {
+        ChangeState(PartState.Grabbed);
+        rtf.target = visualizerRect;
+    }
+
+    public void OnPlaced(Vector2Int position)
+    {
+        this.position = position;
+        ChangeState(PartState.PlacedDisconnected);
     }
 }

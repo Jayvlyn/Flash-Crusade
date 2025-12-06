@@ -3,7 +3,7 @@ using UnityEngine;
 //[ExecuteAlways]
 public class RectTransformFollower : MonoBehaviour
 {
-    [SerializeField] private RectTransform target;
+    public RectTransform target;
 
     private RectTransform self;
 

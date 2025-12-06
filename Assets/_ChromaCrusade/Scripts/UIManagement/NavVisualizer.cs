@@ -9,7 +9,7 @@ public class NavVisualizer : MonoBehaviour
     float transitionDuration = 0.12f;
 
     [HideInInspector] public RectTransform centerGridCell;
-    private RectTransform rect;
+    [HideInInspector] public RectTransform rect;
     private NavItem currentItem;
     private Coroutine lerpRoutine;
 
@@ -33,7 +33,7 @@ public class NavVisualizer : MonoBehaviour
             UpdateCurrentItemImmediate();
     }
 
-    public void OnHighlightGridCell(Vector3Int cell)
+    public void OnHighlightGridCell(Vector2Int cell)
     {
         currentItem = null;
 
@@ -57,7 +57,7 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
     
-    private void LerpToGridCell(Vector3Int cell)
+    private void LerpToGridCell(Vector2Int cell)
     {
         CancelLerp();
 
@@ -71,7 +71,7 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
 
-    //public void UpdateCellImmediate(RectTransform targetRT, Vector3Int cell)
+    //public void UpdateCellImmediate(RectTransform targetRT, Vector2Int cell)
     //{
     //    GetWorldRectValues(targetRT, out Vector2 targetPos, out Vector2 targetSize);
 
@@ -79,6 +79,17 @@ public class NavVisualizer : MonoBehaviour
     //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
     //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     //}
+
+    public void UpdateWithRectImmediate(RectTransform rt)
+    {
+        if (rt == null) return;
+
+        GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
+
+        rect.anchoredPosition = targetPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+    }
 
     public void UpdateCurrentItemImmediate()
     {
@@ -91,7 +102,7 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    public void UpdateGridCellImmediate(Vector3Int cell)
+    public void UpdateGridCellImmediate(Vector2Int cell)
     {
         GetCellRectValues(centerGridCell, cell, out var p, out var s);
 
@@ -117,7 +128,7 @@ public class NavVisualizer : MonoBehaviour
         pos = bl + size * 0.5f;
     }
 
-    private void GetCellRectValues(RectTransform target, Vector3Int cell, out Vector2 pos, out Vector2 size)
+    private void GetCellRectValues(RectTransform target, Vector2Int cell, out Vector2 pos, out Vector2 size)
     {
         GetWorldRectValues(target, out var p, out var s);
         pos = new Vector2(p.x + cell.x * s.x, p.y + cell.y * s.y);

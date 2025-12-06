@@ -13,7 +13,7 @@ public class NavManager : MonoBehaviour
     public enum NavMode { Item, Grid };
 
     [Header("Grid Navigation")]
-    [SerializeField] private Vector3Int currentGridCell = new Vector3Int(0,0,0);
+    [SerializeField] private Vector2Int currentGridCell = new Vector2Int(0,0);
     [SerializeField] private RectTransform centerGridCell;
     [SerializeField] private int zoomLevel = 3;
     [SerializeField] private Vector2 zoomRange = new Vector2(1, 10);
@@ -46,7 +46,11 @@ public class NavManager : MonoBehaviour
     private NavItem hoveredItem;
     [SerializeField] private NavItem initialHoveredItem;
     [SerializeField] private NavItem exitItem;
-    [SerializeField] private Transform buildArea;
+    [SerializeField] private EditorBuildArea buildArea;
+    private EditorShipPart heldPart;
+
+    [Header("TESTING")]
+    public EditorShipPart testPart;
 
     #endregion
 
@@ -96,8 +100,15 @@ public class NavManager : MonoBehaviour
 
     private void Start()
     {
+        //TESTING
+        //buildArea.PlacePart(new Vector2Int(6, 6), testPart);
+        //----
+
         visualizer.gameObject.SetActive(true);
         visualizer.centerGridCell = centerGridCell;
+
+        if (buildArea == null) buildArea = FindFirstObjectByType<EditorBuildArea>();
+        if (visualizer == null) visualizer = FindFirstObjectByType<NavVisualizer>();
 
         InitNavMode(true);
     }
@@ -171,17 +182,17 @@ public class NavManager : MonoBehaviour
 
     private void TriggerNavGrid(Vector2 dir)
     {
-        Vector3Int offset = Vector3Int.zero;
+        Vector2Int offset = Vector2Int.zero;
 
         if (dir.y > 0.5f) offset.y += 1;
         if (dir.y < -0.5f) offset.y -= 1;
         if (dir.x < -0.5f) offset.x -= 1;
         if (dir.x > 0.5f) offset.x += 1;
 
-        if (offset == Vector3Int.zero)
+        if (offset == Vector2Int.zero)
             return;
 
-        Vector3Int newCell = currentGridCell + offset;
+        Vector2Int newCell = currentGridCell + offset;
 
         currentGridCell = newCell;
 
@@ -194,6 +205,12 @@ public class NavManager : MonoBehaviour
         hoveredItem = item;
         hoveredItem.OnHighlighted();
         visualizer.OnHighlightItem(hoveredItem);
+    }
+
+    private void NavToCell(Vector2Int cell)
+    {
+        currentGridCell = cell;
+        visualizer.OnHighlightGridCell(currentGridCell);
     }
 
     public void ToggleNavMode()
@@ -255,11 +272,38 @@ public class NavManager : MonoBehaviour
                 break;
 
             case NavMode.Grid:
-                if (resetGrid) currentGridCell = Vector3Int.zero;
+                if (resetGrid) currentGridCell = Vector2Int.zero;
                 InitGridNav();
                 break;
         }
     }
+
+    #endregion
+
+    #region Part Manipulation
+    private void TryGrabPart()
+    {
+        Debug.Log("Trying to grab part at " + currentGridCell.ToString());
+        EditorShipPart part = buildArea.GrabPart(currentGridCell);
+        if (part)
+        {
+            visualizer.UpdateWithRectImmediate(part.rect);
+            part.OnGrabbed(visualizer.rect);
+            currentGridCell = part.position;
+        }
+    }
+
+    private void TryPlacePart()
+    {
+        Debug.Log("Trying to place part at " + currentGridCell.ToString());
+        if (buildArea.PlacePart(currentGridCell, heldPart))
+        {
+            heldPart = null;
+            heldPart.OnPlaced(currentGridCell);
+            visualizer.UpdateGridCellImmediate(currentGridCell);
+        }
+    }
+
 
     #endregion
 
@@ -281,30 +325,48 @@ public class NavManager : MonoBehaviour
         }
         else
         {
-            buildArea.localScale = new Vector3(s, s, s);
+            buildArea.transform.localScale = new Vector3(s, s, s);
             visualizer.UpdateGridCellImmediate(currentGridCell);
         }
     }
     private IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
     {
         float t = 0f;
-        Vector3 start = buildArea.localScale;
+        Vector3 start = buildArea.transform.localScale;
 
         while (t < 1f)
         {
             t += Time.deltaTime / duration;
-            buildArea.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
+            buildArea.transform.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
             visualizer.UpdateGridCellImmediate(currentGridCell);
 
             yield return null;
         }
-        buildArea.localScale = target;
+        buildArea.transform.localScale = target;
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        hoveredItem?.OnSelected();
+        // submit is disabled in input field, no need to consider that case
+        Debug.Log("submit performed: " + mode.ToString());
+
+        if(mode == NavMode.Item)
+        {
+            hoveredItem?.OnSelected();
+        }
+        else if(mode == NavMode.Grid)
+        {
+            if(heldPart != null)
+            {
+                TryPlacePart();
+            }
+            else
+            {
+                TryGrabPart();
+            }
+        }
+
     }
 
     private void OnCancelPerformed(InputAction.CallbackContext ctx)

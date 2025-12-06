@@ -445,6 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227269908}
   - component: {fileID: 227269910}
+  - component: {fileID: 227269911}
   m_Layer: 5
   m_Name: BuildArea
   m_TagString: Untagged
@@ -482,6 +483,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227269907}
   m_CullTransparentMesh: 1
+--- !u!114 &227269911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227269907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a5de122bd012f40a436dc22bcaf1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EditorBuildArea
 --- !u!1 &261558573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -75, y: -75}
+  m_AnchoredPosition: {x: 150, y: 150}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &402552530
@@ -1285,7 +1298,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8734742930166513155, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  m_Sprite: {fileID: 20803837177228042, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1328,6 +1341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26713b5b2ab51c24080da4b029e4de1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditorShipPart
+  position: {x: 0, y: 0}
+  rect: {fileID: 0}
   rtf: {fileID: 0}
 --- !u!1 &411837594
 GameObject:
@@ -1866,7 +1881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
   mode: 0
-  currentGridCell: {x: 0, y: 0, z: 0}
+  currentGridCell: {x: 0, y: 0}
   centerGridCell: {fileID: 217396645}
   zoomLevel: 3
   zoomRange: {x: 1, y: 10}
@@ -1881,7 +1896,8 @@ MonoBehaviour:
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}
   exitItem: {fileID: 1054526086}
-  buildArea: {fileID: 227269908}
+  buildArea: {fileID: 227269911}
+  testPart: {fileID: 402552533}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavVisualizer
   centerGridCell: {fileID: 0}
+  rect: {fileID: 0}
 --- !u!114 &1036409156
 MonoBehaviour:
   m_ObjectHideFlags: 0

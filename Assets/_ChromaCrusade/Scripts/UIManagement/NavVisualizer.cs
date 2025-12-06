@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(RectTransform))]
 public class NavVisualizer : MonoBehaviour
@@ -33,14 +32,14 @@ public class NavVisualizer : MonoBehaviour
             UpdateCurrentItemImmediate();
     }
 
-    public void OnHighlightGridCell(Vector2Int cell)
+    public void OnHighlightGridCell(Vector2Int cell, bool expanded = false)
     {
         currentItem = null;
 
         if (UIManager.Smoothing)
-            LerpToGridCell(cell);
+            LerpToGridCell(cell, expanded);
         else
-            UpdateGridCellImmediate(cell);
+            UpdateGridCellImmediate(cell, expanded);
     }
 
     private void LerpToCurrentItem()
@@ -57,7 +56,7 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
     
-    private void LerpToGridCell(Vector2Int cell)
+    private void LerpToGridCell(Vector2Int cell, bool expanded = false)
     {
         CancelLerp();
 
@@ -65,6 +64,7 @@ public class NavVisualizer : MonoBehaviour
             getTarget: () =>
             {
                 GetCellRectValues(centerGridCell, cell, out var p, out var s);
+                if (expanded) s *= 3;
                 return (p, s);
             },
             shouldAbort: () => currentItem != null
@@ -102,9 +102,11 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    public void UpdateGridCellImmediate(Vector2Int cell)
+    public void UpdateGridCellImmediate(Vector2Int cell, bool expanded = false)
     {
         GetCellRectValues(centerGridCell, cell, out var p, out var s);
+
+        if (expanded) s *= 3;
 
         rect.anchoredPosition = p;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);

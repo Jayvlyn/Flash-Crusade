@@ -13,12 +13,6 @@ public class EditorShipPart : MonoBehaviour
     */
 
     public Vector2Int position; // center segment
-    public static readonly Vector2Int[] offsets =
-    {
-        new(-1, -1), new(0, -1), new(1, -1),
-        new(-1,  0), new(0,  0), new(1,  0),
-        new(-1,  1), new(0,  1), new(1,  1),
-    }; // when using center position, this will be useful
 
     private bool xFlipped;
     private bool yFlipped;
@@ -35,7 +29,7 @@ public class EditorShipPart : MonoBehaviour
         rtf = GetComponent<RectTransformFollower>();
         rtf.enabled = false;
 
-        //for testing:
+        //TESTING:
         segments[0,0] = new EditorPartSegment();
         segments[0,1] = new EditorPartSegment();
         segments[1,1] = new EditorPartSegment();
@@ -86,6 +80,9 @@ public class EditorShipPart : MonoBehaviour
     public void OnGrabbed(RectTransform visualizerRect)
     {
         ChangeState(PartState.Grabbed);
+        rect.parent = visualizerRect.parent;
+        int currentIndex = rect.GetSiblingIndex();
+        rect.SetSiblingIndex(Mathf.Max(0, currentIndex - 1));
         rtf.target = visualizerRect;
     }
 

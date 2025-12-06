@@ -4,6 +4,12 @@ using UnityEngine;
 public class EditorBuildArea : MonoBehaviour
 {
     public Dictionary<Vector2Int, EditorShipPart> occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
+    public RectTransform rect;
+
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
 
     public EditorShipPart GetPartAtCell(Vector2Int cell)
     {
@@ -17,21 +23,27 @@ public class EditorBuildArea : MonoBehaviour
         if(!CellsAvailable(centerCell, part)) return false;
         Debug.Log("Cells available");
 
-        int i = 0;
-
-        foreach (var segment in part.segments)
+        for (int y = 0; y < 3; y++)
         {
-            if (segment != null)
+            for (int x = 0; x < 3; x++)
             {
-                Vector2Int targetCell = centerCell + EditorShipPart.offsets[i];
+                var segment = part.segments[x, y];
+                if (segment == null)
+                    continue;
+
+                // offset relative to center
+                int offsetX = x - 1;
+                int offsetY = y - 1;
+
+                Vector2Int targetCell = new Vector2Int(
+                    centerCell.x + offsetX,
+                    centerCell.y + offsetY
+                );
+
                 occupiedCells.Add(targetCell, part);
-                Debug.Log("Segment added at " + targetCell.ToString());
+                Debug.Log("added at " + targetCell);
             }
-
-            i++;
         }
-
-        Debug.Log("Placed Fully");
 
         return true;
     }
@@ -41,39 +53,56 @@ public class EditorBuildArea : MonoBehaviour
         EditorShipPart partAtCell = GetPartAtCell(cell);
         if (partAtCell != null)
         {
-            int i = 0;
-
-            foreach (var segment in partAtCell.segments)
+            for (int y = 0; y < 3; y++)
             {
-                if (segment != null)
+                for (int x = 0; x < 3; x++)
                 {
-                    Vector2Int targetCell = cell + EditorShipPart.offsets[i];
+                    var segment = partAtCell.segments[x, y];
+                    if (segment == null)
+                        continue;
+
+                    // offset relative to center
+                    int offsetX = x - 1;
+                    int offsetY = y - 1;
+
+                    Vector2Int targetCell = new Vector2Int(
+                        cell.x + offsetX,
+                        cell.y + offsetY
+                    );
+
                     occupiedCells.Remove(targetCell);
                 }
-
-                i++;
             }
-            return partAtCell; // successfully removed segents from dict
+            return partAtCell;
         }
         return null; // no part to grab here
     }
 
     public bool CellsAvailable(Vector2Int centerCell, EditorShipPart part)
     {
-        int i = 0;
-
-        foreach (var segment in part.segments)
+        for (int y = 0; y < 3; y++)
         {
-            if (segment != null)
+            for (int x = 0; x < 3; x++)
             {
-                Vector2Int targetCell = centerCell + EditorShipPart.offsets[i];
+                var segment = part.segments[x, y];
+                if (segment == null)
+                    continue;
+
+                // offset relative to center
+                int offsetX = x - 1;
+                int offsetY = y - 1;
+
+                Vector2Int targetCell = new Vector2Int(
+                    centerCell.x + offsetX,
+                    centerCell.y + offsetY
+                );
+
                 if (occupiedCells.ContainsKey(targetCell))
                     return false;
             }
-
-            i++;
         }
-
         return true;
     }
+
+
 }

@@ -101,7 +101,7 @@ public class NavManager : MonoBehaviour
     private void Start()
     {
         //TESTING
-        //buildArea.PlacePart(new Vector2Int(6, 6), testPart);
+        buildArea.PlacePart(new Vector2Int(6, 6), testPart);
         //----
 
         visualizer.gameObject.SetActive(true);
@@ -196,7 +196,7 @@ public class NavManager : MonoBehaviour
 
         currentGridCell = newCell;
 
-        visualizer.OnHighlightGridCell(currentGridCell);
+        visualizer.OnHighlightGridCell(currentGridCell, heldPart != null);
     }
 
     private void NavToItem(NavItem item)
@@ -290,6 +290,7 @@ public class NavManager : MonoBehaviour
             visualizer.UpdateWithRectImmediate(part.rect);
             part.OnGrabbed(visualizer.rect);
             currentGridCell = part.position;
+            heldPart = part;
         }
     }
 
@@ -298,8 +299,9 @@ public class NavManager : MonoBehaviour
         Debug.Log("Trying to place part at " + currentGridCell.ToString());
         if (buildArea.PlacePart(currentGridCell, heldPart))
         {
-            heldPart = null;
+            heldPart.rect.parent = buildArea.rect;
             heldPart.OnPlaced(currentGridCell);
+            heldPart = null;
             visualizer.UpdateGridCellImmediate(currentGridCell);
         }
     }

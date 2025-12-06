@@ -11,6 +11,7 @@ public class NavVisualizer : MonoBehaviour
     [HideInInspector] public RectTransform rect;
     private NavItem currentItem;
     private Coroutine lerpRoutine;
+    public bool IsLerping => lerpRoutine != null;
 
     private void Awake()
     {
@@ -71,15 +72,6 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
 
-    //public void UpdateCellImmediate(RectTransform targetRT, Vector2Int cell)
-    //{
-    //    GetWorldRectValues(targetRT, out Vector2 targetPos, out Vector2 targetSize);
-
-    //    rect.anchoredPosition = targetPos;
-    //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-    //    rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
-    //}
-
     public void UpdateWithRectImmediate(RectTransform rt)
     {
         if (rt == null) return;
@@ -89,6 +81,44 @@ public class NavVisualizer : MonoBehaviour
         rect.anchoredPosition = targetPos;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+    }
+
+    public Coroutine LerpWithRect(RectTransform rt)
+    {
+        CancelLerp();
+        return lerpRoutine = StartCoroutine(LerpRect(rt));
+    }
+
+    private IEnumerator LerpRect(RectTransform rt)
+    {
+        if (rt == null) yield break;
+
+        Vector2 startPos = rect.anchoredPosition;
+        Vector2 startSize = rect.sizeDelta;
+
+        GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
+
+        float t = 0f;
+
+        while (t < transitionDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float s = Mathf.Clamp01(t / transitionDuration);
+            s = Mathf.SmoothStep(0, 1, s);
+
+            rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
+            Vector2 size = Vector2.Lerp(startSize, targetSize, s);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+
+            yield return null;
+        }
+
+        rect.anchoredPosition = targetPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+
+        lerpRoutine = null;
     }
 
     public void UpdateCurrentItemImmediate()
@@ -178,10 +208,16 @@ public class NavVisualizer : MonoBehaviour
 
     public void CancelLerp()
     {
-        if (lerpRoutine != null)
+        if (IsLerping)
         {
             StopCoroutine(lerpRoutine);
             lerpRoutine = null;
         }
+    }
+
+    public IEnumerator WaitUntilDone()
+    {
+        while (IsLerping)
+            yield return null;
     }
 }

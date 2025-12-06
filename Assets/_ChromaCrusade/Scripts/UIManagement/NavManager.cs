@@ -23,6 +23,7 @@ public class NavManager : MonoBehaviour
         set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
     }
     private Dictionary<int,float> zoomScales = new Dictionary<int,float>();
+    private bool Expanded => heldPart != null;
 
     [Header("Visualization")]
     [SerializeField] private NavVisualizer visualizer;
@@ -117,11 +118,11 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("---");
-        foreach(var k in buildArea.occupiedCells)
-        {
-            Debug.Log(k.ToString());
-        }
+        //Debug.Log("---");
+        //foreach(var k in buildArea.occupiedCells)
+        //{
+        //    Debug.Log(k.ToString());
+        //}
         ProcessNavInput();
     }
 
@@ -132,7 +133,7 @@ public class NavManager : MonoBehaviour
     private float nextRepeatTime;
     private void ProcessNavInput()
     {
-        if (!allowMovement) return;
+        if (!allowMovement || midGrab || midZoom) return;
 
         Vector2 raw = navigateAction.action.ReadValue<Vector2>();
         Vector2 input = FilterDiagonalTransitions(raw);
@@ -290,27 +291,60 @@ public class NavManager : MonoBehaviour
     #region Part Manipulation
     private void TryGrabPart()
     {
-        Debug.Log("Trying to grab part at " + currentGridCell.ToString());
+        //Debug.Log("Trying to grab part at " + currentGridCell.ToString());
         EditorShipPart part = buildArea.GrabPart(currentGridCell);
         if (part)
         {
-            visualizer.UpdateWithRectImmediate(part.rect);
-            part.OnGrabbed(visualizer.rect);
-            currentGridCell = part.position;
-            heldPart = part;
+            if(UIManager.Smoothing)
+                StartCoroutine(GrabWithLerp(part));
+            else
+                GrabImmediate(part);
         }
+    }
+
+    private void GrabImmediate(EditorShipPart part)
+    {
+        visualizer.UpdateWithRectImmediate(part.rect);
+        part.OnGrabbed(visualizer.rect);
+        currentGridCell = part.position;
+        heldPart = part;
+    }
+
+    private bool midGrab = false;
+    private IEnumerator GrabWithLerp(EditorShipPart part)
+    {
+        midGrab = true;
+        yield return visualizer.LerpWithRect(part.rect); // waits until done
+
+        part.OnGrabbed(visualizer.rect);
+        currentGridCell = part.position;
+        heldPart = part;
+        midGrab = false;
     }
 
     private void TryPlacePart()
     {
-        Debug.Log("Trying to place part at " + currentGridCell.ToString());
+        //Debug.Log("Trying to place part at " + currentGridCell.ToString());
         if (buildArea.PlacePart(currentGridCell, heldPart))
         {
             heldPart.rect.parent = buildArea.rect;
             heldPart.OnPlaced(currentGridCell);
             heldPart = null;
-            visualizer.UpdateGridCellImmediate(currentGridCell);
+            visualizer.OnHighlightGridCell(currentGridCell);
         }
+    }
+
+    private bool placeQueued;
+    private IEnumerator TryPlaceWithSync()
+    {
+        if (placeQueued) yield break; // prevents spam stacking
+        placeQueued = true;
+
+        if (UIManager.Smoothing && visualizer.IsLerping)
+            yield return visualizer.WaitUntilDone();
+
+        TryPlacePart(); // safe now
+        placeQueued = false;
     }
 
 
@@ -335,11 +369,13 @@ public class NavManager : MonoBehaviour
         else
         {
             buildArea.transform.localScale = new Vector3(s, s, s);
-            visualizer.UpdateGridCellImmediate(currentGridCell);
+            if(mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
         }
     }
+    private bool midZoom;
     private IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
     {
+        midZoom = true;
         float t = 0f;
         Vector3 start = buildArea.transform.localScale;
 
@@ -347,18 +383,20 @@ public class NavManager : MonoBehaviour
         {
             t += Time.deltaTime / duration;
             buildArea.transform.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
-            visualizer.UpdateGridCellImmediate(currentGridCell);
+            if (mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
 
             yield return null;
         }
         buildArea.transform.localScale = target;
+        midZoom = false;
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
         // submit is disabled in input field, no need to consider that case
-        Debug.Log("submit performed: " + mode.ToString());
+        
+        //Debug.Log("submit performed: " + mode.ToString());
 
         if(mode == NavMode.Item)
         {
@@ -366,9 +404,13 @@ public class NavManager : MonoBehaviour
         }
         else if(mode == NavMode.Grid)
         {
+            if (midGrab) return;
             if(heldPart != null)
             {
-                TryPlacePart();
+                if (UIManager.Smoothing)
+                    StartCoroutine(TryPlaceWithSync());
+                else
+                    TryPlacePart();
             }
             else
             {

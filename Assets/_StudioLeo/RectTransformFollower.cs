@@ -3,9 +3,12 @@ using UnityEngine;
 //[ExecuteAlways]
 public class RectTransformFollower : MonoBehaviour
 {
+    public bool stretch = false;
+
     public RectTransform target;
 
     private RectTransform self;
+
 
     private void Awake()
     {
@@ -16,16 +19,18 @@ public class RectTransformFollower : MonoBehaviour
     {
         if (!target || !self) return;
 
-        self.anchorMin = target.anchorMin;
-        self.anchorMax = target.anchorMax;
+        if (stretch)
+        {
+            self.anchorMin = target.anchorMin;
+            self.anchorMax = target.anchorMax;
+            self.sizeDelta = target.sizeDelta;
+            self.localScale = target.localScale;
+        }
 
         self.pivot = target.pivot;
-
         self.anchoredPosition = target.anchoredPosition;
 
-        self.sizeDelta = target.sizeDelta;
 
         self.localRotation = target.localRotation;
-        self.localScale = target.localScale;
     }
 }

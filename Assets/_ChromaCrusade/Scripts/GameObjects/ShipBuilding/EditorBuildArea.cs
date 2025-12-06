@@ -19,13 +19,13 @@ public class EditorBuildArea : MonoBehaviour
 
     public bool PlacePart(Vector2Int centerCell, EditorShipPart part)
     {
-        Debug.Log("Trying to place part");
+        //Debug.Log("Trying to place part");
         if(!CellsAvailable(centerCell, part)) return false;
-        Debug.Log("Cells available");
+        //Debug.Log("Cells available");
 
         ForEachSegment(part, centerCell, cell =>
         {
-            Debug.Log("Placing at " + cell);
+            //Debug.Log("Placing at " + cell);
             occupiedCells[cell] = part;
             return true; // keep iterating
         });

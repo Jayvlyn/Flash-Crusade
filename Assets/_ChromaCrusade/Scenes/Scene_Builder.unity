@@ -495,6 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a5de122bd012f40a436dc22bcaf1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditorBuildArea
+  rect: {fileID: 0}
 --- !u!1 &261558573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,6 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79920ac63b343448818a4b3737736e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RectTransformFollower
+  stretch: 1
   target: {fileID: 0}
 --- !u!114 &402552533
 MonoBehaviour:
@@ -5555,7 +5557,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.1
+  m_fontSize: 39.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

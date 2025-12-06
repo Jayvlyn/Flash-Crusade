@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 [RequireComponent(typeof(GridLayoutGroup))]
 public class FixedRatioGrid : MonoBehaviour
 {
@@ -21,14 +21,14 @@ public class FixedRatioGrid : MonoBehaviour
     private GridLayoutGroup grid;
     private Vector2 lastSize;
 
-    void Awake()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         grid = GetComponent<GridLayoutGroup>();
     }
 
-    void Update()
-    //void Start()
+    //void Update()
+    private void Start()
     {
         if (rectTransform.rect.size != lastSize)
         {
@@ -37,7 +37,7 @@ public class FixedRatioGrid : MonoBehaviour
         }
     }
 
-    void Recalculate()
+    public void Recalculate()
     {
         float w = rectTransform.rect.width;
         float h = rectTransform.rect.height;

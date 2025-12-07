@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -149,6 +150,9 @@ public class NavManager : MonoBehaviour
             return;
         }
 
+        input.x = Mathf.RoundToInt(input.x);
+        input.y = Mathf.RoundToInt(input.y);
+
         bool newInput = input != lastMoveInput;
 
         if (newInput || Time.time >= nextRepeatTime)
@@ -194,16 +198,11 @@ public class NavManager : MonoBehaviour
 
     private void TriggerNavGrid(Vector2 dir)
     {
-        Vector2Int offset = Vector2Int.zero;
-
-        if (dir.y > 0.5f) offset.y += 1;
-        if (dir.y < -0.5f) offset.y -= 1;
-        if (dir.x < -0.5f) offset.x -= 1;
-        if (dir.x > 0.5f) offset.x += 1;
+        Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
 
         if (offset == Vector2Int.zero)
             return;
-
+        
         Vector2Int newCell = currentGridCell + offset;
 
         currentGridCell = newCell;
@@ -700,6 +699,11 @@ public class NavManager : MonoBehaviour
                 nav.visualizer.OnHighlightGridCell(originCell);
             }
         }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
+        }
     }
 
     public class PlaceCommand : IEditorCommand
@@ -734,27 +738,44 @@ public class NavManager : MonoBehaviour
                     nav.GrabImmediate(part);
             }
         }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
+        }
     }
 
     public class NavigateCommand : IEditorCommand
     {
-        Vector2 input;
+        Vector2 totalInput;
         NavManager nav;
 
         public NavigateCommand(NavManager nav, Vector2 input)
         {
             this.nav = nav;
-            this.input = input;
+            this.totalInput = input;
         }
 
         public void Execute()
         {
-            nav.TriggerNav(input);
+            nav.TriggerNav(totalInput);
         }
 
         public void Undo()
         {
-            nav.TriggerNav(-input);
+            nav.TriggerNav(-totalInput);
+        }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            if (next is not NavigateCommand other)
+                return false;
+
+            totalInput += other.totalInput;
+
+            nav.TriggerNav(other.totalInput);
+
+            return true;
         }
     }
 
@@ -778,6 +799,11 @@ public class NavManager : MonoBehaviour
         {
             nav.RotatePart(-input);
         }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
+        }
     }
 
     public class FlipCommand : IEditorCommand
@@ -799,6 +825,11 @@ public class NavManager : MonoBehaviour
         public void Undo()
         {
             nav.FlipPart(-input);
+        }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
         }
     }
 

@@ -8,6 +8,16 @@ public class CommandHistory : MonoBehaviour
 
     public static void Execute(IEditorCommand command)
     {
+        if (undoStack.Count > 0)
+        {
+            var last = undoStack.Peek();
+
+            if(last.TryMerge(command))
+            {
+                return;
+            }
+        }
+
         command.Execute();
         undoStack.Push(command);
         redoStack.Clear();
@@ -15,7 +25,6 @@ public class CommandHistory : MonoBehaviour
 
     public static void Undo()
     {
-        Debug.Log("UNDO");
         if (undoStack.Count == 0) return;
 
         IEditorCommand command = undoStack.Pop();
@@ -25,7 +34,6 @@ public class CommandHistory : MonoBehaviour
 
     public static void Redo()
     {
-        Debug.Log("REDO");
         if (redoStack.Count == 0) return;
         IEditorCommand command = redoStack.Pop();
         command.Execute();

@@ -207,7 +207,7 @@ public class NavManager : MonoBehaviour
 
         currentGridCell = newCell;
 
-        visualizer.OnHighlightGridCell(currentGridCell, heldPart != null);
+        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
     }
 
     private void NavToItem(NavItem item)
@@ -221,7 +221,7 @@ public class NavManager : MonoBehaviour
     private void NavToCell(Vector2Int cell)
     {
         currentGridCell = cell;
-        visualizer.OnHighlightGridCell(currentGridCell);
+        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
     }
 
     public void ToggleNavMode()
@@ -271,7 +271,7 @@ public class NavManager : MonoBehaviour
     private void InitGridNav()
     {
         hoveredItem = null;
-        visualizer.OnHighlightGridCell(currentGridCell);
+        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
     }
 
     private void InitNavMode(bool resetGrid)

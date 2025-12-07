@@ -19,9 +19,10 @@ public class EditorShipPart : MonoBehaviour
 
     private float rotation;
 
-
     public RectTransform rect;
     public RectTransformFollower rtf;
+
+    public Vector2Int lastGrabbedFromCell;
 
     private void Awake()
     {
@@ -86,9 +87,10 @@ public class EditorShipPart : MonoBehaviour
         rtf.target = visualizerRect;
     }
 
-    public void OnPlaced(Vector2Int position)
+    public void OnPlaced(Vector2Int position, EditorBuildArea buildArea)
     {
         this.position = position;
+        rect.parent = buildArea.rect;
         ChangeState(PartState.PlacedDisconnected);
     }
 }

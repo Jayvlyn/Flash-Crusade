@@ -1346,6 +1346,7 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   rect: {fileID: 0}
   rtf: {fileID: 0}
+  lastGrabbedFromCell: {x: 0, y: 0}
 --- !u!1 &411837594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,6 +1895,8 @@ MonoBehaviour:
   modeAction: {fileID: 1565305987308768294, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   resetAction: {fileID: 1279934112125055030, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   zoomAction: {fileID: 2056815540720684418, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  undoAction: {fileID: -4898551812581007230, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  redoAction: {fileID: -6999287408727343035, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}

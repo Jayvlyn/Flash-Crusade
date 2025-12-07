@@ -11,6 +11,11 @@ public class EditorBuildArea : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
+    public bool CanPlacePart(Vector2Int centerCell, EditorShipPart part)
+    {
+        return CellsAvailable(centerCell, part);
+    }
+
     public EditorShipPart GetPartAtCell(Vector2Int cell)
     {
         if (occupiedCells.ContainsKey(cell)) return occupiedCells[cell];
@@ -43,6 +48,7 @@ public class EditorBuildArea : MonoBehaviour
                 occupiedCells.Remove(cell);
                 return true; // keep iterating
             });
+            partAtCell.lastGrabbedFromCell = cell;
             return partAtCell;
         }
         return null; // no part to grab here

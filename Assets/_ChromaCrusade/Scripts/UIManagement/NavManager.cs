@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class NavManager : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class NavManager : MonoBehaviour
     [SerializeField] private InputActionReference modeAction;
     [SerializeField] private InputActionReference resetAction;
     [SerializeField] private InputActionReference zoomAction;
+    [SerializeField] private InputActionReference undoAction;
+    [SerializeField] private InputActionReference redoAction;
     private Vector2 lastMoveInput = Vector2.zero;
     private bool inInputField = false;
     private bool allowMovement;
@@ -104,7 +107,7 @@ public class NavManager : MonoBehaviour
         //TESTING
         Vector2Int testPos = new Vector2Int(6, 6);
         buildArea.PlacePart(testPos, testPart);
-        testPart.OnPlaced(testPos);
+        testPart.OnPlaced(testPos, buildArea);
         //----
 
         visualizer.gameObject.SetActive(true);
@@ -119,7 +122,7 @@ public class NavManager : MonoBehaviour
     private void Update()
     {
         //Debug.Log("---");
-        //foreach(var k in buildArea.occupiedCells)
+        //foreach (var k in buildArea.occupiedCells)
         //{
         //    Debug.Log(k.ToString());
         //}
@@ -149,7 +152,7 @@ public class NavManager : MonoBehaviour
 
         if (newInput || Time.time >= nextRepeatTime)
         {
-            TriggerNav(input);
+            CommandHistory.Execute(new NavigateCommand(this,input));
             nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }
@@ -292,13 +295,11 @@ public class NavManager : MonoBehaviour
     private void TryGrabPart()
     {
         //Debug.Log("Trying to grab part at " + currentGridCell.ToString());
-        EditorShipPart part = buildArea.GrabPart(currentGridCell);
+
+        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
         if (part)
         {
-            if(UIManager.Smoothing)
-                StartCoroutine(GrabWithLerp(part));
-            else
-                GrabImmediate(part);
+            CommandHistory.Execute(new GrabCommand(this, part));
         }
     }
 
@@ -325,12 +326,9 @@ public class NavManager : MonoBehaviour
     private void TryPlacePart()
     {
         //Debug.Log("Trying to place part at " + currentGridCell.ToString());
-        if (buildArea.PlacePart(currentGridCell, heldPart))
+        if(buildArea.CanPlacePart(currentGridCell, heldPart))
         {
-            heldPart.rect.parent = buildArea.rect;
-            heldPart.OnPlaced(currentGridCell);
-            heldPart = null;
-            visualizer.OnHighlightGridCell(currentGridCell);
+            CommandHistory.Execute(new PlaceCommand(this, heldPart, currentGridCell));
         }
     }
 
@@ -438,6 +436,18 @@ public class NavManager : MonoBehaviour
         InitNavMode(true);
     }
 
+    private void OnUndoPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        CommandHistory.Undo();
+    }
+
+    private void OnRedoPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        CommandHistory.Redo();
+    }
+
     #endregion
 
     #region Input Management
@@ -465,6 +475,8 @@ public class NavManager : MonoBehaviour
         modeAction.action.Enable();
         resetAction.action.Enable();
         zoomAction.action.Enable();
+        undoAction.action.Enable();
+        redoAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -474,6 +486,8 @@ public class NavManager : MonoBehaviour
         modeAction.action.performed += OnModePerformed;
         resetAction.action.performed += OnResetPerformed;
         zoomAction.action.performed += OnZoomPerformed;
+        undoAction.action.performed += OnUndoPerformed;
+        redoAction.action.performed += OnRedoPerformed;
     }
 
     private void DisableInputs()
@@ -483,6 +497,8 @@ public class NavManager : MonoBehaviour
         modeAction.action.performed -= OnModePerformed;
         resetAction.action.performed -= OnResetPerformed;
         zoomAction.action.performed -= OnZoomPerformed;
+        undoAction.action.performed -= OnUndoPerformed;
+        redoAction.action.performed -= OnRedoPerformed;
     }
 
     private void EnableMainInputs()
@@ -602,6 +618,100 @@ public class NavManager : MonoBehaviour
     private bool IsNeutral(Vector2 v)
     {
         return v.sqrMagnitude < 0.01f;
+    }
+
+    #endregion
+
+    #region Commands
+
+    public class GrabCommand : IEditorCommand
+    {
+        NavManager nav;
+        EditorShipPart part;
+        Vector2Int originCell;
+
+        public GrabCommand(NavManager nav, EditorShipPart part)
+        {
+            this.nav = nav;
+            this.part = part;
+            originCell = part.position;
+        }
+
+        public void Execute()
+        {
+            nav.buildArea.GrabPart(nav.currentGridCell);
+            if (UIManager.Smoothing)
+                nav.StartCoroutine(nav.GrabWithLerp(part));
+            else
+                nav.GrabImmediate(part);
+        }
+
+        public void Undo()
+        {
+            if(part)
+            {
+                nav.buildArea.PlacePart(originCell, part);
+                part.OnPlaced(originCell, nav.buildArea);
+                nav.heldPart = null;
+                nav.visualizer.OnHighlightGridCell(originCell);
+            }
+        }
+    }
+
+    public class PlaceCommand : IEditorCommand
+    {
+        NavManager nav;
+        EditorShipPart part;
+        Vector2Int cell;
+
+        public PlaceCommand(NavManager nav, EditorShipPart part, Vector2Int cell)
+        {
+            this.nav = nav;
+            this.part = part;
+            this.cell = cell;
+        }
+
+        public void Execute()
+        {
+            nav.buildArea.PlacePart(cell, part);
+            part.OnPlaced(cell, nav.buildArea);
+            nav.heldPart = null;
+            nav.visualizer.OnHighlightGridCell(part.position);
+        }
+
+        public void Undo()
+        {
+            if (part)
+            {
+                nav.buildArea.GrabPart(part.lastGrabbedFromCell);
+                if (UIManager.Smoothing)
+                    nav.StartCoroutine(nav.GrabWithLerp(part));
+                else
+                    nav.GrabImmediate(part);
+            }
+        }
+    }
+
+    public class NavigateCommand : IEditorCommand
+    {
+        Vector2 input;
+        NavManager nav;
+
+        public NavigateCommand(NavManager nav, Vector2 input)
+        {
+            this.input = input;
+            this.nav = nav;
+        }
+
+        public void Execute()
+        {
+            nav.TriggerNav(input);
+        }
+
+        public void Undo()
+        {
+            nav.TriggerNav(-input);
+        }
     }
 
     #endregion

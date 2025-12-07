@@ -346,17 +346,24 @@ public class NavManager : MonoBehaviour
         placeQueued = false;
     }
 
+    public void RotatePart(float dir)
+    { // dir:  1 = cw  -1 = ccw
+        
+    }
+
+    public void FlipPart(float input)
+    { // input: 1 = vert flip    -1 = hori flip
+
+    }
 
     #endregion
 
-    #region Input Actions
+    #region Zoom
 
     private Coroutine zoomRoutine;
     private Vector3 targetZoomScale;
-    private void OnZoomPerformed(InputAction.CallbackContext ctx)
+    private void OnNewZoomLevel()
     {
-        float input = ctx.ReadValue<float>();
-        ZoomLevel -= Mathf.RoundToInt(input);
         float s = zoomScales[zoomLevel];
         targetZoomScale = new Vector3(s, s, s);
 
@@ -368,9 +375,10 @@ public class NavManager : MonoBehaviour
         else
         {
             buildArea.transform.localScale = new Vector3(s, s, s);
-            if(mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
+            if (mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
         }
     }
+
     private bool midZoom;
     private IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
     {
@@ -388,6 +396,17 @@ public class NavManager : MonoBehaviour
         }
         buildArea.transform.localScale = target;
         midZoom = false;
+    }
+
+    #endregion
+
+    #region Input Actions
+
+    private void OnZoomPerformed(InputAction.CallbackContext ctx)
+    {
+        float input = ctx.ReadValue<float>();
+        ZoomLevel -= Mathf.RoundToInt(input);
+        OnNewZoomLevel();
     }
 
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
@@ -452,15 +471,17 @@ public class NavManager : MonoBehaviour
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
+        if (heldPart == null) return;
         float input = ctx.ReadValue<float>();
-        Debug.Log("rotate: " + input);
+        CommandHistory.Execute(new RotateCommand(this, input));
     }
 
     private void OnFlipPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
+        if (heldPart == null) return;
         float input = ctx.ReadValue<float>();
-        Debug.Log("flip: " + input);
+        CommandHistory.Execute(new FlipCommand(this, input));
     }
 
     #endregion
@@ -720,8 +741,8 @@ public class NavManager : MonoBehaviour
 
         public NavigateCommand(NavManager nav, Vector2 input)
         {
-            this.input = input;
             this.nav = nav;
+            this.input = input;
         }
 
         public void Execute()
@@ -732,6 +753,50 @@ public class NavManager : MonoBehaviour
         public void Undo()
         {
             nav.TriggerNav(-input);
+        }
+    }
+
+    public class RotateCommand : IEditorCommand
+    {
+        float input;
+        NavManager nav;
+
+        public RotateCommand(NavManager nav, float input)
+        {
+            this.nav = nav;
+            this.input = input;
+        }
+
+        public void Execute()
+        {
+            nav.RotatePart(input);
+        }
+
+        public void Undo()
+        {
+            nav.RotatePart(-input);
+        }
+    }
+
+    public class FlipCommand : IEditorCommand
+    {
+        float input;
+        NavManager nav;
+
+        public FlipCommand(NavManager nav, float input)
+        {
+            this.nav = nav;
+            this.input = input;
+        }
+
+        public void Execute()
+        {
+            nav.FlipPart(input);
+        }
+
+        public void Undo()
+        {
+            nav.FlipPart(-input);
         }
     }
 

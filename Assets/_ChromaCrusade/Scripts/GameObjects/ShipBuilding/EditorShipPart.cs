@@ -44,11 +44,6 @@ public class EditorShipPart : MonoBehaviour
         rotation = cw ? rotation + 90 : rotation - 90;
         if (rotation > 270) rotation = 0;
         if (rotation < 0) rotation = 270;
-
-        // do actual transform stuff here
-        // transform.rotation = rotation
-        // or
-        // lerp transform.rotation to rotation
     }
 
     private void ChangeState(PartState newState)

@@ -1897,6 +1897,8 @@ MonoBehaviour:
   zoomAction: {fileID: 2056815540720684418, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   undoAction: {fileID: -4898551812581007230, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   redoAction: {fileID: -6999287408727343035, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  rotateAction: {fileID: 2384486198090031326, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  flipAction: {fileID: 7741694452288187375, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}

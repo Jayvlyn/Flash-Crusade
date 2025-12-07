@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class NavManager : MonoBehaviour
 {
@@ -38,6 +37,8 @@ public class NavManager : MonoBehaviour
     [SerializeField] private InputActionReference zoomAction;
     [SerializeField] private InputActionReference undoAction;
     [SerializeField] private InputActionReference redoAction;
+    [SerializeField] private InputActionReference rotateAction;
+    [SerializeField] private InputActionReference flipAction;
     private Vector2 lastMoveInput = Vector2.zero;
     private bool inInputField = false;
     private bool allowMovement;
@@ -448,6 +449,20 @@ public class NavManager : MonoBehaviour
         CommandHistory.Redo();
     }
 
+    private void OnRotatePerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        float input = ctx.ReadValue<float>();
+        Debug.Log("rotate: " + input);
+    }
+
+    private void OnFlipPerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        float input = ctx.ReadValue<float>();
+        Debug.Log("flip: " + input);
+    }
+
     #endregion
 
     #region Input Management
@@ -477,6 +492,8 @@ public class NavManager : MonoBehaviour
         zoomAction.action.Enable();
         undoAction.action.Enable();
         redoAction.action.Enable();
+        rotateAction.action.Enable();
+        flipAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -488,6 +505,8 @@ public class NavManager : MonoBehaviour
         zoomAction.action.performed += OnZoomPerformed;
         undoAction.action.performed += OnUndoPerformed;
         redoAction.action.performed += OnRedoPerformed;
+        rotateAction.action.performed += OnRotatePerformed;
+        flipAction.action.performed += OnFlipPerformed;
     }
 
     private void DisableInputs()
@@ -499,6 +518,8 @@ public class NavManager : MonoBehaviour
         zoomAction.action.performed -= OnZoomPerformed;
         undoAction.action.performed -= OnUndoPerformed;
         redoAction.action.performed -= OnRedoPerformed;
+        rotateAction.action.performed -= OnRotatePerformed;
+        flipAction.action.performed -= OnFlipPerformed;
     }
 
     private void EnableMainInputs()

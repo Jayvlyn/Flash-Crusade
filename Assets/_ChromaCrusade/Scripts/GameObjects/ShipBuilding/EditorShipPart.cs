@@ -18,6 +18,7 @@ public class EditorShipPart : MonoBehaviour
     private bool yFlipped;
 
     private float rotation;
+    public float Rotation { get { return rotation; } }
 
     public RectTransform rect;
     public RectTransformFollower rtf;
@@ -41,9 +42,11 @@ public class EditorShipPart : MonoBehaviour
 
     public void Rotate(bool cw)
     {
+        Debug.Log("Starting rotate " + rotation);
         rotation = cw ? rotation + 90 : rotation - 90;
         if (rotation > 270) rotation = 0;
         if (rotation < 0) rotation = 270;
+        Debug.Log("New rot " + rotation);
     }
 
     private void ChangeState(PartState newState)

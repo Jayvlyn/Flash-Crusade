@@ -41,6 +41,9 @@ public class NavVisualizer : MonoBehaviour
             LerpToGridCell(cell, expanded);
         else
             UpdateGridCellImmediate(cell, expanded);
+
+        if (!expanded)
+            ResetRotation();
     }
 
     private void LerpToCurrentItem()
@@ -81,6 +84,7 @@ public class NavVisualizer : MonoBehaviour
         rect.anchoredPosition = targetPos;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+        rect.localEulerAngles = rt.localEulerAngles;
     }
 
     public Coroutine LerpWithRect(RectTransform rt)
@@ -95,6 +99,7 @@ public class NavVisualizer : MonoBehaviour
 
         Vector2 startPos = rect.anchoredPosition;
         Vector2 startSize = rect.sizeDelta;
+        Vector2 startRot = rect.localEulerAngles;
 
         GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
 
@@ -107,9 +112,16 @@ public class NavVisualizer : MonoBehaviour
             s = Mathf.SmoothStep(0, 1, s);
 
             rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
+
             Vector2 size = Vector2.Lerp(startSize, targetSize, s);
             rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);
             rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size.y);
+
+            rect.rotation = Quaternion.Lerp(
+                Quaternion.Euler(startRot),
+                Quaternion.Euler(rt.localEulerAngles),
+                s
+            );
 
             yield return null;
         }
@@ -117,6 +129,7 @@ public class NavVisualizer : MonoBehaviour
         rect.anchoredPosition = targetPos;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+        rect.rotation = Quaternion.Euler(rt.localEulerAngles);
 
         lerpRoutine = null;
     }
@@ -153,11 +166,14 @@ public class NavVisualizer : MonoBehaviour
         for (int i = 0; i < 4; i++)
             local[i] = parent.InverseTransformPoint(corners[i]);
 
-        Vector2 bl = local[0];
-        Vector2 tr = local[2];
+        float minX = Mathf.Min(local[0].x, Mathf.Min(local[1].x, Mathf.Min(local[2].x, local[3].x)));
+        float maxX = Mathf.Max(local[0].x, Mathf.Max(local[1].x, Mathf.Max(local[2].x, local[3].x)));
 
-        size = tr - bl;
-        pos = bl + size * 0.5f;
+        float minY = Mathf.Min(local[0].y, Mathf.Min(local[1].y, Mathf.Min(local[2].y, local[3].y)));
+        float maxY = Mathf.Max(local[0].y, Mathf.Max(local[1].y, Mathf.Max(local[2].y, local[3].y)));
+
+        size = new Vector2(maxX - minX, maxY - minY);
+        pos = new Vector2(minX + size.x * 0.5f, minY + size.y * 0.5f);
     }
 
     private void GetCellRectValues(RectTransform target, Vector2Int cell, out Vector2 pos, out Vector2 size)
@@ -214,19 +230,20 @@ public class NavVisualizer : MonoBehaviour
 
     private float targetRotation;
     private Coroutine rotateRoutine;
-    public Coroutine RotateLerp(float angle)
+    public bool midRotate;
+    public void RotateLerp(float angle)
     {
         // Increment the logical rotation target
-        targetRotation += angle;
+        targetRotation = rect.localEulerAngles.z + angle;
 
         if (rotateRoutine != null)
             StopCoroutine(rotateRoutine);
 
         rotateRoutine = StartCoroutine(RotateRoutine(targetRotation));
-        return rotateRoutine;
     }
     private IEnumerator RotateRoutine(float finalAngle)
     {
+        midRotate = true;
         rect.pivot = new Vector2(0.5f, 0.5f);
 
         float start = rect.localEulerAngles.z;
@@ -244,6 +261,7 @@ public class NavVisualizer : MonoBehaviour
         }
 
         rect.localEulerAngles = new Vector3(0, 0, finalAngle);
+        midRotate = false;
         rotateRoutine = null;
     }
     public void ResetRotation()

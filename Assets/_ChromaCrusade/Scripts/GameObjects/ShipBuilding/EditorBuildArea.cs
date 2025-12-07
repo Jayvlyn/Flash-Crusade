@@ -72,10 +72,18 @@ public class EditorBuildArea : MonoBehaviour
                 if (segment == null)
                     continue;
 
-                Vector2Int targetCell = new Vector2Int(
-                    centerCell.x + (x - 1),
-                    centerCell.y + (1 - y)
-                );
+                Vector2Int offset = new Vector2Int(x - 1, 1 - y);
+
+                Vector2Int rotatedOffset = part.Rotation switch
+                {
+                    0 => offset,
+                    90 => new Vector2Int(offset.y, -offset.x),
+                    180 => new Vector2Int(-offset.x, -offset.y),
+                    270 => new Vector2Int(-offset.y, offset.x),
+                    _ => offset
+                };
+
+                Vector2Int targetCell = centerCell + rotatedOffset;
 
                 if (!callback(targetCell)) return false;
             }

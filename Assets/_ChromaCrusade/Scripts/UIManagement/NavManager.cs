@@ -353,7 +353,7 @@ public class NavManager : MonoBehaviour
         if (UIManager.Smoothing)
             visualizer.RotateLerp(cw ? -90 : 90);
         else
-            visualizer.RotateImmediate(cw ? -90 : 90); // for some reason positive rotations make it move ccw
+            visualizer.RotateImmediate(cw ? -90 : 90);
     }
 
     public void FlipPart(float input)
@@ -476,7 +476,7 @@ public class NavManager : MonoBehaviour
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (heldPart == null) return;
+        if (heldPart == null || visualizer.midRotate) return;
         float input = ctx.ReadValue<float>();
         CommandHistory.Execute(new RotateCommand(this, input));
     }

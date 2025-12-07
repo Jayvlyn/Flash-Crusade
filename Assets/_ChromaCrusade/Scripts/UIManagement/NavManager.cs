@@ -348,7 +348,9 @@ public class NavManager : MonoBehaviour
 
     public void RotatePart(float dir)
     { // dir:  1 = cw  -1 = ccw
-        
+        bool cw = dir == 1;
+        heldPart.Rotate(cw);
+        visualizer.RotateImmediate(cw ? -90 : 90); // for some reason positive rotations make it move ccw
     }
 
     public void FlipPart(float input)

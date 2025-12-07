@@ -31,6 +31,6 @@ public class RectTransformFollower : MonoBehaviour
         self.anchoredPosition = target.anchoredPosition;
 
 
-        self.localRotation = target.localRotation;
+        self.localEulerAngles = target.localEulerAngles;
     }
 }

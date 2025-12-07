@@ -206,6 +206,12 @@ public class NavVisualizer : MonoBehaviour
         lerpRoutine = null;
     }
 
+    public void RotateImmediate(float angle)
+    {
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
+    }
+
     public void CancelLerp()
     {
         if (IsLerping)
@@ -220,4 +226,5 @@ public class NavVisualizer : MonoBehaviour
         while (IsLerping)
             yield return null;
     }
+
 }

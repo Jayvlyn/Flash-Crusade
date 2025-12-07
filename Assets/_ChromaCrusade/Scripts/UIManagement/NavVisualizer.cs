@@ -212,6 +212,46 @@ public class NavVisualizer : MonoBehaviour
         rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
     }
 
+    private float targetRotation;
+    private Coroutine rotateRoutine;
+    public Coroutine RotateLerp(float angle)
+    {
+        // Increment the logical rotation target
+        targetRotation += angle;
+
+        if (rotateRoutine != null)
+            StopCoroutine(rotateRoutine);
+
+        rotateRoutine = StartCoroutine(RotateRoutine(targetRotation));
+        return rotateRoutine;
+    }
+    private IEnumerator RotateRoutine(float finalAngle)
+    {
+        rect.pivot = new Vector2(0.5f, 0.5f);
+
+        float start = rect.localEulerAngles.z;
+        float t = 0f;
+
+        while (t < transitionDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float s = Mathf.SmoothStep(0, 1, t / transitionDuration);
+
+            float newAngle = Mathf.LerpAngle(start, finalAngle, s);
+            rect.localEulerAngles = new Vector3(0, 0, newAngle);
+
+            yield return null;
+        }
+
+        rect.localEulerAngles = new Vector3(0, 0, finalAngle);
+        rotateRoutine = null;
+    }
+    public void ResetRotation()
+    {
+        targetRotation = 0;
+        rect.localEulerAngles = Vector3.zero;
+    }
+
     public void CancelLerp()
     {
         if (IsLerping)

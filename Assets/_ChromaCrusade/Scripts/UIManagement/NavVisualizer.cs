@@ -172,14 +172,12 @@ public class NavVisualizer : MonoBehaviour
 
     #region Rotate
 
-    public void Rotate(bool cw)
+    public void Rotate(float angle)
     {
-        float angle = cw ? -90 : 90;
-
         if (UIManager.Smoothing)
-            RotateLerp(angle);
+            RotateLerp(-angle);
         else
-            RotateImmediate(angle);
+            RotateImmediate(-angle);
     }
 
     private void RotateImmediate(float angle)
@@ -201,7 +199,7 @@ public class NavVisualizer : MonoBehaviour
     {
         rect.pivot = new Vector2(0.5f, 0.5f);
 
-        float start = rect.localEulerAngles.z;
+        float startAngle = rect.localEulerAngles.z;
         float t = 0f;
 
         while (t < transitionDuration)
@@ -209,13 +207,13 @@ public class NavVisualizer : MonoBehaviour
             t += Time.unscaledDeltaTime;
             float s = Mathf.SmoothStep(0, 1, t / transitionDuration);
 
-            float newAngle = Mathf.LerpAngle(start, finalAngle, s);
+            float newAngle = Mathf.LerpAngle(startAngle, finalAngle, s);
             rect.localEulerAngles = new Vector3(0, 0, newAngle);
 
             yield return null;
         }
 
-        rect.localEulerAngles = new Vector3(0, 0, finalAngle);
+        rect.localEulerAngles = new Vector3(0, 0, Mathf.RoundToInt(finalAngle));
         rotateLerpRoutine = null;
     }
 

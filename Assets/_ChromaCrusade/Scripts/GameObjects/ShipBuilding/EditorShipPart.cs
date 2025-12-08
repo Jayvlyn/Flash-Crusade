@@ -93,9 +93,9 @@ public class EditorShipPart : MonoBehaviour
         ChangeState(PartState.PlacedDisconnected);
     }
 
-    public void Rotate(bool cw)
+    public void Rotate(float angle)
     {
-        rotation = cw ? rotation + 90 : rotation - 90;
+        rotation -= angle;
         if (rotation > 270) rotation = 0;
         if (rotation < 0) rotation = 270;
     }

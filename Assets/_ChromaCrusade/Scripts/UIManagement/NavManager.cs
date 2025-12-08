@@ -353,11 +353,10 @@ public class NavManager : MonoBehaviour
 
     #region Flip & Rotate
 
-    public void RotatePart(float dir)
-    { // dir:  1 = cw  -1 = ccw
-        bool cw = dir == 1;
-        heldPart.Rotate(cw);
-        visualizer.Rotate(cw);
+    public void RotatePart(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.Rotate(angle);
     }
 
     public void FlipPart(float input)
@@ -485,6 +484,8 @@ public class NavManager : MonoBehaviour
         if (ctx.canceled) return;
         if (heldPart == null || visualizer.IsRotateLerping) return;
         float input = ctx.ReadValue<float>();
+        input *= 90;
+        if (modifyHeld) input *= 1.999f;
         CommandHistory.Execute(new RotateCommand(this, input));
     }
 
@@ -819,23 +820,23 @@ public class NavManager : MonoBehaviour
 
     public class RotateCommand : IEditorCommand
     {
-        float input;
+        float angle;
         NavManager nav;
 
-        public RotateCommand(NavManager nav, float input)
+        public RotateCommand(NavManager nav, float angle)
         {
             this.nav = nav;
-            this.input = input;
+            this.angle = angle;
         }
 
         public void Execute()
         {
-            nav.RotatePart(input);
+            nav.RotatePart(angle);
         }
 
         public void Undo()
         {
-            nav.RotatePart(-input);
+            nav.RotatePart(-angle);
         }
 
         public bool TryMerge(IEditorCommand next)

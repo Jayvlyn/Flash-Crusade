@@ -344,6 +344,8 @@ public class NavManager : MonoBehaviour
 
     #endregion
 
+    #region Flip & Rotate
+
     public void RotatePart(float dir)
     { // dir:  1 = cw  -1 = ccw
         bool cw = dir == 1;
@@ -358,6 +360,8 @@ public class NavManager : MonoBehaviour
         heldPart.Flip(horizontal);
         visualizer.Flip(horizontal);
     }
+
+    #endregion
 
     #endregion
 

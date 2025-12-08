@@ -532,6 +532,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Modify",
+                    "type": "Button",
+                    "id": "abc9bcb8-a338-419e-b2d4-89436cf5a56f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1150,6 +1159,17 @@
                     "action": "Flip",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c066388b-cb2c-46b0-84bf-8c9db1a14620",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Modify",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

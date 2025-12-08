@@ -39,9 +39,11 @@ public class NavManager : MonoBehaviour
     [SerializeField] private InputActionReference redoAction;
     [SerializeField] private InputActionReference rotateAction;
     [SerializeField] private InputActionReference flipAction;
-    private Vector2 lastMoveInput = Vector2.zero;
-    private bool inInputField = false;
+    [SerializeField] private InputActionReference modifyAction;
+    private Vector2 lastMoveInput;
+    private bool inInputField;
     private bool allowMovement;
+    private bool modifyHeld;
 
     [Header("Settings")]
     [SerializeField] private float inputRepeatDelay = 0.35f;
@@ -146,6 +148,11 @@ public class NavManager : MonoBehaviour
 
         input.x = Mathf.RoundToInt(input.x);
         input.y = Mathf.RoundToInt(input.y);
+        if (modifyHeld)
+        {
+            input.x *= 3;
+            input.y *= 3;
+        }
 
         bool newInput = input != lastMoveInput;
 
@@ -490,6 +497,14 @@ public class NavManager : MonoBehaviour
         CommandHistory.Execute(new FlipCommand(this, input));
     }
 
+    private void OnModifyPerformed(InputAction.CallbackContext ctx)
+    {
+        float input = ctx.ReadValue<float>();
+
+        if (input == 1) modifyHeld = true;
+        else modifyHeld = false;
+    }
+
     #endregion
 
     #region Input Management
@@ -521,6 +536,7 @@ public class NavManager : MonoBehaviour
         redoAction.action.Enable();
         rotateAction.action.Enable();
         flipAction.action.Enable();
+        modifyAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -534,6 +550,7 @@ public class NavManager : MonoBehaviour
         redoAction.action.performed += OnRedoPerformed;
         rotateAction.action.performed += OnRotatePerformed;
         flipAction.action.performed += OnFlipPerformed;
+        modifyAction.action.performed += OnModifyPerformed;
     }
 
     private void DisableInputs()
@@ -547,6 +564,7 @@ public class NavManager : MonoBehaviour
         redoAction.action.performed -= OnRedoPerformed;
         rotateAction.action.performed -= OnRotatePerformed;
         flipAction.action.performed -= OnFlipPerformed;
+        modifyAction.action.performed -= OnModifyPerformed;
     }
 
     private void EnableMainInputs()
@@ -559,6 +577,18 @@ public class NavManager : MonoBehaviour
     {
         allowMovement = false;
         submitAction.action.performed -= OnSubmitPerformed;
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            modifyHeld = modifyAction.action.IsPressed();
+        }
+        else
+        {
+            modifyHeld = false;
+        }
     }
 
     #endregion

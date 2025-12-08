@@ -135,7 +135,7 @@ public class TabManager : MonoBehaviour
             if (lastActiveTab != null)
                 LerpAnchors(lastActiveTab.rect, lastMin, lastMax, lastActiveTab.anchorMinInactive, lastActiveTab.anchorMaxInactive, s);
 
-            navVisualizer.UpdateCurrentItemImmediate();
+            navVisualizer.HighlightItemImmediate();
             yield return null;
         }
 
@@ -148,6 +148,6 @@ public class TabManager : MonoBehaviour
         if (lastActiveTab != null) SetTabState(lastActiveTab, false);
 
         Canvas.ForceUpdateCanvases();
-        if (activeTab != null) navVisualizer.UpdateCurrentItemImmediate();
+        if (activeTab != null) navVisualizer.HighlightItemImmediate();
     }
 }

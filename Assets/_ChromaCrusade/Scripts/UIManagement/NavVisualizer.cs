@@ -11,7 +11,11 @@ public class NavVisualizer : MonoBehaviour
     [HideInInspector] public RectTransform rect;
     private NavItem currentItem;
     private Coroutine lerpRoutine;
+    private Coroutine rotateRoutine;
+    private Coroutine flipRoutine;
     public bool IsLerping => lerpRoutine != null;
+    private float targetRotation;
+    public bool midRotate;
 
     private void Awake()
     {
@@ -23,34 +27,34 @@ public class NavVisualizer : MonoBehaviour
         CancelLerp();
     }
 
-    public void OnHighlightItem(NavItem newItem)
+    #region Item Navigation
+
+    public void HighlightItem(NavItem newItem)
     {
         currentItem = newItem;
 
         if (UIManager.Smoothing)
-            LerpToCurrentItem();
+            HighlightItemLerp();
         else
-            UpdateCurrentItemImmediate();
+            HighlightItemImmediate();
     }
 
-    public void OnHighlightGridCell(Vector2Int cell, bool expanded = false)
+    public void HighlightItemImmediate()
     {
-        currentItem = null;
+        if (currentItem == null) return;
 
-        if (UIManager.Smoothing)
-            LerpToGridCell(cell, expanded);
-        else
-            UpdateGridCellImmediate(cell, expanded);
+        GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
 
-        if (!expanded)
-            ResetRotation();
+        rect.anchoredPosition = targetPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    private void LerpToCurrentItem()
+    private void HighlightItemLerp()
     {
         CancelLerp();
 
-        lerpRoutine = StartCoroutine(LerpToTarget(
+        lerpRoutine = StartCoroutine(LerpToRectTarget(
             getTarget: () =>
             {
                 GetWorldRectValues(currentItem.rect, out var p, out var s);
@@ -59,12 +63,40 @@ public class NavVisualizer : MonoBehaviour
             shouldAbort: () => currentItem == null
         ));
     }
-    
-    private void LerpToGridCell(Vector2Int cell, bool expanded = false)
+
+    #endregion
+
+    #region Grid Navigation
+
+    public void HighlightCell(Vector2Int cell, bool expanded = false)
+    {
+        currentItem = null;
+
+        if (UIManager.Smoothing)
+            HighlightCellLerp(cell, expanded);
+        else
+            HighlightCellImmediate(cell, expanded);
+
+        if (!expanded)
+            ResetRotation();
+    }
+
+    public void HighlightCellImmediate(Vector2Int cell, bool expanded = false)
+    {
+        GetCellRectValues(centerGridCell, cell, out var p, out var s);
+
+        if (expanded) s *= 3;
+
+        rect.anchoredPosition = p;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
+    }
+
+    private void HighlightCellLerp(Vector2Int cell, bool expanded = false)
     {
         CancelLerp();
 
-        lerpRoutine = StartCoroutine(LerpToTarget(
+        lerpRoutine = StartCoroutine(LerpToRectTarget(
             getTarget: () =>
             {
                 GetCellRectValues(centerGridCell, cell, out var p, out var s);
@@ -134,26 +166,79 @@ public class NavVisualizer : MonoBehaviour
         lerpRoutine = null;
     }
 
-    public void UpdateCurrentItemImmediate()
+    #endregion
+
+    #region Rotate
+
+    public void RotateImmediate(float angle)
     {
-        if (currentItem == null) return;
-
-        GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
-
-        rect.anchoredPosition = targetPos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
     }
 
-    public void UpdateGridCellImmediate(Vector2Int cell, bool expanded = false)
+    public void RotateLerp(float angle)
     {
-        GetCellRectValues(centerGridCell, cell, out var p, out var s);
+        // Increment the logical rotation target
+        targetRotation = rect.localEulerAngles.z + angle;
 
-        if (expanded) s *= 3;
+        if (rotateRoutine != null)
+            StopCoroutine(rotateRoutine);
 
-        rect.anchoredPosition = p;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
+        rotateRoutine = StartCoroutine(RotateRoutine(targetRotation));
+    }
+
+    private IEnumerator RotateRoutine(float finalAngle)
+    {
+        midRotate = true;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+
+        float start = rect.localEulerAngles.z;
+        float t = 0f;
+
+        while (t < transitionDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float s = Mathf.SmoothStep(0, 1, t / transitionDuration);
+
+            float newAngle = Mathf.LerpAngle(start, finalAngle, s);
+            rect.localEulerAngles = new Vector3(0, 0, newAngle);
+
+            yield return null;
+        }
+
+        rect.localEulerAngles = new Vector3(0, 0, finalAngle);
+        midRotate = false;
+        rotateRoutine = null;
+    }
+
+    public void ResetRotation()
+    {
+        targetRotation = 0;
+        rect.localEulerAngles = Vector3.zero;
+    }
+
+    #endregion
+
+    #region Flip
+
+
+    #endregion
+
+    #region Helpers
+
+    public void CancelLerp()
+    {
+        if (IsLerping)
+        {
+            StopCoroutine(lerpRoutine);
+            lerpRoutine = null;
+        }
+    }
+
+    public IEnumerator WaitUntilDone()
+    {
+        while (IsLerping)
+            yield return null;
     }
 
     private void GetWorldRectValues(RectTransform target, out Vector2 pos, out Vector2 size)
@@ -183,9 +268,7 @@ public class NavVisualizer : MonoBehaviour
         size = s;
     }
 
-    private IEnumerator LerpToTarget(
-        System.Func<(Vector2 pos, Vector2 size)> getTarget, 
-        System.Func<bool> shouldAbort)
+    private IEnumerator LerpToRectTarget(System.Func<(Vector2 pos, Vector2 size)> getTarget, System.Func<bool> shouldAbort)
     {
         Vector2 startPos = rect.anchoredPosition;
         Vector2 startSize = rect.sizeDelta;
@@ -222,67 +305,5 @@ public class NavVisualizer : MonoBehaviour
         lerpRoutine = null;
     }
 
-    public void RotateImmediate(float angle)
-    {
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
-    }
-
-    private float targetRotation;
-    private Coroutine rotateRoutine;
-    public bool midRotate;
-    public void RotateLerp(float angle)
-    {
-        // Increment the logical rotation target
-        targetRotation = rect.localEulerAngles.z + angle;
-
-        if (rotateRoutine != null)
-            StopCoroutine(rotateRoutine);
-
-        rotateRoutine = StartCoroutine(RotateRoutine(targetRotation));
-    }
-    private IEnumerator RotateRoutine(float finalAngle)
-    {
-        midRotate = true;
-        rect.pivot = new Vector2(0.5f, 0.5f);
-
-        float start = rect.localEulerAngles.z;
-        float t = 0f;
-
-        while (t < transitionDuration)
-        {
-            t += Time.unscaledDeltaTime;
-            float s = Mathf.SmoothStep(0, 1, t / transitionDuration);
-
-            float newAngle = Mathf.LerpAngle(start, finalAngle, s);
-            rect.localEulerAngles = new Vector3(0, 0, newAngle);
-
-            yield return null;
-        }
-
-        rect.localEulerAngles = new Vector3(0, 0, finalAngle);
-        midRotate = false;
-        rotateRoutine = null;
-    }
-    public void ResetRotation()
-    {
-        targetRotation = 0;
-        rect.localEulerAngles = Vector3.zero;
-    }
-
-    public void CancelLerp()
-    {
-        if (IsLerping)
-        {
-            StopCoroutine(lerpRoutine);
-            lerpRoutine = null;
-        }
-    }
-
-    public IEnumerator WaitUntilDone()
-    {
-        while (IsLerping)
-            yield return null;
-    }
-
+    #endregion
 }

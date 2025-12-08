@@ -201,7 +201,7 @@ public class NavManager : MonoBehaviour
 
         currentGridCell = newCell;
 
-        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
+        visualizer.HighlightCell(currentGridCell, Expanded);
     }
 
     private void NavToItem(NavItem item)
@@ -209,13 +209,13 @@ public class NavManager : MonoBehaviour
         if(item == null) return;
         hoveredItem = item;
         hoveredItem.OnHighlighted();
-        visualizer.OnHighlightItem(hoveredItem);
+        visualizer.HighlightItem(hoveredItem);
     }
 
     private void NavToCell(Vector2Int cell)
     {
         currentGridCell = cell;
-        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
+        visualizer.HighlightCell(currentGridCell, Expanded);
     }
 
     public void ToggleNavMode()
@@ -265,7 +265,7 @@ public class NavManager : MonoBehaviour
     private void InitGridNav()
     {
         hoveredItem = null;
-        visualizer.OnHighlightGridCell(currentGridCell, Expanded);
+        visualizer.HighlightCell(currentGridCell, Expanded);
     }
 
     private void InitNavMode(bool resetGrid)
@@ -357,7 +357,17 @@ public class NavManager : MonoBehaviour
 
     public void FlipPart(float input)
     { // input: 1 = vert flip    -1 = hori flip
-        heldPart.Flip(input == -1);
+        bool xFlip = input == -1;
+        heldPart.Flip(xFlip);
+
+        if(UIManager.Smoothing)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     #endregion
@@ -379,7 +389,7 @@ public class NavManager : MonoBehaviour
         else
         {
             buildArea.transform.localScale = new Vector3(s, s, s);
-            if (mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
+            if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
         }
     }
 
@@ -394,7 +404,7 @@ public class NavManager : MonoBehaviour
         {
             t += Time.deltaTime / duration;
             buildArea.transform.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
-            if (mode == NavMode.Grid) visualizer.UpdateGridCellImmediate(currentGridCell, Expanded);
+            if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
 
             yield return null;
         }
@@ -703,7 +713,7 @@ public class NavManager : MonoBehaviour
                 part.OnPlaced(originCell, nav.buildArea);
                 nav.heldPart = null;
                 nav.currentGridCell = grabbedFromCell;
-                nav.visualizer.OnHighlightGridCell(grabbedFromCell);
+                nav.visualizer.HighlightCell(grabbedFromCell);
             }
         }
 
@@ -731,7 +741,7 @@ public class NavManager : MonoBehaviour
             nav.buildArea.PlacePart(cell, part);
             part.OnPlaced(cell, nav.buildArea);
             nav.heldPart = null;
-            nav.visualizer.OnHighlightGridCell(part.position);
+            nav.visualizer.HighlightCell(part.position);
         }
 
         public void Undo()

@@ -158,7 +158,8 @@ public class NavManager : MonoBehaviour
 
         if (newInput || Time.time >= nextRepeatTime)
         {
-            CommandHistory.Execute(new NavigateCommand(this,input));
+            if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, input));
+            else TriggerNav(input);
             nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }
@@ -469,30 +470,46 @@ public class NavManager : MonoBehaviour
 
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled || visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping) return;
+        if (ctx.canceled) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsRotateLerping) return;
+        if (visualizer.IsFlipLerping) return;
+        if (visualizer.IsLerping) return;
+
         CommandHistory.Undo();
     }
 
     private void OnRedoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled || visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping) return;
+        if (ctx.canceled) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsRotateLerping) return;
+        if (visualizer.IsFlipLerping) return;
+        if (visualizer.IsLerping) return;
+
         CommandHistory.Redo();
     }
 
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (heldPart == null || visualizer.IsRotateLerping) return;
+        if (heldPart == null) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsRotateLerping) return;
+
         float input = ctx.ReadValue<float>();
         input *= 90;
-        if (modifyHeld) input *= 1.999f;
+        if (modifyHeld) input *= 1.999f; // comes out to ~179.9 so that lerp happens in correct direction, will snap to int later
         CommandHistory.Execute(new RotateCommand(this, input));
     }
 
     private void OnFlipPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (heldPart == null || visualizer.IsFlipLerping) return;
+        if (heldPart == null) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsFlipLerping) return;
+
         float input = ctx.ReadValue<float>();
         if (input == 0) return;
         CommandHistory.Execute(new FlipCommand(this, input));

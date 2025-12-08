@@ -422,9 +422,7 @@ public class NavManager : MonoBehaviour
     private void OnSubmitPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        // submit is disabled in input field, no need to consider that case
-        
-        //Debug.Log("submit performed: " + mode.ToString());
+        // submit is disabled when in input field, no need to consider that case
 
         if(mode == NavMode.Item)
         {

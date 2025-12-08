@@ -51,6 +51,42 @@ public class TabManager : MonoBehaviour
         }
     }
 
+    private IEnumerator LerpTabs()
+    {
+        float duration = 0.15f;
+        float t = 0f;
+
+        Vector2 startMin = activeTab.rect.anchorMin;
+        Vector2 startMax = activeTab.rect.anchorMax;
+        Vector2 lastMin = lastActiveTab ? lastActiveTab.rect.anchorMin : Vector2.zero;
+        Vector2 lastMax = lastActiveTab ? lastActiveTab.rect.anchorMax : Vector2.zero;
+
+        while (t < 1f)
+        {
+            t += Time.unscaledDeltaTime / duration;
+            float s = Mathf.SmoothStep(0, 1, t);
+
+            LerpAnchors(activeTab.rect, startMin, startMax, activeTab.anchorMinActive, activeTab.anchorMaxActive, s);
+
+            if (lastActiveTab != null)
+                LerpAnchors(lastActiveTab.rect, lastMin, lastMax, lastActiveTab.anchorMinInactive, lastActiveTab.anchorMaxInactive, s);
+
+            navVisualizer.HighlightItemImmediate();
+            yield return null;
+        }
+
+        SnapTabs();
+    }
+
+    private void SnapTabs()
+    {
+        if (activeTab != null) SetTabState(activeTab, true);
+        if (lastActiveTab != null) SetTabState(lastActiveTab, false);
+
+        Canvas.ForceUpdateCanvases();
+        if (activeTab != null) navVisualizer.HighlightItemImmediate();
+    }
+
     #region Anchor Helpers
 
     private void ApplyAnchors(RectTransform rect, Vector2 min, Vector2 max)
@@ -75,8 +111,6 @@ public class TabManager : MonoBehaviour
         Vector2 max = Vector2.Lerp(startMax, targetMax, t);
         ApplyAnchors(rect, min, max);
     }
-
-    #endregion
 
     private void UpdateTabAnchors()
     {
@@ -115,39 +149,5 @@ public class TabManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LerpTabs()
-    {
-        float duration = 0.15f;
-        float t = 0f;
-
-        Vector2 startMin = activeTab.rect.anchorMin;
-        Vector2 startMax = activeTab.rect.anchorMax;
-        Vector2 lastMin = lastActiveTab ? lastActiveTab.rect.anchorMin : Vector2.zero;
-        Vector2 lastMax = lastActiveTab ? lastActiveTab.rect.anchorMax : Vector2.zero;
-
-        while (t < 1f)
-        {
-            t += Time.unscaledDeltaTime / duration;
-            float s = Mathf.SmoothStep(0, 1, t);
-
-            LerpAnchors(activeTab.rect, startMin, startMax, activeTab.anchorMinActive, activeTab.anchorMaxActive, s);
-
-            if (lastActiveTab != null)
-                LerpAnchors(lastActiveTab.rect, lastMin, lastMax, lastActiveTab.anchorMinInactive, lastActiveTab.anchorMaxInactive, s);
-
-            navVisualizer.HighlightItemImmediate();
-            yield return null;
-        }
-
-        SnapTabs();
-    }
-
-    private void SnapTabs()
-    {
-        if (activeTab != null) SetTabState(activeTab, true);
-        if (lastActiveTab != null) SetTabState(lastActiveTab, false);
-
-        Canvas.ForceUpdateCanvases();
-        if (activeTab != null) navVisualizer.HighlightItemImmediate();
-    }
+    #endregion
 }

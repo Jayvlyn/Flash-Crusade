@@ -13,6 +13,7 @@ public class EditorShipPart : MonoBehaviour
     */
 
     public Vector2Int position; // center segment
+    public Vector2Int lastGrabbedFromCell;
 
     private bool xFlipped;
     private bool yFlipped;
@@ -22,8 +23,6 @@ public class EditorShipPart : MonoBehaviour
 
     public RectTransform rect;
     public RectTransformFollower rtf;
-
-    public Vector2Int lastGrabbedFromCell;
 
     private void Awake()
     {

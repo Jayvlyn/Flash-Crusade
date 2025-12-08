@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -107,7 +106,7 @@ public class NavManager : MonoBehaviour
     private void Start()
     {
         //TESTING
-        Vector2Int testPos = new Vector2Int(6, 6);
+        Vector2Int testPos = new Vector2Int(3, 3);
         buildArea.PlacePart(testPos, testPart);
         testPart.OnPlaced(testPos, buildArea);
         //----
@@ -123,11 +122,6 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("---");
-        //foreach (var k in buildArea.occupiedCells)
-        //{
-        //    Debug.Log(k.ToString());
-        //}
         ProcessNavInput();
     }
 
@@ -348,10 +342,6 @@ public class NavManager : MonoBehaviour
         placeQueued = false;
     }
 
-    public void PlaceHeldPart()
-    {
-
-    }
     #endregion
 
     public void RotatePart(float dir)
@@ -686,12 +676,14 @@ public class NavManager : MonoBehaviour
         NavManager nav;
         EditorShipPart part;
         Vector2Int originCell;
+        Vector2Int grabbedFromCell;
 
         public GrabCommand(NavManager nav, EditorShipPart part)
         {
             this.nav = nav;
             this.part = part;
             originCell = part.position;
+            grabbedFromCell = nav.currentGridCell;
         }
 
         public void Execute()
@@ -705,7 +697,14 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
-            nav.PlaceHeldPart();
+            if (part)
+            {
+                nav.buildArea.PlacePart(originCell, part);
+                part.OnPlaced(originCell, nav.buildArea);
+                nav.heldPart = null;
+                nav.currentGridCell = grabbedFromCell;
+                nav.visualizer.OnHighlightGridCell(grabbedFromCell);
+            }
         }
 
         public bool TryMerge(IEditorCommand next)

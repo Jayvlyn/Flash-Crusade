@@ -481,7 +481,7 @@ public class NavManager : MonoBehaviour
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (heldPart == null || visualizer.midRotate) return;
+        if (heldPart == null || visualizer.IsRotateLerping) return;
         float input = ctx.ReadValue<float>();
         CommandHistory.Execute(new RotateCommand(this, input));
     }

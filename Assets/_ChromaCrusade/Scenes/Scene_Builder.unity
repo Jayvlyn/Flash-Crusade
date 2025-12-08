@@ -1299,7 +1299,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 20803837177228042, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  m_Sprite: {fileID: -75206518943498968, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1344,9 +1344,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditorShipPart
   position: {x: 0, y: 0}
+  lastGrabbedFromCell: {x: 0, y: 0}
+  xFlipped: 0
+  yFlipped: 0
   rect: {fileID: 0}
   rtf: {fileID: 0}
-  lastGrabbedFromCell: {x: 0, y: 0}
 --- !u!1 &411837594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,7 +3205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1036409152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3275,7 +3277,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NavVisualizer
   centerGridCell: {fileID: 0}
   rect: {fileID: 0}
-  midRotate: 0
 --- !u!114 &1036409156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5563,7 +5564,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.15
+  m_fontSize: 39.1
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

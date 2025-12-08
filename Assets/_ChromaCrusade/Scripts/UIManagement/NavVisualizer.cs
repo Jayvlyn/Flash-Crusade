@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 [RequireComponent(typeof(RectTransform))]
 public class NavVisualizer : MonoBehaviour
@@ -13,9 +12,10 @@ public class NavVisualizer : MonoBehaviour
     private NavItem currentItem;
     private Coroutine lerpRoutine;
     private Coroutine rotateLerpRoutine;
-    private Coroutine flipRoutine;
+    private Coroutine flipLerpRoutine;
     public bool IsLerping => lerpRoutine != null;
     public bool IsRotateLerping => rotateLerpRoutine != null;
+    public bool IsFlipLerping => flipLerpRoutine != null;
     private float targetRotation;
 
     private void Awake()
@@ -134,8 +134,6 @@ public class NavVisualizer : MonoBehaviour
         Vector2 startPos = rect.anchoredPosition;
         Vector2 startSize = rect.sizeDelta;
         Vector2 startRot = rect.localEulerAngles;
-        //Vector3 startScale = rect.localScale;
-        //Vector3 targetScale = rt.localScale;
 
         GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
 
@@ -159,8 +157,6 @@ public class NavVisualizer : MonoBehaviour
                 s
             );
 
-            //rect.localScale = Vector3.Lerp(startScale, targetScale, s);
-
             yield return null;
         }
 
@@ -168,7 +164,6 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
         rect.rotation = Quaternion.Euler(rt.localEulerAngles);
-        //rect.localScale = targetScale;
 
         lerpRoutine = null;
     }
@@ -237,8 +232,7 @@ public class NavVisualizer : MonoBehaviour
     public void Flip(bool horizontal)
     {
         if (UIManager.Smoothing)
-            FlipInstant(horizontal); // for early test
-            //FlipLerp(horizontal);
+            FlipLerp(horizontal);
         else
             FlipInstant(horizontal);
     }
@@ -257,7 +251,38 @@ public class NavVisualizer : MonoBehaviour
 
     private void FlipLerp(bool horizontal)
     {
+        Vector3 targetScale = rect.localScale;
 
+        if (horizontal)
+            targetScale.x *= -1f;
+        else
+            targetScale.y *= -1f;
+
+        CancelFlipLerp();
+
+        flipLerpRoutine = StartCoroutine(FlipRoutine(targetScale));
+    }
+
+    private IEnumerator FlipRoutine(Vector3 targetScale)
+    {
+        Vector3 startScale = rect.localScale;
+
+        float t = 0f;
+
+        while (t < transitionDuration)
+        {
+            t += Time.unscaledDeltaTime;
+            float s = Mathf.Clamp01(t / transitionDuration);
+            s = Mathf.SmoothStep(0, 1, s);
+
+            rect.localScale = Vector3.Lerp(startScale, targetScale, s);
+
+            yield return null;
+        }
+
+        rect.localScale = targetScale;
+
+        flipLerpRoutine = null;
     }
 
     #endregion
@@ -279,6 +304,15 @@ public class NavVisualizer : MonoBehaviour
         {
             StopCoroutine(rotateLerpRoutine);
             rotateLerpRoutine = null;
+        }
+    }
+
+    public void CancelFlipLerp()
+    {
+        if(IsFlipLerping)
+        {
+            StopCoroutine(flipLerpRoutine);
+            flipLerpRoutine = null;
         }
     }
 

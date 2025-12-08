@@ -459,13 +459,13 @@ public class NavManager : MonoBehaviour
 
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled) return;
+        if (ctx.canceled || visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping) return;
         CommandHistory.Undo();
     }
 
     private void OnRedoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled) return;
+        if (ctx.canceled || visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping) return;
         CommandHistory.Redo();
     }
 
@@ -480,7 +480,7 @@ public class NavManager : MonoBehaviour
     private void OnFlipPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (heldPart == null) return;
+        if (heldPart == null || visualizer.IsFlipLerping) return;
         float input = ctx.ReadValue<float>();
         if (input == 0) return;
         CommandHistory.Execute(new FlipCommand(this, input));
@@ -828,7 +828,7 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
-            nav.FlipPart(-input);
+            nav.FlipPart(input);
         }
 
         public bool TryMerge(IEditorCommand next)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class EditorShipPart : MonoBehaviour
 {
@@ -33,11 +32,12 @@ public class EditorShipPart : MonoBehaviour
 
         //TESTING:
         segments[0,0] = new EditorPartSegment();
+        segments[2,0] = new EditorPartSegment();
         segments[0,1] = new EditorPartSegment();
         segments[1,1] = new EditorPartSegment();
+        segments[2,1] = new EditorPartSegment();
         segments[0,2] = new EditorPartSegment();
         segments[1,2] = new EditorPartSegment();
-        segments[2,2] = new EditorPartSegment();
     }
 
     #region State

@@ -11,11 +11,11 @@ public class NavVisualizer : MonoBehaviour
     [HideInInspector] public RectTransform rect;
     private NavItem currentItem;
     private Coroutine lerpRoutine;
-    private Coroutine rotateRoutine;
+    private Coroutine rotateLerpRoutine;
     private Coroutine flipRoutine;
     public bool IsLerping => lerpRoutine != null;
+    public bool IsRotateLerping => rotateLerpRoutine != null;
     private float targetRotation;
-    public bool midRotate;
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class NavVisualizer : MonoBehaviour
     private void OnDisable()
     {
         CancelLerp();
+        CancelRotateLerp();
     }
 
     #region Item Navigation
@@ -188,18 +189,15 @@ public class NavVisualizer : MonoBehaviour
 
     private void RotateLerp(float angle)
     {
-        // Increment the logical rotation target
         targetRotation = rect.localEulerAngles.z + angle;
 
-        if (rotateRoutine != null)
-            StopCoroutine(rotateRoutine);
+        CancelRotateLerp();
 
-        rotateRoutine = StartCoroutine(RotateRoutine(targetRotation));
+        rotateLerpRoutine = StartCoroutine(RotateRoutine(targetRotation));
     }
 
     private IEnumerator RotateRoutine(float finalAngle)
     {
-        midRotate = true;
         rect.pivot = new Vector2(0.5f, 0.5f);
 
         float start = rect.localEulerAngles.z;
@@ -217,8 +215,7 @@ public class NavVisualizer : MonoBehaviour
         }
 
         rect.localEulerAngles = new Vector3(0, 0, finalAngle);
-        midRotate = false;
-        rotateRoutine = null;
+        rotateLerpRoutine = null;
     }
 
     public void ResetRotation()
@@ -242,6 +239,15 @@ public class NavVisualizer : MonoBehaviour
         {
             StopCoroutine(lerpRoutine);
             lerpRoutine = null;
+        }
+    }
+
+    public void CancelRotateLerp()
+    {
+        if (IsRotateLerping)
+        {
+            StopCoroutine(rotateLerpRoutine);
+            rotateLerpRoutine = null;
         }
     }
 

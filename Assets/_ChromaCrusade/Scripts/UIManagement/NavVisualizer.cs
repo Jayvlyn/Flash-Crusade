@@ -170,13 +170,23 @@ public class NavVisualizer : MonoBehaviour
 
     #region Rotate
 
-    public void RotateImmediate(float angle)
+    public void Rotate(bool cw)
+    {
+        float angle = cw ? -90 : 90;
+
+        if (UIManager.Smoothing)
+            RotateLerp(angle);
+        else
+            RotateImmediate(angle);
+    }
+
+    private void RotateImmediate(float angle)
     {
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
     }
 
-    public void RotateLerp(float angle)
+    private void RotateLerp(float angle)
     {
         // Increment the logical rotation target
         targetRotation = rect.localEulerAngles.z + angle;

@@ -348,11 +348,7 @@ public class NavManager : MonoBehaviour
     { // dir:  1 = cw  -1 = ccw
         bool cw = dir == 1;
         heldPart.Rotate(cw);
-
-        if (UIManager.Smoothing)
-            visualizer.RotateLerp(cw ? -90 : 90);
-        else
-            visualizer.RotateImmediate(cw ? -90 : 90);
+        visualizer.Rotate(cw);
     }
 
     public void FlipPart(float input)

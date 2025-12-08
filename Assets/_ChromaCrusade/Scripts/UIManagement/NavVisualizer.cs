@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 [RequireComponent(typeof(RectTransform))]
 public class NavVisualizer : MonoBehaviour
@@ -133,6 +134,8 @@ public class NavVisualizer : MonoBehaviour
         Vector2 startPos = rect.anchoredPosition;
         Vector2 startSize = rect.sizeDelta;
         Vector2 startRot = rect.localEulerAngles;
+        //Vector3 startScale = rect.localScale;
+        //Vector3 targetScale = rt.localScale;
 
         GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
 
@@ -156,6 +159,8 @@ public class NavVisualizer : MonoBehaviour
                 s
             );
 
+            //rect.localScale = Vector3.Lerp(startScale, targetScale, s);
+
             yield return null;
         }
 
@@ -163,6 +168,7 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
         rect.rotation = Quaternion.Euler(rt.localEulerAngles);
+        //rect.localScale = targetScale;
 
         lerpRoutine = null;
     }
@@ -228,6 +234,31 @@ public class NavVisualizer : MonoBehaviour
 
     #region Flip
 
+    public void Flip(bool horizontal)
+    {
+        if (UIManager.Smoothing)
+            FlipInstant(horizontal); // for early test
+            //FlipLerp(horizontal);
+        else
+            FlipInstant(horizontal);
+    }
+
+    private void FlipInstant(bool horizontal)
+    {
+        Vector3 scale = rect.localScale;
+
+        if (horizontal)
+            scale.x *= -1f;
+        else
+            scale.y *= -1f;
+
+        rect.localScale = scale;
+    }
+
+    private void FlipLerp(bool horizontal)
+    {
+
+    }
 
     #endregion
 

@@ -68,7 +68,9 @@ public class EditorBuildArea : MonoBehaviour
                 if (segment == null)
                     continue;
 
-                Vector2Int offset = new Vector2Int(x - 1, 1 - y);
+                int xOffset = part.xFlipped ? 1 - x : x - 1;
+                int yOffset = part.yFlipped ? y - 1 : 1 - y;
+                Vector2Int offset = new Vector2Int(xOffset, yOffset);
 
                 Vector2Int rotatedOffset = part.Rotation switch
                 {

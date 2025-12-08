@@ -353,17 +353,10 @@ public class NavManager : MonoBehaviour
 
     public void FlipPart(float input)
     { // input: 1 = vert flip    -1 = hori flip
-        bool xFlip = input == -1;
-        heldPart.Flip(xFlip);
-
-        if(UIManager.Smoothing)
-        {
-
-        }
-        else
-        {
-
-        }
+        bool horizontal = input == -1;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.Flip(horizontal);
     }
 
     #endregion

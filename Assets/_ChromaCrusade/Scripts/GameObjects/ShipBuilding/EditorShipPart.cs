@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class EditorShipPart : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class EditorShipPart : MonoBehaviour
     public Vector2Int position; // center segment
     public Vector2Int lastGrabbedFromCell;
 
-    private bool xFlipped;
-    private bool yFlipped;
+    public bool xFlipped;
+    public bool yFlipped;
 
     private float rotation;
     public float Rotation { get { return rotation; } }
@@ -99,13 +100,12 @@ public class EditorShipPart : MonoBehaviour
         if (rotation < 0) rotation = 270;
     }
 
-    public void Flip(bool x)
+    public void Flip(bool horizontal)
     {
-        if (x)
+        if (horizontal)
             xFlipped = !xFlipped;
         else
             yFlipped = !yFlipped;
-
     }
 
     #endregion

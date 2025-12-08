@@ -292,6 +292,8 @@ public class NavManager : MonoBehaviour
     #endregion
 
     #region Part Manipulation
+
+    #region Grab
     private void TryGrabPart()
     {
         //Debug.Log("Trying to grab part at " + currentGridCell.ToString());
@@ -322,10 +324,11 @@ public class NavManager : MonoBehaviour
         heldPart = part;
         midGrab = false;
     }
+    #endregion
 
+    #region Place
     private void TryPlacePart()
     {
-        //Debug.Log("Trying to place part at " + currentGridCell.ToString());
         if(buildArea.CanPlacePart(currentGridCell, heldPart))
         {
             CommandHistory.Execute(new PlaceCommand(this, heldPart, currentGridCell));
@@ -345,6 +348,12 @@ public class NavManager : MonoBehaviour
         placeQueued = false;
     }
 
+    public void PlaceHeldPart()
+    {
+
+    }
+    #endregion
+
     public void RotatePart(float dir)
     { // dir:  1 = cw  -1 = ccw
         bool cw = dir == 1;
@@ -358,7 +367,7 @@ public class NavManager : MonoBehaviour
 
     public void FlipPart(float input)
     { // input: 1 = vert flip    -1 = hori flip
-
+        heldPart.Flip(input == -1);
     }
 
     #endregion
@@ -486,6 +495,7 @@ public class NavManager : MonoBehaviour
         if (ctx.canceled) return;
         if (heldPart == null) return;
         float input = ctx.ReadValue<float>();
+        if (input == 0) return;
         CommandHistory.Execute(new FlipCommand(this, input));
     }
 
@@ -695,13 +705,7 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
-            if(part)
-            {
-                nav.buildArea.PlacePart(originCell, part);
-                part.OnPlaced(originCell, nav.buildArea);
-                nav.heldPart = null;
-                nav.visualizer.OnHighlightGridCell(originCell);
-            }
+            nav.PlaceHeldPart();
         }
 
         public bool TryMerge(IEditorCommand next)

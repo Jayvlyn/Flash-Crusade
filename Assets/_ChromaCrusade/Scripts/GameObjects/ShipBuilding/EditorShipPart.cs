@@ -40,14 +40,7 @@ public class EditorShipPart : MonoBehaviour
         segments[2,2] = new EditorPartSegment();
     }
 
-    public void Rotate(bool cw)
-    {
-        Debug.Log("Starting rotate " + rotation);
-        rotation = cw ? rotation + 90 : rotation - 90;
-        if (rotation > 270) rotation = 0;
-        if (rotation < 0) rotation = 270;
-        Debug.Log("New rot " + rotation);
-    }
+    #region State
 
     private void ChangeState(PartState newState)
     {
@@ -64,6 +57,8 @@ public class EditorShipPart : MonoBehaviour
                 rtf.enabled = false;
                 rtf.target = null;
                 break;
+            default:
+                break;
         }
     }
     private void OnEnterState()
@@ -73,8 +68,14 @@ public class EditorShipPart : MonoBehaviour
             case PartState.Grabbed:
                 rtf.enabled = true;
                 break;
+            default:
+                break;
         }
     }
+
+    #endregion
+
+    #region Manipulation
 
     public void OnGrabbed(RectTransform visualizerRect)
     {
@@ -91,4 +92,22 @@ public class EditorShipPart : MonoBehaviour
         rect.parent = buildArea.rect;
         ChangeState(PartState.PlacedDisconnected);
     }
+
+    public void Rotate(bool cw)
+    {
+        rotation = cw ? rotation + 90 : rotation - 90;
+        if (rotation > 270) rotation = 0;
+        if (rotation < 0) rotation = 270;
+    }
+
+    public void Flip(bool x)
+    {
+        if (x)
+            xFlipped = !xFlipped;
+        else
+            yFlipped = !yFlipped;
+
+    }
+
+    #endregion
 }

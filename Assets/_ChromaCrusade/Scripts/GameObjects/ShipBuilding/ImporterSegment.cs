@@ -15,13 +15,19 @@ public class ImporterSegment : MonoBehaviour
     private Button button;
     private Image image;
 
-    private enum SegmentState { Disabled, Enabled }
-    private SegmentState segmentState;
+    public enum SegmentState { Disabled, Enabled }
+    public SegmentState segmentState;
+
+    public struct SegmentToggledEvent { }
 
     private void Awake()
     {
         button = GetComponent<Button>();
         image = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
         ChangeState(SegmentState.Disabled);
     }
 
@@ -54,9 +60,9 @@ public class ImporterSegment : MonoBehaviour
 
     private void SetConnectionsActive(bool active)
     {
-        leftConnection.gameObject.SetActive(active);
-        topConnection.gameObject.SetActive(active);
-        rightConnection.gameObject.SetActive(active);
-        bottomConnection.gameObject.SetActive(active);
+        leftConnection.Activate(active);
+        topConnection.Activate(active);
+        rightConnection.Activate(active);
+        bottomConnection.Activate(active);
     }
 }

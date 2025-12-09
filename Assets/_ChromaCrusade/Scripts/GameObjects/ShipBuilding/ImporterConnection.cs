@@ -4,6 +4,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button)), RequireComponent(typeof(Image))]
 public class ImporterConnection : MonoBehaviour
 {
+    public ImporterSegment adjacentSegment;
+
     public Color BlockedColor = Color.red;
     public Color DisabledColor = Color.yellow;
     public Color EnabledColor = Color.green;
@@ -12,8 +14,8 @@ public class ImporterConnection : MonoBehaviour
     private Image image;
 
     private enum ConnectionState { Blocked, Disabled, Enabled }
-    // Blocked = Red, Diabled = Yellow, Enabled = Green
     private ConnectionState connectionState;
+    private ConnectionState prevState;
 
     private void Awake()
     {
@@ -21,13 +23,25 @@ public class ImporterConnection : MonoBehaviour
         image = GetComponent<Image>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         ChangeState(ConnectionState.Disabled);
     }
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Subscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
+    }
+
     private void ChangeState(ConnectionState state)
     {
+        if (connectionState == state) return;
+        prevState = connectionState;
         connectionState = state;
         switch (connectionState)
         {
@@ -60,5 +74,23 @@ public class ImporterConnection : MonoBehaviour
     {
         if      (connectionState == ConnectionState.Disabled) ChangeState(ConnectionState.Enabled);
         else if (connectionState == ConnectionState.Enabled)  ChangeState(ConnectionState.Disabled);
+    }
+
+    public void UpdateState()
+    {
+        if (adjacentSegment.segmentState == ImporterSegment.SegmentState.Enabled) ChangeState(ConnectionState.Blocked);
+        else if (connectionState == ConnectionState.Blocked) ChangeState(prevState);
+    }
+
+    public void OnSegmentToggled(ImporterSegment.SegmentToggledEvent e)
+    {
+        UpdateState();
+    }
+
+    public void Activate(bool active)
+    {
+        image.enabled = active;
+        button.enabled = active;
+        if (active && connectionState == ConnectionState.Enabled) ChangeState(ConnectionState.Disabled);
     }
 }

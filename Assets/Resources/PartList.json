@@ -1,0 +1,15 @@
+{
+    "cabins": [
+        "CabinTest1"
+    ],
+    "cores": [
+        "CoreTest1"
+    ],
+    "utilities": [],
+    "wings": [
+        "WingTest1"
+    ],
+    "weapons": [
+        "GunTest1"
+    ]
+}

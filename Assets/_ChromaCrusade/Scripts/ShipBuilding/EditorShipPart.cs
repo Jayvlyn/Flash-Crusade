@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EditorShipPart : MonoBehaviour
 {
@@ -23,11 +24,13 @@ public class EditorShipPart : MonoBehaviour
 
     [HideInInspector] public RectTransform rect;
     [HideInInspector] public RectTransformFollower rtf;
+    [HideInInspector] public Image image;
 
     private ShipPartData partData;
 
     private void Awake()
     {
+        image = GetComponent<Image>();
         rect = GetComponent<RectTransform>();
         rtf = GetComponent<RectTransformFollower>();
         rtf.enabled = false;
@@ -44,6 +47,7 @@ public class EditorShipPart : MonoBehaviour
     public void Init(ShipPartData partData)
     {
         this.partData = partData;
+        image.sprite = partData.sprite;
 
         for(int i = 0; i < 9; i++)
         {

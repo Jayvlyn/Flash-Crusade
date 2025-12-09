@@ -709,6 +709,7 @@ GameObject:
   - component: {fileID: 1185606757}
   - component: {fileID: 1185606760}
   - component: {fileID: 1185606759}
+  - component: {fileID: 1185606761}
   - component: {fileID: 1185606758}
   m_Layer: 0
   m_Name: PartImage
@@ -757,7 +758,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185606756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -770,7 +771,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6893344889736903929, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  m_Sprite: {fileID: -8925005933649089565, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -788,6 +789,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185606756}
   m_CullTransparentMesh: 1
+--- !u!114 &1185606761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185606756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf27a5b39bd16940868c3573032be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImporterHelper
+  image: {fileID: 1185606759}
+  part: {fileID: 1898058804}
 --- !u!1001 &1237723526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1442,8 +1457,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60a97c915773a8428fd5f6df3838040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImporterPart
+  partSprite: {fileID: 0}
+  partType: 0
+  damage: 77
+  energy: 100
+  mobility: 1
+  turning: 1
   image: {fileID: 1185606759}
-  partSprite: {fileID: -6893344889736903929, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
 --- !u!4 &1898058805
 Transform:
   m_ObjectHideFlags: 0

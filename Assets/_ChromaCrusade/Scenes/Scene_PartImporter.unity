@@ -758,7 +758,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185606756}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8925005933649089565, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  m_Sprite: {fileID: 6127297626812172627, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -803,6 +803,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ImporterHelper
   image: {fileID: 1185606759}
   part: {fileID: 1898058804}
+  segments:
+  - {fileID: 1179558071}
+  - {fileID: 1237723528}
+  - {fileID: 2047326623}
+  - {fileID: 854697572}
+  - {fileID: 1840058142}
+  - {fileID: 1830542648}
+  - {fileID: 2080806664}
+  - {fileID: 278762095}
+  - {fileID: 2050695186}
 --- !u!1001 &1237723526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1457,13 +1467,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60a97c915773a8428fd5f6df3838040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImporterPart
-  partSprite: {fileID: 0}
-  partType: 0
+  partName: TESTPART
+  partSprite: {fileID: 6127297626812172627, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  partType: 4
+  mass: 1
+  price: 100
   damage: 77
+  projectileSpeed: 1
+  fireRate: 1
   energy: 100
   mobility: 1
-  turning: 1
+  handling: 1
+  utilityType: 0
   image: {fileID: 1185606759}
+  segments: []
 --- !u!4 &1898058805
 Transform:
   m_ObjectHideFlags: 0

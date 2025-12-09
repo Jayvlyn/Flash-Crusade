@@ -3,6 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewShipPart", menuName = "Data/Ship Wing")]
 public class ShipWingData : ShipPartData
 {
-    public float accelerationIncrease;
-    public bool percentIncrease;
+    public int mobility;
+
+    public override void Apply(ImporterPart importer)
+    {
+        base.Apply(importer);
+        mobility = importer.mobility;
+    }
 }

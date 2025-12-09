@@ -13,8 +13,7 @@ public class ImporterConnection : MonoBehaviour
     private Button button;
     private Image image;
 
-    private enum ConnectionState { Blocked, Disabled, Enabled }
-    private ConnectionState connectionState;
+    public ConnectionState connectionState;
     private ConnectionState prevState;
 
     private void Awake()
@@ -79,7 +78,7 @@ public class ImporterConnection : MonoBehaviour
     public void UpdateState()
     {
         if (adjacentSegment == null) return;
-        if (adjacentSegment.segmentState == ImporterSegment.SegmentState.Enabled) ChangeState(ConnectionState.Blocked);
+        if (adjacentSegment.segmentState == SegmentState.Enabled) ChangeState(ConnectionState.Blocked);
         else if (connectionState == ConnectionState.Blocked) ChangeState(prevState);
     }
 

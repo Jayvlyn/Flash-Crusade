@@ -758,7 +758,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185606756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1467,18 +1467,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60a97c915773a8428fd5f6df3838040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ImporterPart
-  partName: TESTPART
-  partSprite: {fileID: 6127297626812172627, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
-  partType: 4
+  partName: 
+  partSprite: {fileID: 0}
+  partType: 0
   mass: 1
-  price: 100
+  price: 1
   damage: 77
   projectileSpeed: 1
   fireRate: 1
   energy: 100
   mobility: 1
-  handling: 1
-  utilityType: 0
+  handling: 2
+  utilityType: 3
   image: {fileID: 1185606759}
   segments: []
 --- !u!4 &1898058805

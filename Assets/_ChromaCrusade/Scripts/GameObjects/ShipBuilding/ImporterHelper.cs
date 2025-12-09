@@ -11,9 +11,9 @@ public class ImporterHelper : MonoBehaviour
     {
         part.image = image;
 
+        part.segments = new ImporterSegment[segments.Length];
         for (int i = 0; i < segments.Length; i++)
         {
-            part.segments = new ImporterSegment[segments.Length];
             part.segments[i] = segments[i];
         }
     }

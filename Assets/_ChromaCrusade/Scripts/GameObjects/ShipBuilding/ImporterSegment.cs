@@ -7,15 +7,14 @@ public class ImporterSegment : MonoBehaviour
     public Color DisabledColor = Color.ghostWhite;
     public Color EnabledColor = Color.white;
 
-    public ImporterConnection leftConnection;
     public ImporterConnection topConnection;
+    public ImporterConnection leftConnection;
     public ImporterConnection rightConnection;
     public ImporterConnection bottomConnection;
 
     private Button button;
     private Image image;
 
-    public enum SegmentState { Disabled, Enabled }
     public SegmentState segmentState;
 
     public struct SegmentToggledEvent { }
@@ -27,6 +26,11 @@ public class ImporterSegment : MonoBehaviour
     }
 
     private void Start()
+    {
+        Disable();
+    }
+
+    public void Disable()
     {
         ChangeState(SegmentState.Disabled);
     }

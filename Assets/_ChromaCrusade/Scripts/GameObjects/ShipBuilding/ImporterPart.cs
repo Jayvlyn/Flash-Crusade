@@ -85,6 +85,8 @@ public class ImporterPart : MonoBehaviour
     private bool SpriteGiven() => partSprite != null;
     private bool IsValidDamage(int value) => value >= 0;
     private bool EmptyName() => partName.IsNullOrWhitespace();
+    private bool ResetClicked() => resetClicked == true;
+    private bool ResetNotClicked() => resetClicked == false;
     #endregion
 
     private void Start()
@@ -105,9 +107,13 @@ public class ImporterPart : MonoBehaviour
             image.enabled = true;
         }
         else
+        {
             image.enabled = false;
+        }
     }
 
+    //[HorizontalLine(10, EColor.Green), ReadOnly]
+    //public string buttons = "";
     [Button("Save Part")]
     private void SavePart()
     {
@@ -164,5 +170,42 @@ public class ImporterPart : MonoBehaviour
         EditorGUIUtility.PingObject(so); // highlight in editor
 
         Debug.Log($"Created ScriptableObject: {assetPath}");
+    }
+
+
+    [ShowIf(nameof(ResetClicked)), Button("CANCEL Reset")]
+    private void CancelReset()
+    {
+        resetClicked = false;
+    }
+
+    [ShowIf(nameof(ResetClicked)),Button("CONFIRM Reset")]
+    private void ClearFields()
+    {
+        partSprite = null;
+        OnSpriteChangedCallback();
+        partType = PartType.Select;
+        partName = "";
+        mass = 1;
+        price = 100;
+        damage = 10;
+        projectileSpeed = 1;
+        fireRate = 1;
+        energy = 100;
+        mobility = 1;
+        handling = 1;
+        utilityType = UtilityType.Select;
+        foreach(var segment in segments)
+        {
+            segment.Disable();
+        }
+        resetClicked = false;
+    }
+
+    bool resetClicked;
+    [ShowIf(nameof(ResetNotClicked)),Button("Reset")]
+    private void ResetButton()
+    {
+        resetClicked = true;
     }
 }

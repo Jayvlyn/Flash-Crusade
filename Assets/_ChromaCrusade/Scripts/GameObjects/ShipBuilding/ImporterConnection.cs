@@ -35,7 +35,7 @@ public class ImporterConnection : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus.Subscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
+        EventBus.Unsubscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
     }
 
     private void ChangeState(ConnectionState state)
@@ -78,6 +78,7 @@ public class ImporterConnection : MonoBehaviour
 
     public void UpdateState()
     {
+        if (adjacentSegment == null) return;
         if (adjacentSegment.segmentState == ImporterSegment.SegmentState.Enabled) ChangeState(ConnectionState.Blocked);
         else if (connectionState == ConnectionState.Blocked) ChangeState(prevState);
     }

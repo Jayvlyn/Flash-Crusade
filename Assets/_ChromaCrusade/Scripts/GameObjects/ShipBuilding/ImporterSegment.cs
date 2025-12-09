@@ -34,6 +34,7 @@ public class ImporterSegment : MonoBehaviour
     public void OnClick()
     {
         ToggleState();
+        EventBus.Publish(new SegmentToggledEvent());
     }
 
     private void ToggleState()

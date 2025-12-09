@@ -65,7 +65,7 @@ public class EditorBuildArea : MonoBehaviour
             for (int x = 0; x < 3; x++)
             {
                 var segment = part.segments[x, y];
-                if (segment == null)
+                if (segment == null || segment.segmentState == SegmentState.Disabled)
                     continue;
 
                 int xOffset = part.xFlipped ? 1 - x : x - 1;

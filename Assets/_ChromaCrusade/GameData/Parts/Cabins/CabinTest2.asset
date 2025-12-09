@@ -9,13 +9,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9250c595644571047a9fa333749b8fcf, type: 3}
-  m_Name: TestPart
-  m_EditorClassIdentifier: Assembly-CSharp::ShipWeaponData
-  sprite: {fileID: -3964438663731247159, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
-  mass: 58
-  price: 55
+  m_Script: {fileID: 11500000, guid: 80bebadcdb6a0f8449affbdeb77889b6, type: 3}
+  m_Name: CabinTest2
+  m_EditorClassIdentifier: Assembly-CSharp::ShipCabinData
+  sprite: {fileID: 2381692899163183857, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  mass: 1
+  price: 100
   segments:
+  - segmentState: 0
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 0
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 0
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 1
@@ -31,7 +58,7 @@ MonoBehaviour:
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
       connectionState: 1
   - segmentState: 0
@@ -40,7 +67,7 @@ MonoBehaviour:
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
       connectionState: 1
   - segmentState: 1
@@ -49,37 +76,10 @@ MonoBehaviour:
     leftConnection:
       connectionState: 2
     rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 0
-    topConnection:
-      connectionState: 1
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 0
-    topConnection:
-      connectionState: 1
-    leftConnection:
-      connectionState: 1
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 1
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
       connectionState: 2
-    rightConnection:
-      connectionState: 0
     bottomConnection:
       connectionState: 2
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
@@ -92,11 +92,9 @@ MonoBehaviour:
     topConnection:
       connectionState: 1
     leftConnection:
-      connectionState: 0
+      connectionState: 1
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
-  damage: 8367
-  projectileSpeed: 4524
-  fireRate: 67
+      connectionState: 2
+  handling: 1

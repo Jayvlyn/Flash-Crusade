@@ -12,17 +12,19 @@ public class EditorShipPart : MonoBehaviour
         (0,2) (1,2) (2,2)
     */
 
-    public Vector2Int position; // center segment
-    public Vector2Int lastGrabbedFromCell;
+    [HideInInspector] public Vector2Int position; // center segment
+    [HideInInspector] public Vector2Int lastGrabbedFromCell;
 
-    public bool xFlipped;
-    public bool yFlipped;
+    [HideInInspector] public bool xFlipped;
+    [HideInInspector] public bool yFlipped;
 
     private float rotation;
     public float Rotation { get { return rotation; } }
 
-    public RectTransform rect;
-    public RectTransformFollower rtf;
+    [HideInInspector] public RectTransform rect;
+    [HideInInspector] public RectTransformFollower rtf;
+
+    private ShipPartData partData;
 
     private void Awake()
     {
@@ -30,14 +32,34 @@ public class EditorShipPart : MonoBehaviour
         rtf = GetComponent<RectTransformFollower>();
         rtf.enabled = false;
 
-        //TESTING:
-        segments[0,0] = new EditorPartSegment();
-        segments[2,0] = new EditorPartSegment();
-        segments[0,1] = new EditorPartSegment();
-        segments[1,1] = new EditorPartSegment();
-        segments[2,1] = new EditorPartSegment();
-        segments[0,2] = new EditorPartSegment();
-        segments[1,2] = new EditorPartSegment();
+        for(int x = 0; x < 3; x++)
+        {
+            for(int  y = 0; y < 3; y++)
+            {
+                segments[x, y] = new EditorPartSegment();
+            }
+        }
+    }
+
+    public void Init(ShipPartData partData)
+    {
+        this.partData = partData;
+
+        for(int i = 0; i < 9; i++)
+        {
+            int width = 3;
+            int x = i % width;
+            int y = i / width;
+
+            EditorPartSegment segment = segments[x, y];
+            PartSegment dataSegment = partData.segments[i];
+
+            segment.segmentState = dataSegment.segmentState;
+            segment.topConnection.connectionState = dataSegment.topConnection.connectionState;
+            segment.leftConnection.connectionState = dataSegment.leftConnection.connectionState;
+            segment.rightConnection.connectionState = dataSegment.rightConnection.connectionState;
+            segment.bottomConnection.connectionState = dataSegment.bottomConnection.connectionState;
+        }
     }
 
     #region State

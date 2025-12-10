@@ -118,6 +118,12 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("--");
+        foreach(var cell in buildArea.occupiedCells)
+        {
+            Debug.Log(cell.Key);
+        }
+
         ProcessNavInput();
     }
 
@@ -321,9 +327,9 @@ public class NavManager : MonoBehaviour
         midGrab = false;
     }
 
-    public void OnInventoryPartGrabbed(EditorShipPart part, PartOrganizer organizer)
+    public void OnInventoryPartGrabbed(ShipPartData part)
     {
-        CommandHistory.Execute(new InventoryGrabCommand(this, part, organizer));
+        CommandHistory.Execute(new InventoryGrabCommand(this, part));
     }
 
     #endregion
@@ -784,7 +790,7 @@ public class NavManager : MonoBehaviour
         {
             if (part)
             {
-                nav.buildArea.GrabPart(part.lastGrabbedFromCell);
+                nav.buildArea.GrabPart(part.cellPlacedAt);
                 if (UIManager.Smoothing)
                     nav.StartCoroutine(nav.GrabWithLerp(part));
                 else
@@ -892,13 +898,12 @@ public class NavManager : MonoBehaviour
 
         public void Execute()
         {
-            if (partData != null && nav.partOrganizer != null)
-            {
+            if (partData != null)
                 nav.partOrganizer.AddPart(partData);
 
-                if (nav.heldPart != null)
-                    Destroy(nav.heldPart.gameObject);
-
+            if (nav.heldPart != null)
+            {
+                Object.Destroy(nav.heldPart.gameObject);
                 nav.heldPart = null;
             }
 
@@ -907,55 +912,68 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
-            if (partData == null || nav.partOrganizer == null)
-            {
-                nav.SwitchToGridMode();
+            if (partData == null)
                 return;
-            }
 
-            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart partInstance);
+            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart part);
 
             if (!success)
             {
-                Debug.LogWarning("Undo failed: no matching part in inventory.");
+                Debug.LogWarning("Undo failed: part not available.");
                 return;
             }
 
-            nav.GrabImmediate(partInstance);
+            nav.GrabImmediate(part);
             nav.SwitchToGridMode();
         }
 
         public bool TryMerge(IEditorCommand next) => false;
     }
 
+
     public class InventoryGrabCommand : IEditorCommand
     {
-        EditorShipPart partGrabbed;
-        NavManager nav;
+        private ShipPartData partData;
+        private NavManager nav;
 
-        public InventoryGrabCommand(NavManager nav, EditorShipPart partGrabbed, PartOrganizer organizer)
+        public InventoryGrabCommand(NavManager nav, ShipPartData data)
         {
             this.nav = nav;
-            this.partGrabbed = partGrabbed;
-            nav.partOrganizer = organizer;
+            this.partData = data;
         }
 
-        public void Execute() // grab part from inv, enter grid mode
+        public void Execute()
         {
-            nav.GrabImmediate(partGrabbed);
+            // Always pull from inventory on execution
+            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart newPart);
+
+            if (!success)
+            {
+                Debug.LogWarning("Redo failed: part not available.");
+                return;
+            }
+
+            nav.GrabImmediate(newPart);
             nav.SwitchToGridMode();
         }
 
-        public void Undo() // send part back to inv, enter item mode
+        public void Undo()
         {
-            nav.partOrganizer.AddPart(partGrabbed.partData);
-            Destroy(nav.heldPart.gameObject);
-            nav.heldPart = null;
+            // return to inventory
+            nav.partOrganizer.AddPart(partData);
+
+            if (nav.heldPart != null)
+            {
+                Object.Destroy(nav.heldPart.gameObject);
+                nav.heldPart = null;
+            }
+
             nav.SwitchToItemMode();
         }
 
         public bool TryMerge(IEditorCommand next) => false;
     }
+
 
     #endregion
 }

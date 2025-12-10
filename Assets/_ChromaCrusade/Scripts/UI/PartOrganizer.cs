@@ -51,6 +51,7 @@ public class PartOrganizer : MonoBehaviour
 
     private void ChangeShowState(PartType showState)
     {
+        currentPage = 1;
         this.showState = showState;
         switch (showState)
         {
@@ -75,7 +76,6 @@ public class PartOrganizer : MonoBehaviour
                 ShowParts(utilities);
                 break;
         }
-        currentPage = 1;
     }
 
     private void ClearParts()
@@ -114,16 +114,7 @@ public class PartOrganizer : MonoBehaviour
 
             partSelector.onSelected.AddListener(() =>
             {
-                TakePart(inventoryEntry);
-
-                GameObject clone = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
-                EditorShipPart runtimePart = clone.GetComponent<EditorShipPart>();
-                runtimePart.Init(inventoryEntry.data);
-
-                runtimePart.rtf.target = partSelector.rect;
-                part.rtf.enabled = true;
-
-                nav.OnInventoryPartGrabbed(runtimePart, this);
+                nav.OnInventoryPartGrabbed(inventoryEntry.data);
             });
 
             selectorIndex++;
@@ -197,18 +188,6 @@ public class PartOrganizer : MonoBehaviour
         return true;
     }
 
-    public void TakePart(InventoryEntry entry)
-    {
-        entry.count--;
-
-        if (entry.count <= 0)
-        {
-            RemoveEntry(entry);
-        }
-
-        RefreshCurrentPage();
-    }
-
     public void AddPart(ShipPartData data)
     {
         List<InventoryEntry> list = GetListForType(data.PartType);
@@ -245,15 +224,9 @@ public class PartOrganizer : MonoBehaviour
 
     private void RemoveEntry(InventoryEntry entry)
     {
-        switch (showState)
-        {
-            case PartType.Cabin: cabins.Remove(entry); break;
-            case PartType.Core: cores.Remove(entry); break;
-            case PartType.Wing: wings.Remove(entry); break;
-            case PartType.Weapon: weapons.Remove(entry); break;
-            case PartType.Utility: utilities.Remove(entry); break;
-        }
-        UpdatePageCount(cabins.Count, partSelectors.Length);
+        var list = GetListForType(entry.data.PartType);
+        list.Remove(entry);
+        UpdatePageCount(list.Count, partSelectors.Length);
     }
 
     #region Event Responses

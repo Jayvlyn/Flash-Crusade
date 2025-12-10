@@ -28,6 +28,7 @@ public class EditorBuildArea : MonoBehaviour
 
         ForEachSegment(part, centerCell, cell =>
         {
+            part.cellPlacedAt = cell;
             occupiedCells[cell] = part;
             return true; // keep iterating
         });
@@ -45,7 +46,6 @@ public class EditorBuildArea : MonoBehaviour
                 occupiedCells.Remove(cell);
                 return true; // keep iterating
             });
-            partAtCell.lastGrabbedFromCell = cell;
             return partAtCell;
         }
         return null; // no part to grab here

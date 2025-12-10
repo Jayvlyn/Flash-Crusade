@@ -14,7 +14,7 @@ public class EditorShipPart : MonoBehaviour
     */
 
     [HideInInspector] public Vector2Int position; // center segment
-    [HideInInspector] public Vector2Int lastGrabbedFromCell;
+    [HideInInspector] public Vector2Int cellPlacedAt;
 
     [HideInInspector] public bool xFlipped;
     [HideInInspector] public bool yFlipped;
@@ -110,11 +110,6 @@ public class EditorShipPart : MonoBehaviour
         int currentIndex = rect.GetSiblingIndex();
         rect.SetSiblingIndex(Mathf.Max(0, currentIndex - 1));
         rtf.target = visualizerRect;
-    }
-
-    public void OnInventoryGrabbed()
-    {
-
     }
 
     public void OnPlaced(Vector2Int position, EditorBuildArea buildArea)

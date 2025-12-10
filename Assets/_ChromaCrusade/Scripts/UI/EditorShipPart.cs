@@ -112,6 +112,11 @@ public class EditorShipPart : MonoBehaviour
         rtf.target = visualizerRect;
     }
 
+    public void OnInventoryGrabbed()
+    {
+
+    }
+
     public void OnPlaced(Vector2Int position, EditorBuildArea buildArea)
     {
         this.position = position;
@@ -121,7 +126,7 @@ public class EditorShipPart : MonoBehaviour
 
     public void Rotate(float angle)
     {
-        rotation -= angle;
+        rotation += angle;
         if (rotation > 270) rotation = 0;
         if (rotation < 0) rotation = 270;
     }

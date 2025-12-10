@@ -56,15 +56,13 @@ public class NavManager : MonoBehaviour
     [SerializeField] private EditorBuildArea buildArea;
     private EditorShipPart heldPart;
 
-    [Header("TESTING")]
-    public EditorShipPart testPart;
-
     #endregion
 
     #region Events
     public struct DisableNavigationEvent { }
     public struct EnableNavigationEvent { }
     public struct EnterInputFieldEvent { }
+    public struct InventoryPartGrabbedEvent { EditorShipPart part; }
     #endregion
 
     #region Lifecycle
@@ -107,12 +105,6 @@ public class NavManager : MonoBehaviour
 
     private void Start()
     {
-        //TESTING
-        Vector2Int testPos = new Vector2Int(3, 3);
-        buildArea.PlacePart(testPos, testPart);
-        testPart.OnPlaced(testPos, buildArea);
-        //----
-
         visualizer.gameObject.SetActive(true);
         visualizer.centerGridCell = centerGridCell;
 
@@ -311,7 +303,7 @@ public class NavManager : MonoBehaviour
     {
         visualizer.UpdateWithRectImmediate(part.rect);
         part.OnGrabbed(visualizer.rect);
-        currentGridCell = part.position;
+        if(mode == NavMode.Grid) currentGridCell = part.position;
         heldPart = part;
     }
 
@@ -322,10 +314,16 @@ public class NavManager : MonoBehaviour
         yield return visualizer.LerpWithRect(part.rect); // waits until done
 
         part.OnGrabbed(visualizer.rect);
-        currentGridCell = part.position;
+        if (mode == NavMode.Grid) currentGridCell = part.position;
         heldPart = part;
         midGrab = false;
     }
+
+    public void OnInventoryPartGrabbed(EditorShipPart part)
+    {
+        CommandHistory.Execute(new InventoryGrabCommand(this, part));
+    }
+
     #endregion
 
     #region Place
@@ -881,6 +879,63 @@ public class NavManager : MonoBehaviour
         public void Undo()
         {
             nav.FlipPart(input);
+        }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
+        }
+    }
+
+    public class ExitBuildModeCommand : IEditorCommand
+    {
+        EditorShipPart heldPart; // was a part held on exit
+        NavManager nav;
+
+        public ExitBuildModeCommand(NavManager nav, EditorShipPart heldPart)
+        {
+            this.nav = nav;
+            this.heldPart = heldPart;
+        }
+
+        public void Execute() // if part held -> send back to inv, enter item mode
+        {
+            
+        }
+
+        public void Undo() // if part was held -> grab part from inv, enter grid mode
+        {
+            
+        }
+
+        public bool TryMerge(IEditorCommand next)
+        {
+            return false;
+        }
+    }
+
+    public class InventoryGrabCommand : IEditorCommand
+    {
+        EditorShipPart partGrabbed;
+        NavManager nav;
+
+        public InventoryGrabCommand(NavManager nav, EditorShipPart partGrabbed)
+        {
+            this.nav = nav;
+            this.partGrabbed = partGrabbed;
+        }
+
+        public void Execute() // grab part from inv, enter grid mode
+        {
+            nav.GrabImmediate(partGrabbed);
+            nav.SwitchToGridMode();
+        }
+
+        public void Undo() // send part back to inv, enter item mode
+        {
+            Destroy(nav.heldPart);
+            nav.heldPart = null;
+            nav.SwitchToItemMode();
         }
 
         public bool TryMerge(IEditorCommand next)

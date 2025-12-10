@@ -1,0 +1,50 @@
+{
+    "cabins": [
+        {
+            "name": "CabinTest1",
+            "count": 1
+        },
+        {
+            "name": "CabinTest2",
+            "count": 3
+        },
+        {
+            "name": "CabinTest3",
+            "count": 10
+        }
+    ],
+    "cores": [],
+    "wings": [
+        {
+            "name": "WingTest1",
+            "count": 4
+        },
+        {
+            "name": "WingTest2",
+            "count": 4
+        },
+        {
+            "name": "WingTest3",
+            "count": 4
+        }
+    ],
+    "weapons": [
+        {
+            "name": "GunTest1",
+            "count": 1
+        },
+        {
+            "name": "GunTest2",
+            "count": 5
+        },
+        {
+            "name": "GunTest3",
+            "count": 7
+        },
+        {
+            "name": "GunTest4",
+            "count": 20
+        }
+    ],
+    "utilities": []
+}

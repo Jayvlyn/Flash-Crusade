@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static ImporterPart;
 
 public class PartDatabase : MonoBehaviour
 {
@@ -61,12 +60,12 @@ public class PartDatabase : MonoBehaviour
         return null;
     }
 
-    public ShipPartData[] GetPartsOfType(PartType type)
+    public List<ShipPartData> GetPartsOfType(PartType type)
     {
         if (LoadedList == null)
         {
             Debug.LogError("PartDatabase has not loaded or PartList.json is missing.");
-            return System.Array.Empty<ShipPartData>();
+            return new List<ShipPartData>();
         }
 
         List<string> targetNames = type switch
@@ -82,7 +81,7 @@ public class PartDatabase : MonoBehaviour
         if (targetNames == null)
         {
             Debug.LogError($"Unhandled part type: {type}");
-            return System.Array.Empty<ShipPartData>();
+            return new List<ShipPartData>();
         }
 
         List<ShipPartData> results = new();
@@ -95,6 +94,6 @@ public class PartDatabase : MonoBehaviour
                 Debug.LogWarning($"Part '{name}' in JSON list for '{type}' not found in lookup.");
         }
 
-        return results.ToArray();
+        return results;
     }
 }

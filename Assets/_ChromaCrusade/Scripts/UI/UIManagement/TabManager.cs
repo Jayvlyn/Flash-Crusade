@@ -29,6 +29,13 @@ public class TabManager : MonoBehaviour
             t.owner = this;
 
         UpdateTabAnchors();
+
+    }
+
+    private void Start()
+    {
+        SwitchToTab(tabs[0]);
+        tabs[0].OnSelected();
     }
 
     public void SwitchToTab(NavTab newTab)

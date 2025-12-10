@@ -7,7 +7,24 @@
     "cores": [
         "CoreTest1",
         "CoreTest2",
-        "CoreTest3"
+        "CoreTest3",
+        "CoreTest4",
+        "CoreTest5",
+        "CoreTest6",
+        "CoreTest7",
+        "CoreTest8",
+        "CoreTest9",
+        "CoreTest10",
+        "CoreTest11",
+        "CoreTest12",
+        "CoreTest13",
+        "CoreTest14",
+        "CoreTest15",
+        "CoreTest16",
+        "CoreTest17",
+        "CoreTest18",
+        "CoreTest19",
+        "CoreTest20"
     ],
     "utilities": [
         "UtilityTest1",

@@ -13,7 +13,88 @@
             "count": 10
         }
     ],
-    "cores": [],
+    "cores": [
+        {
+            "name": "CoreTest1",
+            "count": 2
+        },
+        {
+            "name": "CoreTest2",
+            "count": 2
+        },
+        {
+            "name": "CoreTest3",
+            "count": 2
+        },
+        {
+            "name": "CoreTest4",
+            "count": 2
+        },
+        {
+            "name": "CoreTest5",
+            "count": 2
+        },
+        {
+            "name": "CoreTest6",
+            "count": 2
+        },
+        {
+            "name": "CoreTest7",
+            "count": 2
+        },
+        {
+            "name": "CoreTest8",
+            "count": 2
+        },
+        {
+            "name": "CoreTest9",
+            "count": 2
+        },
+        {
+            "name": "CoreTest10",
+            "count": 2
+        },
+        {
+            "name": "CoreTest11",
+            "count": 2
+        },
+        {
+            "name": "CoreTest12",
+            "count": 2
+        },
+        {
+            "name": "CoreTest13",
+            "count": 2
+        },
+        {
+            "name": "CoreTest14",
+            "count": 2
+        },
+        {
+            "name": "CoreTest15",
+            "count": 2
+        },
+        {
+            "name": "CoreTest16",
+            "count": 2
+        },
+        {
+            "name": "CoreTest17",
+            "count": 2
+        },
+        {
+            "name": "CoreTest18",
+            "count": 2
+        },
+        {
+            "name": "CoreTest19",
+            "count": 2
+        },
+        {
+            "name": "CoreTest20",
+            "count": 2
+        }
+    ],
     "wings": [
         {
             "name": "WingTest1",

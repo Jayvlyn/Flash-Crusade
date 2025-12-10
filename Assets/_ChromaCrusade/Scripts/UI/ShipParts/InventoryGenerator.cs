@@ -22,6 +22,26 @@ public class InventoryGenerator
         inventory.Add("GunTest2", PartType.Weapon, 5);
         inventory.Add("GunTest3", PartType.Weapon, 7);
         inventory.Add("GunTest4", PartType.Weapon, 20);
+        inventory.Add("CoreTest1", PartType.Core, 2);
+        inventory.Add("CoreTest2", PartType.Core, 2);
+        inventory.Add("CoreTest3", PartType.Core, 2);
+        inventory.Add("CoreTest4", PartType.Core, 2);
+        inventory.Add("CoreTest5", PartType.Core, 2);
+        inventory.Add("CoreTest6", PartType.Core, 2);
+        inventory.Add("CoreTest7", PartType.Core, 2);
+        inventory.Add("CoreTest8", PartType.Core, 2);
+        inventory.Add("CoreTest9", PartType.Core, 2);
+        inventory.Add("CoreTest10", PartType.Core, 2);
+        inventory.Add("CoreTest11", PartType.Core, 2);
+        inventory.Add("CoreTest12", PartType.Core, 2);
+        inventory.Add("CoreTest13", PartType.Core, 2);
+        inventory.Add("CoreTest14", PartType.Core, 2);
+        inventory.Add("CoreTest15", PartType.Core, 2);
+        inventory.Add("CoreTest16", PartType.Core, 2);
+        inventory.Add("CoreTest17", PartType.Core, 2);
+        inventory.Add("CoreTest18", PartType.Core, 2);
+        inventory.Add("CoreTest19", PartType.Core, 2);
+        inventory.Add("CoreTest20", PartType.Core, 2);
 
         string json = JsonUtility.ToJson(inventory, true);
 

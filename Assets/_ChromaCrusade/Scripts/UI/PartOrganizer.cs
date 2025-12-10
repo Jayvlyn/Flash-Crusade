@@ -28,7 +28,7 @@ public class PartOrganizer : MonoBehaviour
     public List<EditorShipPart> shownParts;
 
     private int pageCount;
-    private int currentPage;
+    private int currentPage = 1;
 
     private void Awake()
     {
@@ -75,6 +75,7 @@ public class PartOrganizer : MonoBehaviour
                 ShowParts(utilities);
                 break;
         }
+        currentPage = 1;
     }
 
     private void ClearParts()
@@ -136,7 +137,6 @@ public class PartOrganizer : MonoBehaviour
     private void UpdatePageCount(int totalElements, int elementsPerPage = 18)
     {
         pageCount = Mathf.CeilToInt((float)totalElements / elementsPerPage);
-        currentPage = 1;
     }
 
 
@@ -194,6 +194,7 @@ public class PartOrganizer : MonoBehaviour
             case PartType.Weapon: weapons.Remove(entry); break;
             case PartType.Utility: utilities.Remove(entry); break;
         }
+        UpdatePageCount(cabins.Count, partSelectors.Length);
     }
 
     #region Event Responses

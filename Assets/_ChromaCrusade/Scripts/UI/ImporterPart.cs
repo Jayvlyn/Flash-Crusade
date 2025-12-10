@@ -141,12 +141,12 @@ public class ImporterPart : MonoBehaviour
             return;
         }
 
-        string folder = PartListGenerator.PartsRootFolder + FolderNames[partType];
+        string folder = PartListGenerator.PartsRootFolder +"/"+ FolderNames[partType];
         string assetPath = $"{folder}/{partName}.asset";
 
         if (!AssetDatabase.IsValidFolder(folder.TrimEnd('/')))
         {
-            Debug.LogError("Cannot create ScriptableObject: Invalid folder path");
+            Debug.LogError(folder.TrimEnd('/'));
             return;
         }
 

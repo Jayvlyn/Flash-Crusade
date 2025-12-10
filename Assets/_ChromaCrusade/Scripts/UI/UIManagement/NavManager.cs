@@ -319,9 +319,9 @@ public class NavManager : MonoBehaviour
         midGrab = false;
     }
 
-    public void OnInventoryPartGrabbed(EditorShipPart part)
+    public void OnInventoryPartGrabbed(EditorShipPart part, PartOrganizer organizer)
     {
-        CommandHistory.Execute(new InventoryGrabCommand(this, part));
+        CommandHistory.Execute(new InventoryGrabCommand(this, part, organizer));
     }
 
     #endregion
@@ -916,13 +916,15 @@ public class NavManager : MonoBehaviour
 
     public class InventoryGrabCommand : IEditorCommand
     {
+        PartOrganizer organizer;
         EditorShipPart partGrabbed;
         NavManager nav;
 
-        public InventoryGrabCommand(NavManager nav, EditorShipPart partGrabbed)
+        public InventoryGrabCommand(NavManager nav, EditorShipPart partGrabbed, PartOrganizer organizer)
         {
             this.nav = nav;
             this.partGrabbed = partGrabbed;
+            this.organizer = organizer;
         }
 
         public void Execute() // grab part from inv, enter grid mode
@@ -933,7 +935,8 @@ public class NavManager : MonoBehaviour
 
         public void Undo() // send part back to inv, enter item mode
         {
-            Destroy(nav.heldPart);
+            organizer.AddPart(partGrabbed.partData);
+            Destroy(nav.heldPart.gameObject);
             nav.heldPart = null;
             nav.SwitchToItemMode();
         }

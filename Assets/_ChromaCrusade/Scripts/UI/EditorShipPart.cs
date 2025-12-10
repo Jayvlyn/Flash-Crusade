@@ -26,7 +26,7 @@ public class EditorShipPart : MonoBehaviour
     [HideInInspector] public RectTransformFollower rtf;
     [HideInInspector] public Image image;
 
-    private ShipPartData partData;
+    public ShipPartData partData;
 
     private void Awake()
     {

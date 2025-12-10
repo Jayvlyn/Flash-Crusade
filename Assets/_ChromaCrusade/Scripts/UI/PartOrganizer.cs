@@ -123,7 +123,7 @@ public class PartOrganizer : MonoBehaviour
                 runtimePart.rtf.target = partSelector.rect;
                 part.rtf.enabled = true;
 
-                nav.OnInventoryPartGrabbed(runtimePart);
+                nav.OnInventoryPartGrabbed(runtimePart, this);
             });
 
             selectorIndex++;
@@ -182,6 +182,40 @@ public class PartOrganizer : MonoBehaviour
         }
 
         RefreshCurrentPage();
+    }
+
+    public void AddPart(ShipPartData data)
+    {
+        List<InventoryEntry> list = GetListForType(data.PartType);
+
+        InventoryEntry entry = list.Find(e => e.data == data);
+
+        if (entry != null)
+        {
+            entry.count++;
+        }
+        else
+        {
+            entry = new InventoryEntry { data = data, count = 1 };
+            list.Add(entry);
+        }
+
+        UpdatePageCount(list.Count, partSelectors.Length);
+
+        RefreshCurrentPage();
+    }
+
+    private List<InventoryEntry> GetListForType(PartType type)
+    {
+        return type switch
+        {
+            PartType.Cabin => cabins,
+            PartType.Core => cores,
+            PartType.Wing => wings,
+            PartType.Weapon => weapons,
+            PartType.Utility => utilities,
+            _ => null
+        };
     }
 
     private void RemoveEntry(InventoryEntry entry)

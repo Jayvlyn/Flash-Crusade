@@ -6,6 +6,8 @@ public class ShipWeaponData : ShipPartData
     public int projectileSpeed;
     public float fireRate;
 
+    public override PartType PartType => PartType.Weapon;
+
     public override void Apply(ImporterPart importer)
     {
         base.Apply(importer);

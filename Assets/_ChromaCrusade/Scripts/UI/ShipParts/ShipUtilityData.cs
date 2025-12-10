@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewShipPart", menuName = "Data/Ship Utility")]
 public class ShipUtilityData : ShipPartData
 {
+    public override PartType PartType => PartType.Utility;
+
     public enum UtilityType
     { // 0 is "select" in importer
         Dock = 1,       // other ships can dock here

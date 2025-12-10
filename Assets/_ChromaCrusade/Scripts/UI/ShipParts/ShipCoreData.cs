@@ -5,6 +5,8 @@ public class ShipCoreData : ShipPartData
 {
     public float energy;
 
+    public override PartType PartType => PartType.Core;
+
     public override void Apply(ImporterPart importer)
     {
         base.Apply(importer);

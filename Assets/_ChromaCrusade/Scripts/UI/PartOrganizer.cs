@@ -172,6 +172,31 @@ public class PartOrganizer : MonoBehaviour
         return resolved;
     }
 
+    public bool TryTakePart(ShipPartData data, out EditorShipPart createdPart)
+    {
+        createdPart = null;
+
+        var list = GetListForType(data.PartType);
+        var entry = list.Find(e => e.data == data);
+
+        if (entry == null || entry.count <= 0)
+            return false;
+
+        entry.count--;
+
+        if (entry.count == 0)
+            list.Remove(entry);
+
+        GameObject obj = Instantiate(Assets.i.editorShipPartPrefab);
+        var part = obj.GetComponent<EditorShipPart>();
+        part.Init(data);
+
+        createdPart = part;
+
+        RefreshCurrentPage();
+        return true;
+    }
+
     public void TakePart(InventoryEntry entry)
     {
         entry.count--;

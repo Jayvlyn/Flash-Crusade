@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -55,6 +56,7 @@ public class NavManager : MonoBehaviour
     [SerializeField] private NavItem exitItem;
     [SerializeField] private EditorBuildArea buildArea;
     private EditorShipPart heldPart;
+    [HideInInspector] public PartOrganizer partOrganizer;
 
     #endregion
 
@@ -220,8 +222,8 @@ public class NavManager : MonoBehaviour
 
     public void ToggleNavMode()
     {
-        if (mode == NavMode.Item)      SwitchToGridMode();
-        else if (mode == NavMode.Grid) SwitchToItemMode();
+        if (mode == NavMode.Item) SwitchToGridMode();
+        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitBuildModeCommand(this));
     }
 
     public void SwitchNavMode(NavMode newMode)
@@ -249,7 +251,7 @@ public class NavManager : MonoBehaviour
         }
         else if (mode == NavMode.Grid)
         {
-            SwitchToItemMode();
+            CommandHistory.Execute(new ExitBuildModeCommand(this));
         }
     }
 
@@ -469,7 +471,7 @@ public class NavManager : MonoBehaviour
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (mode != NavMode.Grid) return;
+        //if (mode != NavMode.Grid) return;
         if (visualizer.IsRotateLerping) return;
         if (visualizer.IsFlipLerping) return;
         if (visualizer.IsLerping) return;
@@ -480,7 +482,7 @@ public class NavManager : MonoBehaviour
     private void OnRedoPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
-        if (mode != NavMode.Grid) return;
+        //if (mode != NavMode.Grid) return;
         if (visualizer.IsRotateLerping) return;
         if (visualizer.IsFlipLerping) return;
         if (visualizer.IsLerping) return;
@@ -754,10 +756,7 @@ public class NavManager : MonoBehaviour
             }
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     public class PlaceCommand : IEditorCommand
@@ -793,10 +792,7 @@ public class NavManager : MonoBehaviour
             }
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     public class NavigateCommand : IEditorCommand
@@ -854,10 +850,7 @@ public class NavManager : MonoBehaviour
             nav.RotatePart(-angle);
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     public class FlipCommand : IEditorCommand
@@ -881,42 +874,62 @@ public class NavManager : MonoBehaviour
             nav.FlipPart(input);
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     public class ExitBuildModeCommand : IEditorCommand
     {
-        EditorShipPart heldPart; // was a part held on exit
-        NavManager nav;
+        private ShipPartData partData;
+        private NavManager nav;
 
-        public ExitBuildModeCommand(NavManager nav, EditorShipPart heldPart)
+        public ExitBuildModeCommand(NavManager nav)
         {
             this.nav = nav;
-            this.heldPart = heldPart;
+
+            if (nav.heldPart != null)
+                partData = nav.heldPart.partData;
         }
 
-        public void Execute() // if part held -> send back to inv, enter item mode
+        public void Execute()
         {
-            
+            if (partData != null && nav.partOrganizer != null)
+            {
+                nav.partOrganizer.AddPart(partData);
+
+                if (nav.heldPart != null)
+                    Destroy(nav.heldPart.gameObject);
+
+                nav.heldPart = null;
+            }
+
+            nav.SwitchToItemMode();
         }
 
-        public void Undo() // if part was held -> grab part from inv, enter grid mode
+        public void Undo()
         {
-            
+            if (partData == null || nav.partOrganizer == null)
+            {
+                nav.SwitchToGridMode();
+                return;
+            }
+
+            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart partInstance);
+
+            if (!success)
+            {
+                Debug.LogWarning("Undo failed: no matching part in inventory.");
+                return;
+            }
+
+            nav.GrabImmediate(partInstance);
+            nav.SwitchToGridMode();
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     public class InventoryGrabCommand : IEditorCommand
     {
-        PartOrganizer organizer;
         EditorShipPart partGrabbed;
         NavManager nav;
 
@@ -924,7 +937,7 @@ public class NavManager : MonoBehaviour
         {
             this.nav = nav;
             this.partGrabbed = partGrabbed;
-            this.organizer = organizer;
+            nav.partOrganizer = organizer;
         }
 
         public void Execute() // grab part from inv, enter grid mode
@@ -935,16 +948,13 @@ public class NavManager : MonoBehaviour
 
         public void Undo() // send part back to inv, enter item mode
         {
-            organizer.AddPart(partGrabbed.partData);
+            nav.partOrganizer.AddPart(partGrabbed.partData);
             Destroy(nav.heldPart.gameObject);
             nav.heldPart = null;
             nav.SwitchToItemMode();
         }
 
-        public bool TryMerge(IEditorCommand next)
-        {
-            return false;
-        }
+        public bool TryMerge(IEditorCommand next) => false;
     }
 
     #endregion

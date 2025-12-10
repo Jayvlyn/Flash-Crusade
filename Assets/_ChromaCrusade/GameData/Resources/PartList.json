@@ -1,0 +1,27 @@
+{
+    "cabins": [
+        "CabinTest1",
+        "CabinTest2",
+        "CabinTest3"
+    ],
+    "cores": [
+        "CoreTest1",
+        "CoreTest2",
+        "CoreTest3"
+    ],
+    "utilities": [
+        "UtilityTest1",
+        "UtilityTest2"
+    ],
+    "wings": [
+        "WingTest1",
+        "WingTest2",
+        "WingTest3"
+    ],
+    "weapons": [
+        "GunTest1",
+        "GunTest2",
+        "GunTest3",
+        "GunTest4"
+    ]
+}

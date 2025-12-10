@@ -9,9 +9,9 @@ public class ImporterPart : MonoBehaviour
 {
     #region Data
     public enum PartType { Select = 0, 
-        Core = 1,
-        Wing = 2, 
-        Cabin = 3, 
+        Cabin = 1, 
+        Core = 2,
+        Wing = 3, 
         Weapon = 4, 
         Utility = 5
     }
@@ -52,21 +52,21 @@ public class ImporterPart : MonoBehaviour
 
     private static readonly Dictionary<PartType, string> FolderNames = new()
     {
+        { PartType.Cabin, "Cabins" },
         { PartType.Core, "Cores" },
         { PartType.Wing, "Wings" },
-        { PartType.Cabin, "Cabins" },
         { PartType.Weapon, "Weapons" },
         { PartType.Utility, "Utilities" }
     };
 
     private static readonly Dictionary<PartType, System.Type> SoTypeMap = new()
-{
-    { PartType.Core, typeof(ShipCoreData) },
-    { PartType.Wing, typeof(ShipWingData) },
-    { PartType.Cabin, typeof(ShipCabinData) },
-    { PartType.Weapon, typeof(ShipWeaponData) },
-    { PartType.Utility, typeof(ShipUtilityData) }
-};
+    {
+        { PartType.Cabin, typeof(ShipCabinData) },
+        { PartType.Core, typeof(ShipCoreData) },
+        { PartType.Wing, typeof(ShipWingData) },
+        { PartType.Weapon, typeof(ShipWeaponData) },
+        { PartType.Utility, typeof(ShipUtilityData) }
+    };
 
     #endregion
 
@@ -141,7 +141,7 @@ public class ImporterPart : MonoBehaviour
             return;
         }
 
-        string folder = "Assets/_ChromaCrusade/GameData/Parts/" + FolderNames[partType];
+        string folder = PartListGenerator.PartsRootFolder + FolderNames[partType];
         string assetPath = $"{folder}/{partName}.asset";
 
         if (!AssetDatabase.IsValidFolder(folder.TrimEnd('/')))

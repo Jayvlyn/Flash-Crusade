@@ -4,8 +4,8 @@ using System.IO;
 
 public class PartListGenerator
 {
-    private const string PartsRootFolder = "Assets/_ChromaCrusade/GameData/Parts";
-    private const string OutputPath = "Assets/Resources/PartList.json";
+    public const string PartsRootFolder = "Assets/_ChromaCrusade/GameData/Resources/Parts";
+    private const string OutputPath = "Assets/_ChromaCrusade/GameData/Resources/PartList.json";
 
     [MenuItem("Tools/Generate Ship Part List")]
     public static void Generate()

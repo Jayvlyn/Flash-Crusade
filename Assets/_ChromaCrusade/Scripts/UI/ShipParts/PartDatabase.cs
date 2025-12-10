@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using static ImporterPart;
 
 public class PartDatabase : MonoBehaviour
 {
@@ -58,5 +59,42 @@ public class PartDatabase : MonoBehaviour
 
         Debug.LogError($"Missing part: {partName}");
         return null;
+    }
+
+    public ShipPartData[] GetPartsOfType(PartType type)
+    {
+        if (LoadedList == null)
+        {
+            Debug.LogError("PartDatabase has not loaded or PartList.json is missing.");
+            return System.Array.Empty<ShipPartData>();
+        }
+
+        List<string> targetNames = type switch
+        {
+            PartType.Cabin => LoadedList.cabins,
+            PartType.Core => LoadedList.cores,
+            PartType.Utility => LoadedList.utilities,
+            PartType.Wing => LoadedList.wings,
+            PartType.Weapon => LoadedList.weapons,
+            _ => null
+        };
+
+        if (targetNames == null)
+        {
+            Debug.LogError($"Unhandled part type: {type}");
+            return System.Array.Empty<ShipPartData>();
+        }
+
+        List<ShipPartData> results = new();
+
+        foreach (var name in targetNames)
+        {
+            if (lookup.TryGetValue(name, out var part))
+                results.Add(part);
+            else
+                Debug.LogWarning($"Part '{name}' in JSON list for '{type}' not found in lookup.");
+        }
+
+        return results.ToArray();
     }
 }

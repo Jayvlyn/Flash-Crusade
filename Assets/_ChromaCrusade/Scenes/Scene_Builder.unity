@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 266385986}
   - component: {fileID: 266385988}
   m_Layer: 5
-  m_Name: Tab (4)
+  m_Name: UtilityTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,7 +812,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658380378}
+        m_TargetAssemblyTypeName: PartOrganizer, StudioLeo.UI
+        m_MethodName: OnUtilityTabSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
@@ -833,7 +845,7 @@ GameObject:
   - component: {fileID: 295307809}
   - component: {fileID: 295307811}
   m_Layer: 5
-  m_Name: Tab
+  m_Name: CabinTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -917,7 +929,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658380378}
+        m_TargetAssemblyTypeName: PartOrganizer, StudioLeo.UI
+        m_MethodName: OnCabinTabSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
@@ -1412,7 +1436,7 @@ GameObject:
   - component: {fileID: 455178762}
   - component: {fileID: 455178764}
   m_Layer: 5
-  m_Name: Tab (1)
+  m_Name: CoreTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1496,7 +1520,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658380378}
+        m_TargetAssemblyTypeName: PartOrganizer, StudioLeo.UI
+        m_MethodName: OnCoreTabSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
@@ -2189,6 +2225,7 @@ GameObject:
   - component: {fileID: 658380375}
   - component: {fileID: 658380377}
   - component: {fileID: 658380376}
+  - component: {fileID: 658380378}
   m_Layer: 5
   m_Name: PartsWindow
   m_TagString: Untagged
@@ -2255,6 +2292,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658380374}
   m_CullTransparentMesh: 1
+--- !u!114 &658380378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658380374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637988d1c3200264a87577b1b612f596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: StudioLeo.UI::PartOrganizer
+  partSelectors:
+  - {fileID: 790226074}
+  - {fileID: 815884798}
+  - {fileID: 318598950}
+  - {fileID: 686430438}
+  - {fileID: 411837595}
+  - {fileID: 261558577}
+  - {fileID: 2106762840}
+  - {fileID: 1278501521}
+  - {fileID: 886169494}
+  - {fileID: 1787411075}
+  - {fileID: 902406005}
+  - {fileID: 160399128}
+  - {fileID: 1415818557}
+  - {fileID: 1293722430}
+  - {fileID: 2104786518}
+  - {fileID: 816478719}
+  - {fileID: 2050349872}
+  - {fileID: 620702156}
+  cabins: []
+  cores: []
+  wings: []
+  weapons: []
+  utilities: []
+  itemPanel: {fileID: 261982136}
 --- !u!1 &684390834
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,7 +4076,7 @@ GameObject:
   - component: {fileID: 1460786039}
   - component: {fileID: 1460786041}
   m_Layer: 5
-  m_Name: Tab (2)
+  m_Name: WingTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4086,7 +4160,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658380378}
+        m_TargetAssemblyTypeName: PartOrganizer, StudioLeo.UI
+        m_MethodName: OnWingTabSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
@@ -5142,7 +5228,7 @@ GameObject:
   - component: {fileID: 2051465183}
   - component: {fileID: 2051465185}
   m_Layer: 5
-  m_Name: Tab (3)
+  m_Name: WeaponTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5226,7 +5312,19 @@ MonoBehaviour:
       m_Calls: []
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658380378}
+        m_TargetAssemblyTypeName: PartOrganizer, StudioLeo.UI
+        m_MethodName: OnWeaponTabSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   owner: {fileID: 0}
   selected: 0

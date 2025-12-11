@@ -3,6 +3,7 @@ using UnityEngine;
 //[ExecuteAlways]
 public class RectTransformFollower : MonoBehaviour
 {
+    public bool startOnly = false;
     public bool stretch = false;
 
     public RectTransform target;
@@ -15,7 +16,17 @@ public class RectTransformFollower : MonoBehaviour
         self = GetComponent<RectTransform>();
     }
 
+    private void Start()
+    {
+        Follow();
+    }
+
     private void LateUpdate()
+    {
+        if(!startOnly) Follow();
+    }
+
+    public void Follow()
     {
         if (!target || !self) return;
 

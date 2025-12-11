@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PartOrganizer : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class PartOrganizer : MonoBehaviour
     public List<InventoryEntry> wings = new();
     public List<InventoryEntry> weapons = new();
     public List<InventoryEntry> utilities = new();
+
+    public RectTransform defaultPartSpawn;
 
     [System.Serializable]
     public class InventoryEntry
@@ -103,10 +107,11 @@ public class PartOrganizer : MonoBehaviour
             partSelector.onSelected.RemoveAllListeners();
 
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
+            
             EditorShipPart part = obj.GetComponent<EditorShipPart>();
             part.Init(inventoryEntry.data);
-            part.rtf.target = partSelector.rect;
             part.rtf.enabled = true;
+            part.rtf.target = partSelector.rect;
 
             shownParts.Add(part);
 
@@ -182,11 +187,19 @@ public class PartOrganizer : MonoBehaviour
         var part = obj.GetComponent<EditorShipPart>();
         part.Init(data);
 
+        part.rect.SetParent(defaultPartSpawn, worldPositionStays: false);
+        part.rtf.target = defaultPartSpawn;
+        part.rtf.stretch = true;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(defaultPartSpawn);
+        StartCoroutine(part.EnableRTFNextFrame());
+
         createdPart = part;
 
         RefreshCurrentPage();
         return true;
     }
+
+
 
     public void AddPart(ShipPartData data)
     {

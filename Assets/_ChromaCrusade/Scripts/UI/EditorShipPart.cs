@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +28,16 @@ public class EditorShipPart : MonoBehaviour
     [HideInInspector] public RectTransformFollower rtf;
     [HideInInspector] public Image image;
 
+    public RectTransform partSelectorRect;
+
     public ShipPartData partData;
+
+    public IEnumerator EnableRTFNextFrame()
+    {
+        yield return null;
+        rtf.enabled = true;
+        rtf.Follow();
+    }
 
     private void Awake()
     {

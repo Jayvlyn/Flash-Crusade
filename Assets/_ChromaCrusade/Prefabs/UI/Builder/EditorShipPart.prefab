@@ -90,11 +90,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditorShipPart
   position: {x: 0, y: 0}
-  lastGrabbedFromCell: {x: 0, y: 0}
+  cellPlacedAt: {x: 0, y: 0}
   xFlipped: 0
   yFlipped: 0
   rect: {fileID: 0}
   rtf: {fileID: 0}
+  image: {fileID: 0}
+  partSelectorRect: {fileID: 0}
+  partData: {fileID: 0}
 --- !u!114 &1202010373954754445
 MonoBehaviour:
   m_ObjectHideFlags: 0

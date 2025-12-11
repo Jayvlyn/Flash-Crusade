@@ -912,18 +912,17 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
-            if (partData == null)
-                return;
-
-            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart part);
-
-            if (!success)
+            if (partData != null)
             {
-                Debug.LogWarning("Undo failed: part not available.");
-                return;
+                bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart part);
+
+                if (success)
+                {
+                    nav.GrabImmediate(part);
+                }
             }
 
-            nav.GrabImmediate(part);
+
             nav.SwitchToGridMode();
         }
 

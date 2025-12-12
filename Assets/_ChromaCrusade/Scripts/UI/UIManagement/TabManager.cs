@@ -70,7 +70,7 @@ public class TabManager : MonoBehaviour
 
         while (t < 1f)
         {
-            t += Time.unscaledDeltaTime / duration;
+            t += Time.deltaTime / duration;
             float s = Mathf.SmoothStep(0, 1, t);
 
             LerpAnchors(activeTab.rect, startMin, startMax, activeTab.anchorMinActive, activeTab.anchorMaxActive, s);

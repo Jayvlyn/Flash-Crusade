@@ -769,6 +769,9 @@ public class NavManager : MonoBehaviour
         public void Execute()
         {
             part = nav.buildArea.GrabPart(nav.currentGridCell);
+
+            nav.visualizer.MatchRectScale(part.rect);
+
             if (UIManager.Smoothing)
                 nav.StartCoroutine(nav.GrabWithLerp(part, false));
             else
@@ -782,6 +785,7 @@ public class NavManager : MonoBehaviour
                 nav.buildArea.PlacePart(originCell, part);
                 part.OnPlaced(originCell, nav.buildArea);
                 nav.heldPart = null;
+                nav.visualizer.ResetScale();
                 nav.currentGridCell = grabbedFromCell;
                 nav.visualizer.HighlightCell(grabbedFromCell);
             }
@@ -810,6 +814,7 @@ public class NavManager : MonoBehaviour
             nav.buildArea.PlacePart(cell, part);
             part.OnPlaced(cell, nav.buildArea);
             nav.heldPart = null;
+            nav.visualizer.ResetScale();
             nav.visualizer.HighlightCell(part.position);
         }
 
@@ -818,6 +823,9 @@ public class NavManager : MonoBehaviour
             if (part)
             {
                 nav.buildArea.GrabPart(part.cellPlacedAt);
+
+                nav.visualizer.MatchRectScale(part.rect);
+
                 if (UIManager.Smoothing)
                     nav.StartCoroutine(nav.GrabWithLerp(part, false));
                 else
@@ -987,7 +995,7 @@ public class NavManager : MonoBehaviour
             else
                 nav.GrabImmediate(newPart, true);
 
-                nav.SwitchToGridMode();
+            nav.SwitchToGridMode();
         }
 
         public void Undo()
@@ -1017,7 +1025,6 @@ public class NavManager : MonoBehaviour
 
             if (UIManager.Smoothing)
             {
-                //nav.GrabFrameLate(newPart, true);
                 nav.StartCoroutine(nav.GrabWithLerp(newPart, true));
             }
             else

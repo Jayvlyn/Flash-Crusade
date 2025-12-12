@@ -238,7 +238,7 @@ public class PartOrganizer : MonoBehaviour
 
     public void SetPartToDefaultStart(EditorShipPart part)
     {
-        part.rect.SetParent(defaultPartSpawn, worldPositionStays: false);
+        part.rect.SetParent(defaultPartSpawn.parent, worldPositionStays: false);
         part.rtf.target = defaultPartSpawn;
         part.rtf.stretch = true;
         LayoutRebuilder.ForceRebuildLayoutImmediate(defaultPartSpawn);

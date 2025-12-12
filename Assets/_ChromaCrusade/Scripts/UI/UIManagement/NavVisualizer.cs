@@ -141,7 +141,7 @@ public class NavVisualizer : MonoBehaviour
 
         while (t < transitionDuration)
         {
-            t += Time.unscaledDeltaTime;
+            t += Time.deltaTime;
             float s = Mathf.Clamp01(t / transitionDuration);
             s = Mathf.SmoothStep(0, 1, s);
 
@@ -204,7 +204,7 @@ public class NavVisualizer : MonoBehaviour
 
         while (t < transitionDuration)
         {
-            t += Time.unscaledDeltaTime;
+            t += Time.deltaTime;
             float s = Mathf.SmoothStep(0, 1, t / transitionDuration);
 
             float newAngle = Mathf.LerpAngle(startAngle, finalAngle, s);
@@ -269,7 +269,7 @@ public class NavVisualizer : MonoBehaviour
 
         while (t < transitionDuration)
         {
-            t += Time.unscaledDeltaTime;
+            t += Time.deltaTime;
             float s = Mathf.Clamp01(t / transitionDuration);
             s = Mathf.SmoothStep(0, 1, s);
 
@@ -364,7 +364,7 @@ public class NavVisualizer : MonoBehaviour
 
             var (targetPos, targetSize) = getTarget();
 
-            t += Time.unscaledDeltaTime / transitionDuration;
+            t += Time.deltaTime / transitionDuration;
             float s = Mathf.SmoothStep(0, 1, t);
 
             rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
@@ -382,6 +382,27 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalSize.y);
 
         lerpRoutine = null;
+    }
+
+    public void ResetScale()
+    {
+        var scale = rect.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        scale.y = Mathf.Abs(scale.y);
+        rect.localScale = scale;
+    }
+
+    public void MatchRectScale(RectTransform rectTransform)
+    {
+        var scale = rect.localScale;
+
+        if (rectTransform.localScale.x < 0)
+            scale.x = -scale.x;
+
+        if (rectTransform.localScale.y < 0)
+            scale.y = -scale.y;
+
+        rect.localScale = scale;
     }
 
     #endregion

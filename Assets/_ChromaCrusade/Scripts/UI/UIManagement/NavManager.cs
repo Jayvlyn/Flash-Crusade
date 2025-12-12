@@ -275,6 +275,9 @@ public class NavManager : MonoBehaviour
     private void InitItemNav()
     {
         NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
+
+        visualizer.ResetRotation();
+        visualizer.ResetScale();
     }
     
     private void InitGridNav()

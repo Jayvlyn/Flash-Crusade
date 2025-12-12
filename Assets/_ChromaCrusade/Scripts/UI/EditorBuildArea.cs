@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
-using static EditorShipPart;
 
 public class EditorBuildArea : MonoBehaviour
 {
     public Dictionary<Vector2Int, EditorShipPart> occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
     [HideInInspector] public RectTransform rect;
 
-    // Maps each placed part -> list of its connected neighbors
     private Dictionary<EditorShipPart, List<EditorShipPart>> adjacency = new Dictionary<EditorShipPart, List<EditorShipPart>>();
 
     private HashSet<EditorShipPart> allParts = new HashSet<EditorShipPart>();
@@ -38,9 +35,9 @@ public class EditorBuildArea : MonoBehaviour
         Vector2Int unrotated = part.Rotation switch
         {
             0 => offset,
-            90 => new Vector2Int(-offset.y, offset.x),   // inverse of (y, -x)
+            90 => new Vector2Int(-offset.y, offset.x),
             180 => new Vector2Int(-offset.x, -offset.y),
-            270 => new Vector2Int(offset.y, -offset.x),    // inverse of (-y, x)
+            270 => new Vector2Int(offset.y, -offset.x),
             _ => offset
         };
 
@@ -81,7 +78,6 @@ public class EditorBuildArea : MonoBehaviour
         });
 
         allParts.Add(part);
-
         RecomputeConnectivity();
 
         return true;
@@ -101,6 +97,8 @@ public class EditorBuildArea : MonoBehaviour
 
         RemoveNodeFromGraph(partAtCell);
         allParts.Remove(partAtCell);
+
+        if (partAtCell == centerPart) centerPart = null;
 
         RecomputeConnectivity();
 
@@ -167,17 +165,15 @@ public class EditorBuildArea : MonoBehaviour
     {
         Vector2Int d = dir;
 
-        // Undo rotation (reverse direction)
         d = part.Rotation switch
         {
             0 => d,
-            90 => new Vector2Int(-d.y, d.x),     // inverse of (y, -x)
+            90 => new Vector2Int(-d.y, d.x),
             180 => new Vector2Int(-d.x, -d.y),
-            270 => new Vector2Int(d.y, -d.x),     // inverse of (-d.y, d.x)
+            270 => new Vector2Int(d.y, -d.x),
             _ => d
         };
 
-        // Undo flips (same operation as forward, flips are symmetric)
         if (part.xFlipped) d.x *= -1;
         if (part.yFlipped) d.y *= -1;
 
@@ -266,7 +262,11 @@ public class EditorBuildArea : MonoBehaviour
 
     public void RecomputeConnectivity()
     {
-        if (centerPart == null) return;
+        if (centerPart == null)
+        {
+            foreach (var part in allParts) part.PartDisconnected();
+            return;
+        }
 
         HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
 

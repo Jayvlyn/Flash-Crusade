@@ -154,7 +154,6 @@ public class EditorShipPart : MonoBehaviour
     {
         this.position = position;
         rect.parent = buildArea.rect;
-        ChangeState(PartState.PlacedDisconnected);
     }
 
     public void Rotate(float angle)

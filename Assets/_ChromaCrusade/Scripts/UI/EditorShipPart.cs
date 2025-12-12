@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EditorShipPart : MonoBehaviour
 {
     public enum PartState { Inventory, Grabbed, PlacedConnected, PlacedDisconnected}
-    private PartState partState;
+    public PartState partState;
 
     public EditorPartSegment[,] segments = new EditorPartSegment[3,3];
     /*

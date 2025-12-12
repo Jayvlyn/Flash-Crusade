@@ -1,5 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static EditorShipPart;
 
 public class EditorBuildArea : MonoBehaviour
 {
@@ -59,10 +61,37 @@ public class EditorBuildArea : MonoBehaviour
         return segment;
     }
 
+    //public bool PlacePart(Vector2Int centerCell, EditorShipPart part)
+    //{
+    //    if (!CellsAvailable(centerCell, part))
+    //        return false;
+
+    //    ForEachSegment(part, centerCell, (segment, cell) =>
+    //    {
+    //        part.cellPlacedAt = cell;
+    //        occupiedCells[cell] = part;
+
+    //        if (cell == Vector2Int.zero)
+    //            centerPart = part;
+
+    //        TryConnectSegment(part, segment, cell);
+
+    //        return true;
+    //    });
+
+    //    allParts.Add(part);
+    //    RecomputeConnectivity();
+
+    //    return true;
+    //}
     public bool PlacePart(Vector2Int centerCell, EditorShipPart part)
     {
         if (!CellsAvailable(centerCell, part))
             return false;
+
+        allParts.Add(part);
+        if (!adjacency.ContainsKey(part))
+            adjacency[part] = new List<EditorShipPart>();
 
         ForEachSegment(part, centerCell, (segment, cell) =>
         {
@@ -73,15 +102,45 @@ public class EditorBuildArea : MonoBehaviour
                 centerPart = part;
 
             TryConnectSegment(part, segment, cell);
-
             return true;
         });
 
-        allParts.Add(part);
-        RecomputeConnectivity();
+        bool connected = CanReachCenter(part);
+
+        if (connected)
+        {
+            part.PartConnected();
+            PropagateConnectedState(part);
+        }
+        else
+        {
+            part.PartDisconnected();
+        }
 
         return true;
     }
+
+    //public EditorShipPart GrabPart(Vector2Int cell)
+    //{
+    //    EditorShipPart partAtCell = GetPartAtCell(cell);
+    //    if (partAtCell == null)
+    //        return null;
+
+    //    ForEachSegment(partAtCell, partAtCell.position, (segment, segCell) =>
+    //    {
+    //        occupiedCells.Remove(segCell);
+    //        return true;
+    //    });
+
+    //    RemoveNodeFromGraph(partAtCell);
+    //    allParts.Remove(partAtCell);
+
+    //    if (partAtCell == centerPart) centerPart = null;
+
+    //    RecomputeConnectivity();
+
+    //    return partAtCell;
+    //}
 
     public EditorShipPart GrabPart(Vector2Int cell)
     {
@@ -89,18 +148,24 @@ public class EditorBuildArea : MonoBehaviour
         if (partAtCell == null)
             return null;
 
-        ForEachSegment(partAtCell, partAtCell.position, (segment, segCell) =>
+        List<EditorShipPart> neighbors = adjacency.ContainsKey(partAtCell)
+            ? adjacency[partAtCell].ToList()
+            : new List<EditorShipPart>();
+
+        ForEachSegment(partAtCell, partAtCell.position, (segment, c) =>
         {
-            occupiedCells.Remove(segCell);
+            occupiedCells.Remove(c);
             return true;
         });
 
         RemoveNodeFromGraph(partAtCell);
+
         allParts.Remove(partAtCell);
 
         if (partAtCell == centerPart) centerPart = null;
 
-        RecomputeConnectivity();
+        foreach (var n in neighbors)
+            CheckAndPropagateDisconnect(n);
 
         return partAtCell;
     }
@@ -206,18 +271,14 @@ public class EditorBuildArea : MonoBehaviour
 
     private bool NeighborConnectsBack(EditorShipPart neighbor, Vector2Int neighborCell, Vector2Int thisCell)
     {
-        // Direction from neighbor TO this part (world space)
         Vector2Int worldDir = thisCell - neighborCell;
 
-        // Get the neighbor segment at neighborCell
         EditorPartSegment seg = GetSegmentAtCell(neighbor, neighborCell);
         if (seg == null)
             return false;
 
-        // Convert worldDir into the neighbor's local direction
         Vector2Int localDir = InverseTransformDirection(worldDir, neighbor);
 
-        // Now we check the correct local-facing connection
         if (localDir == Vector2Int.up)
             return seg.topConnection.connectionState == ConnectionState.Enabled;
 
@@ -297,6 +358,73 @@ public class EditorBuildArea : MonoBehaviour
             if (!visited.Contains(part))
             {
                 part.PartDisconnected();
+            }
+        }
+    }
+
+    private bool CanReachCenter(EditorShipPart start)
+    {
+        Queue<EditorShipPart> queue = new Queue<EditorShipPart>();
+        HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+
+            if (current == centerPart)
+                return true;
+
+            foreach (var neighbor in adjacency[current])
+            {
+                if (!visited.Contains(neighbor) && neighbor.partState == PartState.PlacedConnected)
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void CheckAndPropagateDisconnect(EditorShipPart startPart)
+    {
+        if (startPart == centerPart) return;
+
+        if (startPart.partState == PartState.PlacedDisconnected) return;
+
+        if (CanReachCenter(startPart)) return;
+
+        startPart.PartDisconnected();
+
+        foreach (var n in adjacency[startPart]) CheckAndPropagateDisconnect(n);
+    }
+
+    private void PropagateConnectedState(EditorShipPart part)
+    {
+        if (!adjacency.ContainsKey(part)) return;
+
+        Queue<EditorShipPart> queue = new Queue<EditorShipPart>();
+        HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
+
+        queue.Enqueue(part);
+        visited.Add(part);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+
+            foreach (var neighbor in adjacency[current])
+            {
+                if (!visited.Contains(neighbor) && neighbor.partState == PartState.PlacedDisconnected)
+                {
+                    neighbor.PartConnected();
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
             }
         }
     }

@@ -118,12 +118,6 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("--");
-        foreach(var cell in buildArea.occupiedCells)
-        {
-            Debug.Log(cell.Key);
-        }
-
         ProcessNavInput();
     }
 
@@ -307,16 +301,28 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    private void GrabImmediate(EditorShipPart part)
+    private void GrabFrameLate(EditorShipPart part, bool fromInv)
+    {
+        heldPart = part;
+        StartCoroutine(FrameLateRoutine(part, fromInv));
+    }
+
+    private IEnumerator FrameLateRoutine(EditorShipPart part, bool fromInv)
+    {
+        yield return null;
+        GrabImmediate(part, fromInv);
+    }
+
+    private void GrabImmediate(EditorShipPart part, bool fromInv)
     {
         visualizer.UpdateWithRectImmediate(part.rect);
         part.OnGrabbed(visualizer.rect);
-        if(mode == NavMode.Grid) currentGridCell = part.position;
+        if(!fromInv) currentGridCell = part.position;
         heldPart = part;
     }
 
     private bool midGrab = false;
-    private IEnumerator GrabWithLerp(EditorShipPart part)
+    private IEnumerator GrabWithLerp(EditorShipPart part, bool fromInv)
     {
         midGrab = true;
         yield return visualizer.LerpWithRect(part.rect); // waits until done
@@ -339,7 +345,7 @@ public class NavManager : MonoBehaviour
     {
         if(buildArea.CanPlacePart(currentGridCell, heldPart))
         {
-            CommandHistory.Execute(new PlaceCommand(this, heldPart, currentGridCell));
+            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
         }
     }
 
@@ -745,9 +751,9 @@ public class NavManager : MonoBehaviour
         {
             nav.buildArea.GrabPart(nav.currentGridCell);
             if (UIManager.Smoothing)
-                nav.StartCoroutine(nav.GrabWithLerp(part));
+                nav.StartCoroutine(nav.GrabWithLerp(part, false));
             else
-                nav.GrabImmediate(part);
+                nav.GrabImmediate(part, false);
         }
 
         public void Undo()
@@ -768,18 +774,18 @@ public class NavManager : MonoBehaviour
     public class PlaceCommand : IEditorCommand
     {
         NavManager nav;
-        EditorShipPart part;
         Vector2Int cell;
+        EditorShipPart part;
 
-        public PlaceCommand(NavManager nav, EditorShipPart part, Vector2Int cell)
+        public PlaceCommand(NavManager nav, Vector2Int cell)
         {
             this.nav = nav;
-            this.part = part;
             this.cell = cell;
         }
 
         public void Execute()
         {
+            part = nav.heldPart;
             nav.buildArea.PlacePart(cell, part);
             part.OnPlaced(cell, nav.buildArea);
             nav.heldPart = null;
@@ -792,9 +798,9 @@ public class NavManager : MonoBehaviour
             {
                 nav.buildArea.GrabPart(part.cellPlacedAt);
                 if (UIManager.Smoothing)
-                    nav.StartCoroutine(nav.GrabWithLerp(part));
+                    nav.StartCoroutine(nav.GrabWithLerp(part, false));
                 else
-                    nav.GrabImmediate(part);
+                    nav.GrabImmediate(part, false);
             }
         }
 
@@ -918,7 +924,7 @@ public class NavManager : MonoBehaviour
 
                 if (success)
                 {
-                    nav.GrabImmediate(part);
+                    nav.GrabImmediate(part, true);
                 }
             }
 
@@ -952,7 +958,8 @@ public class NavManager : MonoBehaviour
                 return;
             }
 
-            nav.GrabImmediate(newPart);
+            //nav.GrabImmediate(newPart);
+            nav.GrabFrameLate(newPart, true);
             nav.SwitchToGridMode();
         }
 

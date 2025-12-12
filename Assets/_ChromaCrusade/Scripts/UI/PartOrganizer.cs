@@ -187,12 +187,6 @@ public class PartOrganizer : MonoBehaviour
         var part = obj.GetComponent<EditorShipPart>();
         part.Init(data);
 
-        part.rect.SetParent(defaultPartSpawn, worldPositionStays: false);
-        part.rtf.target = defaultPartSpawn;
-        part.rtf.stretch = true;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(defaultPartSpawn);
-        StartCoroutine(part.EnableRTFNextFrame());
-
         createdPart = part;
 
         RefreshCurrentPage();

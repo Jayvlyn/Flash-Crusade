@@ -32,13 +32,6 @@ public class EditorShipPart : MonoBehaviour
 
     public ShipPartData partData;
 
-    public IEnumerator EnableRTFNextFrame()
-    {
-        yield return null;
-        rtf.enabled = true;
-        rtf.Follow();
-    }
-
     private void Awake()
     {
         image = GetComponent<Image>();

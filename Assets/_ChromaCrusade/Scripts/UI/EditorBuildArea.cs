@@ -64,44 +64,24 @@ public class EditorBuildArea : MonoBehaviour
 
     public bool PlacePart(Vector2Int centerCell, EditorShipPart part)
     {
-        if(!CellsAvailable(centerCell, part)) return false;
+        if (!CellsAvailable(centerCell, part))
+            return false;
 
         ForEachSegment(part, centerCell, (segment, cell) =>
         {
             part.cellPlacedAt = cell;
             occupiedCells[cell] = part;
 
-            if (cell == new Vector2Int(0, 0)) centerPart = part;
+            if (cell == Vector2Int.zero)
+                centerPart = part;
 
-            // look at segments here
-            if (segment.topConnection.connectionState == ConnectionState.Enabled)
-            {
-                Vector2Int dir = TransformDirection(new Vector2Int(0, 1), part);
-                FindConnectingNeighbor(cell, dir, part);
-            }
+            TryConnectSegment(part, segment, cell);
 
-            if (segment.bottomConnection.connectionState == ConnectionState.Enabled)
-            {
-                Vector2Int dir = TransformDirection(new Vector2Int(0, -1), part);
-                FindConnectingNeighbor(cell, dir, part);
-            }
-
-            if (segment.leftConnection.connectionState == ConnectionState.Enabled)
-            {
-                Vector2Int dir = TransformDirection(new Vector2Int(-1, 0), part);
-                FindConnectingNeighbor(cell, dir, part);
-            }
-
-            if (segment.rightConnection.connectionState == ConnectionState.Enabled)
-            {
-                Vector2Int dir = TransformDirection(new Vector2Int(1, 0), part);
-                FindConnectingNeighbor(cell, dir, part);
-            }
-
-            return true; // keep iterating
+            return true;
         });
 
         allParts.Add(part);
+
         RecomputeConnectivity();
 
         return true;
@@ -110,23 +90,21 @@ public class EditorBuildArea : MonoBehaviour
     public EditorShipPart GrabPart(Vector2Int cell)
     {
         EditorShipPart partAtCell = GetPartAtCell(cell);
-        if (partAtCell != null)
+        if (partAtCell == null)
+            return null;
+
+        ForEachSegment(partAtCell, partAtCell.position, (segment, segCell) =>
         {
-            ForEachSegment(partAtCell, partAtCell.position, (segment,cell) =>
-            {
-                occupiedCells.Remove(cell);
+            occupiedCells.Remove(segCell);
+            return true;
+        });
 
-                RemoveNodeFromGraph(partAtCell);
-                allParts.Remove(partAtCell);
+        RemoveNodeFromGraph(partAtCell);
+        allParts.Remove(partAtCell);
 
-                return true; // keep iterating
-            });
+        RecomputeConnectivity();
 
-            RecomputeConnectivity();
-
-            return partAtCell;
-        }
-        return null; // no part to grab here
+        return partAtCell;
     }
 
     public bool CellsAvailable(Vector2Int centerCell, EditorShipPart part)
@@ -213,6 +191,21 @@ public class EditorBuildArea : MonoBehaviour
 
         if (!adjacency[a].Contains(b)) adjacency[a].Add(b);
         if (!adjacency[b].Contains(a)) adjacency[b].Add(a);
+    }
+
+    private void TryConnectSegment(EditorShipPart part, EditorPartSegment segment, Vector2Int cell)
+    {
+        if (segment.topConnection.connectionState == ConnectionState.Enabled)
+            FindConnectingNeighbor(cell, TransformDirection(Vector2Int.up, part), part);
+
+        if (segment.bottomConnection.connectionState == ConnectionState.Enabled)
+            FindConnectingNeighbor(cell, TransformDirection(Vector2Int.down, part), part);
+
+        if (segment.leftConnection.connectionState == ConnectionState.Enabled)
+            FindConnectingNeighbor(cell, TransformDirection(Vector2Int.left, part), part);
+
+        if (segment.rightConnection.connectionState == ConnectionState.Enabled)
+            FindConnectingNeighbor(cell, TransformDirection(Vector2Int.right, part), part);
     }
 
     private bool NeighborConnectsBack(EditorShipPart neighbor, Vector2Int neighborCell, Vector2Int thisCell)

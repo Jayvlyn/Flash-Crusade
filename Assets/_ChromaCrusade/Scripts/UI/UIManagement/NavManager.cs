@@ -313,6 +313,18 @@ public class NavManager : MonoBehaviour
         GrabImmediate(part, fromInv);
     }
 
+    //private void GrabTimeLate(EditorShipPart part, bool fromInv, float time)
+    //{
+    //    heldPart = part;
+    //    StartCoroutine(TimeLateRoutine(part, fromInv, time));
+    //}
+
+    //private IEnumerator TimeLateRoutine(EditorShipPart part, bool fromInv, float time)
+    //{
+    //    yield return new WaitForSecondsRealtime(time);
+    //    GrabImmediate(part, fromInv);
+    //}
+
     private void GrabImmediate(EditorShipPart part, bool fromInv)
     {
         visualizer.UpdateWithRectImmediate(part.rect);
@@ -768,6 +780,8 @@ public class NavManager : MonoBehaviour
             }
         }
 
+        public void Redo() => Execute();
+
         public bool TryMerge(IEditorCommand next) => false;
     }
 
@@ -804,6 +818,8 @@ public class NavManager : MonoBehaviour
             }
         }
 
+        public void Redo() => Execute();
+
         public bool TryMerge(IEditorCommand next) => false;
     }
 
@@ -827,6 +843,8 @@ public class NavManager : MonoBehaviour
         {
             nav.TriggerNav(-totalInput);
         }
+
+        public void Redo() => Execute();
 
         public bool TryMerge(IEditorCommand next)
         {
@@ -862,6 +880,8 @@ public class NavManager : MonoBehaviour
             nav.RotatePart(-angle);
         }
 
+        public void Redo() => Execute();
+
         public bool TryMerge(IEditorCommand next) => false;
     }
 
@@ -885,6 +905,8 @@ public class NavManager : MonoBehaviour
         {
             nav.FlipPart(input);
         }
+
+        public void Redo() => Execute();
 
         public bool TryMerge(IEditorCommand next) => false;
     }
@@ -932,6 +954,8 @@ public class NavManager : MonoBehaviour
             nav.SwitchToGridMode();
         }
 
+        public void Redo() => Execute();
+
         public bool TryMerge(IEditorCommand next) => false;
     }
 
@@ -949,7 +973,31 @@ public class NavManager : MonoBehaviour
 
         public void Execute()
         {
-            // Always pull from inventory on execution
+            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart newPart);
+
+            if(UIManager.Smoothing)
+                nav.GrabFrameLate(newPart, true);
+            else
+                nav.GrabImmediate(newPart, true);
+
+                nav.SwitchToGridMode();
+        }
+
+        public void Undo()
+        {
+            nav.partOrganizer.AddPart(partData);
+
+            if (nav.heldPart != null)
+            {
+                Destroy(nav.heldPart.gameObject);
+                nav.heldPart = null;
+            }
+
+            nav.SwitchToItemMode();
+        }
+
+        public void Redo()
+        {
             bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart newPart);
 
             if (!success)
@@ -958,23 +1006,14 @@ public class NavManager : MonoBehaviour
                 return;
             }
 
-            //nav.GrabImmediate(newPart);
-            nav.GrabFrameLate(newPart, true);
+            nav.partOrganizer.SetPartToDefaultStart(newPart);
+
+            if (UIManager.Smoothing)
+                nav.GrabFrameLate(newPart, true);
+            else
+                nav.GrabImmediate(newPart, true);
+
             nav.SwitchToGridMode();
-        }
-
-        public void Undo()
-        {
-            // return to inventory
-            nav.partOrganizer.AddPart(partData);
-
-            if (nav.heldPart != null)
-            {
-                Object.Destroy(nav.heldPart.gameObject);
-                nav.heldPart = null;
-            }
-
-            nav.SwitchToItemMode();
         }
 
         public bool TryMerge(IEditorCommand next) => false;

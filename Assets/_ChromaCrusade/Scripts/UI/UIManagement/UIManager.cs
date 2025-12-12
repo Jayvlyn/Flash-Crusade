@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public static bool Smoothing = true;
+    public static bool Smoothing = false;
 }

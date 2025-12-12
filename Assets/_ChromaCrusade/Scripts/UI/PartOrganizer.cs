@@ -236,6 +236,16 @@ public class PartOrganizer : MonoBehaviour
         UpdatePageCount(list.Count, partSelectors.Length);
     }
 
+    public void SetPartToDefaultStart(EditorShipPart part)
+    {
+        part.rect.SetParent(defaultPartSpawn, worldPositionStays: false);
+        part.rtf.target = defaultPartSpawn;
+        part.rtf.stretch = true;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(defaultPartSpawn);
+        part.rtf.enabled = true;
+        part.rtf.Follow();
+    }
+
     #region Event Responses
 
     public void OnCabinTabSelected()

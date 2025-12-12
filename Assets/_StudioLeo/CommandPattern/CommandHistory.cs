@@ -36,7 +36,7 @@ public class CommandHistory : MonoBehaviour
     {
         if (redoStack.Count == 0) return;
         IEditorCommand command = redoStack.Pop();
-        command.Execute();
+        command.Redo();
         undoStack.Push(command);
     }
 }

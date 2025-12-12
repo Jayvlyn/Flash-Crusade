@@ -2083,6 +2083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79920ac63b343448818a4b3737736e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.Utilities::RectTransformFollower
+  startOnly: 0
   stretch: 1
   target: {fileID: 1278501522}
 --- !u!1 &411837594
@@ -3267,7 +3268,7 @@ MonoBehaviour:
   wings: []
   weapons: []
   utilities: []
-  defaultItemSpawn: {fileID: 0}
+  defaultPartSpawn: {fileID: 397825348}
   itemPanel: {fileID: 261982136}
   showState: 0
   shownParts: []

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NavVisualizer : MonoBehaviour
 {
     [Header("Settings")] 
-    float transitionDuration = 0.12f;
+    public float transitionDuration = 0.12f;
 
     [HideInInspector] public RectTransform centerGridCell;
     [HideInInspector] public RectTransform rect;

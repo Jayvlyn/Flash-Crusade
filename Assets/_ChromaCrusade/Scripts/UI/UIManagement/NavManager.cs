@@ -50,6 +50,12 @@ public class NavManager : MonoBehaviour
     [SerializeField] private float inputRepeatDelay = 0.35f;
     [SerializeField] private float inputRepeatRate = 0.1f;
 
+    bool undoHeld;
+    bool redoHeld;
+
+    float undoNextTime;
+    float redoNextTime;
+
     [Header("Other Refs")]
     private NavItem hoveredItem;
     [SerializeField] private NavItem initialHoveredItem;
@@ -125,6 +131,7 @@ public class NavManager : MonoBehaviour
         //}
 
         ProcessNavInput();
+        ProcessUndoRedoRepeat();
     }
 
     #endregion
@@ -501,24 +508,14 @@ public class NavManager : MonoBehaviour
 
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled) return;
-        //if (mode != NavMode.Grid) return;
-        if (visualizer.IsRotateLerping) return;
-        if (visualizer.IsFlipLerping) return;
-        if (visualizer.IsLerping) return;
-
-        CommandHistory.Undo();
+        float input = ctx.ReadValue<float>();
+        undoHeld = input == 1;
     }
 
     private void OnRedoPerformed(InputAction.CallbackContext ctx)
     {
-        if (ctx.canceled) return;
-        //if (mode != NavMode.Grid) return;
-        if (visualizer.IsRotateLerping) return;
-        if (visualizer.IsFlipLerping) return;
-        if (visualizer.IsLerping) return;
-
-        CommandHistory.Redo();
+        float input = ctx.ReadValue<float>();
+        redoHeld = input == 1;
     }
 
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
@@ -550,8 +547,7 @@ public class NavManager : MonoBehaviour
     {
         float input = ctx.ReadValue<float>();
 
-        if (input == 1) modifyHeld = true;
-        else modifyHeld = false;
+        modifyHeld = input == 1;
     }
 
     #endregion
@@ -633,10 +629,14 @@ public class NavManager : MonoBehaviour
         if (hasFocus)
         {
             modifyHeld = modifyAction.action.IsPressed();
+            undoHeld = undoAction.action.IsPressed();
+            redoHeld = undoAction.action.IsPressed();
         }
         else
         {
             modifyHeld = false;
+            undoHeld = false;
+            redoHeld = false;
         }
     }
 
@@ -1039,5 +1039,33 @@ public class NavManager : MonoBehaviour
     }
 
 
+    #endregion
+
+    #region Command Management
+    private void ProcessUndoRedoRepeat()
+    {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping)
+            return;
+
+        if (undoHeld)
+        {
+            if (Time.time >= undoNextTime)
+            {
+                CommandHistory.Undo();
+                undoNextTime = Time.time + (undoNextTime == 0f ? inputRepeatDelay : inputRepeatRate);
+            }
+        }
+        else undoNextTime = 0f;
+
+        if (redoHeld)
+        {
+            if (Time.time >= redoNextTime)
+            {
+                CommandHistory.Redo();
+                redoNextTime = Time.time + (redoNextTime == 0f ? inputRepeatDelay : inputRepeatRate);
+            }
+        }
+        else redoNextTime = 0f;
+    }
     #endregion
 }

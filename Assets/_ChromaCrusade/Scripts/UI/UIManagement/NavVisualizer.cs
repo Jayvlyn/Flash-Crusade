@@ -175,20 +175,20 @@ public class NavVisualizer : MonoBehaviour
     public void Rotate(float angle)
     {
         if (UIManager.Smoothing)
-            RotateLerp(-angle);
+            RotateLerp(angle);
         else
-            RotateImmediate(-angle);
+            RotateImmediate(angle);
     }
 
-    private void RotateImmediate(float angle)
+    public void RotateImmediate(float angle)
     {
         rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z + angle);
+        rect.localEulerAngles = new Vector3(0, 0, rect.localEulerAngles.z - angle);
     }
 
     private void RotateLerp(float angle)
     {
-        targetRotation = rect.localEulerAngles.z + angle;
+        targetRotation = rect.localEulerAngles.z - angle;
 
         CancelRotateLerp();
 
@@ -232,10 +232,10 @@ public class NavVisualizer : MonoBehaviour
         if (UIManager.Smoothing)
             FlipLerp(horizontal);
         else
-            FlipInstant(horizontal);
+            FlipImmediate(horizontal);
     }
 
-    private void FlipInstant(bool horizontal)
+    public void FlipImmediate(bool horizontal)
     {
         Vector3 scale = rect.localScale;
 

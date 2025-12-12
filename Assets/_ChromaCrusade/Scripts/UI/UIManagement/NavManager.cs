@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -41,6 +42,7 @@ public class NavManager : MonoBehaviour
     [SerializeField] private InputActionReference rotateAction;
     [SerializeField] private InputActionReference flipAction;
     [SerializeField] private InputActionReference modifyAction;
+    [SerializeField] private InputActionReference deleteAction;
     private Vector2 lastMoveInput;
     private bool inInputField;
     private bool allowMovement;
@@ -308,8 +310,6 @@ public class NavManager : MonoBehaviour
     #region Grab
     private void TryGrabPart()
     {
-        //Debug.Log("Trying to grab part at " + currentGridCell.ToString());
-
         EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
         if (part)
         {
@@ -341,9 +341,9 @@ public class NavManager : MonoBehaviour
     //    GrabImmediate(part, fromInv);
     //}
 
-    private void GrabImmediate(EditorShipPart part, bool fromInv)
+    private void GrabImmediate(EditorShipPart part, bool fromInv, bool updateVisualizer = true)
     {
-        visualizer.UpdateWithRectImmediate(part.rect);
+        if(updateVisualizer) visualizer.UpdateWithRectImmediate(part.rect);
         part.OnGrabbed(visualizer.rect);
         if(!fromInv) currentGridCell = part.position;
         heldPart = part;
@@ -401,12 +401,26 @@ public class NavManager : MonoBehaviour
         visualizer.Rotate(angle);
     }
 
+    public void RotatePartImmediate(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.RotateImmediate(angle);
+    }
+
     public void FlipPart(float input)
     { // input: 1 = vert flip    -1 = hori flip
         bool horizontal = input == -1;
         if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
         heldPart.Flip(horizontal);
         visualizer.Flip(horizontal);
+    }
+
+    public void FlipPartImmediate(float input)
+    { // input: 1 = vert flip    -1 = hori flip
+        bool horizontal = input == -1;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.FlipImmediate(horizontal);
     }
 
     #endregion
@@ -509,6 +523,16 @@ public class NavManager : MonoBehaviour
         InitNavMode(true);
     }
 
+    private void OnDeletePerformed(InputAction.CallbackContext ctx)
+    {
+        if (ctx.canceled) return;
+        if (mode != NavMode.Grid) return;
+        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
+        if (heldPart == null && part == null) return; // no part to delete
+
+        CommandHistory.Execute(new DeleteCommand(this, currentGridCell));
+    }
+
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
@@ -585,6 +609,7 @@ public class NavManager : MonoBehaviour
         rotateAction.action.Enable();
         flipAction.action.Enable();
         modifyAction.action.Enable();
+        deleteAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -599,6 +624,7 @@ public class NavManager : MonoBehaviour
         rotateAction.action.performed += OnRotatePerformed;
         flipAction.action.performed += OnFlipPerformed;
         modifyAction.action.performed += OnModifyPerformed;
+        deleteAction.action.performed += OnDeletePerformed;
     }
 
     private void DisableInputs()
@@ -613,6 +639,7 @@ public class NavManager : MonoBehaviour
         rotateAction.action.performed -= OnRotatePerformed;
         flipAction.action.performed -= OnFlipPerformed;
         modifyAction.action.performed -= OnModifyPerformed;
+        deleteAction.action.performed -= OnDeletePerformed;
     }
 
     private void EnableMainInputs()
@@ -1039,6 +1066,97 @@ public class NavManager : MonoBehaviour
         }
 
         public bool TryMerge(IEditorCommand next) => false;
+    }
+
+
+    public class DeleteCommand : IEditorCommand
+    {
+        NavManager nav;
+        Vector2Int startCell;
+        Vector2Int partPosition;
+        ShipPartData partData;
+        bool wasPlaced;
+        bool xFlipped;
+        bool yFlipped;
+        float rotation;
+
+        public DeleteCommand(NavManager nav, Vector2Int startCell)
+        {
+            this.nav = nav;
+            this.startCell = startCell;
+        }
+
+        public void Execute()
+        {
+            if (nav.heldPart != null)
+            {
+                wasPlaced = false;
+                nav.partOrganizer.AddPart(nav.heldPart.partData);
+                partData = nav.heldPart.partData;
+
+                xFlipped = nav.heldPart.xFlipped;
+                yFlipped = nav.heldPart.yFlipped;
+                rotation = nav.heldPart.Rotation;
+
+                Destroy(nav.heldPart.gameObject);
+                nav.heldPart = null;
+            }
+            else
+            {
+                wasPlaced = true;
+                EditorShipPart part = nav.buildArea.GrabPart(nav.currentGridCell);
+                partData = part.partData;
+                partPosition = part.position;
+                nav.partOrganizer.AddPart(part.partData);
+                nav.GrabImmediate(part, false, false);
+
+                xFlipped = nav.heldPart.xFlipped;
+                yFlipped = nav.heldPart.yFlipped;
+                rotation = nav.heldPart.Rotation;
+
+                Destroy(part.gameObject);
+                nav.heldPart = null;
+            }
+
+            nav.currentGridCell = startCell;
+            nav.visualizer.HighlightCell(nav.currentGridCell);
+        }
+
+        public void Undo()
+        {
+            if (partData != null)
+            {
+                if(wasPlaced) nav.visualizer.HighlightCellImmediate(partPosition, true);
+                else nav.visualizer.HighlightCellImmediate(startCell, true);
+
+                nav.StartCoroutine(nav.help(wasPlaced, partData, partPosition, startCell, xFlipped, yFlipped, rotation));
+            }
+        }
+
+        public void Redo() => Execute();
+
+        public bool TryMerge(IEditorCommand next) => false;
+
+    }
+
+    private IEnumerator help(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, bool xFlipped, bool yFlipped, float rotation)
+    {
+        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
+        if (success) GrabImmediate(part, true, false);
+        yield return null;
+        if (rotation != 0) RotatePartImmediate(rotation);
+        if (xFlipped) FlipPartImmediate(-1);
+        if (yFlipped) FlipPartImmediate(1);
+        yield return null;
+
+        if (wasPlaced)
+        {
+            buildArea.PlacePart(partPosition, part);
+            part.OnPlaced(partPosition, buildArea);
+            heldPart = null;
+            visualizer.ResetScale();
+            visualizer.HighlightCellImmediate(startCell, false);
+        }
     }
 
 

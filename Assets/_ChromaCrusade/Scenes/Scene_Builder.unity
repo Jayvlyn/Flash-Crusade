@@ -889,6 +889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EditorBuildArea
   rect: {fileID: 0}
+  centerPart: {fileID: 0}
 --- !u!1 &261558573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2811,6 +2812,7 @@ MonoBehaviour:
   rotateAction: {fileID: 2384486198090031326, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   flipAction: {fileID: 7741694452288187375, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   modifyAction: {fileID: 4959521218990074076, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  deleteAction: {fileID: 498701818083463054, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   inputRepeatDelay: 0.35
   inputRepeatRate: 0.15
   initialHoveredItem: {fileID: 1809799018}

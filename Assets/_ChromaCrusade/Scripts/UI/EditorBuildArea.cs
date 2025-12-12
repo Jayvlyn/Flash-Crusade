@@ -4,7 +4,7 @@ using UnityEngine;
 public class EditorBuildArea : MonoBehaviour
 {
     public Dictionary<Vector2Int, EditorShipPart> occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
-    public RectTransform rect;
+    [HideInInspector] public RectTransform rect;
 
     private void Awake()
     {
@@ -30,6 +30,10 @@ public class EditorBuildArea : MonoBehaviour
         {
             part.cellPlacedAt = cell;
             occupiedCells[cell] = part;
+
+
+            // look at segments here
+
             return true; // keep iterating
         });
 
@@ -44,6 +48,10 @@ public class EditorBuildArea : MonoBehaviour
             ForEachSegment(partAtCell, partAtCell.position, cell =>
             {
                 occupiedCells.Remove(cell);
+
+                // look at segments here
+
+
                 return true; // keep iterating
             });
             return partAtCell;
@@ -88,4 +96,6 @@ public class EditorBuildArea : MonoBehaviour
         }
         return true;
     }
+
+
 }

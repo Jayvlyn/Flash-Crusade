@@ -814,11 +814,16 @@ public class NavManager : MonoBehaviour
             {
                 nav.buildArea.PlacePart(originCell, part);
                 part.OnPlaced(originCell, nav.buildArea);
-                nav.heldPart = null;
-                nav.visualizer.ResetScale();
-                nav.currentGridCell = grabbedFromCell;
-                nav.visualizer.HighlightCell(grabbedFromCell);
             }
+            else
+            {
+                nav.buildArea.PlacePart(originCell, nav.heldPart);
+                nav.heldPart.OnPlaced(originCell, nav.buildArea);
+            }
+            nav.heldPart = null;
+            nav.visualizer.ResetScale();
+            nav.currentGridCell = grabbedFromCell;
+            nav.visualizer.HighlightCell(grabbedFromCell);
         }
 
         public void Redo() => Execute();
@@ -831,6 +836,7 @@ public class NavManager : MonoBehaviour
         NavManager nav;
         Vector2Int cell;
         EditorShipPart part;
+        Vector2Int cellPlacedAt;
 
         public PlaceCommand(NavManager nav, Vector2Int cell)
         {
@@ -843,6 +849,7 @@ public class NavManager : MonoBehaviour
             part = nav.heldPart;
             nav.buildArea.PlacePart(cell, part);
             part.OnPlaced(cell, nav.buildArea);
+            cellPlacedAt = part.cellPlacedAt;
             nav.heldPart = null;
             nav.visualizer.ResetScale();
             nav.visualizer.HighlightCell(part.position);
@@ -850,6 +857,11 @@ public class NavManager : MonoBehaviour
 
         public void Undo()
         {
+            if (part == null)
+            {
+                part = nav.buildArea.GrabPart(cellPlacedAt);
+            }
+
             if (part)
             {
                 nav.buildArea.GrabPart(part.cellPlacedAt);
@@ -1126,10 +1138,11 @@ public class NavManager : MonoBehaviour
         {
             if (partData != null)
             {
+                nav.midUndoDelete = true;
                 if(wasPlaced) nav.visualizer.HighlightCellImmediate(partPosition, true);
                 else nav.visualizer.HighlightCellImmediate(startCell, true);
 
-                nav.StartCoroutine(nav.help(wasPlaced, partData, partPosition, startCell, xFlipped, yFlipped, rotation));
+                nav.StartCoroutine(nav.UndoDeleteRoutine(wasPlaced, partData, partPosition, startCell, xFlipped, yFlipped, rotation));
             }
         }
 
@@ -1139,7 +1152,8 @@ public class NavManager : MonoBehaviour
 
     }
 
-    private IEnumerator help(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, bool xFlipped, bool yFlipped, float rotation)
+    private bool midUndoDelete;
+    private IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, bool xFlipped, bool yFlipped, float rotation)
     {
         bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
         if (success) GrabImmediate(part, true, false);
@@ -1157,6 +1171,7 @@ public class NavManager : MonoBehaviour
             visualizer.ResetScale();
             visualizer.HighlightCellImmediate(startCell, false);
         }
+        midUndoDelete = false;
     }
 
 
@@ -1165,7 +1180,7 @@ public class NavManager : MonoBehaviour
     #region Command Management
     private void ProcessUndoRedoRepeat()
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
             return;
 
         if (undoHeld && !modifyHeld)

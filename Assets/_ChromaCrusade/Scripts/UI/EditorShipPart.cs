@@ -158,7 +158,7 @@ public class EditorShipPart : MonoBehaviour
 
     public void Rotate(float angle)
     {
-        rotation += angle;
+        rotation += Mathf.RoundToInt(angle);
         if (rotation > 270) rotation = 0;
         if (rotation < 0) rotation = 270;
     }

@@ -118,6 +118,12 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("---");
+        //foreach(var key in buildArea.occupiedCells.Keys)
+        //{
+        //    Debug.Log(key);
+        //}
+
         ProcessNavInput();
     }
 
@@ -762,7 +768,7 @@ public class NavManager : MonoBehaviour
 
         public void Execute()
         {
-            nav.buildArea.GrabPart(nav.currentGridCell);
+            part = nav.buildArea.GrabPart(nav.currentGridCell);
             if (UIManager.Smoothing)
                 nav.StartCoroutine(nav.GrabWithLerp(part, false));
             else
@@ -932,7 +938,7 @@ public class NavManager : MonoBehaviour
 
             if (nav.heldPart != null)
             {
-                Object.Destroy(nav.heldPart.gameObject);
+                Destroy(nav.heldPart.gameObject);
                 nav.heldPart = null;
             }
 

@@ -32,6 +32,16 @@ public class EditorShipPart : MonoBehaviour
 
     public ShipPartData partData;
 
+    public bool debugState = false;
+
+    private void Update()
+    {
+        if(debugState)
+        {
+            Debug.Log(partState.ToString());
+        }
+    }
+
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -87,6 +97,13 @@ public class EditorShipPart : MonoBehaviour
                 rtf.enabled = false;
                 rtf.target = null;
                 break;
+            case PartState.Inventory:
+                break;
+            case PartState.PlacedConnected:
+                break;
+            case PartState.PlacedDisconnected:
+                ChangeAlpha(1f);
+                break;
             default:
                 break;
         }
@@ -97,6 +114,13 @@ public class EditorShipPart : MonoBehaviour
         {
             case PartState.Grabbed:
                 rtf.enabled = true;
+                break;
+            case PartState.Inventory:
+                break;
+            case PartState.PlacedConnected:
+                break;
+            case PartState.PlacedDisconnected:
+                ChangeAlpha(0.3f);
                 break;
             default:
                 break;
@@ -139,4 +163,11 @@ public class EditorShipPart : MonoBehaviour
     }
 
     #endregion
+
+    private void ChangeAlpha(float alpha)
+    {
+        Color color = image.color;
+        color.a = alpha;
+        image.color = color;
+    }
 }

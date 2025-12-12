@@ -127,6 +127,16 @@ public class EditorShipPart : MonoBehaviour
         }
     }
 
+    public void PartConnected()
+    {
+        ChangeState(PartState.PlacedConnected);
+    }
+
+    public void PartDisconnected()
+    {
+        ChangeState(PartState.PlacedDisconnected);
+    }
+
     #endregion
 
     #region Manipulation

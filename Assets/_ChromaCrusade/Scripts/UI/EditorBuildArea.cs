@@ -26,13 +26,35 @@ public class EditorBuildArea : MonoBehaviour
     {
         if(!CellsAvailable(centerCell, part)) return false;
 
-        ForEachSegment(part, centerCell, cell =>
+        ForEachSegment(part, centerCell, (segment, cell) =>
         {
             part.cellPlacedAt = cell;
             occupiedCells[cell] = part;
 
-
             // look at segments here
+            if (segment.topConnection.connectionState == ConnectionState.Enabled)
+            {
+                Vector2Int dir = TransformDirection(new Vector2Int(0, 1), part);
+                Vector2Int connectingCell = cell + dir;
+            }
+
+            if (segment.bottomConnection.connectionState == ConnectionState.Enabled)
+            {
+                Vector2Int dir = TransformDirection(new Vector2Int(0, -1), part);
+                Vector2Int connectingCell = cell + dir;
+            }
+
+            if (segment.leftConnection.connectionState == ConnectionState.Enabled)
+            {
+                Vector2Int dir = TransformDirection(new Vector2Int(-1, 0), part);
+                Vector2Int connectingCell = cell + dir;
+            }
+
+            if (segment.rightConnection.connectionState == ConnectionState.Enabled)
+            {
+                Vector2Int dir = TransformDirection(new Vector2Int(1, 0), part);
+                Vector2Int connectingCell = cell + dir;
+            }
 
             return true; // keep iterating
         });
@@ -45,12 +67,34 @@ public class EditorBuildArea : MonoBehaviour
         EditorShipPart partAtCell = GetPartAtCell(cell);
         if (partAtCell != null)
         {
-            ForEachSegment(partAtCell, partAtCell.position, cell =>
+            ForEachSegment(partAtCell, partAtCell.position, (segment,cell) =>
             {
                 occupiedCells.Remove(cell);
 
                 // look at segments here
+                if (segment.topConnection.connectionState == ConnectionState.Enabled)
+                {
+                    Vector2Int dir = TransformDirection(new Vector2Int(0, 1), partAtCell);
+                    Vector2Int connectingCell = cell + dir;
+                }
 
+                if (segment.bottomConnection.connectionState == ConnectionState.Enabled)
+                {
+                    Vector2Int dir = TransformDirection(new Vector2Int(0, -1), partAtCell);
+                    Vector2Int connectingCell = cell + dir;
+                }
+
+                if (segment.leftConnection.connectionState == ConnectionState.Enabled)
+                {
+                    Vector2Int dir = TransformDirection(new Vector2Int(-1, 0), partAtCell);
+                    Vector2Int connectingCell = cell + dir;
+                }
+
+                if (segment.rightConnection.connectionState == ConnectionState.Enabled)
+                {
+                    Vector2Int dir = TransformDirection(new Vector2Int(1, 0), partAtCell);
+                    Vector2Int connectingCell = cell + dir;
+                }
 
                 return true; // keep iterating
             });
@@ -61,12 +105,12 @@ public class EditorBuildArea : MonoBehaviour
 
     public bool CellsAvailable(Vector2Int centerCell, EditorShipPart part)
     {
-        return ForEachSegment(part, centerCell, cell =>
+        return ForEachSegment(part, centerCell, (segment, cell) =>
             !occupiedCells.ContainsKey(cell)
         );
     }
 
-    private bool ForEachSegment(EditorShipPart part, Vector2Int centerCell, System.Func<Vector2Int, bool> callback)
+    private bool ForEachSegment(EditorShipPart part, Vector2Int centerCell, System.Func<EditorPartSegment, Vector2Int, bool> callback)
     {
         for (int y = 0; y < 3; y++)
         {
@@ -91,11 +135,28 @@ public class EditorBuildArea : MonoBehaviour
 
                 Vector2Int targetCell = centerCell + rotatedOffset;
 
-                if (!callback(targetCell)) return false;
+                if (!callback(segment, targetCell)) return false;
             }
         }
         return true;
     }
 
+
+    private Vector2Int TransformDirection(Vector2Int dir, EditorShipPart part)
+    {
+        Vector2Int d = dir;
+
+        if (part.xFlipped) d.x *= -1;
+        if (part.yFlipped) d.y *= -1;
+
+        return part.Rotation switch
+        {
+            0 => d,
+            90 => new Vector2Int(d.y, -d.x),
+            180 => new Vector2Int(-d.x, -d.y),
+            270 => new Vector2Int(-d.y, d.x),
+            _ => d
+        };
+    }
 
 }

@@ -1047,7 +1047,7 @@ public class NavManager : MonoBehaviour
         if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping)
             return;
 
-        if (undoHeld)
+        if (undoHeld && !modifyHeld)
         {
             if (Time.time >= undoNextTime)
             {
@@ -1057,7 +1057,7 @@ public class NavManager : MonoBehaviour
         }
         else undoNextTime = 0f;
 
-        if (redoHeld)
+        if (redoHeld || (undoHeld && modifyHeld))
         {
             if (Time.time >= redoNextTime)
             {

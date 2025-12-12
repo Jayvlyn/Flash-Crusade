@@ -2044,7 +2044,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397825348}
-  - component: {fileID: 397825349}
   m_Layer: 5
   m_Name: DefaultPartSpawn
   m_TagString: Untagged
@@ -2066,26 +2065,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 261982136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 77, y: -132.5}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &397825349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 397825347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79920ac63b343448818a4b3737736e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: StudioLeo.Utilities::RectTransformFollower
-  startOnly: 0
-  stretch: 1
-  target: {fileID: 1278501522}
 --- !u!1 &411837594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3521,6 +3505,7 @@ MonoBehaviour:
   heightFactor: 0.03
   heightFactor2: 0.03
   cellReduction: 1.2
+  sizeTemplate: {fileID: 397825348}
 --- !u!114 &684390837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4946,6 +4931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5dbfda802208649997a03ced5ed4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavVisualizer
+  transitionDuration: 0.12
   centerGridCell: {fileID: 0}
   rect: {fileID: 0}
 --- !u!114 &1036409156
@@ -7338,7 +7324,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.2
+  m_fontSize: 20.75
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8860,7 +8846,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.15
+  m_fontSize: 36.55
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

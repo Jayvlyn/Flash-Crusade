@@ -340,9 +340,10 @@ public class NavManager : MonoBehaviour
         yield return visualizer.LerpWithRect(part.rect); // waits until done
 
         part.OnGrabbed(visualizer.rect);
-        if (mode == NavMode.Grid) currentGridCell = part.position;
+        if (!fromInv) currentGridCell = part.position;
         heldPart = part;
         midGrab = false;
+        if (fromInv) SwitchToGridMode();
     }
 
     public void OnInventoryPartGrabbed(ShipPartData part)
@@ -1009,11 +1010,16 @@ public class NavManager : MonoBehaviour
             nav.partOrganizer.SetPartToDefaultStart(newPart);
 
             if (UIManager.Smoothing)
-                nav.GrabFrameLate(newPart, true);
+            {
+                //nav.GrabFrameLate(newPart, true);
+                nav.StartCoroutine(nav.GrabWithLerp(newPart, true));
+            }
             else
+            {
                 nav.GrabImmediate(newPart, true);
+                nav.SwitchToGridMode();
+            }
 
-            nav.SwitchToGridMode();
         }
 
         public bool TryMerge(IEditorCommand next) => false;

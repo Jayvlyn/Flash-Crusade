@@ -21,6 +21,8 @@ public class FixedRatioGrid : MonoBehaviour
     private GridLayoutGroup grid;
     private Vector2 lastSize;
 
+    public RectTransform sizeTemplate;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -92,5 +94,11 @@ public class FixedRatioGrid : MonoBehaviour
 
         grid.cellSize = new Vector2(cellSize, cellSize);
         grid.padding = new RectOffset(padLeft, padRight, padTop, 0);
+
+        if(sizeTemplate)
+        {
+            sizeTemplate.sizeDelta = grid.cellSize;
+            sizeTemplate.anchoredPosition = new Vector3(w*0.5f, -h*0.5f, 0);
+        }
     }
 }

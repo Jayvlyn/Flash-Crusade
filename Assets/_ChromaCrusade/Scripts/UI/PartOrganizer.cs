@@ -9,14 +9,13 @@ public class PartOrganizer : MonoBehaviour
     public RectTransform itemPanel;
     public RectTransform defaultPartSpawn;
     public NavItem[] partSelectors;
+
     private PartCounter[] partCounters;
     private List<EditorShipPart> shownParts;
-
-    private PartType showState;
-    private int pageCount;
-    private int currentPage = 1;
-
     private PartInventoryModel partInventory;
+    private PartInventoryPager pager;
+
+    #region Initialization 
 
     private void Awake()
     {
@@ -30,12 +29,17 @@ public class PartOrganizer : MonoBehaviour
         PartInventory inv = InventoryLoader.Load();
         partInventory = new PartInventoryModel(inv);
 
+        pager = new PartInventoryPager();
+
         partCounters = new PartCounter[partSelectors.Length];
 
         for (int i = 0; i < partSelectors.Length; i++)
             partCounters[i] = partSelectors[i].rect.GetChild(0).GetComponent<PartCounter>();   
     }
 
+    #endregion
+
+    #region Public API
 
     public void SetPartToDefaultStart(EditorShipPart part)
     {
@@ -47,31 +51,44 @@ public class PartOrganizer : MonoBehaviour
         part.rtf.Follow();
     }
 
-    private void ChangeShowState(PartType showState)
+    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
     {
-        this.showState = showState;
+        part = null;
+
+        if (!partInventory.TryTake(data))
+            return false;
+
+        part = CreateInventoryPart(data);
+        RefreshCurrentPage();
+        return true;
+    }
+
+    public void AddPart(ShipPartData data)
+    {
+        partInventory.Add(data);
         RefreshCurrentPage();
     }
 
-    private void ClearParts()
+    #endregion
+
+    #region View Rendering
+
+    private void RefreshCurrentPage()
     {
-        foreach (var part in shownParts)
-            Destroy(part.gameObject);
-        shownParts.Clear();
+        var parts = partInventory.GetParts(showState);
+        ShowParts(parts);
     }
 
     private void ShowParts(IReadOnlyList<PartInventoryModel.Entry> parts)
     {
-        UpdatePageCount(parts.Count, partSelectors.Length);
-
         ClearParts();
 
         int elementsPerPage = partSelectors.Length;
-        int startIndex = (currentPage - 1) * elementsPerPage;
-        int endIndex = Mathf.Min(startIndex + elementsPerPage, parts.Count);
+        pager.Recalculate(parts.Count, elementsPerPage);
+        var (startIndex, endIndex) = pager.GetRange(parts.Count, elementsPerPage);
+
 
         int selectorIndex = 0;
-
         for (int i = startIndex; i < endIndex; i++)
         {
             var entry = parts[i];
@@ -80,7 +97,7 @@ public class PartOrganizer : MonoBehaviour
             partSelector.onSelected.RemoveAllListeners();
 
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
-            
+
             EditorShipPart part = obj.GetComponent<EditorShipPart>();
             part.Init(entry.data);
 
@@ -103,19 +120,31 @@ public class PartOrganizer : MonoBehaviour
             partCounters[i].SetCount(0);
     }
 
-    private void UpdatePageCount(int totalElements, int elementsPerPage = 18)
+    private void ClearParts()
     {
-        currentPage = 1;
-        pageCount = Mathf.CeilToInt((float)totalElements / elementsPerPage);
+        foreach (var part in shownParts)
+            Destroy(part.gameObject);
+        shownParts.Clear();
     }
 
-    public void RefreshCurrentPage()
+    #endregion
+
+    #region State
+
+    private PartType showState;
+
+    private void ChangeShowState(PartType showState)
     {
-        var parts = partInventory.GetParts(showState);
-        ShowParts(parts);
+        this.showState = showState;
+        pager.Reset();
+        RefreshCurrentPage();
     }
 
-    public EditorShipPart CreateInventoryPart(ShipPartData data)
+    #endregion
+
+    #region Factory
+
+    private EditorShipPart CreateInventoryPart(ShipPartData data)
     {
         var obj = Instantiate(Assets.i.editorShipPartPrefab);
         var part = obj.GetComponent<EditorShipPart>();
@@ -123,67 +152,24 @@ public class PartOrganizer : MonoBehaviour
         return part;
     }
 
-    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
-    {
-        part = null;
-
-        if (!partInventory.TryTake(data))
-            return false;
-
-        part = CreateInventoryPart(data);
-        RefreshCurrentPage();
-        return true;
-    }
-
-    public void AddPart(ShipPartData data)
-    {
-        partInventory.Add(data);
-        RefreshCurrentPage();
-    }
+    #endregion
 
     #region Event Responses
 
-    public void OnCabinTabSelected()
-    {
-        ChangeShowState(PartType.Cabin);
-    }
-
-    public void OnCoreTabSelected()
-    {
-        ChangeShowState(PartType.Core);
-    }
-
-    public void OnWingTabSelected()
-    {
-        ChangeShowState(PartType.Wing);
-    }
-
-    public void OnWeaponTabSelected()
-    {
-        ChangeShowState(PartType.Weapon);
-    }
-
-    public void OnUtilityTabSelected()
-    {
-        ChangeShowState(PartType.Utility);
-    }
+    public void OnCabinTabSelected() => ChangeShowState(PartType.Cabin);
+    public void OnCoreTabSelected() => ChangeShowState(PartType.Core);
+    public void OnWingTabSelected() => ChangeShowState(PartType.Wing);
+    public void OnWeaponTabSelected() => ChangeShowState(PartType.Weapon);
+    public void OnUtilityTabSelected() => ChangeShowState(PartType.Utility);
 
     public void OnUpSelected()
     {
-        if (currentPage > 1)
-        {
-            currentPage--;
-            RefreshCurrentPage();
-        }
+        if(pager.PageUp()) RefreshCurrentPage();
     }
 
     public void OnDownSelected()
     {
-        if (currentPage < pageCount)
-        {
-            currentPage++;
-            RefreshCurrentPage();
-        }
+        if(pager.PageDown()) RefreshCurrentPage();
     }
 
     #endregion

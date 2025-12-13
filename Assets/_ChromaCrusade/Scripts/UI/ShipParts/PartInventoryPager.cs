@@ -28,15 +28,23 @@ public class PartInventoryPager
     public bool CanPageUp() => CurrentPage > 1;
     public bool CanPageDown() => CurrentPage < PageCount;
 
-    public void PageUp()
+    public bool PageUp()
     {
-        if (CanPageUp())
+        bool canPage = CanPageUp();
+
+        if (canPage)
             CurrentPage--;
+
+        return canPage;
     }
 
-    public void PageDown()
+    public bool PageDown()
     {
-        if (CanPageDown())
+        bool canPage = CanPageDown();
+
+        if (canPage)
             CurrentPage++;
+
+        return canPage;
     }
 }

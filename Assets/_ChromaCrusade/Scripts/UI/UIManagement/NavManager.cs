@@ -8,26 +8,22 @@ public class NavManager : MonoBehaviour
 {
     #region Variables
 
-    [Header("Mode")]
-    public NavMode mode = NavMode.Item;
-    public enum NavMode { Item, Grid };
-    public NavItem buildWindow;
-
-    [Header("Grid Navigation")]
-    [SerializeField] private Vector2Int currentGridCell = new Vector2Int(0,0);
-    [SerializeField] private RectTransform centerGridCell;
-    [SerializeField] private int zoomLevel = 3;
+    [Header("Settings")]
+    [SerializeField] private float inputRepeatDelay = 0.35f;
+    [SerializeField] private float inputRepeatRate = 0.1f;
     [SerializeField] private Vector2 zoomRange = new Vector2(1, 10);
+    private int zoomLevel = 3;
     public int ZoomLevel
     {
         get => zoomLevel;
         set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
     }
     private Dictionary<int,float> zoomScales = new Dictionary<int,float>();
-    private bool Expanded => heldPart != null;
 
-    [Header("Visualization")]
-    [SerializeField] private NavVisualizer visualizer;
+    private Vector2Int currentGridCell = new Vector2Int(0,0);
+    public enum NavMode { Item, Grid };
+    [HideInInspector] public NavMode mode = NavMode.Item;
+    private bool Expanded => heldPart != null;
 
     [Header("Input")]
     [SerializeField] private InputActionReference navigateAction;
@@ -46,24 +42,21 @@ public class NavManager : MonoBehaviour
     private bool inInputField;
     private bool allowMovement;
     private bool modifyHeld;
-
-    [Header("Settings")]
-    [SerializeField] private float inputRepeatDelay = 0.35f;
-    [SerializeField] private float inputRepeatRate = 0.1f;
-
     bool undoHeld;
     bool redoHeld;
-
     float undoNextTime;
     float redoNextTime;
 
-    [Header("Other Refs")]
-    private NavItem hoveredItem;
+    [Header("Refs")]
+    public NavItem buildWindow;
+    [SerializeField] private RectTransform centerGridCell;
+    [SerializeField] private NavVisualizer visualizer;
     [SerializeField] private NavItem initialHoveredItem;
     [SerializeField] private NavItem exitItem;
     [SerializeField] private EditorBuildArea buildArea;
-    private EditorShipPart heldPart;
     [HideInInspector] public PartOrganizer partOrganizer;
+    private NavItem hoveredItem;
+    private EditorShipPart heldPart;
 
     #endregion
 

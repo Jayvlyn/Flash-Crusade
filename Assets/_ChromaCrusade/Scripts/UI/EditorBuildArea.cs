@@ -342,7 +342,7 @@ public class EditorBuildArea : MonoBehaviour
 
     #region Connectivity
 
-    public EditorShipPart centerPart;
+    private EditorShipPart centerPart;
 
     private bool CanReachCenter(EditorShipPart start)
     {

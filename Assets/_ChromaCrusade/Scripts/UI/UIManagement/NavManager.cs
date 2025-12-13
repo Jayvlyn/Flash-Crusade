@@ -13,6 +13,7 @@ public class NavManager : MonoBehaviour
     [Header("Mode")]
     public NavMode mode = NavMode.Item;
     public enum NavMode { Item, Grid };
+    public NavItem buildWindow;
 
     [Header("Grid Navigation")]
     [SerializeField] private Vector2Int currentGridCell = new Vector2Int(0,0);
@@ -237,8 +238,8 @@ public class NavManager : MonoBehaviour
 
     public void ToggleNavMode()
     {
-        if (mode == NavMode.Item) SwitchToGridMode();
-        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitBuildModeCommand(this));
+        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
+        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
     }
 
     public void SwitchNavMode(NavMode newMode)
@@ -266,7 +267,7 @@ public class NavManager : MonoBehaviour
         }
         else if (mode == NavMode.Grid)
         {
-            CommandHistory.Execute(new ExitBuildModeCommand(this));
+            CommandHistory.Execute(new ExitGridModeCommand(this));
         }
     }
 
@@ -485,7 +486,11 @@ public class NavManager : MonoBehaviour
 
         if(mode == NavMode.Item)
         {
-            hoveredItem?.OnSelected();
+            if(hoveredItem != null)
+            {
+                if (hoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else hoveredItem.OnSelected();
+            }
         }
         else if(mode == NavMode.Grid)
         {
@@ -968,12 +973,12 @@ public class NavManager : MonoBehaviour
         public bool TryMerge(IEditorCommand next) => false;
     }
 
-    public class ExitBuildModeCommand : IEditorCommand
+    public class ExitGridModeCommand : IEditorCommand
     {
         private ShipPartData partData;
         private NavManager nav;
 
-        public ExitBuildModeCommand(NavManager nav)
+        public ExitGridModeCommand(NavManager nav)
         {
             this.nav = nav;
 
@@ -1016,6 +1021,23 @@ public class NavManager : MonoBehaviour
         public bool TryMerge(IEditorCommand next) => false;
     }
 
+    public class EnterGridModeCommand : IEditorCommand
+    {
+        private NavManager nav;
+
+        public EnterGridModeCommand(NavManager nav)
+        {
+            this.nav = nav;
+        }
+
+        public void Execute() => nav.SwitchToGridMode();
+
+        public void Undo() => nav.SwitchToItemMode();
+
+        public void Redo() => Execute();
+
+        public bool TryMerge(IEditorCommand next) => false;
+    }
 
     public class InventoryGrabCommand : IEditorCommand
     {

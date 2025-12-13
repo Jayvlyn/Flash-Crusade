@@ -2796,6 +2796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
   mode: 0
+  buildWindow: {fileID: 1809799018}
   currentGridCell: {x: 0, y: 0}
   centerGridCell: {fileID: 217396645}
   zoomLevel: 3

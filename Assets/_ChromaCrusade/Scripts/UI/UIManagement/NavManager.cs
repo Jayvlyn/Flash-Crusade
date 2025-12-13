@@ -202,9 +202,7 @@ public class NavManager : MonoBehaviour
         
         Vector2Int newCell = currentGridCell + offset;
 
-        currentGridCell = newCell;
-
-        visualizer.HighlightCell(currentGridCell, Expanded);
+        NavToCell(newCell);
     }
 
     private void NavToItem(NavItem item)
@@ -271,7 +269,7 @@ public class NavManager : MonoBehaviour
     private void InitGridNav()
     {
         hoveredItem = null;
-        visualizer.HighlightCell(currentGridCell, Expanded);
+        NavToCell(currentGridCell);
     }
 
     private void InitNavMode(bool resetGrid)
@@ -314,18 +312,6 @@ public class NavManager : MonoBehaviour
         yield return null;
         GrabImmediate(part, fromInv);
     }
-
-    //private void GrabTimeLate(EditorShipPart part, bool fromInv, float time)
-    //{
-    //    heldPart = part;
-    //    StartCoroutine(TimeLateRoutine(part, fromInv, time));
-    //}
-
-    //private IEnumerator TimeLateRoutine(EditorShipPart part, bool fromInv, float time)
-    //{
-    //    yield return new WaitForSecondsRealtime(time);
-    //    GrabImmediate(part, fromInv);
-    //}
 
     private void GrabImmediate(EditorShipPart part, bool fromInv, bool updateVisualizer = true)
     {
@@ -492,7 +478,6 @@ public class NavManager : MonoBehaviour
                 TryGrabPart();
             }
         }
-
     }
 
     private void OnCancelPerformed(InputAction.CallbackContext ctx)
@@ -812,8 +797,8 @@ public class NavManager : MonoBehaviour
             }
             nav.heldPart = null;
             nav.visualizer.ResetScale();
-            nav.currentGridCell = grabbedFromCell;
-            nav.visualizer.HighlightCell(grabbedFromCell);
+
+            nav.NavToCell(grabbedFromCell);
         }
 
         public void Redo() => Execute();
@@ -842,7 +827,7 @@ public class NavManager : MonoBehaviour
             cellPlacedAt = part.cellPlacedAt;
             nav.heldPart = null;
             nav.visualizer.ResetScale();
-            nav.visualizer.HighlightCell(part.position);
+            nav.NavToCell(part.position);
         }
 
         public void Undo()
@@ -997,7 +982,6 @@ public class NavManager : MonoBehaviour
                 }
             }
 
-
             nav.SwitchToGridMode();
         }
 
@@ -1118,7 +1102,6 @@ public class NavManager : MonoBehaviour
                 rotation = nav.heldPart.Rotation;
 
                 Destroy(nav.heldPart.gameObject);
-                nav.heldPart = null;
             }
             else
             {
@@ -1134,11 +1117,10 @@ public class NavManager : MonoBehaviour
                 rotation = nav.heldPart.Rotation;
 
                 Destroy(part.gameObject);
-                nav.heldPart = null;
             }
 
-            nav.currentGridCell = startCell;
-            nav.visualizer.HighlightCell(nav.currentGridCell);
+            nav.heldPart = null;
+            nav.NavToCell(startCell);
         }
 
         public void Undo()

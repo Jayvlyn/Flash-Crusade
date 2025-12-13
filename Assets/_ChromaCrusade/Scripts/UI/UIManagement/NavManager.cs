@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -127,12 +125,6 @@ public class NavManager : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("---");
-        //foreach(var key in buildArea.occupiedCells.Keys)
-        //{
-        //    Debug.Log(key);
-        //}
-
         ProcessNavInput();
         ProcessUndoRedoRepeat();
     }

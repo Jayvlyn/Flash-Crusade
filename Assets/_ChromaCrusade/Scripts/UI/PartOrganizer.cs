@@ -12,117 +12,30 @@ public class PartOrganizer : MonoBehaviour
     private PartCounter[] partCounters;
     private List<EditorShipPart> shownParts;
 
-    private List<InventoryEntry> cabins = new();
-    private List<InventoryEntry> cores = new();
-    private List<InventoryEntry> wings = new();
-    private List<InventoryEntry> weapons = new();
-    private List<InventoryEntry> utilities = new();
-    [System.Serializable]
-    public class InventoryEntry
-    {
-        public ShipPartData data;
-        public int count;
-    }
-
     private PartType showState;
     private int pageCount;
     private int currentPage = 1;
+
+    private PartInventoryModel partInventory;
 
     private void Awake()
     {
         Init();
     }
 
-    #region Initialization
-
     private void Init()
     {
         shownParts = new List<EditorShipPart>();
 
         PartInventory inv = InventoryLoader.Load();
+        partInventory = new PartInventoryModel(inv);
 
         partCounters = new PartCounter[partSelectors.Length];
+
         for (int i = 0; i < partSelectors.Length; i++)
-        {
-            partCounters[i] = partSelectors[i].rect.GetChild(0).GetComponent<PartCounter>();
-        }
-
-        cabins = Resolve(inv.cabins, PartType.Cabin);
-        cores = Resolve(inv.cores, PartType.Core);
-        wings = Resolve(inv.wings, PartType.Wing);
-        weapons = Resolve(inv.weapons, PartType.Weapon);
-        utilities = Resolve(inv.utilities, PartType.Utility);
+            partCounters[i] = partSelectors[i].rect.GetChild(0).GetComponent<PartCounter>();   
     }
 
-    private List<InventoryEntry> Resolve(List<PartStack> stackList, PartType type)
-    {
-        var resolved = new List<InventoryEntry>();
-
-        foreach (var stack in stackList)
-        {
-            ShipPartData data = PartDatabase.Instance.Get(stack.name);
-
-            if (data == null)
-            {
-                Debug.LogWarning($"Inventory references missing part: {stack.name}");
-                continue;
-            }
-
-            resolved.Add(new InventoryEntry { data = data, count = stack.count });
-        }
-
-        return resolved;
-    }
-
-    #endregion
-
-    #region Public API
-
-    public bool TryTakePart(ShipPartData data, out EditorShipPart createdPart)
-    {
-        createdPart = null;
-
-        var list = GetListForType(data.PartType);
-        var entry = list.Find(e => e.data == data);
-
-        if (entry == null || entry.count <= 0)
-            return false;
-
-        entry.count--;
-
-        if (entry.count == 0)
-            list.Remove(entry);
-
-        GameObject obj = Instantiate(Assets.i.editorShipPartPrefab);
-        var part = obj.GetComponent<EditorShipPart>();
-        part.Init(data);
-
-        createdPart = part;
-
-        RefreshCurrentPage();
-        return true;
-    }
-
-    public void AddPart(ShipPartData data)
-    {
-        List<InventoryEntry> list = GetListForType(data.PartType);
-
-        InventoryEntry entry = list.Find(e => e.data == data);
-
-        if (entry != null)
-        {
-            entry.count++;
-        }
-        else
-        {
-            entry = new InventoryEntry { data = data, count = 1 };
-            list.Add(entry);
-        }
-
-        UpdatePageCount(list.Count, partSelectors.Length);
-
-        RefreshCurrentPage();
-    }
 
     public void SetPartToDefaultStart(EditorShipPart part)
     {
@@ -134,31 +47,10 @@ public class PartOrganizer : MonoBehaviour
         part.rtf.Follow();
     }
 
-    #endregion
-
-    #region Paging
-
     private void ChangeShowState(PartType showState)
     {
         this.showState = showState;
-        switch (showState)
-        {
-            case PartType.Cabin:
-                ShowParts(cabins);
-                break;
-            case PartType.Core:
-                ShowParts(cores);
-                break;
-            case PartType.Wing:
-                ShowParts(wings);
-                break;
-            case PartType.Weapon:
-                ShowParts(weapons);
-                break;
-            case PartType.Utility:
-                ShowParts(utilities);
-                break;
-        }
+        RefreshCurrentPage();
     }
 
     private void ClearParts()
@@ -168,21 +60,21 @@ public class PartOrganizer : MonoBehaviour
         shownParts.Clear();
     }
 
-    private void ShowParts(List<InventoryEntry> partArray)
+    private void ShowParts(IReadOnlyList<PartInventoryModel.Entry> parts)
     {
-        UpdatePageCount(partArray.Count, partSelectors.Length);
+        UpdatePageCount(parts.Count, partSelectors.Length);
 
         ClearParts();
 
         int elementsPerPage = partSelectors.Length;
         int startIndex = (currentPage - 1) * elementsPerPage;
-        int endIndex = Mathf.Min(startIndex + elementsPerPage, partArray.Count);
+        int endIndex = Mathf.Min(startIndex + elementsPerPage, parts.Count);
 
         int selectorIndex = 0;
 
         for (int i = startIndex; i < endIndex; i++)
         {
-            var inventoryEntry = partArray[i];
+            var entry = parts[i];
 
             NavItem partSelector = partSelectors[selectorIndex];
             partSelector.onSelected.RemoveAllListeners();
@@ -190,17 +82,18 @@ public class PartOrganizer : MonoBehaviour
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
             
             EditorShipPart part = obj.GetComponent<EditorShipPart>();
-            part.Init(inventoryEntry.data);
+            part.Init(entry.data);
+
             part.rtf.enabled = true;
             part.rtf.target = partSelector.rect;
 
             shownParts.Add(part);
 
-            partCounters[selectorIndex].SetCount(inventoryEntry.count);
+            partCounters[selectorIndex].SetCount(entry.count);
 
             partSelector.onSelected.AddListener(() =>
             {
-                nav.OnInventoryPartGrabbed(inventoryEntry.data);
+                nav.OnInventoryPartGrabbed(entry.data);
             });
 
             selectorIndex++;
@@ -218,30 +111,35 @@ public class PartOrganizer : MonoBehaviour
 
     public void RefreshCurrentPage()
     {
-        switch (showState)
-        {
-            case PartType.Cabin: ShowParts(cabins); break;
-            case PartType.Core: ShowParts(cores); break;
-            case PartType.Wing: ShowParts(wings); break;
-            case PartType.Weapon: ShowParts(weapons); break;
-            case PartType.Utility: ShowParts(utilities); break;
-        }
+        var parts = partInventory.GetParts(showState);
+        ShowParts(parts);
     }
 
-    private List<InventoryEntry> GetListForType(PartType type)
+    public EditorShipPart CreateInventoryPart(ShipPartData data)
     {
-        return type switch
-        {
-            PartType.Cabin => cabins,
-            PartType.Core => cores,
-            PartType.Wing => wings,
-            PartType.Weapon => weapons,
-            PartType.Utility => utilities,
-            _ => null
-        };
+        var obj = Instantiate(Assets.i.editorShipPartPrefab);
+        var part = obj.GetComponent<EditorShipPart>();
+        part.Init(data);
+        return part;
     }
 
-    #endregion
+    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
+    {
+        part = null;
+
+        if (!partInventory.TryTake(data))
+            return false;
+
+        part = CreateInventoryPart(data);
+        RefreshCurrentPage();
+        return true;
+    }
+
+    public void AddPart(ShipPartData data)
+    {
+        partInventory.Add(data);
+        RefreshCurrentPage();
+    }
 
     #region Event Responses
 

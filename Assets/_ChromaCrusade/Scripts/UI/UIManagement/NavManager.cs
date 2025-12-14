@@ -502,8 +502,12 @@ public class NavManager : MonoBehaviour
         {
             HoveredItem = null;
             lastHoveredItem = null;
+            InitNavMode(true);
         }
-        InitNavMode(true);
+        else // grid mode
+        {
+            CommandHistory.Execute(new ResetCommand(this));
+        }
     }
 
     private void OnDeletePerformed(InputAction.CallbackContext ctx)
@@ -1152,6 +1156,33 @@ public class NavManager : MonoBehaviour
 
                 nav.StartCoroutine(nav.UndoDeleteRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped));
             }
+        }
+
+        public void Redo() => Execute();
+
+        public bool TryMerge(IEditorCommand next) => false;
+
+    }
+
+    public class ResetCommand : IEditorCommand
+    {
+        NavManager nav;
+        Vector2Int prevCell;
+
+        public ResetCommand(NavManager nav) 
+        {
+            this.nav = nav;
+            prevCell = nav.currentGridCell;
+        }
+
+        public void Execute()
+        {
+            nav.InitNavMode(true);
+        }
+
+        public void Undo()
+        {
+            nav.NavToCell(prevCell);
         }
 
         public void Redo() => Execute();

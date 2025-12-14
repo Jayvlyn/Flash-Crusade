@@ -144,7 +144,7 @@ public class EditorShipPart : MonoBehaviour
     public void OnGrabbed(RectTransform visualizerRect)
     {
         ChangeState(PartState.Grabbed);
-        rect.parent = visualizerRect.parent;
+        rect.SetParent(visualizerRect.parent);
         int currentIndex = rect.GetSiblingIndex();
         rect.SetSiblingIndex(Mathf.Max(0, currentIndex - 1));
         rtf.target = visualizerRect;
@@ -153,7 +153,7 @@ public class EditorShipPart : MonoBehaviour
     public void OnPlaced(Vector2Int position, EditorBuildArea buildArea)
     {
         this.position = position;
-        rect.parent = buildArea.rect;
+        rect.SetParent(buildArea.rect);
     }
 
     public void Rotate(float angle)

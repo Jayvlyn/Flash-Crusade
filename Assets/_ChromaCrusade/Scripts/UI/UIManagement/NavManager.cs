@@ -987,13 +987,14 @@ public class NavManager : MonoBehaviour
 
                 if (success)
                 {
+                    nav.partOrganizer.SetPartToDefaultStart(part);
                     nav.GrabImmediate(part, true);
                 }
             }
 
             nav.SwitchToGridMode();
 
-            if(nav.heldPart != null) nav.RestorePartTransformations(rotation, xFlipped, yFlipped);
+            if (nav.heldPart != null) nav.RestorePartTransformations(rotation, xFlipped, yFlipped);
         }
 
         public void Redo() => Execute();
@@ -1185,6 +1186,7 @@ public class NavManager : MonoBehaviour
     private IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
+        //partOrganizer.SetPartToDefaultStart(part);
         if (success) GrabImmediate(part, true, false);
         yield return null;
         RestorePartTransformations(rotation, xFlipped, yFlipped);

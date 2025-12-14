@@ -599,6 +599,18 @@ public class NavManager : MonoBehaviour
     {
         EnableMainInputs();
         cancelAction.action.performed += OnCancelPerformed;
+    }
+
+    private void DisableInputs()
+    {
+        DisableMainInputs();
+        cancelAction.action.performed -= OnCancelPerformed;
+    }
+
+    private void EnableMainInputs()
+    {
+        allowMovement = true;
+        submitAction.action.performed += OnSubmitPerformed;
         modeAction.action.performed += OnModePerformed;
         resetAction.action.performed += OnResetPerformed;
         zoomAction.action.performed += OnZoomPerformed;
@@ -610,10 +622,10 @@ public class NavManager : MonoBehaviour
         deleteAction.action.performed += OnDeletePerformed;
     }
 
-    private void DisableInputs()
+    private void DisableMainInputs()
     {
-        DisableMainInputs();
-        cancelAction.action.performed -= OnCancelPerformed;
+        allowMovement = false;
+        submitAction.action.performed -= OnSubmitPerformed;
         modeAction.action.performed -= OnModePerformed;
         resetAction.action.performed -= OnResetPerformed;
         zoomAction.action.performed -= OnZoomPerformed;
@@ -623,18 +635,6 @@ public class NavManager : MonoBehaviour
         flipAction.action.performed -= OnFlipPerformed;
         modifyAction.action.performed -= OnModifyPerformed;
         deleteAction.action.performed -= OnDeletePerformed;
-    }
-
-    private void EnableMainInputs()
-    {
-        allowMovement = true;
-        submitAction.action.performed += OnSubmitPerformed;
-    }
-
-    private void DisableMainInputs()
-    {
-        allowMovement = false;
-        submitAction.action.performed -= OnSubmitPerformed;
     }
 
     private void OnApplicationFocus(bool hasFocus)

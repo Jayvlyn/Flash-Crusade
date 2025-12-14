@@ -1016,6 +1016,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "d66a7627-0fb0-47db-813e-4cef1fffa909",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bb3dc62-6de0-4716-9530-9e4bb0e7f246",
+                    "path": "<Keyboard>/home",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "79805e37-b972-495d-9fa0-aa0a2e9fe5e2",
                     "path": "1DAxis",

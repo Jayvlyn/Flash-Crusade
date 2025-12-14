@@ -56,6 +56,17 @@ public class NavManager : MonoBehaviour
     [SerializeField] private EditorBuildArea buildArea;
     [HideInInspector] public PartOrganizer partOrganizer;
     private NavItem hoveredItem;
+    private NavItem lastHoveredItem;
+    private NavItem HoveredItem
+    {
+        get => hoveredItem;
+        set
+        {
+            if (hoveredItem == value) return;
+            lastHoveredItem = hoveredItem;
+            hoveredItem = value;
+        }
+    }
     private EditorShipPart heldPart;
 
     #endregion
@@ -177,15 +188,15 @@ public class NavManager : MonoBehaviour
 
     private void TriggerNavItem(Vector2 dir)
     {
-        if (hoveredItem == null)
+        if (HoveredItem == null)
             return;
 
         NavItem next = null;
 
-        if (dir.y > 0.5f) next = hoveredItem.navUp;
-        else if (dir.y < -0.5f) next = hoveredItem.navDown;
-        else if (dir.x < -0.5f) next = hoveredItem.navLeft;
-        else if (dir.x > 0.5f) next = hoveredItem.navRight;
+        if (dir.y > 0.5f) next = HoveredItem.navUp;
+        else if (dir.y < -0.5f) next = HoveredItem.navDown;
+        else if (dir.x < -0.5f) next = HoveredItem.navLeft;
+        else if (dir.x > 0.5f) next = HoveredItem.navRight;
 
         if (next == null)
             return;
@@ -208,21 +219,15 @@ public class NavManager : MonoBehaviour
     private void NavToItem(NavItem item)
     {
         if(item == null) return;
-        hoveredItem = item;
-        hoveredItem.OnHighlighted();
-        visualizer.HighlightItem(hoveredItem);
+        HoveredItem = item;
+        HoveredItem.OnHighlighted();
+        visualizer.HighlightItem(HoveredItem);
     }
 
     private void NavToCell(Vector2Int cell)
     {
         currentGridCell = cell;
         visualizer.HighlightCell(currentGridCell, Expanded);
-    }
-
-    public void ToggleNavMode()
-    {
-        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
-        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
     }
 
     public void SwitchNavMode(NavMode newMode)
@@ -245,7 +250,7 @@ public class NavManager : MonoBehaviour
         }
         else if (mode == NavMode.Item)
         {
-            if (hoveredItem == exitItem) exitItem.OnSelected();
+            if (HoveredItem == exitItem) exitItem.OnSelected();
             else NavToItem(exitItem);
         }
         else if (mode == NavMode.Grid)
@@ -258,31 +263,25 @@ public class NavManager : MonoBehaviour
 
     #region Initialization
 
-    private void InitItemNav()
-    {
-        NavToItem(initialHoveredItem ?? GetComponentInChildren<NavItem>());
-
-        visualizer.ResetRotation();
-        visualizer.ResetScale();
-    }
-    
-    private void InitGridNav()
-    {
-        hoveredItem = null;
-        NavToCell(currentGridCell);
-    }
-
     private void InitNavMode(bool resetGrid)
     {
         switch (mode)
         {
             case NavMode.Item:
-                InitItemNav();
+                NavItem targetItem = null;
+                if (lastHoveredItem != null) targetItem = lastHoveredItem;
+                else if (initialHoveredItem != null) targetItem = initialHoveredItem;
+                else targetItem = GetComponentInChildren<NavItem>();
+                NavToItem(targetItem);
+
+                visualizer.ResetRotation();
+                visualizer.ResetScale();
                 break;
 
             case NavMode.Grid:
                 if (resetGrid) currentGridCell = Vector2Int.zero;
-                InitGridNav();
+                HoveredItem = null;
+                NavToCell(currentGridCell);
                 break;
         }
     }
@@ -457,10 +456,10 @@ public class NavManager : MonoBehaviour
 
         if(mode == NavMode.Item)
         {
-            if(hoveredItem != null)
+            if(HoveredItem != null)
             {
-                if (hoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
-                else hoveredItem.OnSelected();
+                if (HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else HoveredItem.OnSelected();
             }
         }
         else if(mode == NavMode.Grid)
@@ -495,6 +494,11 @@ public class NavManager : MonoBehaviour
     private void OnResetPerformed(InputAction.CallbackContext ctx)
     {
         if (ctx.canceled) return;
+        if(mode == NavMode.Item)
+        {
+            HoveredItem = null;
+            lastHoveredItem = null;
+        }
         InitNavMode(true);
     }
 
@@ -1154,7 +1158,13 @@ public class NavManager : MonoBehaviour
 
     #endregion
 
-    #region Command Management
+    #region Command Helpers
+
+    public void ToggleNavMode()
+    {
+        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
+        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
+    }
 
     private void ProcessUndoRedoRepeat()
     {

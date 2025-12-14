@@ -995,6 +995,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c354fca5-5d92-48da-a238-67d01683f44c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8679f9dc-7b3d-4546-a773-c8c893551478",
                     "path": "<Keyboard>/r",
                     "interactions": "",

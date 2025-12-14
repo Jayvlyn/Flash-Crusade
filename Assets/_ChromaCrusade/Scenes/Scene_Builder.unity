@@ -7653,7 +7653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NavItem
   navUp: {fileID: 1478069468}
   navLeft: {fileID: 886169494}
-  navRight: {fileID: 945632137}
+  navRight: {fileID: 0}
   navDown: {fileID: 0}
   onHighlighted:
     m_PersistentCalls:
@@ -8861,7 +8861,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.1
+  m_fontSize: 39.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8924,7 +8924,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 39.1
+      value: 39.15
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x

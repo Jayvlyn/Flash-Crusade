@@ -165,7 +165,11 @@ public class NavManager : MonoBehaviour
         if (newInput || Time.time >= nextRepeatTime)
         {
             if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, input));
-            else TriggerNav(input);
+            else
+            {
+                TriggerNav(input);
+                if (modifyHeld) TriggerNav(input);
+            }
             nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
             lastMoveInput = input;
         }

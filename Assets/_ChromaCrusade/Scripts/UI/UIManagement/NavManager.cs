@@ -945,15 +945,24 @@ public class NavManager : MonoBehaviour
 
     public class ExitGridModeCommand : IEditorCommand
     {
-        private ShipPartData partData;
         private NavManager nav;
+
+        private ShipPartData partData;
+        bool xFlipped;
+        bool yFlipped;
+        float rotation;
 
         public ExitGridModeCommand(NavManager nav)
         {
             this.nav = nav;
 
             if (nav.heldPart != null)
+            {
                 partData = nav.heldPart.partData;
+                xFlipped = nav.heldPart.xFlipped;
+                yFlipped = nav.heldPart.yFlipped;
+                rotation = nav.heldPart.Rotation;
+            }
         }
 
         public void Execute()
@@ -983,6 +992,8 @@ public class NavManager : MonoBehaviour
             }
 
             nav.SwitchToGridMode();
+
+            if(nav.heldPart != null) nav.RestorePartTransformations(rotation, xFlipped, yFlipped);
         }
 
         public void Redo() => Execute();
@@ -1071,7 +1082,6 @@ public class NavManager : MonoBehaviour
         public bool TryMerge(IEditorCommand next) => false;
     }
 
-
     public class DeleteCommand : IEditorCommand
     {
         NavManager nav;
@@ -1131,7 +1141,7 @@ public class NavManager : MonoBehaviour
                 if(wasPlaced) nav.visualizer.HighlightCellImmediate(partPosition, true);
                 else nav.visualizer.HighlightCellImmediate(startCell, true);
 
-                nav.StartCoroutine(nav.UndoDeleteRoutine(wasPlaced, partData, partPosition, startCell, xFlipped, yFlipped, rotation));
+                nav.StartCoroutine(nav.UndoDeleteRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped));
             }
         }
 
@@ -1141,32 +1151,10 @@ public class NavManager : MonoBehaviour
 
     }
 
-    private bool midUndoDelete;
-    private IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, bool xFlipped, bool yFlipped, float rotation)
-    {
-        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
-        if (success) GrabImmediate(part, true, false);
-        yield return null;
-        if (rotation != 0) RotatePartImmediate(rotation);
-        if (xFlipped) FlipPartImmediate(-1);
-        if (yFlipped) FlipPartImmediate(1);
-        yield return null;
-
-        if (wasPlaced)
-        {
-            buildArea.PlacePart(partPosition, part);
-            part.OnPlaced(partPosition, buildArea);
-            heldPart = null;
-            visualizer.ResetScale();
-            visualizer.HighlightCellImmediate(startCell, false);
-        }
-        midUndoDelete = false;
-    }
-
-
     #endregion
 
     #region Command Management
+
     private void ProcessUndoRedoRepeat()
     {
         if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
@@ -1192,5 +1180,33 @@ public class NavManager : MonoBehaviour
         }
         else redoNextTime = 0f;
     }
+
+    private bool midUndoDelete;
+    private IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
+        if (success) GrabImmediate(part, true, false);
+        yield return null;
+        RestorePartTransformations(rotation, xFlipped, yFlipped);
+        yield return null;
+
+        if (wasPlaced)
+        {
+            buildArea.PlacePart(partPosition, part);
+            part.OnPlaced(partPosition, buildArea);
+            heldPart = null;
+            visualizer.ResetScale();
+            visualizer.HighlightCellImmediate(startCell, false);
+        }
+        midUndoDelete = false;
+    }
+
+    private void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        if (rotation != 0) RotatePartImmediate(rotation);
+        if (xFlipped) FlipPartImmediate(-1);
+        if (yFlipped) FlipPartImmediate(1);
+    }
+
     #endregion
 }

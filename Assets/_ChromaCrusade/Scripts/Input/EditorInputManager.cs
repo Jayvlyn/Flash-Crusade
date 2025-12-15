@@ -171,41 +171,16 @@ public class EditorInputManager : MonoBehaviour
         EventBus.Publish(new ZoomInputEvent { zoomDirection = zoomDir });
     }
 
-    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
+    private void OnSubmitPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new SubmitInputEvent { });
 
-        EventBus.Publish(new SubmitInputEvent { });
-    }
-
-    private void OnCancelPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-
-        EventBus.Publish(new CancelInputEvent { });
-    }
-
-    private void OnModePerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-
-        EventBus.Publish(new ModeInputEvent { });
-    }
-
-    private void OnResetPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-
-        EventBus.Publish(new ResetInputEvent { });
-    }
-
-    private void OnDeletePerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-
-        EventBus.Publish(new DeleteInputEvent { });
-    }
-
+    private void OnCancelPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new CancelInputEvent { });
+    
+    private void OnModePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ModeInputEvent { });
+    
+    private void OnResetPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ResetInputEvent { });
+    
+    private void OnDeletePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new DeleteInputEvent { });
+    
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
@@ -220,7 +195,6 @@ public class EditorInputManager : MonoBehaviour
 
     private void OnRotatePerformed(InputAction.CallbackContext ctx)
     {
-        Debug.Log(ctx.canceled);
         float input = ctx.ReadValue<float>();
         if (input == 0) return;
 

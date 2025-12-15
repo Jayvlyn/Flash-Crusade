@@ -44,8 +44,6 @@ public class NavManager : MonoBehaviour
 
     bool modifyHeld;
 
-    #region Lifecycle
-
     void OnEnable()
     {
         SubscribeToInputEvents();
@@ -86,10 +84,6 @@ public class NavManager : MonoBehaviour
 
         InitNavMode(true);
     }
-
-    #endregion
-
-    #region Navigation
 
     void TriggerNav(Vector2 dir)
     {
@@ -161,10 +155,6 @@ public class NavManager : MonoBehaviour
 
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
 
-    #endregion
-
-    #region Initialization
-
     void InitNavMode(bool resetGrid)
     {
         switch (mode)
@@ -188,11 +178,6 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    #endregion
-
-    #region Part Manipulation
-
-    #region Grab
     void TryGrabPart()
     {
         EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
@@ -240,9 +225,6 @@ public class NavManager : MonoBehaviour
         CommandHistory.Execute(new InventoryGrabCommand(this, part));
     }
 
-    #endregion
-
-    #region Place
     void TryPlacePart()
     {
         if(buildArea.CanPlacePart(currentGridCell, heldPart))
@@ -264,9 +246,6 @@ public class NavManager : MonoBehaviour
         placeQueued = false;
     }
 
-    #endregion
-
-    #region Flip & Rotate
 
     public void RotatePart(float angle)
     {
@@ -295,12 +274,6 @@ public class NavManager : MonoBehaviour
         heldPart.Flip(horizontal);
         visualizer.FlipImmediate(horizontal);
     }
-
-    #endregion
-
-    #endregion
-
-    #region Zoom
 
     private Coroutine zoomRoutine;
     private Vector3 targetZoomScale;
@@ -340,9 +313,65 @@ public class NavManager : MonoBehaviour
         midZoom = false;
     }
 
-    #endregion
+    bool inInputField;
+    private void GoBack()
+    {
+        if (inInputField)
+        {
+            inInputField = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else if (mode == NavMode.Item)
+        {
+            if (HoveredItem == exitItem) exitItem.OnSelected();
+            else NavToItem(exitItem);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            CommandHistory.Execute(new ExitGridModeCommand(this));
+        }
+    }
 
-    #region Commands
+
+    void ToggleNavMode()
+    {
+        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
+        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
+    }
+
+    bool midUndoDelete;
+    IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
+        //partOrganizer.SetPartToDefaultStart(part);
+        if (success) GrabImmediate(part, true, false);
+        yield return null;
+        RestorePartTransformations(rotation, xFlipped, yFlipped);
+        yield return null;
+
+        if (wasPlaced)
+        {
+            buildArea.PlacePart(partPosition, part);
+            part.OnPlaced(partPosition, buildArea);
+            heldPart = null;
+            visualizer.ResetScale();
+            visualizer.HighlightCellImmediate(startCell, false);
+        }
+        midUndoDelete = false;
+    }
+
+    void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        if (rotation != 0) RotatePartImmediate(rotation);
+        if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
+        if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
+    }
+
+
+
+
+
+    #region TEMP COMMAND HANDLING
 
     public class GrabCommand : IEditorCommand
     {
@@ -768,45 +797,9 @@ public class NavManager : MonoBehaviour
 
     #endregion
 
-    #region Command Helpers
+    #region TEMP INPUT EVENT HANDLING
 
-    public void ToggleNavMode()
-    {
-        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
-        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
-    }
-
-    private bool midUndoDelete;
-    IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
-    {
-        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
-        //partOrganizer.SetPartToDefaultStart(part);
-        if (success) GrabImmediate(part, true, false);
-        yield return null;
-        RestorePartTransformations(rotation, xFlipped, yFlipped);
-        yield return null;
-
-        if (wasPlaced)
-        {
-            buildArea.PlacePart(partPosition, part);
-            part.OnPlaced(partPosition, buildArea);
-            heldPart = null;
-            visualizer.ResetScale();
-            visualizer.HighlightCellImmediate(startCell, false);
-        }
-        midUndoDelete = false;
-    }
-
-    void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
-    {
-        if (rotation != 0) RotatePartImmediate(rotation);
-        if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
-        if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
-    }
-
-    #endregion
-
-    public void SubscribeToInputEvents()
+    void SubscribeToInputEvents()
     {
         EventBus.Subscribe<SubmitInputEvent>(OnSubmitInputEvent);
         EventBus.Subscribe<CancelInputEvent>(OnCancelInputEvent);
@@ -822,7 +815,7 @@ public class NavManager : MonoBehaviour
         EventBus.Subscribe<RotateInputEvent>(OnRotateInputEvent);
     }
 
-    public void UnsubscribeFromInputEvents()
+    void UnsubscribeFromInputEvents()
     {
         EventBus.Unsubscribe<SubmitInputEvent>(OnSubmitInputEvent);
         EventBus.Unsubscribe<CancelInputEvent>(OnCancelInputEvent);
@@ -973,27 +966,10 @@ public class NavManager : MonoBehaviour
         CommandHistory.Execute(new RotateCommand(this, angle));
     }
 
-    bool inInputField;
-    private void GoBack()
-    {
-        if (inInputField)
-        {
-            inInputField = false;
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-        else if (mode == NavMode.Item)
-        {
-            if (HoveredItem == exitItem) exitItem.OnSelected();
-            else NavToItem(exitItem);
-        }
-        else if (mode == NavMode.Grid)
-        {
-            CommandHistory.Execute(new ExitGridModeCommand(this));
-        }
-    }
-
-    private void OnEnterInputField(EnterInputFieldEvent e)
+    void OnEnterInputField(EnterInputFieldEvent e)
     {
         inInputField = true;
     }
+
+    #endregion
 }

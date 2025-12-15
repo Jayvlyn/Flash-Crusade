@@ -12,3 +12,8 @@ public struct ModifyInputEvent { public bool held; }
 public struct FlipInputEvent { public FlipAxis flipAxis; }
 public struct ZoomInputEvent { public ZoomDirection zoomDirection; }
 public struct RotateInputEvent { public RotationDirection rotationDirection; }
+
+public struct DisableNavigationEvent { }
+public struct EnableNavigationEvent { }
+public struct EnterInputFieldEvent { }
+public struct InventoryPartGrabbedEvent { EditorShipPart part; }

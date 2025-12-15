@@ -1,10 +1,10 @@
-using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class EditorInputManager : MonoBehaviour
 {
+    #region Inspector Variables
+
     [Header("Input Settings")]
     [SerializeField] float inputRepeatDelay = 0.35f;
     [SerializeField] float inputRepeatRate = 0.1f;
@@ -22,22 +22,6 @@ public class EditorInputManager : MonoBehaviour
     [SerializeField] InputActionReference flipAction;
     [SerializeField] InputActionReference modifyAction;
     [SerializeField] InputActionReference deleteAction;
-
-    Vector2 lastMoveInput;
-
-    bool allowMovement;
-    bool modifyHeld;
-    bool undoHeld;
-    bool redoHeld;
-    float undoNextTime;
-    float redoNextTime;
-
-    #region Events
-
-    public struct DisableNavigationEvent { }
-    public struct EnableNavigationEvent { }
-    public struct EnterInputFieldEvent { }
-    public struct InventoryPartGrabbedEvent { EditorShipPart part; }
 
     #endregion
 
@@ -159,6 +143,16 @@ public class EditorInputManager : MonoBehaviour
 
     #region Input Actions
 
+    private void OnSubmitPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new SubmitInputEvent { });
+
+    private void OnCancelPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new CancelInputEvent { });
+    
+    private void OnModePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ModeInputEvent { });
+    
+    private void OnResetPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ResetInputEvent { });
+    
+    private void OnDeletePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new DeleteInputEvent { });
+
     private void OnZoomPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
@@ -171,16 +165,6 @@ public class EditorInputManager : MonoBehaviour
         EventBus.Publish(new ZoomInputEvent { zoomDirection = zoomDir });
     }
 
-    private void OnSubmitPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new SubmitInputEvent { });
-
-    private void OnCancelPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new CancelInputEvent { });
-    
-    private void OnModePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ModeInputEvent { });
-    
-    private void OnResetPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ResetInputEvent { });
-    
-    private void OnDeletePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new DeleteInputEvent { });
-    
     private void OnUndoPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
@@ -224,6 +208,13 @@ public class EditorInputManager : MonoBehaviour
 
     #endregion
 
+    #region Per-frame Processes
+
+    bool modifyHeld;
+    bool undoHeld;
+    bool redoHeld;
+    float undoNextTime;
+    float redoNextTime;
     private void ProcessUndoRedoRepeat()
     {
         if (undoHeld && !modifyHeld)
@@ -247,8 +238,10 @@ public class EditorInputManager : MonoBehaviour
         else redoNextTime = 0f;
     }
 
+    bool allowMovement;
     float nextRepeatTime;
     bool lastModifyHeld;
+    Vector2 lastMoveInput;
     void ProcessNavInput()
     {
         if (!allowMovement) return;
@@ -276,6 +269,10 @@ public class EditorInputManager : MonoBehaviour
 
         lastModifyHeld = modifyHeld;
     }
+
+    #endregion
+
+    #region Input Helpers
 
     Vector2 prevStableInput = Vector2.zero;
     Vector2 pendingCardinal = Vector2.zero;
@@ -380,4 +377,5 @@ public class EditorInputManager : MonoBehaviour
         return v.sqrMagnitude < 0.01f;
     }
 
+    #endregion
 }

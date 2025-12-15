@@ -29,13 +29,13 @@ public class NavInputHelper : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
-        EventBus.Publish(new EditorInputManager.DisableNavigationEvent());
-        EventBus.Publish(new EditorInputManager.EnterInputFieldEvent());
+        EventBus.Publish(new DisableNavigationEvent());
+        EventBus.Publish(new EnterInputFieldEvent());
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        EventBus.Publish(new EditorInputManager.EnableNavigationEvent());
+        EventBus.Publish(new EnableNavigationEvent());
     }
 
     private void OnDestroy()

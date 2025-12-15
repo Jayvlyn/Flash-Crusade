@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static EditorInputManager;
 
-public class NavManager : MonoBehaviour
+public class NavManager : MonoBehaviour, IPartGrabber
 {
     [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
     int zoomLevel = 3;
@@ -187,39 +185,6 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    public void GrabFrameLate(EditorShipPart part, bool fromInv) // temp public
-    {
-        heldPart = part;
-        StartCoroutine(FrameLateRoutine(part, fromInv));
-    }
-
-    IEnumerator FrameLateRoutine(EditorShipPart part, bool fromInv)
-    {
-        yield return null;
-        GrabImmediate(part, fromInv);
-    }
-
-    public void GrabImmediate(EditorShipPart part, bool fromInv, bool updateVisualizer = true) // temp public
-    {
-        if(updateVisualizer) visualizer.UpdateWithRectImmediate(part.rect);
-        part.OnGrabbed(visualizer.rect);
-        if(!fromInv) currentGridCell = part.position;
-        heldPart = part;
-    }
-
-    private bool midGrab = false;
-    public IEnumerator GrabWithLerp(EditorShipPart part, bool fromInv) // temp public
-    {
-        midGrab = true;
-        yield return visualizer.LerpWithRect(part.rect); // waits until done
-
-        part.OnGrabbed(visualizer.rect);
-        if (!fromInv) currentGridCell = part.position;
-        heldPart = part;
-        midGrab = false;
-        if (fromInv) SwitchToGridMode();
-    }
-
     public void OnInventoryPartGrabbed(ShipPartData part)
     {
         CommandHistory.Execute(new InventoryGrabCommand(this, part));
@@ -343,8 +308,7 @@ public class NavManager : MonoBehaviour
     public IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
     {
         bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
-        //partOrganizer.SetPartToDefaultStart(part);
-        if (success) GrabImmediate(part, true, false);
+        if (success) GrabImmediate(part, true);
         yield return null;
         RestorePartTransformations(rotation, xFlipped, yFlipped);
         yield return null;
@@ -368,11 +332,48 @@ public class NavManager : MonoBehaviour
     }
 
 
+    #region IPartGrabber
+    
+    public void GrabImmediate(EditorShipPart part, bool fromInv)
+    {
+        part.OnGrabbed(visualizer.rect);
+        if(!fromInv) currentGridCell = part.position;
+        heldPart = part;
+    }
 
+    public void GrabFrameLate(EditorShipPart part, bool fromInv)
+    {
+        heldPart = part;
+        StartCoroutine(GrabFrameLateRoutine(part, fromInv));
+    }
 
+    public void GrabWithLerp(EditorShipPart part, bool fromInv)
+    {
+        StartCoroutine(GrabWithLerpRoutine(part, fromInv));
+    }
 
-    #region TEMP COMMAND HANDLING
+    #region IPartGrabber Helpers
+    IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
+    {
+        yield return null;
+        visualizer.UpdateWithRectImmediate(part.rect);
+        GrabImmediate(part, fromInv);
+    }
 
+    private bool midGrab = false;
+    IEnumerator GrabWithLerpRoutine(EditorShipPart part, bool fromInv)
+    {
+        midGrab = true;
+        yield return visualizer.LerpWithRect(part.rect); // waits until done
+
+        part.OnGrabbed(visualizer.rect);
+        if (!fromInv) currentGridCell = part.position;
+        heldPart = part;
+        midGrab = false;
+        if (fromInv) SwitchToGridMode();
+    }
+
+    #endregion
 
     #endregion
 

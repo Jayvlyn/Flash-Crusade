@@ -22,9 +22,12 @@ public class GrabCommand : IEditorCommand
         nav.visualizer.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
-            nav.StartCoroutine(nav.GrabWithLerp(part, false));
+            nav.GrabWithLerp(part, false);
         else
+        {
+            nav.visualizer.UpdateWithRectImmediate(part.rect);
             nav.GrabImmediate(part, false);
+        }
     }
 
     public void Undo()
@@ -88,9 +91,12 @@ public class PlaceCommand : IEditorCommand
             nav.visualizer.MatchRectScale(part.rect);
 
             if (UIManager.Smoothing)
-                nav.StartCoroutine(nav.GrabWithLerp(part, false));
+                nav.GrabWithLerp(part, false);
             else
+            {
+                nav.visualizer.UpdateWithRectImmediate(part.rect);
                 nav.GrabImmediate(part, false);
+            }
         }
     }
 
@@ -231,6 +237,7 @@ public class ExitGridModeCommand : IEditorCommand
             if (success)
             {
                 nav.partOrganizer.SetPartToDefaultStart(part);
+                nav.visualizer.UpdateWithRectImmediate(part.rect);
                 nav.GrabImmediate(part, true);
             }
         }
@@ -281,7 +288,10 @@ public class InventoryGrabCommand : IEditorCommand
         if (UIManager.Smoothing)
             nav.GrabFrameLate(newPart, true);
         else
+        {
+            nav.visualizer.UpdateWithRectImmediate(newPart.rect);
             nav.GrabImmediate(newPart, true);
+        }
 
         nav.SwitchToGridMode();
     }
@@ -313,10 +323,11 @@ public class InventoryGrabCommand : IEditorCommand
 
         if (UIManager.Smoothing)
         {
-            nav.StartCoroutine(nav.GrabWithLerp(newPart, true));
+            nav.GrabWithLerp(newPart, true);
         }
         else
         {
+            nav.visualizer.UpdateWithRectImmediate(newPart.rect);
             nav.GrabImmediate(newPart, true);
             nav.SwitchToGridMode();
         }
@@ -364,7 +375,7 @@ public class DeleteCommand : IEditorCommand
             partData = part.partData;
             partPosition = part.position;
             nav.partOrganizer.AddPart(part.partData);
-            nav.GrabImmediate(part, false, false);
+            nav.GrabImmediate(part, false);
 
             xFlipped = nav.heldPart.xFlipped;
             yFlipped = nav.heldPart.yFlipped;

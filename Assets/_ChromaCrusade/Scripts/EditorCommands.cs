@@ -52,48 +52,49 @@ public class GrabCommand : IEditorCommand
 
 public class PlaceCommand : IEditorCommand
 {
-    NavManager nav;
-    Vector2Int cell;
     EditorShipPart part;
+    Vector2Int cell;
     Vector2Int cellPlacedAt;
 
-    public PlaceCommand(NavManager nav, Vector2Int cell)
+    IPartGrabber grabber;
+    IPartPlacer placer;
+    IVisualizer visualizer;
+    INavigator navigator;
+
+    public PlaceCommand(EditorShipPart part, Vector2Int cell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
     {
-        this.nav = nav;
+        this.part = part;
         this.cell = cell;
+
+        this.grabber = grabber;
+        this.placer = placer;
+        this.visualizer = visualizer;
+        this.navigator = navigator;
     }
 
     public void Execute()
     {
-        part = nav.heldPart;
-
-        nav.PlacePart(part, cell);
+        part = placer.GetHeldPart();
+        placer.PlacePart(part, cell);
 
         cellPlacedAt = part.cellPlacedAt;
-        nav.visualizer.ResetScale();
-        nav.NavToCell(part.position);
+
+        visualizer.ResetScale();
+
+        navigator.NavToCell(part.position);
     }
 
     public void Undo()
     {
-        if (part == null)
+        part = grabber.GrabFromGrid(cellPlacedAt);
+        visualizer.MatchRectScale(part.rect);
+
+        if (UIManager.Smoothing)
+            grabber.GrabWithLerp(part, false);
+        else
         {
-            part = nav.buildArea.GrabPart(cellPlacedAt);
-        }
-
-        if (part)
-        {
-            nav.buildArea.GrabPart(part.cellPlacedAt);
-
-            nav.visualizer.MatchRectScale(part.rect);
-
-            if (UIManager.Smoothing)
-                nav.GrabWithLerp(part, false);
-            else
-            {
-                nav.visualizer.UpdateWithRectImmediate(part.rect);
-                nav.GrabImmediate(part, false);
-            }
+            visualizer.UpdateWithRectImmediate(part.rect);
+            grabber.GrabImmediate(part, false);
         }
     }
 

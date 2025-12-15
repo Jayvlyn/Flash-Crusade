@@ -326,12 +326,16 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         heldPart = null;
     }
 
+    public EditorShipPart GetHeldPart()
+    {
+        return heldPart;
+    }
 
     void TryPlacePart()
     {
         if (buildArea.CanPlacePart(heldPart, currentGridCell))
         {
-            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
+            CommandHistory.Execute(new PlaceCommand(heldPart, currentGridCell, this, this, this, this));
         }
     }
 

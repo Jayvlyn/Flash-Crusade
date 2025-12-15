@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NavManager : MonoBehaviour, IPartGrabber
+public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer, INavigator
 {
     [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
     int zoomLevel = 3;
@@ -136,12 +136,6 @@ public class NavManager : MonoBehaviour, IPartGrabber
         visualizer.HighlightItem(HoveredItem);
     }
 
-    public void NavToCell(Vector2Int cell) // temp public
-    {
-        currentGridCell = cell;
-        visualizer.HighlightCell(currentGridCell, Expanded);
-    }
-
     public void SwitchNavMode(NavMode newMode)
     {
         if (mode == newMode) return;
@@ -175,42 +169,6 @@ public class NavManager : MonoBehaviour, IPartGrabber
                 break;
         }
     }
-
-    void TryGrabPart()
-    {
-        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
-        if (part)
-        {
-            CommandHistory.Execute(new GrabCommand(this, part));
-        }
-    }
-
-    public void OnInventoryPartGrabbed(ShipPartData part)
-    {
-        CommandHistory.Execute(new InventoryGrabCommand(this, part));
-    }
-
-    void TryPlacePart()
-    {
-        if(buildArea.CanPlacePart(currentGridCell, heldPart))
-        {
-            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
-        }
-    }
-
-    private bool placeQueued;
-    IEnumerator TryPlacePartDelayed()
-    {
-        if (placeQueued) yield break; // prevents spam stacking
-        placeQueued = true;
-
-        if (UIManager.Smoothing && visualizer.IsLerping)
-            yield return visualizer.WaitUntilDone();
-
-        TryPlacePart(); // safe now
-        placeQueued = false;
-    }
-
 
     public void RotatePart(float angle)
     {
@@ -297,7 +255,6 @@ public class NavManager : MonoBehaviour, IPartGrabber
         }
     }
 
-
     void ToggleNavMode()
     {
         if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
@@ -315,7 +272,7 @@ public class NavManager : MonoBehaviour, IPartGrabber
 
         if (wasPlaced)
         {
-            buildArea.PlacePart(partPosition, part);
+            buildArea.PlacePart(part, partPosition);
             part.OnPlaced(partPosition, buildArea);
             heldPart = null;
             visualizer.ResetScale();
@@ -331,9 +288,75 @@ public class NavManager : MonoBehaviour, IPartGrabber
         if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
     }
 
+    #region INavigator
+
+    public void NavToCell(Vector2Int cell)
+    {
+        currentGridCell = cell;
+        visualizer.HighlightCell(currentGridCell, Expanded);
+    }
+
+    #endregion
+
+    #region IVisualizer
+
+    public void UpdateWithRectImmediate(RectTransform rect)
+    {
+        visualizer.UpdateWithRectImmediate(rect);
+    }
+
+    public void MatchRectScale(RectTransform rect)
+    {
+        visualizer.MatchRectScale(rect);
+    }
+
+    public void ResetScale()
+    {
+        visualizer.ResetScale();
+    }
+
+    #endregion
+
+    #region IPartPlacer
+
+    public void PlacePart(EditorShipPart part, Vector2Int cell)
+    {
+        buildArea.PlacePart(part, cell);
+        part.OnPlaced(cell, buildArea);
+        heldPart = null;
+    }
+
+
+    void TryPlacePart()
+    {
+        if (buildArea.CanPlacePart(heldPart, currentGridCell))
+        {
+            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
+        }
+    }
+
+    private bool placeQueued;
+    IEnumerator TryPlacePartDelayed()
+    {
+        if (placeQueued) yield break; // prevents spam stacking
+        placeQueued = true;
+
+        if (UIManager.Smoothing && visualizer.IsLerping)
+            yield return visualizer.WaitUntilDone();
+
+        TryPlacePart(); // safe now
+        placeQueued = false;
+    }
+
+    #endregion
 
     #region IPartGrabber
-    
+
+    public EditorShipPart GrabFromGrid(Vector2Int cell)
+    {
+        return buildArea.GrabPart(cell);
+    }
+
     public void GrabImmediate(EditorShipPart part, bool fromInv)
     {
         part.OnGrabbed(visualizer.rect);
@@ -352,7 +375,13 @@ public class NavManager : MonoBehaviour, IPartGrabber
         StartCoroutine(GrabWithLerpRoutine(part, fromInv));
     }
 
-    #region IPartGrabber Helpers
+
+    void TryGrabPart()
+    {
+        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
+        if (part) CommandHistory.Execute(new GrabCommand(part, currentGridCell, this, this, this, this));
+    }
+
     IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
     {
         yield return null;
@@ -373,7 +402,10 @@ public class NavManager : MonoBehaviour, IPartGrabber
         if (fromInv) SwitchToGridMode();
     }
 
-    #endregion
+    public void OnInventoryPartGrabbed(ShipPartData part)
+    {
+        CommandHistory.Execute(new InventoryGrabCommand(this, part));
+    }
 
     #endregion
 

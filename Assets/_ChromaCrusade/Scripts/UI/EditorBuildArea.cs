@@ -15,7 +15,7 @@ public class EditorBuildArea : MonoBehaviour
 
     #region Public API
 
-    public bool CanPlacePart(Vector2Int centerCell, EditorShipPart part)
+    public bool CanPlacePart(EditorShipPart part, Vector2Int centerCell)
     {
         return CellsAvailable(centerCell, part);
     }
@@ -26,7 +26,7 @@ public class EditorBuildArea : MonoBehaviour
         else return null;
     }
 
-    public bool PlacePart(Vector2Int centerCell, EditorShipPart part)
+    public bool PlacePart(EditorShipPart part, Vector2Int centerCell)
     {
         if (!CellsAvailable(centerCell, part))
             return false;

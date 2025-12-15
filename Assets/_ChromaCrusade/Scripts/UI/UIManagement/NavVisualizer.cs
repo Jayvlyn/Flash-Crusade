@@ -109,18 +109,6 @@ public class NavVisualizer : MonoBehaviour
         ));
     }
 
-    public void UpdateWithRectImmediate(RectTransform rt)
-    {
-        if (rt == null) return;
-
-        GetWorldRectValues(rt, out Vector2 targetPos, out Vector2 targetSize);
-
-        rect.anchoredPosition = targetPos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
-        rect.localEulerAngles = rt.localEulerAngles;
-    }
-
     public Coroutine LerpWithRect(RectTransform rt)
     {
         CancelLerp();
@@ -392,17 +380,30 @@ public class NavVisualizer : MonoBehaviour
         rect.localScale = scale;
     }
 
-    public void MatchRectScale(RectTransform rectTransform)
+    public void UpdateWithRectImmediate(RectTransform rect)
     {
-        var scale = rect.localScale;
+        if (rect == null) return;
 
-        if (rectTransform.localScale.x < 0)
+        GetWorldRectValues(rect, out Vector2 targetPos, out Vector2 targetSize);
+
+        this.rect.anchoredPosition = targetPos;
+        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+        this.rect.localEulerAngles = rect.localEulerAngles;
+    }
+
+
+    public void MatchRectScale(RectTransform rect)
+    {
+        var scale = this.rect.localScale;
+
+        if (rect.localScale.x < 0)
             scale.x = -scale.x;
 
-        if (rectTransform.localScale.y < 0)
+        if (rect.localScale.y < 0)
             scale.y = -scale.y;
 
-        rect.localScale = scale;
+        this.rect.localScale = scale;
     }
 
     #endregion

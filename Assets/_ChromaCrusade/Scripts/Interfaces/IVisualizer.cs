@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class IVisualizer : MonoBehaviour
+public interface IVisualizer
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void UpdateWithRectImmediate(RectTransform rect);
+    void MatchRectScale(RectTransform rect);
+    void ResetScale();
 }

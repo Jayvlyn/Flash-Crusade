@@ -2,43 +2,47 @@ using UnityEngine;
 
 public class GrabCommand : IEditorCommand
 {
-    NavManager nav;
     EditorShipPart part;
     Vector2Int originCell;
     Vector2Int grabbedFromCell;
 
-    public GrabCommand(NavManager nav, EditorShipPart part)
+    IPartGrabber grabber;
+    IPartPlacer placer;
+    IVisualizer visualizer;
+    INavigator navigator;
+
+    public GrabCommand(EditorShipPart part, Vector2Int grabbingFromCell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
     {
-        this.nav = nav;
         this.part = part;
         originCell = part.position;
-        grabbedFromCell = nav.currentGridCell;
+        grabbedFromCell = grabbingFromCell;
+
+        this.grabber = grabber;
+        this.placer = placer;
+        this.visualizer = visualizer;
+        this.navigator = navigator;
     }
 
     public void Execute()
     {
-        part = nav.buildArea.GrabPart(nav.currentGridCell);
+        part = grabber.GrabFromGrid(grabbedFromCell);
 
-        nav.visualizer.MatchRectScale(part.rect);
+        visualizer.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
-            nav.GrabWithLerp(part, false);
+            grabber.GrabWithLerp(part, false);
         else
         {
-            nav.visualizer.UpdateWithRectImmediate(part.rect);
-            nav.GrabImmediate(part, false);
+            visualizer.UpdateWithRectImmediate(part.rect);
+            grabber.GrabImmediate(part, false);
         }
     }
 
     public void Undo()
     {
-        nav.buildArea.PlacePart(originCell, nav.heldPart);
-        nav.heldPart.OnPlaced(originCell, nav.buildArea);
-        nav.heldPart = null;
-
-        nav.visualizer.ResetScale();
-
-        nav.NavToCell(grabbedFromCell);
+        placer.PlacePart(part, originCell);
+        visualizer.ResetScale();
+        navigator.NavToCell(grabbedFromCell);
     }
 
     public void Redo() => Execute();
@@ -62,10 +66,10 @@ public class PlaceCommand : IEditorCommand
     public void Execute()
     {
         part = nav.heldPart;
-        nav.buildArea.PlacePart(cell, part);
-        part.OnPlaced(cell, nav.buildArea);
+
+        nav.PlacePart(part, cell);
+
         cellPlacedAt = part.cellPlacedAt;
-        nav.heldPart = null;
         nav.visualizer.ResetScale();
         nav.NavToCell(part.position);
     }

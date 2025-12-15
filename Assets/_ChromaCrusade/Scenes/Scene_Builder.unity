@@ -338,6 +338,64 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!1 &137828022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137828024}
+  - component: {fileID: 137828023}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &137828023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137828022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d9c52fdb7c9be4c8e8e30bd0d6ca52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EditorInputManager
+  inputRepeatDelay: 0.35
+  inputRepeatRate: 0.1
+  navigateAction: {fileID: 802242249}
+  submitAction: {fileID: 946211695}
+  cancelAction: {fileID: 904699297}
+  modeAction: {fileID: 1205080423}
+  resetAction: {fileID: 431079976}
+  zoomAction: {fileID: 1220065252}
+  undoAction: {fileID: 951668322}
+  redoAction: {fileID: 1634200450}
+  rotateAction: {fileID: 188439679}
+  flipAction: {fileID: 998866718}
+  modifyAction: {fileID: 1483751138}
+  deleteAction: {fileID: 1488343066}
+--- !u!4 &137828024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137828022}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 695.76105, y: 490.91135, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &160399124
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +810,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &188439679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Rotate
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: f88f5fcf-37f8-4e2c-85c5-ce7e394698c8
 --- !u!1 &217396644
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,6 +2248,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411837594}
   m_CullTransparentMesh: 1
+--- !u!114 &431079976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Reset
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: 930e9e01-dccb-49c3-9d7c-fc2fedd9104d
 --- !u!1 &455178759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,22 +2886,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6242520b48024446a77b316e107cdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
-  inputRepeatDelay: 0.35
-  inputRepeatRate: 0.15
   zoomRange: {x: 1, y: 10}
   mode: 0
-  navigateAction: {fileID: -8784545083839296357, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  submitAction: {fileID: 392368643174621059, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  cancelAction: {fileID: 7727032971491509709, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  modeAction: {fileID: 1565305987308768294, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  resetAction: {fileID: 1279934112125055030, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  zoomAction: {fileID: 2056815540720684418, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  undoAction: {fileID: -4898551812581007230, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  redoAction: {fileID: -6999287408727343035, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  rotateAction: {fileID: 2384486198090031326, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  flipAction: {fileID: 7741694452288187375, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  modifyAction: {fileID: 4959521218990074076, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  deleteAction: {fileID: 498701818083463054, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   buildWindow: {fileID: 1809799018}
   centerGridCell: {fileID: 217396645}
   visualizer: {fileID: 1036409155}
@@ -3906,6 +3978,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   rect: {fileID: 0}
+--- !u!114 &802242249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Navigate
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
 --- !u!1 &815884797
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,6 +4392,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902406004}
   m_CullTransparentMesh: 1
+--- !u!114 &904699297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Cancel
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
 --- !u!1 &917093075
 GameObject:
   m_ObjectHideFlags: 0
@@ -4496,6 +4596,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
   m_AspectMode: 2
   m_AspectRatio: 1
+--- !u!114 &946211695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Submit
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
+--- !u!114 &951668322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Undo
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: 9737060a-7766-4e75-ac07-2e096c749acd
 --- !u!1 &965694209
 GameObject:
   m_ObjectHideFlags: 0
@@ -4671,6 +4799,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!114 &998866718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Flip
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: 96f9bb11-cb4d-40b9-b1d4-84df1f6f7012
 --- !u!1 &1004297363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,6 +5500,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190025409}
   m_CullTransparentMesh: 1
+--- !u!114 &1205080423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Mode
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: a2d17e0a-3f73-454d-9c29-864575cff0ba
+--- !u!114 &1220065252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Zoom
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: e1a670f7-449e-4dcc-848c-676d7ccf347e
 --- !u!1 &1278501520
 GameObject:
   m_ObjectHideFlags: 0
@@ -6563,6 +6733,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5563e8eaca89e584c8e16c7b30e5277a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavItem
+--- !u!114 &1483751138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Modify
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: abc9bcb8-a338-419e-b2d4-89436cf5a56f
+--- !u!114 &1488343066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Delete
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: ec78c872-5a5e-4f71-add5-59ccac3ac583
 --- !u!1 &1567530958
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,6 +7181,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623336162}
   m_CullTransparentMesh: 1
+--- !u!114 &1634200450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: UI/Redo
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  m_ActionId: fd1a52ac-823a-4390-87e5-e9fdff541dbb
 --- !u!1 &1659551617
 GameObject:
   m_ObjectHideFlags: 0
@@ -7336,7 +7548,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.2
+  m_fontSize: 22.4
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8861,7 +9073,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.15
+  m_fontSize: 43.5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8924,7 +9136,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 39.15
+      value: 39.1
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -9150,3 +9362,4 @@ SceneRoots:
   - {fileID: 579940309}
   - {fileID: 1615260374}
   - {fileID: 5220296}
+  - {fileID: 137828024}

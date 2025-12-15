@@ -2,62 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using static EditorInputManager;
 
 public class NavManager : MonoBehaviour
 {
-    #region Variables
-
-    [Header("Settings")]
-    [SerializeField] private float inputRepeatDelay = 0.35f;
-    [SerializeField] private float inputRepeatRate = 0.1f;
-    [SerializeField] private Vector2 zoomRange = new Vector2(1, 10);
-    private int zoomLevel = 3;
+    [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
+    int zoomLevel = 3;
     public int ZoomLevel
     {
         get => zoomLevel;
         set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
     }
-    private Dictionary<int,float> zoomScales = new Dictionary<int,float>();
+    Dictionary<int,float> zoomScales = new Dictionary<int,float>();
 
-    private Vector2Int currentGridCell = new Vector2Int(0,0);
+    Vector2Int currentGridCell = new Vector2Int(0,0);
     public enum NavMode { Item, Grid };
     [HideInInspector] public NavMode mode = NavMode.Item;
-    private bool Expanded => heldPart != null;
+    bool Expanded => heldPart != null;
 
-    [Header("Input")]
-    [SerializeField] private InputActionReference navigateAction;
-    [SerializeField] private InputActionReference submitAction;
-    [SerializeField] private InputActionReference cancelAction;
-    [SerializeField] private InputActionReference modeAction;
-    [SerializeField] private InputActionReference resetAction;
-    [SerializeField] private InputActionReference zoomAction;
-    [SerializeField] private InputActionReference undoAction;
-    [SerializeField] private InputActionReference redoAction;
-    [SerializeField] private InputActionReference rotateAction;
-    [SerializeField] private InputActionReference flipAction;
-    [SerializeField] private InputActionReference modifyAction;
-    [SerializeField] private InputActionReference deleteAction;
-    private Vector2 lastMoveInput;
-    private bool inInputField;
-    private bool allowMovement;
-    private bool modifyHeld;
-    bool undoHeld;
-    bool redoHeld;
-    float undoNextTime;
-    float redoNextTime;
-
-    [Header("Refs")]
     public NavItem buildWindow;
-    [SerializeField] private RectTransform centerGridCell;
-    [SerializeField] private NavVisualizer visualizer;
-    [SerializeField] private NavItem initialHoveredItem;
-    [SerializeField] private NavItem exitItem;
-    [SerializeField] private EditorBuildArea buildArea;
+    [SerializeField] RectTransform centerGridCell;
+    [SerializeField] NavVisualizer visualizer;
+    [SerializeField] NavItem initialHoveredItem;
+    [SerializeField] NavItem exitItem;
+    [SerializeField] EditorBuildArea buildArea;
     [HideInInspector] public PartOrganizer partOrganizer;
-    private NavItem hoveredItem;
-    private NavItem lastHoveredItem;
-    private NavItem HoveredItem
+    NavItem hoveredItem;
+    NavItem lastHoveredItem;
+    NavItem HoveredItem
     {
         get => hoveredItem;
         set
@@ -69,39 +42,27 @@ public class NavManager : MonoBehaviour
     }
     private EditorShipPart heldPart;
 
-    #endregion
-
-    #region Events
-    public struct DisableNavigationEvent { }
-    public struct EnableNavigationEvent { }
-    public struct EnterInputFieldEvent { }
-    public struct InventoryPartGrabbedEvent { EditorShipPart part; }
-    #endregion
+    bool modifyHeld;
 
     #region Lifecycle
 
-    private void OnEnable()
+    void OnEnable()
     {
-        EnableActions();
-        EnableInputs();
+        SubscribeToInputEvents();
+        visualizer.gameObject.SetActive(true);
 
-        EventBus.Subscribe<DisableNavigationEvent>(OnDisableNavigation);
-        EventBus.Subscribe<EnableNavigationEvent>(OnEnableNavigation);
         EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
-        DisableInputs();
-
+        UnsubscribeFromInputEvents();
         visualizer.gameObject.SetActive(false);
 
-        EventBus.Unsubscribe<DisableNavigationEvent>(OnDisableNavigation);
-        EventBus.Unsubscribe<EnableNavigationEvent>(OnEnableNavigation);
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
     }
 
-    private void Awake()
+    void Awake()
     {
         // based on 16:9 ratio
         zoomScales.Add(1, 1.48f);
@@ -116,9 +77,8 @@ public class NavManager : MonoBehaviour
         zoomScales.Add(10,0.21141f);
     }
 
-    private void Start()
+    void Start()
     {
-        visualizer.gameObject.SetActive(true);
         visualizer.centerGridCell = centerGridCell;
 
         if (buildArea == null) buildArea = FindFirstObjectByType<EditorBuildArea>();
@@ -127,55 +87,11 @@ public class NavManager : MonoBehaviour
         InitNavMode(true);
     }
 
-    private void Update()
-    {
-        ProcessNavInput();
-        ProcessUndoRedoRepeat();
-    }
-
     #endregion
 
     #region Navigation
 
-    private float nextRepeatTime;
-    private void ProcessNavInput()
-    {
-        if (!allowMovement || midGrab || midZoom) return;
-
-        Vector2 raw = navigateAction.action.ReadValue<Vector2>();
-        Vector2 input = FilterDiagonalTransitions(raw);
-
-        if (input == Vector2.zero)
-        {
-            lastMoveInput = Vector2.zero;
-            nextRepeatTime = 0f;
-            return;
-        }
-
-        input.x = Mathf.RoundToInt(input.x);
-        input.y = Mathf.RoundToInt(input.y);
-        if (modifyHeld)
-        {
-            input.x *= 3;
-            input.y *= 3;
-        }
-
-        bool newInput = input != lastMoveInput;
-
-        if (newInput || Time.time >= nextRepeatTime)
-        {
-            if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, input));
-            else
-            {
-                TriggerNav(input);
-                if (modifyHeld) TriggerNav(input);
-            }
-            nextRepeatTime = Time.time + (newInput ? inputRepeatDelay : inputRepeatRate);
-            lastMoveInput = input;
-        }
-    }
-
-    private void TriggerNav(Vector2 dir)
+    void TriggerNav(Vector2 dir)
     {
         if (mode == NavMode.Item)
         {
@@ -190,7 +106,7 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    private void TriggerNavItem(Vector2 dir)
+    void TriggerNavItem(Vector2 dir)
     {
         if (HoveredItem == null)
             return;
@@ -208,7 +124,7 @@ public class NavManager : MonoBehaviour
         NavToItem(next);
     }
 
-    private void TriggerNavGrid(Vector2 dir)
+    void TriggerNavGrid(Vector2 dir)
     {
         Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
 
@@ -220,7 +136,7 @@ public class NavManager : MonoBehaviour
         NavToCell(newCell);
     }
 
-    private void NavToItem(NavItem item)
+    void NavToItem(NavItem item)
     {
         if(item == null) return;
         HoveredItem = item;
@@ -228,7 +144,7 @@ public class NavManager : MonoBehaviour
         visualizer.HighlightItem(HoveredItem);
     }
 
-    private void NavToCell(Vector2Int cell)
+    void NavToCell(Vector2Int cell)
     {
         currentGridCell = cell;
         visualizer.HighlightCell(currentGridCell, Expanded);
@@ -245,29 +161,11 @@ public class NavManager : MonoBehaviour
 
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
 
-    private void GoBack()
-    {
-        if (inInputField)
-        {
-            inInputField = false;
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-        else if (mode == NavMode.Item)
-        {
-            if (HoveredItem == exitItem) exitItem.OnSelected();
-            else NavToItem(exitItem);
-        }
-        else if (mode == NavMode.Grid)
-        {
-            CommandHistory.Execute(new ExitGridModeCommand(this));
-        }
-    }
-
     #endregion
 
     #region Initialization
 
-    private void InitNavMode(bool resetGrid)
+    void InitNavMode(bool resetGrid)
     {
         switch (mode)
         {
@@ -295,7 +193,7 @@ public class NavManager : MonoBehaviour
     #region Part Manipulation
 
     #region Grab
-    private void TryGrabPart()
+    void TryGrabPart()
     {
         EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
         if (part)
@@ -304,19 +202,19 @@ public class NavManager : MonoBehaviour
         }
     }
 
-    private void GrabFrameLate(EditorShipPart part, bool fromInv)
+    void GrabFrameLate(EditorShipPart part, bool fromInv)
     {
         heldPart = part;
         StartCoroutine(FrameLateRoutine(part, fromInv));
     }
 
-    private IEnumerator FrameLateRoutine(EditorShipPart part, bool fromInv)
+    IEnumerator FrameLateRoutine(EditorShipPart part, bool fromInv)
     {
         yield return null;
         GrabImmediate(part, fromInv);
     }
 
-    private void GrabImmediate(EditorShipPart part, bool fromInv, bool updateVisualizer = true)
+    void GrabImmediate(EditorShipPart part, bool fromInv, bool updateVisualizer = true)
     {
         if(updateVisualizer) visualizer.UpdateWithRectImmediate(part.rect);
         part.OnGrabbed(visualizer.rect);
@@ -325,7 +223,7 @@ public class NavManager : MonoBehaviour
     }
 
     private bool midGrab = false;
-    private IEnumerator GrabWithLerp(EditorShipPart part, bool fromInv)
+    IEnumerator GrabWithLerp(EditorShipPart part, bool fromInv)
     {
         midGrab = true;
         yield return visualizer.LerpWithRect(part.rect); // waits until done
@@ -345,7 +243,7 @@ public class NavManager : MonoBehaviour
     #endregion
 
     #region Place
-    private void TryPlacePart()
+    void TryPlacePart()
     {
         if(buildArea.CanPlacePart(currentGridCell, heldPart))
         {
@@ -354,7 +252,7 @@ public class NavManager : MonoBehaviour
     }
 
     private bool placeQueued;
-    private IEnumerator TryPlaceWithSync()
+    IEnumerator TryPlaceWithSync()
     {
         if (placeQueued) yield break; // prevents spam stacking
         placeQueued = true;
@@ -382,17 +280,17 @@ public class NavManager : MonoBehaviour
         visualizer.RotateImmediate(angle);
     }
 
-    public void FlipPart(float input)
-    { // input: 1 = vert flip    -1 = hori flip
-        bool horizontal = input == -1;
+    public void FlipPart(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
         if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
         heldPart.Flip(horizontal);
         visualizer.Flip(horizontal);
     }
 
-    public void FlipPartImmediate(float input)
-    { // input: 1 = vert flip    -1 = hori flip
-        bool horizontal = input == -1;
+    public void FlipPartImmediate(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
         if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
         heldPart.Flip(horizontal);
         visualizer.FlipImmediate(horizontal);
@@ -406,7 +304,7 @@ public class NavManager : MonoBehaviour
 
     private Coroutine zoomRoutine;
     private Vector3 targetZoomScale;
-    private void OnNewZoomLevel()
+    void OnNewZoomLevel()
     {
         float s = zoomScales[zoomLevel];
         targetZoomScale = new Vector3(s, s, s);
@@ -424,7 +322,7 @@ public class NavManager : MonoBehaviour
     }
 
     private bool midZoom;
-    private IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
+    IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
     {
         midZoom = true;
         float t = 0f;
@@ -440,328 +338,6 @@ public class NavManager : MonoBehaviour
         }
         buildArea.transform.localScale = target;
         midZoom = false;
-    }
-
-    #endregion
-
-    #region Input Actions
-
-    private void OnZoomPerformed(InputAction.CallbackContext ctx)
-    {
-        float input = ctx.ReadValue<float>();
-        ZoomLevel -= Mathf.RoundToInt(input);
-        OnNewZoomLevel();
-    }
-
-    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        // submit is disabled when in input field, no need to consider that case
-
-        if(mode == NavMode.Item)
-        {
-            if(HoveredItem != null)
-            {
-                if (HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
-                else HoveredItem.OnSelected();
-            }
-        }
-        else if(mode == NavMode.Grid)
-        {
-            if (midGrab) return;
-            if(heldPart != null)
-            {
-                if (UIManager.Smoothing)
-                    StartCoroutine(TryPlaceWithSync());
-                else
-                    TryPlacePart();
-            }
-            else
-            {
-                TryGrabPart();
-            }
-        }
-    }
-
-    private void OnCancelPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        GoBack();
-    }
-
-    private void OnModePerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        ToggleNavMode();
-    }
-
-    private void OnResetPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        if(mode == NavMode.Item)
-        {
-            HoveredItem = null;
-            lastHoveredItem = null;
-            InitNavMode(true);
-        }
-        else // grid mode
-        {
-            CommandHistory.Execute(new ResetCommand(this));
-        }
-    }
-
-    private void OnDeletePerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        if (mode != NavMode.Grid) return;
-        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
-        if (heldPart == null && part == null) return; // no part to delete
-
-        CommandHistory.Execute(new DeleteCommand(this, currentGridCell));
-    }
-
-    private void OnUndoPerformed(InputAction.CallbackContext ctx)
-    {
-        float input = ctx.ReadValue<float>();
-        undoHeld = input == 1;
-    }
-
-    private void OnRedoPerformed(InputAction.CallbackContext ctx)
-    {
-        float input = ctx.ReadValue<float>();
-        redoHeld = input == 1;
-    }
-
-    private void OnRotatePerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        if (heldPart == null) return;
-        if (mode != NavMode.Grid) return;
-        if (visualizer.IsRotateLerping) return;
-
-        float input = ctx.ReadValue<float>();
-        input *= 90;
-        if (modifyHeld) input *= 1.999f; // comes out to ~179.9 so that lerp happens in correct direction, will snap to int later
-        CommandHistory.Execute(new RotateCommand(this, input));
-    }
-
-    private void OnFlipPerformed(InputAction.CallbackContext ctx)
-    {
-        if (ctx.canceled) return;
-        if (heldPart == null) return;
-        if (mode != NavMode.Grid) return;
-        if (visualizer.IsFlipLerping) return;
-
-        float input = ctx.ReadValue<float>();
-        if (input == 0) return;
-        CommandHistory.Execute(new FlipCommand(this, input));
-    }
-
-    private void OnModifyPerformed(InputAction.CallbackContext ctx)
-    {
-        float input = ctx.ReadValue<float>();
-
-        modifyHeld = input == 1;
-    }
-
-    #endregion
-
-    #region Input Management
-
-    private void OnDisableNavigation(DisableNavigationEvent e)
-    {
-        DisableMainInputs();
-    }
-
-    private void OnEnableNavigation(EnableNavigationEvent e)
-    {
-        EnableMainInputs();
-    }
-
-    private void OnEnterInputField(EnterInputFieldEvent e)
-    {
-        inInputField = true;   
-    }
-
-    private void EnableActions()
-    {
-        navigateAction.action.Enable();
-        submitAction.action.Enable();
-        cancelAction.action.Enable();
-        modeAction.action.Enable();
-        resetAction.action.Enable();
-        zoomAction.action.Enable();
-        undoAction.action.Enable();
-        redoAction.action.Enable();
-        rotateAction.action.Enable();
-        flipAction.action.Enable();
-        modifyAction.action.Enable();
-        deleteAction.action.Enable();
-    }
-
-    private void EnableInputs()
-    {
-        EnableMainInputs();
-        cancelAction.action.performed += OnCancelPerformed;
-    }
-
-    private void DisableInputs()
-    {
-        DisableMainInputs();
-        cancelAction.action.performed -= OnCancelPerformed;
-    }
-
-    private void EnableMainInputs()
-    {
-        allowMovement = true;
-        submitAction.action.performed += OnSubmitPerformed;
-        modeAction.action.performed += OnModePerformed;
-        resetAction.action.performed += OnResetPerformed;
-        zoomAction.action.performed += OnZoomPerformed;
-        undoAction.action.performed += OnUndoPerformed;
-        redoAction.action.performed += OnRedoPerformed;
-        rotateAction.action.performed += OnRotatePerformed;
-        flipAction.action.performed += OnFlipPerformed;
-        modifyAction.action.performed += OnModifyPerformed;
-        deleteAction.action.performed += OnDeletePerformed;
-    }
-
-    private void DisableMainInputs()
-    {
-        allowMovement = false;
-        submitAction.action.performed -= OnSubmitPerformed;
-        modeAction.action.performed -= OnModePerformed;
-        resetAction.action.performed -= OnResetPerformed;
-        zoomAction.action.performed -= OnZoomPerformed;
-        undoAction.action.performed -= OnUndoPerformed;
-        redoAction.action.performed -= OnRedoPerformed;
-        rotateAction.action.performed -= OnRotatePerformed;
-        flipAction.action.performed -= OnFlipPerformed;
-        modifyAction.action.performed -= OnModifyPerformed;
-        deleteAction.action.performed -= OnDeletePerformed;
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (hasFocus)
-        {
-            modifyHeld = modifyAction.action.IsPressed();
-            undoHeld = undoAction.action.IsPressed();
-            redoHeld = undoAction.action.IsPressed();
-        }
-        else
-        {
-            modifyHeld = false;
-            undoHeld = false;
-            redoHeld = false;
-        }
-    }
-
-    #endregion
-
-    #region Helpers
-
-    private Vector2 prevStableInput = Vector2.zero;
-    private Vector2 pendingCardinal = Vector2.zero;
-    private Vector2 pendingDiagonal = Vector2.zero;
-    private float pendingTime;
-    private int stuckHits;
-    private int stuckHitThreshold = 5; // could make this frame-dependent like pendingWindow
-    private float cardinalHoldTime;
-    private float diagonalHoldTime;
-    private Vector2 FilterDiagonalTransitions(Vector2 raw)
-    {
-        bool rawIsNeutral = IsNeutral(raw);
-        bool rawIsCardinal = IsCardinal(raw);
-        bool rawIsDiagonal = IsDiagonal(raw);
-        float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
-        if (rawIsDiagonal)
-        {
-            diagonalHoldTime += Time.deltaTime;
-
-            if (IsCardinal(prevStableInput))
-            {
-                if(cardinalHoldTime > 0.2f || diagonalHoldTime > 0.2f)
-                {
-                    cardinalHoldTime = 0;
-                    diagonalHoldTime = 0;
-                    return prevStableInput = raw; // accept diagonal after being stuck
-                }
-                return prevStableInput; // deny diagonal
-            }
-
-            if (pendingDiagonal == Vector2.zero)
-            {
-                pendingDiagonal = raw;
-                pendingTime = Time.time;
-                return prevStableInput; // new pending diag, use prev
-            }
-
-            if (Time.time - pendingTime < pendingWindow)
-            {
-                return prevStableInput; // diag still pending, keep using previous
-            }
-
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = raw; // accept diag after pending
-        }
-
-        if (rawIsNeutral)
-        {
-            cardinalHoldTime = 0;
-            diagonalHoldTime = 0;
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = Vector2.zero; // always accept neutral
-        }
-
-        if (rawIsCardinal)
-        {
-            cardinalHoldTime += Time.deltaTime;
-
-            if (IsDiagonal(prevStableInput))
-            {
-                stuckHits++;
-                if (stuckHits > stuckHitThreshold)
-                {
-                    stuckHits = 0;
-                    return prevStableInput = raw; // accept cardinal after being stuck
-                }
-                return prevStableInput; // deny cardinal
-            }
-            stuckHits = 0;
-
-            if (pendingCardinal == Vector2.zero)
-            {
-                pendingCardinal = raw;
-                pendingTime = Time.time;
-                return prevStableInput; // new pending cardinal, keep using previous
-            }
-
-            if (Time.time - pendingTime < pendingWindow)
-            {
-                return prevStableInput; // cardinal still pending, keep using previous
-            }
-
-            pendingCardinal = Vector2.zero;
-            return prevStableInput = raw; // cardinal accepted after pending
-        }
-
-        return prevStableInput;
-    }
-
-    private bool IsDiagonal(Vector2 v)
-    {
-        return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
-    }
-
-    private bool IsCardinal(Vector2 v)
-    {
-        return Mathf.Abs(v.x) > 0.1f ^ Mathf.Abs(v.y) > 0.1f;
-    }
-
-    private bool IsNeutral(Vector2 v)
-    {
-        return v.sqrMagnitude < 0.01f;
     }
 
     #endregion
@@ -931,23 +507,22 @@ public class NavManager : MonoBehaviour
 
     public class FlipCommand : IEditorCommand
     {
-        float input;
+        FlipAxis axis;
         NavManager nav;
 
-        public FlipCommand(NavManager nav, float input)
+        public FlipCommand(NavManager nav, FlipAxis axis)
         {
             this.nav = nav;
-            this.input = input;
         }
 
         public void Execute()
         {
-            nav.FlipPart(input);
+            nav.FlipPart(axis);
         }
 
         public void Undo()
         {
-            nav.FlipPart(input);
+            nav.FlipPart(axis);
         }
 
         public void Redo() => Execute();
@@ -1201,34 +776,8 @@ public class NavManager : MonoBehaviour
         else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
     }
 
-    private void ProcessUndoRedoRepeat()
-    {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
-            return;
-
-        if (undoHeld && !modifyHeld)
-        {
-            if (Time.time >= undoNextTime)
-            {
-                CommandHistory.Undo();
-                undoNextTime = Time.time + (undoNextTime == 0f ? inputRepeatDelay : inputRepeatRate);
-            }
-        }
-        else undoNextTime = 0f;
-
-        if (redoHeld || (undoHeld && modifyHeld))
-        {
-            if (Time.time >= redoNextTime)
-            {
-                CommandHistory.Redo();
-                redoNextTime = Time.time + (redoNextTime == 0f ? inputRepeatDelay : inputRepeatRate);
-            }
-        }
-        else redoNextTime = 0f;
-    }
-
     private bool midUndoDelete;
-    private IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
+    IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
         //partOrganizer.SetPartToDefaultStart(part);
@@ -1248,12 +797,203 @@ public class NavManager : MonoBehaviour
         midUndoDelete = false;
     }
 
-    private void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
+    void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         if (rotation != 0) RotatePartImmediate(rotation);
-        if (xFlipped) FlipPartImmediate(-1);
-        if (yFlipped) FlipPartImmediate(1);
+        if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
+        if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
     }
 
     #endregion
+
+    public void SubscribeToInputEvents()
+    {
+        EventBus.Subscribe<SubmitInputEvent>(OnSubmitInputEvent);
+        EventBus.Subscribe<CancelInputEvent>(OnCancelInputEvent);
+        EventBus.Subscribe<ModeInputEvent>(OnModeInputEvent);
+        EventBus.Subscribe<UndoInputEvent>(OnUndoInputEvent);
+        EventBus.Subscribe<RedoInputEvent>(OnRedoInputEvent);
+        EventBus.Subscribe<DeleteInputEvent>(OnDeleteInputEvent);
+        EventBus.Subscribe<ResetInputEvent>(OnResetInputEvent);
+        EventBus.Subscribe<NavigateInputEvent>(OnNavigateInputEvent);
+        EventBus.Subscribe<ModifyInputEvent>(OnModifyInputEvent);
+        EventBus.Subscribe<FlipInputEvent>(OnFlipInputEvent);
+        EventBus.Subscribe<ZoomInputEvent>(OnZoomInputEvent);
+        EventBus.Subscribe<RotateInputEvent>(OnRotateInputEvent);
+    }
+
+    public void UnsubscribeFromInputEvents()
+    {
+        EventBus.Unsubscribe<SubmitInputEvent>(OnSubmitInputEvent);
+        EventBus.Unsubscribe<CancelInputEvent>(OnCancelInputEvent);
+        EventBus.Unsubscribe<ModeInputEvent>(OnModeInputEvent);
+        EventBus.Unsubscribe<UndoInputEvent>(OnUndoInputEvent);
+        EventBus.Unsubscribe<RedoInputEvent>(OnRedoInputEvent);
+        EventBus.Unsubscribe<DeleteInputEvent>(OnDeleteInputEvent);
+        EventBus.Unsubscribe<ResetInputEvent>(OnResetInputEvent);
+        EventBus.Unsubscribe<NavigateInputEvent>(OnNavigateInputEvent);
+        EventBus.Unsubscribe<ModifyInputEvent>(OnModifyInputEvent);
+        EventBus.Unsubscribe<FlipInputEvent>(OnFlipInputEvent);
+        EventBus.Unsubscribe<ZoomInputEvent>(OnZoomInputEvent);
+        EventBus.Unsubscribe<RotateInputEvent>(OnRotateInputEvent);
+    }
+
+    void OnSubmitInputEvent(SubmitInputEvent e)
+    {
+        // submit is disabled when in input field, no need to consider that case
+        if (mode == NavMode.Item)
+        {
+            if (HoveredItem != null)
+            {
+                if (HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else HoveredItem.OnSelected();
+            }
+        }
+        else if (mode == NavMode.Grid)
+        {
+            if (midGrab) return;
+            if (heldPart != null)
+            {
+                if (UIManager.Smoothing)
+                    StartCoroutine(TryPlaceWithSync());
+                else
+                    TryPlacePart();
+            }
+            else
+            {
+                TryGrabPart();
+            }
+        }
+    }
+
+    void OnCancelInputEvent(CancelInputEvent e)
+    {
+        GoBack();
+    }
+
+    void OnModeInputEvent(ModeInputEvent e)
+    {
+        ToggleNavMode();
+    }
+
+    void OnUndoInputEvent(UndoInputEvent e)
+    {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+
+        CommandHistory.Undo();
+    }
+
+    void OnRedoInputEvent(RedoInputEvent e)
+    {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+
+        CommandHistory.Redo();
+    }
+
+    void OnDeleteInputEvent(DeleteInputEvent e)
+    {
+        if (mode != NavMode.Grid) return;
+        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
+        if (heldPart == null && part == null) return;
+
+        CommandHistory.Execute(new DeleteCommand(this, currentGridCell));
+    }
+
+    void OnResetInputEvent(ResetInputEvent e)
+    {
+        if (mode == NavMode.Item)
+        {
+            HoveredItem = null;
+            lastHoveredItem = null;
+            InitNavMode(true);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            CommandHistory.Execute(new ResetCommand(this));
+        }
+    }
+
+    void OnNavigateInputEvent(NavigateInputEvent e)
+    {
+        if (midGrab || midZoom) return;
+
+        Vector2 dir = e.dir;
+
+        dir.x = Mathf.RoundToInt(dir.x);
+        dir.y = Mathf.RoundToInt(dir.y);
+        if (modifyHeld)
+        {
+            dir.x *= 3;
+            dir.y *= 3;
+        }
+
+        if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, dir));
+        else
+        {
+            TriggerNav(dir);
+            if (modifyHeld) TriggerNav(dir); // double trigger when modify held (dir mag doesnt matter for item mode)
+        }
+    }
+
+    void OnModifyInputEvent(ModifyInputEvent e) 
+    {
+        modifyHeld = e.held;
+    }
+
+    void OnFlipInputEvent(FlipInputEvent e)
+    {
+        if (heldPart == null) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsFlipLerping) return;
+
+        CommandHistory.Execute(new FlipCommand(this, e.flipAxis));
+    }
+
+    void OnZoomInputEvent(ZoomInputEvent e)
+    {
+        ZoomDirection zoomDir = e.zoomDirection;
+        if      (zoomDir == ZoomDirection.In)  ZoomLevel--;
+        else if (zoomDir == ZoomDirection.Out) ZoomLevel++;
+        OnNewZoomLevel();
+    }
+
+    void OnRotateInputEvent(RotateInputEvent e)
+    {
+        if (heldPart == null) return;
+        if (mode != NavMode.Grid) return;
+        if (visualizer.IsRotateLerping) return;
+
+        float angle = 0;
+        if (e.rotationDirection == RotationDirection.Clockwise) angle = 90;
+        else angle = -90;
+
+        if (modifyHeld) angle *= 1.999f; // comes out to ~179.9 so that lerp happens in correct direction, will snap to int later
+        CommandHistory.Execute(new RotateCommand(this, angle));
+    }
+
+    bool inInputField;
+    private void GoBack()
+    {
+        if (inInputField)
+        {
+            inInputField = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else if (mode == NavMode.Item)
+        {
+            if (HoveredItem == exitItem) exitItem.OnSelected();
+            else NavToItem(exitItem);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            CommandHistory.Execute(new ExitGridModeCommand(this));
+        }
+    }
+
+    private void OnEnterInputField(EnterInputFieldEvent e)
+    {
+        inInputField = true;
+    }
 }

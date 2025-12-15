@@ -199,7 +199,7 @@ public class NavManager : MonoBehaviour, IPartGrabber
     }
 
     private bool placeQueued;
-    IEnumerator TryPlaceWithSync()
+    IEnumerator TryPlacePartDelayed()
     {
         if (placeQueued) yield break; // prevents spam stacking
         placeQueued = true;
@@ -428,7 +428,7 @@ public class NavManager : MonoBehaviour, IPartGrabber
             if (heldPart != null)
             {
                 if (UIManager.Smoothing)
-                    StartCoroutine(TryPlaceWithSync());
+                    StartCoroutine(TryPlacePartDelayed());
                 else
                     TryPlacePart();
             }

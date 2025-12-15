@@ -32,17 +32,10 @@ public class GrabCommand : IEditorCommand
 
     public void Undo()
     {
-        if (part)
-        {
-            nav.buildArea.PlacePart(originCell, part);
-            part.OnPlaced(originCell, nav.buildArea);
-        }
-        else
-        {
-            nav.buildArea.PlacePart(originCell, nav.heldPart);
-            nav.heldPart.OnPlaced(originCell, nav.buildArea);
-        }
+        nav.buildArea.PlacePart(originCell, nav.heldPart);
+        nav.heldPart.OnPlaced(originCell, nav.buildArea);
         nav.heldPart = null;
+
         nav.visualizer.ResetScale();
 
         nav.NavToCell(grabbedFromCell);

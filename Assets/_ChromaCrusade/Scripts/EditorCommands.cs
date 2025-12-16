@@ -2,45 +2,37 @@ using UnityEngine;
 
 public class GrabCommand : IEditorCommand
 {
+    IEditorCommandContext ctx;
     Vector2Int partCenterCell;
     Vector2Int grabbedFromCell;
 
-    IPartGrabber grabber;
-    IPartPlacer placer;
-    IVisualizer visualizer;
-    INavigator navigator;
-
-    public GrabCommand(Vector2Int partCenterCell, Vector2Int grabbingFromCell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
+    public GrabCommand(IEditorCommandContext ctx, Vector2Int partCenterCell, Vector2Int grabbingFromCell)
     {
+        this.ctx = ctx;
         this.partCenterCell = partCenterCell;
         grabbedFromCell = grabbingFromCell;
-
-        this.grabber = grabber;
-        this.placer = placer;
-        this.visualizer = visualizer;
-        this.navigator = navigator;
     }
 
     public void Execute()
     {
-        EditorShipPart part = grabber.GrabFromGrid(grabbedFromCell);
-        visualizer.MatchRectScale(part.rect);
+        EditorShipPart part = ctx.GrabFromGrid(grabbedFromCell);
+        ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
-            grabber.GrabWithLerp(part, false);
+            ctx.GrabWithLerp(part, false);
         else
         {
-            visualizer.UpdateWithRectImmediate(part.rect);
-            grabber.GrabImmediate(part, false);
+            ctx.UpdateWithRectImmediate(part.rect);
+            ctx.GrabImmediate(part, false);
         }
     }
 
     public void Undo()
     {
-        EditorShipPart part = placer.GetHeldPart();
-        placer.PlacePart(part, partCenterCell);
-        visualizer.ResetScale();
-        navigator.NavToCell(grabbedFromCell);
+        EditorShipPart part = ctx.GetHeldPart();
+        ctx.PlacePart(part, partCenterCell);
+        ctx.ResetScale();
+        ctx.NavToCell(grabbedFromCell);
     }
 
     public void Redo() => Execute();
@@ -50,47 +42,39 @@ public class GrabCommand : IEditorCommand
 
 public class PlaceCommand : IEditorCommand
 {
+    IEditorCommandContext ctx;
     Vector2Int cell;
     Vector2Int cellPlacedAt;
 
-    IPartGrabber grabber;
-    IPartPlacer placer;
-    IVisualizer visualizer;
-    INavigator navigator;
-
-    public PlaceCommand(Vector2Int cell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
+    public PlaceCommand(IEditorCommandContext ctx, Vector2Int cell)
     {
+        this.ctx = ctx;
         this.cell = cell;
-
-        this.grabber = grabber;
-        this.placer = placer;
-        this.visualizer = visualizer;
-        this.navigator = navigator;
     }
 
     public void Execute()
     {
-        EditorShipPart part = placer.GetHeldPart();
-        placer.PlacePart(part, cell);
+        EditorShipPart part = ctx.GetHeldPart();
+        ctx.PlacePart(part, cell);
 
         cellPlacedAt = part.cellPlacedAt;
 
-        visualizer.ResetScale();
+        ctx.ResetScale();
 
-        navigator.NavToCell(part.position);
+        ctx.NavToCell(part.position);
     }
 
     public void Undo()
     {
-        EditorShipPart part = grabber.GrabFromGrid(cellPlacedAt);
-        visualizer.MatchRectScale(part.rect);
+        EditorShipPart part = ctx.GrabFromGrid(cellPlacedAt);
+        ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
-            grabber.GrabWithLerp(part, false);
+            ctx.GrabWithLerp(part, false);
         else
         {
-            visualizer.UpdateWithRectImmediate(part.rect);
-            grabber.GrabImmediate(part, false);
+            ctx.UpdateWithRectImmediate(part.rect);
+            ctx.GrabImmediate(part, false);
         }
     }
 
@@ -101,24 +85,18 @@ public class PlaceCommand : IEditorCommand
 
 public class NavigateCommand : IEditorCommand
 {
+    IEditorCommandContext ctx;
     Vector2 totalInput;
-    INavigator navigator;
 
-    public NavigateCommand(Vector2 input, INavigator navigator)
+    public NavigateCommand(IEditorCommandContext ctx, Vector2 input)
     {
-        this.navigator = navigator;
+        this.ctx = ctx;
         this.totalInput = input;
     }
 
-    public void Execute()
-    {
-        navigator.TriggerNav(totalInput);
-    }
+    public void Execute() => ctx.TriggerNav(totalInput);
 
-    public void Undo()
-    {
-        navigator.TriggerNav(-totalInput);
-    }
+    public void Undo() => ctx.TriggerNav(-totalInput);
 
     public void Redo() => Execute();
 
@@ -129,7 +107,7 @@ public class NavigateCommand : IEditorCommand
 
         totalInput += other.totalInput;
 
-        navigator.TriggerNav(other.totalInput);
+        ctx.TriggerNav(other.totalInput);
 
         return true;
     }
@@ -137,25 +115,18 @@ public class NavigateCommand : IEditorCommand
 
 public class RotateCommand : IEditorCommand
 {
+    IEditorCommandContext ctx;
     float angle;
 
-    IPartTransformer transformer;
-
-    public RotateCommand(float angle, IPartTransformer transformer)
+    public RotateCommand(IEditorCommandContext ctx, float angle)
     {
-        this.transformer = transformer;
+        this.ctx = ctx;
         this.angle = angle;
     }
 
-    public void Execute()
-    {
-        transformer.RotatePart(angle);
-    }
+    public void Execute() => ctx.RotatePart(angle);
 
-    public void Undo()
-    {
-        transformer.RotatePart(-angle);
-    }
+    public void Undo() => ctx.RotatePart(-angle);
 
     public void Redo() => Execute();
 
@@ -164,26 +135,19 @@ public class RotateCommand : IEditorCommand
 
 public class FlipCommand : IEditorCommand
 {
+    IEditorCommandContext ctx;
     FlipAxis axis;
 
-    IPartTransformer transformer;
-
-    public FlipCommand(FlipAxis axis, IPartTransformer transformer)
+    public FlipCommand(IEditorCommandContext ctx, FlipAxis axis)
     {
+        this.ctx = ctx;
+
         this.axis = axis;
-
-        this.transformer = transformer;
     }
 
-    public void Execute()
-    {
-        transformer.FlipPart(axis);
-    }
+    public void Execute() => ctx.FlipPart(axis);
 
-    public void Undo()
-    {
-        transformer.FlipPart(axis);
-    }
+    public void Undo() => ctx.FlipPart(axis);
 
     public void Redo() => Execute();
 
@@ -192,57 +156,55 @@ public class FlipCommand : IEditorCommand
 
 public class ExitGridModeCommand : IEditorCommand
 {
-    private NavManager nav;
-
-    private ShipPartData partData;
+    IEditorCommandContext ctx;
+    ShipPartData partData;
     bool xFlipped;
     bool yFlipped;
     float rotation;
 
-    public ExitGridModeCommand(NavManager nav)
+    public ExitGridModeCommand(IEditorCommandContext ctx, EditorShipPart heldPart)
     {
-        this.nav = nav;
+        this.ctx = ctx;
 
-        if (nav.heldPart != null)
+        if (heldPart != null)
         {
-            partData = nav.heldPart.partData;
-            xFlipped = nav.heldPart.xFlipped;
-            yFlipped = nav.heldPart.yFlipped;
-            rotation = nav.heldPart.Rotation;
+            partData = heldPart.partData;
+            xFlipped = heldPart.xFlipped;
+            yFlipped = heldPart.yFlipped;
+            rotation = heldPart.Rotation;
         }
     }
 
     public void Execute()
     {
         if (partData != null)
-            nav.partOrganizer.AddPart(partData);
-
-        if (nav.heldPart != null)
         {
-            GameObject.Destroy(nav.heldPart.gameObject);
-            nav.heldPart = null;
+            ctx.AddPart(partData);
+            EditorShipPart heldPart = ctx.GetHeldPart();
+            ctx.DestroyPart(heldPart);
         }
 
-        nav.SwitchToItemMode();
+        ctx.SwitchToItemMode();
     }
 
     public void Undo()
     {
         if (partData != null)
         {
-            bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart part);
+            bool success = ctx.TryTakePart(partData, out EditorShipPart part);
 
             if (success)
             {
-                nav.partOrganizer.SetPartToDefaultStart(part);
-                nav.visualizer.UpdateWithRectImmediate(part.rect);
-                nav.GrabImmediate(part, true);
+                ctx.SetPartToDefaultStart(part);
+                ctx.UpdateWithRectImmediate(part.rect);
+                ctx.GrabImmediate(part, true);
             }
         }
 
-        nav.SwitchToGridMode();
+        ctx.SwitchToGridMode();
 
-        if (nav.heldPart != null) nav.RestorePartTransformations(rotation, xFlipped, yFlipped);
+        if (ctx.GetHeldPart() != null)
+            ctx.RestorePartTransformations(rotation, xFlipped, yFlipped);
     }
 
     public void Redo() => Execute();
@@ -252,16 +214,16 @@ public class ExitGridModeCommand : IEditorCommand
 
 public class EnterGridModeCommand : IEditorCommand
 {
-    private NavManager nav;
+    IEditorCommandContext ctx;
 
-    public EnterGridModeCommand(NavManager nav)
+    public EnterGridModeCommand(IEditorCommandContext ctx)
     {
-        this.nav = nav;
+        this.ctx = ctx;
     }
 
-    public void Execute() => nav.SwitchToGridMode();
+    public void Execute() => ctx.SwitchToGridMode();
 
-    public void Undo() => nav.SwitchToItemMode();
+    public void Undo() => ctx.SwitchToItemMode();
 
     public void Redo() => Execute();
 
@@ -270,66 +232,55 @@ public class EnterGridModeCommand : IEditorCommand
 
 public class InventoryGrabCommand : IEditorCommand
 {
-    private ShipPartData partData;
-    private NavManager nav;
+    IEditorCommandContext ctx;
+    ShipPartData partData;
 
-    public InventoryGrabCommand(NavManager nav, ShipPartData data)
+    public InventoryGrabCommand(IEditorCommandContext ctx, ShipPartData partData)
     {
-        this.nav = nav;
-        this.partData = data;
+        this.ctx = ctx;
+        this.partData = partData;
     }
 
     public void Execute()
     {
-        bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart newPart);
+        bool success = ctx.TryTakePart(partData, out EditorShipPart newPart);
 
         if (UIManager.Smoothing)
-            nav.GrabFrameLate(newPart, true);
+            ctx.GrabFrameLate(newPart, true);
         else
         {
-            nav.visualizer.UpdateWithRectImmediate(newPart.rect);
-            nav.GrabImmediate(newPart, true);
+            ctx.UpdateWithRectImmediate(newPart.rect);
+            ctx.GrabImmediate(newPart, true);
         }
 
-        nav.SwitchToGridMode();
+        ctx.SwitchToGridMode();
     }
 
     public void Undo()
     {
-        nav.partOrganizer.AddPart(partData);
+        ctx.AddPart(partData);
 
-        if (nav.heldPart != null)
-        {
-            GameObject.Destroy(nav.heldPart.gameObject);
-            nav.heldPart = null;
-        }
+        EditorShipPart heldPart = ctx.GetHeldPart();
+        if (heldPart != null) ctx.DestroyPart(heldPart);
 
-        nav.SwitchToItemMode();
+        ctx.SwitchToItemMode();
     }
 
     public void Redo()
     {
-        bool success = nav.partOrganizer.TryTakePart(partData, out EditorShipPart newPart);
+        bool success = ctx.TryTakePart(partData, out EditorShipPart newPart);
 
-        if (!success)
-        {
-            Debug.LogWarning("Redo failed: part not available.");
-            return;
-        }
+        if (!success) return;
 
-        nav.partOrganizer.SetPartToDefaultStart(newPart);
+        ctx.SetPartToDefaultStart(newPart);
 
-        if (UIManager.Smoothing)
-        {
-            nav.GrabWithLerp(newPart, true);
-        }
+        if (UIManager.Smoothing) ctx.GrabWithLerp(newPart, true);
         else
         {
-            nav.visualizer.UpdateWithRectImmediate(newPart.rect);
-            nav.GrabImmediate(newPart, true);
-            nav.SwitchToGridMode();
+            ctx.UpdateWithRectImmediate(newPart.rect);
+            ctx.GrabImmediate(newPart, true);
+            ctx.SwitchToGridMode();
         }
-
     }
 
     public bool TryMerge(IEditorCommand next) => false;
@@ -337,7 +288,7 @@ public class InventoryGrabCommand : IEditorCommand
 
 public class DeleteCommand : IEditorCommand
 {
-    NavManager nav;
+    IEditorCommandContext ctx;
     Vector2Int startCell;
     Vector2Int partPosition;
     ShipPartData partData;
@@ -346,55 +297,57 @@ public class DeleteCommand : IEditorCommand
     bool yFlipped;
     float rotation;
 
-    public DeleteCommand(NavManager nav, Vector2Int startCell)
+    public DeleteCommand(IEditorCommandContext ctx, Vector2Int startCell)
     {
-        this.nav = nav;
+        this.ctx = ctx;
         this.startCell = startCell;
     }
 
     public void Execute()
     {
-        if (nav.heldPart != null)
+        EditorShipPart heldPart = ctx.GetHeldPart();
+
+        if (heldPart != null)
         {
             wasPlaced = false;
-            nav.partOrganizer.AddPart(nav.heldPart.partData);
-            partData = nav.heldPart.partData;
 
-            xFlipped = nav.heldPart.xFlipped;
-            yFlipped = nav.heldPart.yFlipped;
-            rotation = nav.heldPart.Rotation;
+            ctx.AddPart(heldPart.partData);
 
-            GameObject.Destroy(nav.heldPart.gameObject);
+            partData = heldPart.partData;
+            xFlipped = heldPart.xFlipped;
+            yFlipped = heldPart.yFlipped;
+            rotation = heldPart.Rotation;
+
+            ctx.DestroyPart(heldPart);
         }
         else
         {
             wasPlaced = true;
-            EditorShipPart part = nav.buildArea.GrabPart(nav.currentGridCell);
+
+            EditorShipPart part = ctx.GrabFromGrid(ctx.GetCurrentGridCell());
             partData = part.partData;
             partPosition = part.position;
-            nav.partOrganizer.AddPart(part.partData);
-            nav.GrabImmediate(part, false);
+            ctx.AddPart(part.partData);
+            ctx.GrabImmediate(part, false);
 
-            xFlipped = nav.heldPart.xFlipped;
-            yFlipped = nav.heldPart.yFlipped;
-            rotation = nav.heldPart.Rotation;
+            xFlipped = part.xFlipped;
+            yFlipped = part.yFlipped;
+            rotation = part.Rotation;
 
-            GameObject.Destroy(part.gameObject);
+            ctx.DestroyPart(part);
         }
 
-        nav.heldPart = null;
-        nav.NavToCell(startCell);
+        ctx.NavToCell(startCell);
     }
 
     public void Undo()
     {
         if (partData != null)
         {
-            nav.midUndoDelete = true;
-            if (wasPlaced) nav.visualizer.HighlightCellImmediate(partPosition, true);
-            else nav.visualizer.HighlightCellImmediate(startCell, true);
+            if (wasPlaced) ctx.HighlightCellImmediate(partPosition, true);
+            else ctx.HighlightCellImmediate(startCell, true);
 
-            nav.StartCoroutine(nav.UndoDeleteRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped));
+            ctx.HandleUndoRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped);
         }
     }
 
@@ -406,23 +359,24 @@ public class DeleteCommand : IEditorCommand
 
 public class ResetCommand : IEditorCommand
 {
-    NavManager nav;
+    IEditorCommandContext ctx;
     Vector2Int prevCell;
 
-    public ResetCommand(NavManager nav)
+    public ResetCommand(IEditorCommandContext ctx)
     {
-        this.nav = nav;
-        prevCell = nav.currentGridCell;
+        this.ctx = ctx;
+        prevCell = ctx.GetCurrentGridCell();
     }
 
     public void Execute()
     {
-        nav.InitNavMode(true);
+        ctx.ResetGridPosition();
+        ctx.InitNavMode();
     }
 
     public void Undo()
     {
-        nav.NavToCell(prevCell);
+        ctx.NavToCell(prevCell);
     }
 
     public void Redo() => Execute();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer, INavigator, IPartTransformer
+public class NavManager : MonoBehaviour, IEditorCommandContext
 {
     [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
     int zoomLevel = 3;
@@ -80,41 +80,8 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         if (buildArea == null) buildArea = FindFirstObjectByType<EditorBuildArea>();
         if (visualizer == null) visualizer = FindFirstObjectByType<NavVisualizer>();
 
-        InitNavMode(true);
-    }
-
-    public void SwitchNavMode(NavMode newMode)
-    {
-        if (mode == newMode) return;
-        mode = newMode;
-        InitNavMode(false);
-    }
-
-    public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
-
-    public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
-
-    public void InitNavMode(bool resetGrid) // temp public
-    {
-        switch (mode)
-        {
-            case NavMode.Item:
-                NavItem targetItem = null;
-                if (lastHoveredItem != null) targetItem = lastHoveredItem;
-                else if (initialHoveredItem != null) targetItem = initialHoveredItem;
-                else targetItem = GetComponentInChildren<NavItem>();
-                NavToItem(targetItem);
-
-                visualizer.ResetRotation();
-                visualizer.ResetScale();
-                break;
-
-            case NavMode.Grid:
-                if (resetGrid) currentGridCell = Vector2Int.zero;
-                HoveredItem = null;
-                NavToCell(currentGridCell);
-                break;
-        }
+        ResetGridPosition();
+        InitNavMode();
     }
 
     private Coroutine zoomRoutine;
@@ -155,93 +122,35 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         midZoom = false;
     }
 
-    bool inInputField;
-    private void GoBack()
-    {
-        if (inInputField)
-        {
-            inInputField = false;
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-        else if (mode == NavMode.Item)
-        {
-            if (HoveredItem == exitItem) exitItem.OnSelected();
-            else NavToItem(exitItem);
-        }
-        else if (mode == NavMode.Grid)
-        {
-            CommandHistory.Execute(new ExitGridModeCommand(this));
-        }
-    }
-
-    void ToggleNavMode()
-    {
-        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
-        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this));
-    }
-
-    public bool midUndoDelete; // temp public
-    public IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
-    {
-        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
-        if (success) GrabImmediate(part, true);
-        yield return null;
-        RestorePartTransformations(rotation, xFlipped, yFlipped);
-        yield return null;
-
-        if (wasPlaced)
-        {
-            buildArea.PlacePart(part, partPosition);
-            part.OnPlaced(partPosition, buildArea);
-            heldPart = null;
-            visualizer.ResetScale();
-            NavToCell(startCell);
-        }
-        midUndoDelete = false;
-    }
-
-
-    #region IPartTransformer
-
-    public void RotatePart(float angle)
-    {
-        heldPart.Rotate(angle);
-        visualizer.Rotate(angle);
-    }
-
-    public void FlipPart(FlipAxis axis)
-    {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.Flip(horizontal);
-    }
-
-    public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
-    {
-        if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
-        if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
-        if (rotation != 0) RotatePartImmediate(rotation);
-    }
-
-    void FlipPartImmediate(FlipAxis axis)
-    {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.FlipImmediate(horizontal);
-    }
-
-    void RotatePartImmediate(float angle)
-    {
-        heldPart.Rotate(angle);
-        visualizer.RotateImmediate(angle);
-    }
-
-    #endregion
-
-
     #region INavigator
+
+    public Vector2Int GetCurrentGridCell() => currentGridCell;
+
+    public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
+
+    public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
+
+    public void InitNavMode()
+    {
+        switch (mode)
+        {
+            case NavMode.Item:
+                NavItem targetItem = null;
+                if (lastHoveredItem != null) targetItem = lastHoveredItem;
+                else if (initialHoveredItem != null) targetItem = initialHoveredItem;
+                else targetItem = GetComponentInChildren<NavItem>();
+                NavToItem(targetItem);
+
+                visualizer.ResetRotation();
+                visualizer.ResetScale();
+                break;
+
+            case NavMode.Grid:
+                HoveredItem = null;
+                NavToCell(currentGridCell);
+                break;
+        }
+    }
 
     public void TriggerNav(Vector2 dir)
     {
@@ -302,9 +211,147 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         visualizer.HighlightCell(currentGridCell, Expanded);
     }
 
+    public void ResetGridPosition()
+    {
+        currentGridCell = Vector2Int.zero;
+    }
+
+    void SwitchNavMode(NavMode newMode)
+    {
+        if (mode == newMode) return;
+        mode = newMode;
+        InitNavMode();
+    }
+
+    bool inInputField;
+    void GoBack()
+    {
+        if (inInputField)
+        {
+            inInputField = false;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else if (mode == NavMode.Item)
+        {
+            if (HoveredItem == exitItem) exitItem.OnSelected();
+            else NavToItem(exitItem);
+        }
+        else if (mode == NavMode.Grid)
+        {
+            CommandHistory.Execute(new ExitGridModeCommand(this, heldPart));
+        }
+    }
+
+    void ToggleNavMode()
+    {
+        if (mode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
+        else if (mode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, heldPart));
+    }
+
+    #endregion
+
+
+    #region IPartDestroyer
+
+    public void DestroyPart(EditorShipPart part)
+    {
+        if (part == heldPart) heldPart = null;
+        Destroy(part.gameObject);
+    }
+
+    public void HandleUndoRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        StartCoroutine(UndoDeleteRoutine(wasPlaced,partData, partPosition, startCell, rotation, xFlipped, yFlipped));
+    }
+
+    bool midUndoDelete;
+    IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        midUndoDelete = true;
+        bool success = partOrganizer.TryTakePart(partData, out EditorShipPart part);
+        if (success) GrabImmediate(part, true);
+        yield return null;
+        RestorePartTransformations(rotation, xFlipped, yFlipped);
+        yield return null;
+
+        if (wasPlaced)
+        {
+            buildArea.PlacePart(part, partPosition);
+            part.OnPlaced(partPosition, buildArea);
+            heldPart = null;
+            visualizer.ResetScale();
+            NavToCell(startCell);
+        }
+        midUndoDelete = false;
+    }
+
+    #endregion
+
+
+    #region IInventoryManager
+
+    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
+    {
+        return partOrganizer.TryTakePart(data, out part);
+    }
+
+    public void AddPart(ShipPartData data)
+    {
+        partOrganizer.AddPart(data);
+    }
+
+    public void SetPartToDefaultStart(EditorShipPart part)
+    {
+        partOrganizer.SetPartToDefaultStart(part);
+    }
+
+    #endregion
+
+    #region IPartTransformer
+
+    public void RotatePart(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.Rotate(angle);
+    }
+
+    public void FlipPart(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.Flip(horizontal);
+    }
+
+    public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
+    {
+        if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
+        if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
+        if (rotation != 0) RotatePartImmediate(rotation);
+    }
+
+    void FlipPartImmediate(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.FlipImmediate(horizontal);
+    }
+
+    void RotatePartImmediate(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.RotateImmediate(angle);
+    }
+
     #endregion
 
     #region IVisualizer
+
+    public void HighlightCellImmediate(Vector2Int cell, bool expanded = false)
+    {
+        visualizer.HighlightCellImmediate(cell, expanded);
+    }
 
     public void UpdateWithRectImmediate(RectTransform rect)
     {
@@ -341,7 +388,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
     {
         if (buildArea.CanPlacePart(heldPart, currentGridCell))
         {
-            CommandHistory.Execute(new PlaceCommand(currentGridCell, this, this, this, this));
+            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
         }
     }
 
@@ -389,7 +436,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
     void TryGrabPart()
     {
         EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
-        if (part) CommandHistory.Execute(new GrabCommand(part.position, currentGridCell, this, this, this, this));
+        if (part) CommandHistory.Execute(new GrabCommand(this, part.position, currentGridCell));
     }
 
     IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
@@ -522,7 +569,8 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         {
             HoveredItem = null;
             lastHoveredItem = null;
-            InitNavMode(true);
+            ResetGridPosition();
+            InitNavMode();
         }
         else if (mode == NavMode.Grid)
         {
@@ -544,7 +592,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
             dir.y *= 3;
         }
 
-        if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(dir, this));
+        if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, dir));
         else
         {
             TriggerNav(dir);
@@ -563,7 +611,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         if (mode != NavMode.Grid) return;
         if (visualizer.IsFlipLerping) return;
 
-        CommandHistory.Execute(new FlipCommand(e.flipAxis, this));
+        CommandHistory.Execute(new FlipCommand(this, e.flipAxis));
     }
 
     void OnZoomInputEvent(ZoomInputEvent e)
@@ -585,7 +633,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         else angle = -90;
 
         if (modifyHeld) angle *= 1.999f; // comes out to ~179.9 so that lerp happens in correct direction, will snap to int later
-        CommandHistory.Execute(new RotateCommand(angle, this));
+        CommandHistory.Execute(new RotateCommand(this, angle));
     }
 
     void OnEnterInputField(EnterInputFieldEvent e)

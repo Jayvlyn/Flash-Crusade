@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer, INavigator
+public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer, INavigator, IPartTransformer
 {
     [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
     int zoomLevel = 3;
@@ -117,34 +117,6 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         }
     }
 
-    public void RotatePart(float angle)
-    {
-        heldPart.Rotate(angle);
-        visualizer.Rotate(angle);
-    }
-
-    public void RotatePartImmediate(float angle)
-    {
-        heldPart.Rotate(angle);
-        visualizer.RotateImmediate(angle);
-    }
-
-    public void FlipPart(FlipAxis axis)
-    {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.Flip(horizontal);
-    }
-
-    public void FlipPartImmediate(FlipAxis axis)
-    {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.FlipImmediate(horizontal);
-    }
-
     private Coroutine zoomRoutine;
     private Vector3 targetZoomScale;
     void OnNewZoomLevel()
@@ -228,12 +200,46 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         midUndoDelete = false;
     }
 
+
+    #region IPartTransformer
+
+    public void RotatePart(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.Rotate(angle);
+    }
+
+    public void FlipPart(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.Flip(horizontal);
+    }
+
     public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
     {
         if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
         if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
         if (rotation != 0) RotatePartImmediate(rotation);
     }
+
+    void FlipPartImmediate(FlipAxis axis)
+    {
+        bool horizontal = axis == FlipAxis.Horizontal;
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
+        heldPart.Flip(horizontal);
+        visualizer.FlipImmediate(horizontal);
+    }
+
+    void RotatePartImmediate(float angle)
+    {
+        heldPart.Rotate(angle);
+        visualizer.RotateImmediate(angle);
+    }
+
+    #endregion
+
 
     #region INavigator
 
@@ -557,7 +563,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         if (mode != NavMode.Grid) return;
         if (visualizer.IsFlipLerping) return;
 
-        CommandHistory.Execute(new FlipCommand(this, e.flipAxis));
+        CommandHistory.Execute(new FlipCommand(e.flipAxis, this));
     }
 
     void OnZoomInputEvent(ZoomInputEvent e)
@@ -579,7 +585,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         else angle = -90;
 
         if (modifyHeld) angle *= 1.999f; // comes out to ~179.9 so that lerp happens in correct direction, will snap to int later
-        CommandHistory.Execute(new RotateCommand(this, angle));
+        CommandHistory.Execute(new RotateCommand(angle, this));
     }
 
     void OnEnterInputField(EnterInputFieldEvent e)

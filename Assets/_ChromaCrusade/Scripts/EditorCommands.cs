@@ -138,22 +138,23 @@ public class NavigateCommand : IEditorCommand
 public class RotateCommand : IEditorCommand
 {
     float angle;
-    NavManager nav;
 
-    public RotateCommand(NavManager nav, float angle)
+    IPartTransformer transformer;
+
+    public RotateCommand(float angle, IPartTransformer transformer)
     {
-        this.nav = nav;
+        this.transformer = transformer;
         this.angle = angle;
     }
 
     public void Execute()
     {
-        nav.RotatePart(angle);
+        transformer.RotatePart(angle);
     }
 
     public void Undo()
     {
-        nav.RotatePart(-angle);
+        transformer.RotatePart(-angle);
     }
 
     public void Redo() => Execute();
@@ -164,21 +165,24 @@ public class RotateCommand : IEditorCommand
 public class FlipCommand : IEditorCommand
 {
     FlipAxis axis;
-    NavManager nav;
 
-    public FlipCommand(NavManager nav, FlipAxis axis)
+    IPartTransformer transformer;
+
+    public FlipCommand(FlipAxis axis, IPartTransformer transformer)
     {
-        this.nav = nav;
+        this.axis = axis;
+
+        this.transformer = transformer;
     }
 
     public void Execute()
     {
-        nav.FlipPart(axis);
+        transformer.FlipPart(axis);
     }
 
     public void Undo()
     {
-        nav.FlipPart(axis);
+        transformer.FlipPart(axis);
     }
 
     public void Redo() => Execute();

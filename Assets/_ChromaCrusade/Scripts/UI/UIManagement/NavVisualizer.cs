@@ -9,15 +9,17 @@ public class NavVisualizer : MonoBehaviour
 
     [HideInInspector] public RectTransform centerGridCell;
     [HideInInspector] public RectTransform rect;
-    private NavItem currentItem;
-    private Coroutine lerpRoutine;
-    private Coroutine rotateLerpRoutine;
-    private Coroutine flipLerpRoutine;
+
     public bool IsLerping => lerpRoutine != null;
     public bool IsRotateLerping => rotateLerpRoutine != null;
     public bool IsFlipLerping => flipLerpRoutine != null;
-    private float targetRotation;
     public bool expanded;
+
+    NavItem currentItem;
+    Coroutine lerpRoutine;
+    Coroutine rotateLerpRoutine;
+    Coroutine flipLerpRoutine;
+    float targetRotation;
 
     #region Lifecycle
 
@@ -397,7 +399,6 @@ public class NavVisualizer : MonoBehaviour
         this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
         this.rect.localEulerAngles = rect.localEulerAngles;
     }
-
 
     public void MatchRectScale(RectTransform rect)
     {

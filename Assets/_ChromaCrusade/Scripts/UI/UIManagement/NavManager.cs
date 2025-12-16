@@ -1,31 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class NavManager : MonoBehaviour, IEditorCommandContext
 {
-    [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
-    int zoomLevel = 3;
-    public int ZoomLevel
-    {
-        get => zoomLevel;
-        set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
-    }
-    Dictionary<int,float> zoomScales = new Dictionary<int,float>();
-
-    public Vector2Int currentGridCell = new Vector2Int(0,0); // temp public
-    public enum NavMode { Item, Grid };
-    [HideInInspector] public NavMode mode = NavMode.Item;
-    bool Expanded => heldPart != null;
-
-    public NavItem buildWindow;
+    [SerializeField] NavItem buildWindow;
     [SerializeField] RectTransform centerGridCell;
-    [SerializeField] public NavVisualizer visualizer; // temp public
+    [SerializeField] NavVisualizer visualizer;
     [SerializeField] NavItem initialHoveredItem;
     [SerializeField] NavItem exitItem;
-    [SerializeField] public EditorBuildArea buildArea; // temp public
-    [HideInInspector] public PartOrganizer partOrganizer;
+    [SerializeField] EditorBuildArea buildArea;
+
+    Vector2Int currentGridCell = new Vector2Int(0,0);
+    public enum NavMode { Item, Grid };
+    NavMode mode = NavMode.Item;
+    bool Expanded => heldPart != null;
+
+    PartOrganizer partOrganizer;
     NavItem hoveredItem;
     NavItem lastHoveredItem;
     NavItem HoveredItem
@@ -38,7 +29,7 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
             hoveredItem = value;
         }
     }
-    public EditorShipPart heldPart; // temp public
+    EditorShipPart heldPart;
 
     bool modifyHeld;
 
@@ -48,6 +39,8 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         visualizer.gameObject.SetActive(true);
 
         EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
+
+        EventBus.Subscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
     }
 
     void OnDisable()
@@ -56,21 +49,8 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         visualizer.gameObject.SetActive(false);
 
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
-    }
 
-    void Awake()
-    {
-        // based on 16:9 ratio
-        zoomScales.Add(1, 1.48f);
-        zoomScales.Add(2, 0.89f);
-        zoomScales.Add(3, 0.635f);
-        zoomScales.Add(4, 0.493f);
-        zoomScales.Add(5, 0.403f);
-        zoomScales.Add(6, 0.3415f);
-        zoomScales.Add(7, 0.29597f);
-        zoomScales.Add(8, 0.26114f);
-        zoomScales.Add(9, 0.23365f);
-        zoomScales.Add(10,0.21141f);
+        EventBus.Unsubscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
     }
 
     void Start()
@@ -84,43 +64,11 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         InitNavMode();
     }
 
-    private Coroutine zoomRoutine;
-    private Vector3 targetZoomScale;
-    void OnNewZoomLevel()
+    void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
-        float s = zoomScales[zoomLevel];
-        targetZoomScale = new Vector3(s, s, s);
-
-        if (UIManager.Smoothing)
-        {
-            if (zoomRoutine != null) StopCoroutine(zoomRoutine);
-            zoomRoutine = StartCoroutine(LerpZoom(targetZoomScale));
-        }
-        else
-        {
-            buildArea.transform.localScale = new Vector3(s, s, s);
-            if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
-        }
+        if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
     }
 
-    private bool midZoom;
-    IEnumerator LerpZoom(Vector3 target, float duration = 0.15f)
-    {
-        midZoom = true;
-        float t = 0f;
-        Vector3 start = buildArea.transform.localScale;
-
-        while (t < 1f)
-        {
-            t += Time.deltaTime / duration;
-            buildArea.transform.localScale = Vector3.Lerp(start, target, Mathf.SmoothStep(0f, 1f, t));
-            if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
-
-            yield return null;
-        }
-        buildArea.transform.localScale = target;
-        midZoom = false;
-    }
 
     #region INavigator
 
@@ -480,7 +428,6 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         EventBus.Subscribe<NavigateInputEvent>(OnNavigateInputEvent);
         EventBus.Subscribe<ModifyInputEvent>(OnModifyInputEvent);
         EventBus.Subscribe<FlipInputEvent>(OnFlipInputEvent);
-        EventBus.Subscribe<ZoomInputEvent>(OnZoomInputEvent);
         EventBus.Subscribe<RotateInputEvent>(OnRotateInputEvent);
     }
 
@@ -496,7 +443,6 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         EventBus.Unsubscribe<NavigateInputEvent>(OnNavigateInputEvent);
         EventBus.Unsubscribe<ModifyInputEvent>(OnModifyInputEvent);
         EventBus.Unsubscribe<FlipInputEvent>(OnFlipInputEvent);
-        EventBus.Unsubscribe<ZoomInputEvent>(OnZoomInputEvent);
         EventBus.Unsubscribe<RotateInputEvent>(OnRotateInputEvent);
     }
 
@@ -580,7 +526,7 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     void OnNavigateInputEvent(NavigateInputEvent e)
     {
-        if (midGrab || midZoom) return;
+        if (midGrab || EditorZoomController.MidZoom) return;
 
         Vector2 dir = e.dir;
 
@@ -612,14 +558,6 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         if (visualizer.IsFlipLerping) return;
 
         CommandHistory.Execute(new FlipCommand(this, e.flipAxis));
-    }
-
-    void OnZoomInputEvent(ZoomInputEvent e)
-    {
-        ZoomDirection zoomDir = e.zoomDirection;
-        if      (zoomDir == ZoomDirection.In)  ZoomLevel--;
-        else if (zoomDir == ZoomDirection.Out) ZoomLevel++;
-        OnNewZoomLevel();
     }
 
     void OnRotateInputEvent(RotateInputEvent e)

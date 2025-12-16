@@ -17,6 +17,9 @@ public class NavVisualizer : MonoBehaviour
     public bool IsRotateLerping => rotateLerpRoutine != null;
     public bool IsFlipLerping => flipLerpRoutine != null;
     private float targetRotation;
+    public bool expanded;
+
+    #region Lifecycle
 
     private void Awake()
     {
@@ -28,6 +31,8 @@ public class NavVisualizer : MonoBehaviour
         CancelLerp();
         CancelRotateLerp();
     }
+
+    #endregion
 
     #region Item Navigation
 
@@ -70,20 +75,20 @@ public class NavVisualizer : MonoBehaviour
 
     #region Grid Navigation
 
-    public void HighlightCell(Vector2Int cell, bool expanded = false)
+    public void HighlightCell(Vector2Int cell)
     {
         currentItem = null;
 
         if (UIManager.Smoothing)
-            HighlightCellLerp(cell, expanded);
+            HighlightCellLerp(cell);
         else
-            HighlightCellImmediate(cell, expanded);
+            HighlightCellImmediate(cell);
 
         if (!expanded)
             ResetRotation();
     }
 
-    public void HighlightCellImmediate(Vector2Int cell, bool expanded = false)
+    public void HighlightCellImmediate(Vector2Int cell)
     {
         GetCellRectValues(centerGridCell, cell, out var p, out var s);
 
@@ -94,7 +99,7 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
     }
 
-    private void HighlightCellLerp(Vector2Int cell, bool expanded = false)
+    private void HighlightCellLerp(Vector2Int cell)
     {
         CancelLerp();
 
@@ -102,7 +107,8 @@ public class NavVisualizer : MonoBehaviour
             getTarget: () =>
             {
                 GetCellRectValues(centerGridCell, cell, out var p, out var s);
-                if (expanded) s *= 3;
+                if (expanded) 
+                    s *= 3;
                 return (p, s);
             },
             shouldAbort: () => currentItem != null
@@ -215,19 +221,19 @@ public class NavVisualizer : MonoBehaviour
 
     #region Flip
 
-    public void Flip(bool horizontal)
+    public void Flip(FlipAxis axis)
     {
         if (UIManager.Smoothing)
-            FlipLerp(horizontal);
+            FlipLerp(axis);
         else
-            FlipImmediate(horizontal);
+            FlipImmediate(axis);
     }
 
-    public void FlipImmediate(bool horizontal)
+    public void FlipImmediate(FlipAxis axis)
     {
         Vector3 scale = rect.localScale;
 
-        if (horizontal)
+        if (axis == FlipAxis.Horizontal)
             scale.x *= -1f;
         else
             scale.y *= -1f;
@@ -235,11 +241,11 @@ public class NavVisualizer : MonoBehaviour
         rect.localScale = scale;
     }
 
-    private void FlipLerp(bool horizontal)
+    private void FlipLerp(FlipAxis axis)
     {
         Vector3 targetScale = rect.localScale;
 
-        if (horizontal)
+        if (axis == FlipAxis.Horizontal)
             targetScale.x *= -1f;
         else
             targetScale.y *= -1f;

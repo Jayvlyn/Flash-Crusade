@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class EditorInputManager : MonoBehaviour
 {
-    #region Inspector Variables
-
     [Header("Input Settings")]
     [SerializeField] float inputRepeatDelay = 0.35f;
     [SerializeField] float inputRepeatRate = 0.1f;
@@ -22,8 +20,6 @@ public class EditorInputManager : MonoBehaviour
     [SerializeField] InputActionReference flipAction;
     [SerializeField] InputActionReference modifyAction;
     [SerializeField] InputActionReference deleteAction;
-
-    #endregion
 
     #region Lifecycle
 

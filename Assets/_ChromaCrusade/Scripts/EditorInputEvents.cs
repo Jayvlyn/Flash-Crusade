@@ -16,4 +16,4 @@ public struct RotateInputEvent { public RotationDirection rotationDirection; }
 public struct DisableNavigationEvent { }
 public struct EnableNavigationEvent { }
 public struct EnterInputFieldEvent { }
-public struct InventoryPartGrabbedEvent { EditorShipPart part; }
+public struct InventoryPartGrabbedEvent { public ShipPartData part; }

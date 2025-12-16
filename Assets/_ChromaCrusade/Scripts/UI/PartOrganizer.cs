@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PartOrganizer : MonoBehaviour
 {
     [Header("Refs")]
-    public NavManager nav;
     public RectTransform itemPanel;
     public RectTransform defaultPartSpawn;
     public NavItem[] partSelectors;
@@ -73,13 +72,13 @@ public class PartOrganizer : MonoBehaviour
 
     #region View Rendering
 
-    private void RefreshCurrentPage()
+    void RefreshCurrentPage()
     {
         var parts = partInventory.GetParts(showState);
         ShowParts(parts);
     }
 
-    private void ShowParts(IReadOnlyList<PartInventoryModel.Entry> parts)
+    void ShowParts(IReadOnlyList<PartInventoryModel.Entry> parts)
     {
         ClearParts();
 
@@ -110,7 +109,7 @@ public class PartOrganizer : MonoBehaviour
 
             partSelector.onSelected.AddListener(() =>
             {
-                nav.OnInventoryPartGrabbed(entry.data);
+                EventBus.Publish(new InventoryPartGrabbedEvent { part = entry.data });
             });
 
             selectorIndex++;
@@ -120,7 +119,7 @@ public class PartOrganizer : MonoBehaviour
             partCounters[i].SetCount(0);
     }
 
-    private void ClearParts()
+    void ClearParts()
     {
         foreach (var part in shownParts)
             Destroy(part.gameObject);
@@ -131,9 +130,9 @@ public class PartOrganizer : MonoBehaviour
 
     #region State
 
-    private PartType showState;
+    PartType showState;
 
-    private void ChangeShowState(PartType showState)
+    void ChangeShowState(PartType showState)
     {
         this.showState = showState;
         pager.Reset();
@@ -144,7 +143,7 @@ public class PartOrganizer : MonoBehaviour
 
     #region Factory
 
-    private EditorShipPart CreateInventoryPart(ShipPartData data)
+    EditorShipPart CreateInventoryPart(ShipPartData data)
     {
         var obj = Instantiate(Assets.i.editorShipPartPrefab);
         var part = obj.GetComponent<EditorShipPart>();

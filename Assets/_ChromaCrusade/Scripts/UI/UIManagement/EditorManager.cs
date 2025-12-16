@@ -2,100 +2,82 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class NavManager : MonoBehaviour, IEditorCommandContext
+public class EditorManager : MonoBehaviour, IEditorCommandContext
 {
     [SerializeField] NavItem buildWindow;
-    [SerializeField] RectTransform centerGridCell;
     [SerializeField] NavVisualizer visualizer;
-    [SerializeField] NavItem initialHoveredItem;
     [SerializeField] NavItem exitItem;
     [SerializeField] EditorBuildArea buildArea;
+    [SerializeField] PartOrganizer partOrganizer;
+    [SerializeField] GridNavigator gridNav;
+    [SerializeField] UINavigator uiNav;
 
-    Vector2Int currentGridCell = new Vector2Int(0,0);
     public enum NavMode { Item, Grid };
     NavMode mode = NavMode.Item;
-    bool Expanded => heldPart != null;
-
-    PartOrganizer partOrganizer;
-    NavItem hoveredItem;
-    NavItem lastHoveredItem;
-    NavItem HoveredItem
-    {
-        get => hoveredItem;
-        set
-        {
-            if (hoveredItem == value) return;
-            lastHoveredItem = hoveredItem;
-            hoveredItem = value;
-        }
-    }
     EditorShipPart heldPart;
-
-    bool modifyHeld;
 
     void OnEnable()
     {
         SubscribeToInputEvents();
-        visualizer.gameObject.SetActive(true);
 
         EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
-
-        EventBus.Subscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
+        EventBus.Subscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
     }
 
     void OnDisable()
     {
         UnsubscribeFromInputEvents();
-        visualizer.gameObject.SetActive(false);
 
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
-
-        EventBus.Unsubscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
+        EventBus.Unsubscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
     }
 
     void Start()
     {
-        visualizer.centerGridCell = centerGridCell;
-
         if (buildArea == null) buildArea = FindFirstObjectByType<EditorBuildArea>();
         if (visualizer == null) visualizer = FindFirstObjectByType<NavVisualizer>();
-
-        ResetGridPosition();
+        if (gridNav == null) gridNav = FindFirstObjectByType<GridNavigator>();
+        if (uiNav == null) uiNav = FindFirstObjectByType<UINavigator>();
+        gridNav.ResetGridPosition();
         InitNavMode();
     }
 
-    void OnNewZoomLevelEvent(NewZoomLevelEvent e)
-    {
-        if (mode == NavMode.Grid) visualizer.HighlightCellImmediate(currentGridCell, Expanded);
-    }
-
-
     #region INavigator
 
-    public Vector2Int GetCurrentGridCell() => currentGridCell;
+    public Vector2Int GetCurrentGridCell() => gridNav.CurrentGridCell;
+
+    void SwitchNavMode(NavMode newMode)
+    {
+        if (mode == newMode) return;
+        mode = newMode;
+        InitNavMode();
+    }
 
     public void SwitchToItemMode() => SwitchNavMode(NavMode.Item);
 
     public void SwitchToGridMode() => SwitchNavMode(NavMode.Grid);
+
+    public void NavToCell(Vector2Int cell)
+    {
+        gridNav.NavToCell(cell);
+    }
+
+    public void ResetGridPosition()
+    {
+        gridNav.ResetGridPosition();
+    }
 
     public void InitNavMode()
     {
         switch (mode)
         {
             case NavMode.Item:
-                NavItem targetItem = null;
-                if (lastHoveredItem != null) targetItem = lastHoveredItem;
-                else if (initialHoveredItem != null) targetItem = initialHoveredItem;
-                else targetItem = GetComponentInChildren<NavItem>();
-                NavToItem(targetItem);
-
-                visualizer.ResetRotation();
-                visualizer.ResetScale();
+                uiNav.Init();
                 break;
 
             case NavMode.Grid:
-                HoveredItem = null;
-                NavToCell(currentGridCell);
+                uiNav.HoveredItem = null;
+                gridNav.Init();
                 break;
         }
     }
@@ -104,71 +86,15 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
     {
         if (mode == NavMode.Item)
         {
-            TriggerNavItem(dir);
+            uiNav.TriggerNav(dir);
             return;
         }
 
         if (mode == NavMode.Grid)
         {
-            TriggerNavGrid(dir);
+            gridNav.TriggerNav(dir);
             return;
         }
-    }
-
-    void TriggerNavItem(Vector2 dir)
-    {
-        if (HoveredItem == null)
-            return;
-
-        NavItem next = null;
-
-        if (dir.y > 0.5f) next = HoveredItem.navUp;
-        else if (dir.y < -0.5f) next = HoveredItem.navDown;
-        else if (dir.x < -0.5f) next = HoveredItem.navLeft;
-        else if (dir.x > 0.5f) next = HoveredItem.navRight;
-
-        if (next == null)
-            return;
-
-        NavToItem(next);
-    }
-
-    void TriggerNavGrid(Vector2 dir)
-    {
-        Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
-
-        if (offset == Vector2Int.zero)
-            return;
-
-        Vector2Int newCell = currentGridCell + offset;
-
-        NavToCell(newCell);
-    }
-
-    void NavToItem(NavItem item)
-    {
-        if (item == null) return;
-        HoveredItem = item;
-        HoveredItem.OnHighlighted();
-        visualizer.HighlightItem(HoveredItem);
-    }
-
-    public void NavToCell(Vector2Int cell)
-    {
-        currentGridCell = cell;
-        visualizer.HighlightCell(currentGridCell, Expanded);
-    }
-
-    public void ResetGridPosition()
-    {
-        currentGridCell = Vector2Int.zero;
-    }
-
-    void SwitchNavMode(NavMode newMode)
-    {
-        if (mode == newMode) return;
-        mode = newMode;
-        InitNavMode();
     }
 
     bool inInputField;
@@ -181,8 +107,8 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         }
         else if (mode == NavMode.Item)
         {
-            if (HoveredItem == exitItem) exitItem.OnSelected();
-            else NavToItem(exitItem);
+            if (uiNav.HoveredItem == exitItem) exitItem.OnSelected();
+            else uiNav.NavToItem(exitItem);
         }
         else if (mode == NavMode.Grid)
         {
@@ -197,7 +123,6 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
     }
 
     #endregion
-
 
     #region IPartDestroyer
 
@@ -228,13 +153,17 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
             part.OnPlaced(partPosition, buildArea);
             heldPart = null;
             visualizer.ResetScale();
+            SetExpanded(false);
             NavToCell(startCell);
+        }
+        else
+        {
+            SetExpanded(true);
         }
         midUndoDelete = false;
     }
 
     #endregion
-
 
     #region IInventoryManager
 
@@ -265,10 +194,13 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     public void FlipPart(FlipAxis axis)
     {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.Flip(horizontal);
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270)
+        {
+            if (axis == FlipAxis.Horizontal) axis = FlipAxis.Vertical;
+            else axis = FlipAxis.Horizontal;
+        }
+        heldPart.Flip(axis);
+        visualizer.Flip(axis);
     }
 
     public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
@@ -280,10 +212,13 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     void FlipPartImmediate(FlipAxis axis)
     {
-        bool horizontal = axis == FlipAxis.Horizontal;
-        if (heldPart.Rotation == 90 || heldPart.Rotation == 270) horizontal = !horizontal;
-        heldPart.Flip(horizontal);
-        visualizer.FlipImmediate(horizontal);
+        if (heldPart.Rotation == 90 || heldPart.Rotation == 270)
+        {
+            if (axis == FlipAxis.Horizontal) axis = FlipAxis.Vertical;
+            else                             axis = FlipAxis.Horizontal;
+        }
+        heldPart.Flip(axis);
+        visualizer.FlipImmediate(axis);
     }
 
     void RotatePartImmediate(float angle)
@@ -296,9 +231,14 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     #region IVisualizer
 
-    public void HighlightCellImmediate(Vector2Int cell, bool expanded = false)
+    public void SetExpanded(bool expanded)
     {
-        visualizer.HighlightCellImmediate(cell, expanded);
+        visualizer.expanded = expanded;
+    }
+
+    public void HighlightCellImmediate(Vector2Int cell)
+    {
+        visualizer.HighlightCellImmediate(cell);
     }
 
     public void UpdateWithRectImmediate(RectTransform rect)
@@ -334,9 +274,9 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     void TryPlacePart()
     {
-        if (buildArea.CanPlacePart(heldPart, currentGridCell))
+        if (buildArea.CanPlacePart(heldPart, gridNav.CurrentGridCell))
         {
-            CommandHistory.Execute(new PlaceCommand(this, currentGridCell));
+            CommandHistory.Execute(new PlaceCommand(this, gridNav.CurrentGridCell));
         }
     }
 
@@ -365,7 +305,7 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
     public void GrabImmediate(EditorShipPart part, bool fromInv)
     {
         part.OnGrabbed(visualizer.rect);
-        if(!fromInv) currentGridCell = part.position;
+        if(!fromInv) gridNav.CurrentGridCell = part.position;
         heldPart = part;
     }
 
@@ -383,8 +323,8 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
 
     void TryGrabPart()
     {
-        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
-        if (part) CommandHistory.Execute(new GrabCommand(this, part.position, currentGridCell));
+        EditorShipPart part = buildArea.GetPartAtCell(gridNav.CurrentGridCell);
+        if (part) CommandHistory.Execute(new GrabCommand(this, part.position, gridNav.CurrentGridCell));
     }
 
     IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
@@ -401,15 +341,15 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         yield return visualizer.LerpWithRect(part.rect); // waits until done
 
         part.OnGrabbed(visualizer.rect);
-        if (!fromInv) currentGridCell = part.position;
+        if (!fromInv) gridNav.CurrentGridCell = part.position;
         heldPart = part;
         midGrab = false;
         if (fromInv) SwitchToGridMode();
     }
 
-    public void OnInventoryPartGrabbed(ShipPartData part)
+    public void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e)
     {
-        CommandHistory.Execute(new InventoryGrabCommand(this, part));
+        CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
     }
 
     #endregion
@@ -451,10 +391,10 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         // submit is disabled when in input field, no need to consider that case
         if (mode == NavMode.Item)
         {
-            if (HoveredItem != null)
+            if (uiNav.HoveredItem != null)
             {
-                if (HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
-                else HoveredItem.OnSelected();
+                if (uiNav.HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else uiNav.HoveredItem.OnSelected();
             }
         }
         else if (mode == NavMode.Grid)
@@ -503,18 +443,18 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
     void OnDeleteInputEvent(DeleteInputEvent e)
     {
         if (mode != NavMode.Grid) return;
-        EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
+        EditorShipPart part = buildArea.GetPartAtCell(gridNav.CurrentGridCell);
         if (heldPart == null && part == null) return;
 
-        CommandHistory.Execute(new DeleteCommand(this, currentGridCell));
+        CommandHistory.Execute(new DeleteCommand(this, gridNav.CurrentGridCell));
     }
 
     void OnResetInputEvent(ResetInputEvent e)
     {
         if (mode == NavMode.Item)
         {
-            HoveredItem = null;
-            lastHoveredItem = null;
+            uiNav.HoveredItem = null;
+            uiNav.LastHoveredItem = null;
             ResetGridPosition();
             InitNavMode();
         }
@@ -546,6 +486,8 @@ public class NavManager : MonoBehaviour, IEditorCommandContext
         }
     }
 
+
+    bool modifyHeld;
     void OnModifyInputEvent(ModifyInputEvent e) 
     {
         modifyHeld = e.held;

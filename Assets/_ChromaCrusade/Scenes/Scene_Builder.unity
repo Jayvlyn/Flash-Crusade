@@ -2793,6 +2793,8 @@ GameObject:
   - component: {fileID: 579940308}
   - component: {fileID: 579940307}
   - component: {fileID: 579940306}
+  - component: {fileID: 579940312}
+  - component: {fileID: 579940311}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2901,11 +2903,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
   buildWindow: {fileID: 1809799018}
-  centerGridCell: {fileID: 217396645}
   visualizer: {fileID: 1036409155}
-  initialHoveredItem: {fileID: 1809799018}
   exitItem: {fileID: 1054526086}
   buildArea: {fileID: 227269911}
+  partOrganizer: {fileID: 658380378}
+  gridNav: {fileID: 579940312}
+  uiNav: {fileID: 579940311}
+--- !u!114 &579940311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4718efc688e5c304bad0e1701285c402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UINavigator
+  visualizer: {fileID: 1036409155}
+  initialHoveredItem: {fileID: 1809799018}
+--- !u!114 &579940312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b80eb571f2d114b9d2c969b810e969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GridNavigator
+  visualizer: {fileID: 1036409155}
+  centerGridCell: {fileID: 217396645}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637988d1c3200264a87577b1b612f596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.UI::PartOrganizer
-  nav: {fileID: 579940310}
   itemPanel: {fileID: 261982136}
   defaultPartSpawn: {fileID: 397825348}
   partSelectors:
@@ -5091,6 +5121,7 @@ MonoBehaviour:
   transitionDuration: 0.12
   centerGridCell: {fileID: 0}
   rect: {fileID: 0}
+  expanded: 0
 --- !u!114 &1036409156
 MonoBehaviour:
   m_ObjectHideFlags: 0

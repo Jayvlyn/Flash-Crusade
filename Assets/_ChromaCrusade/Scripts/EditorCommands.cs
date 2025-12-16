@@ -15,6 +15,7 @@ public class GrabCommand : IEditorCommand
 
     public void Execute()
     {
+        ctx.SetExpanded(true);
         EditorShipPart part = ctx.GrabFromGrid(grabbedFromCell);
         ctx.MatchRectScale(part.rect);
 
@@ -32,6 +33,7 @@ public class GrabCommand : IEditorCommand
         EditorShipPart part = ctx.GetHeldPart();
         ctx.PlacePart(part, partCenterCell);
         ctx.ResetScale();
+        ctx.SetExpanded(false);
         ctx.NavToCell(grabbedFromCell);
     }
 
@@ -61,11 +63,13 @@ public class PlaceCommand : IEditorCommand
 
         ctx.ResetScale();
 
+        ctx.SetExpanded(false);
         ctx.NavToCell(part.position);
     }
 
     public void Undo()
     {
+        ctx.SetExpanded(true);
         EditorShipPart part = ctx.GrabFromGrid(cellPlacedAt);
         ctx.MatchRectScale(part.rect);
 
@@ -184,6 +188,7 @@ public class ExitGridModeCommand : IEditorCommand
             ctx.DestroyPart(heldPart);
         }
 
+        ctx.SetExpanded(false);
         ctx.SwitchToItemMode();
     }
 
@@ -195,6 +200,7 @@ public class ExitGridModeCommand : IEditorCommand
 
             if (success)
             {
+                ctx.SetExpanded(true);
                 ctx.SetPartToDefaultStart(part);
                 ctx.UpdateWithRectImmediate(part.rect);
                 ctx.GrabImmediate(part, true);
@@ -253,6 +259,7 @@ public class InventoryGrabCommand : IEditorCommand
             ctx.GrabImmediate(newPart, true);
         }
 
+        ctx.SetExpanded(true);
         ctx.SwitchToGridMode();
     }
 
@@ -263,6 +270,7 @@ public class InventoryGrabCommand : IEditorCommand
         EditorShipPart heldPart = ctx.GetHeldPart();
         if (heldPart != null) ctx.DestroyPart(heldPart);
 
+        ctx.SetExpanded(false);
         ctx.SwitchToItemMode();
     }
 
@@ -274,11 +282,16 @@ public class InventoryGrabCommand : IEditorCommand
 
         ctx.SetPartToDefaultStart(newPart);
 
-        if (UIManager.Smoothing) ctx.GrabWithLerp(newPart, true);
+        if (UIManager.Smoothing)
+        {
+            ctx.SetExpanded(true);
+            ctx.GrabWithLerp(newPart, true);
+        }
         else
         {
             ctx.UpdateWithRectImmediate(newPart.rect);
             ctx.GrabImmediate(newPart, true);
+            ctx.SetExpanded(true);
             ctx.SwitchToGridMode();
         }
     }
@@ -337,6 +350,8 @@ public class DeleteCommand : IEditorCommand
             ctx.DestroyPart(part);
         }
 
+        ctx.ResetScale();
+        ctx.SetExpanded(false);
         ctx.NavToCell(startCell);
     }
 
@@ -344,8 +359,10 @@ public class DeleteCommand : IEditorCommand
     {
         if (partData != null)
         {
-            if (wasPlaced) ctx.HighlightCellImmediate(partPosition, true);
-            else ctx.HighlightCellImmediate(startCell, true);
+            ctx.SetExpanded(true);
+
+            if (wasPlaced) ctx.HighlightCellImmediate(partPosition);
+            else ctx.HighlightCellImmediate(startCell);
 
             ctx.HandleUndoRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped);
         }

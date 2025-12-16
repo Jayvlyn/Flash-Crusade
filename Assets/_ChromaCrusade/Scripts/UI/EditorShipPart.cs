@@ -163,9 +163,9 @@ public class EditorShipPart : MonoBehaviour
         if (rotation < 0) rotation = 270;
     }
 
-    public void Flip(bool horizontal)
+    public void Flip(FlipAxis axis)
     {
-        if (horizontal)
+        if (axis == FlipAxis.Horizontal)
             xFlipped = !xFlipped;
         else
             yFlipped = !yFlipped;

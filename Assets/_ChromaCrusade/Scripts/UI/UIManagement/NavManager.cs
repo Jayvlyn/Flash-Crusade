@@ -83,59 +83,6 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
         InitNavMode(true);
     }
 
-    public void TriggerNav(Vector2 dir) // temp public
-    {
-        if (mode == NavMode.Item)
-        {
-            TriggerNavItem(dir);
-            return;
-        }
-
-        if (mode == NavMode.Grid)
-        {
-            TriggerNavGrid(dir);
-            return;
-        }
-    }
-
-    void TriggerNavItem(Vector2 dir)
-    {
-        if (HoveredItem == null)
-            return;
-
-        NavItem next = null;
-
-        if (dir.y > 0.5f) next = HoveredItem.navUp;
-        else if (dir.y < -0.5f) next = HoveredItem.navDown;
-        else if (dir.x < -0.5f) next = HoveredItem.navLeft;
-        else if (dir.x > 0.5f) next = HoveredItem.navRight;
-
-        if (next == null)
-            return;
-
-        NavToItem(next);
-    }
-
-    void TriggerNavGrid(Vector2 dir)
-    {
-        Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
-
-        if (offset == Vector2Int.zero)
-            return;
-        
-        Vector2Int newCell = currentGridCell + offset;
-
-        NavToCell(newCell);
-    }
-
-    void NavToItem(NavItem item)
-    {
-        if(item == null) return;
-        HoveredItem = item;
-        HoveredItem.OnHighlighted();
-        visualizer.HighlightItem(HoveredItem);
-    }
-
     public void SwitchNavMode(NavMode newMode)
     {
         if (mode == newMode) return;
@@ -276,19 +223,72 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
             part.OnPlaced(partPosition, buildArea);
             heldPart = null;
             visualizer.ResetScale();
-            visualizer.HighlightCellImmediate(startCell, false);
+            NavToCell(startCell);
         }
         midUndoDelete = false;
     }
 
     public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) // temp public
     {
-        if (rotation != 0) RotatePartImmediate(rotation);
         if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
         if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
+        if (rotation != 0) RotatePartImmediate(rotation);
     }
 
     #region INavigator
+
+    public void TriggerNav(Vector2 dir)
+    {
+        if (mode == NavMode.Item)
+        {
+            TriggerNavItem(dir);
+            return;
+        }
+
+        if (mode == NavMode.Grid)
+        {
+            TriggerNavGrid(dir);
+            return;
+        }
+    }
+
+    void TriggerNavItem(Vector2 dir)
+    {
+        if (HoveredItem == null)
+            return;
+
+        NavItem next = null;
+
+        if (dir.y > 0.5f) next = HoveredItem.navUp;
+        else if (dir.y < -0.5f) next = HoveredItem.navDown;
+        else if (dir.x < -0.5f) next = HoveredItem.navLeft;
+        else if (dir.x > 0.5f) next = HoveredItem.navRight;
+
+        if (next == null)
+            return;
+
+        NavToItem(next);
+    }
+
+    void TriggerNavGrid(Vector2 dir)
+    {
+        Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
+
+        if (offset == Vector2Int.zero)
+            return;
+
+        Vector2Int newCell = currentGridCell + offset;
+
+        NavToCell(newCell);
+    }
+
+    void NavToItem(NavItem item)
+    {
+        if (item == null) return;
+        HoveredItem = item;
+        HoveredItem.OnHighlighted();
+        visualizer.HighlightItem(HoveredItem);
+    }
 
     public void NavToCell(Vector2Int cell)
     {
@@ -335,7 +335,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
     {
         if (buildArea.CanPlacePart(heldPart, currentGridCell))
         {
-            CommandHistory.Execute(new PlaceCommand(heldPart, currentGridCell, this, this, this, this));
+            CommandHistory.Execute(new PlaceCommand(currentGridCell, this, this, this, this));
         }
     }
 
@@ -383,7 +383,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
     void TryGrabPart()
     {
         EditorShipPart part = buildArea.GetPartAtCell(currentGridCell);
-        if (part) CommandHistory.Execute(new GrabCommand(part, currentGridCell, this, this, this, this));
+        if (part) CommandHistory.Execute(new GrabCommand(part.position, currentGridCell, this, this, this, this));
     }
 
     IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
@@ -538,7 +538,7 @@ public class NavManager : MonoBehaviour, IPartGrabber, IPartPlacer, IVisualizer,
             dir.y *= 3;
         }
 
-        if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, dir));
+        if (mode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(dir, this));
         else
         {
             TriggerNav(dir);

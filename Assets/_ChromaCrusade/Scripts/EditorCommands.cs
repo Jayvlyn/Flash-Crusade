@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class GrabCommand : IEditorCommand
 {
-    EditorShipPart part;
-    Vector2Int originCell;
+    Vector2Int partCenterCell;
     Vector2Int grabbedFromCell;
 
     IPartGrabber grabber;
@@ -11,10 +10,9 @@ public class GrabCommand : IEditorCommand
     IVisualizer visualizer;
     INavigator navigator;
 
-    public GrabCommand(EditorShipPart part, Vector2Int grabbingFromCell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
+    public GrabCommand(Vector2Int partCenterCell, Vector2Int grabbingFromCell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
     {
-        this.part = part;
-        originCell = part.position;
+        this.partCenterCell = partCenterCell;
         grabbedFromCell = grabbingFromCell;
 
         this.grabber = grabber;
@@ -25,8 +23,7 @@ public class GrabCommand : IEditorCommand
 
     public void Execute()
     {
-        part = grabber.GrabFromGrid(grabbedFromCell);
-
+        EditorShipPart part = grabber.GrabFromGrid(grabbedFromCell);
         visualizer.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
@@ -40,7 +37,8 @@ public class GrabCommand : IEditorCommand
 
     public void Undo()
     {
-        placer.PlacePart(part, originCell);
+        EditorShipPart part = placer.GetHeldPart();
+        placer.PlacePart(part, partCenterCell);
         visualizer.ResetScale();
         navigator.NavToCell(grabbedFromCell);
     }
@@ -52,7 +50,6 @@ public class GrabCommand : IEditorCommand
 
 public class PlaceCommand : IEditorCommand
 {
-    EditorShipPart part;
     Vector2Int cell;
     Vector2Int cellPlacedAt;
 
@@ -61,9 +58,8 @@ public class PlaceCommand : IEditorCommand
     IVisualizer visualizer;
     INavigator navigator;
 
-    public PlaceCommand(EditorShipPart part, Vector2Int cell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
+    public PlaceCommand(Vector2Int cell, IPartGrabber grabber, IPartPlacer placer, IVisualizer visualizer, INavigator navigator)
     {
-        this.part = part;
         this.cell = cell;
 
         this.grabber = grabber;
@@ -74,7 +70,7 @@ public class PlaceCommand : IEditorCommand
 
     public void Execute()
     {
-        part = placer.GetHeldPart();
+        EditorShipPart part = placer.GetHeldPart();
         placer.PlacePart(part, cell);
 
         cellPlacedAt = part.cellPlacedAt;
@@ -86,7 +82,7 @@ public class PlaceCommand : IEditorCommand
 
     public void Undo()
     {
-        part = grabber.GrabFromGrid(cellPlacedAt);
+        EditorShipPart part = grabber.GrabFromGrid(cellPlacedAt);
         visualizer.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
@@ -106,22 +102,22 @@ public class PlaceCommand : IEditorCommand
 public class NavigateCommand : IEditorCommand
 {
     Vector2 totalInput;
-    NavManager nav;
+    INavigator navigator;
 
-    public NavigateCommand(NavManager nav, Vector2 input)
+    public NavigateCommand(Vector2 input, INavigator navigator)
     {
-        this.nav = nav;
+        this.navigator = navigator;
         this.totalInput = input;
     }
 
     public void Execute()
     {
-        nav.TriggerNav(totalInput);
+        navigator.TriggerNav(totalInput);
     }
 
     public void Undo()
     {
-        nav.TriggerNav(-totalInput);
+        navigator.TriggerNav(-totalInput);
     }
 
     public void Redo() => Execute();
@@ -133,7 +129,7 @@ public class NavigateCommand : IEditorCommand
 
         totalInput += other.totalInput;
 
-        nav.TriggerNav(other.totalInput);
+        navigator.TriggerNav(other.totalInput);
 
         return true;
     }

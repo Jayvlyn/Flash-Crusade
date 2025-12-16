@@ -416,11 +416,17 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
 
     void OnCancelInputEvent(CancelInputEvent e)
     {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+        
         GoBack();
     }
 
     void OnModeInputEvent(ModeInputEvent e)
     {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+
         ToggleNavMode();
     }
 
@@ -446,11 +452,17 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
         EditorShipPart part = buildArea.GetPartAtCell(gridNav.CurrentGridCell);
         if (heldPart == null && part == null) return;
 
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+
         CommandHistory.Execute(new DeleteCommand(this, gridNav.CurrentGridCell));
     }
 
     void OnResetInputEvent(ResetInputEvent e)
     {
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
+            return;
+
         if (mode == NavMode.Item)
         {
             uiNav.HoveredItem = null;

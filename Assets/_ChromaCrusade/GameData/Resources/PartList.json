@@ -33,7 +33,8 @@
     "wings": [
         "WingTest1",
         "WingTest2",
-        "WingTest3"
+        "WingTest3",
+        "WingTest4"
     ],
     "weapons": [
         "GunTest1",

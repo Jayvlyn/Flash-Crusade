@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class NavVisualizer : MonoBehaviour
+public class NavVisualizer : MonoBehaviour, IVisualizer
 {
     [Header("Settings")] 
     public float transitionDuration = 0.12f;
@@ -13,13 +13,13 @@ public class NavVisualizer : MonoBehaviour
     public bool IsLerping => lerpRoutine != null;
     public bool IsRotateLerping => rotateLerpRoutine != null;
     public bool IsFlipLerping => flipLerpRoutine != null;
-    public bool expanded;
 
     NavItem currentItem;
     Coroutine lerpRoutine;
     Coroutine rotateLerpRoutine;
     Coroutine flipLerpRoutine;
     float targetRotation;
+    bool expanded;
 
     #region Lifecycle
 
@@ -33,6 +33,56 @@ public class NavVisualizer : MonoBehaviour
         CancelLerp();
         CancelRotateLerp();
     }
+
+    #endregion
+
+    #region IVisualizer
+
+    public void HighlightCellImmediate(Vector2Int cell)
+    {
+        GetCellRectValues(centerGridCell, cell, out var p, out var s);
+
+        if (expanded) s *= 3;
+
+        rect.anchoredPosition = p;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
+    }
+
+    public void UpdateWithRectImmediate(RectTransform rect)
+    {
+        if (rect == null) return;
+
+        GetWorldRectValues(rect, out Vector2 targetPos, out Vector2 targetSize);
+
+        this.rect.anchoredPosition = targetPos;
+        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+        this.rect.localEulerAngles = rect.localEulerAngles;
+    }
+
+    public void MatchRectScale(RectTransform rect)
+    {
+        var scale = this.rect.localScale;
+
+        if (rect.localScale.x < 0)
+            scale.x = -scale.x;
+
+        if (rect.localScale.y < 0)
+            scale.y = -scale.y;
+
+        this.rect.localScale = scale;
+    }
+
+    public void ResetScale()
+    {
+        var scale = rect.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        scale.y = Mathf.Abs(scale.y);
+        rect.localScale = scale;
+    }
+
+    public void SetExpanded(bool expanded) => this.expanded = expanded;
 
     #endregion
 
@@ -88,17 +138,6 @@ public class NavVisualizer : MonoBehaviour
 
         if (!expanded)
             ResetRotation();
-    }
-
-    public void HighlightCellImmediate(Vector2Int cell)
-    {
-        GetCellRectValues(centerGridCell, cell, out var p, out var s);
-
-        if (expanded) s *= 3;
-
-        rect.anchoredPosition = p;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, s.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, s.y);
     }
 
     private void HighlightCellLerp(Vector2Int cell)
@@ -378,39 +417,6 @@ public class NavVisualizer : MonoBehaviour
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalSize.y);
 
         lerpRoutine = null;
-    }
-
-    public void ResetScale()
-    {
-        var scale = rect.localScale;
-        scale.x = Mathf.Abs(scale.x);
-        scale.y = Mathf.Abs(scale.y);
-        rect.localScale = scale;
-    }
-
-    public void UpdateWithRectImmediate(RectTransform rect)
-    {
-        if (rect == null) return;
-
-        GetWorldRectValues(rect, out Vector2 targetPos, out Vector2 targetSize);
-
-        this.rect.anchoredPosition = targetPos;
-        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-        this.rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
-        this.rect.localEulerAngles = rect.localEulerAngles;
-    }
-
-    public void MatchRectScale(RectTransform rect)
-    {
-        var scale = this.rect.localScale;
-
-        if (rect.localScale.x < 0)
-            scale.x = -scale.x;
-
-        if (rect.localScale.y < 0)
-            scale.y = -scale.y;
-
-        this.rect.localScale = scale;
     }
 
     #endregion

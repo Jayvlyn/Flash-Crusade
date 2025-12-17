@@ -231,30 +231,15 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
 
     #region IVisualizer
 
-    public void SetExpanded(bool expanded)
-    {
-        visualizer.expanded = expanded;
-    }
+    public void SetExpanded(bool expanded) => visualizer.SetExpanded(expanded);
 
-    public void HighlightCellImmediate(Vector2Int cell)
-    {
-        visualizer.HighlightCellImmediate(cell);
-    }
+    public void HighlightCellImmediate(Vector2Int cell) => visualizer.HighlightCellImmediate(cell);
 
-    public void UpdateWithRectImmediate(RectTransform rect)
-    {
-        visualizer.UpdateWithRectImmediate(rect);
-    }
+    public void UpdateWithRectImmediate(RectTransform rect) => visualizer.UpdateWithRectImmediate(rect);
 
-    public void MatchRectScale(RectTransform rect)
-    {
-        visualizer.MatchRectScale(rect);
-    }
+    public void MatchRectScale(RectTransform rect) => visualizer.MatchRectScale(rect);
 
-    public void ResetScale()
-    {
-        visualizer.ResetScale();
-    }
+    public void ResetScale() => visualizer.ResetScale();
 
     #endregion
 
@@ -388,7 +373,6 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
 
     void OnSubmitInputEvent(SubmitInputEvent e)
     {
-        // submit is disabled when in input field, no need to consider that case
         if (mode == NavMode.Item)
         {
             if (uiNav.HoveredItem != null)
@@ -452,9 +436,6 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
         EditorShipPart part = buildArea.GetPartAtCell(gridNav.CurrentGridCell);
         if (heldPart == null && part == null) return;
 
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || midUndoDelete)
-            return;
-
         CommandHistory.Execute(new DeleteCommand(this, gridNav.CurrentGridCell));
     }
 
@@ -498,12 +479,8 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
         }
     }
 
-
     bool modifyHeld;
-    void OnModifyInputEvent(ModifyInputEvent e) 
-    {
-        modifyHeld = e.held;
-    }
+    void OnModifyInputEvent(ModifyInputEvent e) => modifyHeld = e.held;
 
     void OnFlipInputEvent(FlipInputEvent e)
     {
@@ -528,10 +505,7 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
         CommandHistory.Execute(new RotateCommand(this, angle));
     }
 
-    void OnEnterInputField(EnterInputFieldEvent e)
-    {
-        inInputField = true;
-    }
+    void OnEnterInputField(EnterInputFieldEvent e) => inInputField = true;
 
     #endregion
 }

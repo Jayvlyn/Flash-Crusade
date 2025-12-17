@@ -1690,7 +1690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 20.1
+      value: 21.25
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -6029,7 +6029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 20.1
+      value: 21.25
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -7646,7 +7646,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21
+  m_fontSize: 22.2
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9171,7 +9171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37
+  m_fontSize: 39.1
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9234,7 +9234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 37
+      value: 39.1
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -9343,7 +9343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 19.7
+      value: 20.85
       objectReference: {fileID: 0}
     - target: {fileID: 1258948047804769387, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: navDown
@@ -9439,7 +9439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770168939380860893, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 19.7
+      value: 20.85
       objectReference: {fileID: 0}
     - target: {fileID: 7592103861028924198, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_Name

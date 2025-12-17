@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class Navigator : MonoBehaviour, IInitializable
 {
     [SerializeField] protected NavVisualizer visualizer;
+    public EditorState EditorState { get; set; }
 
     protected virtual void Start()
     {
@@ -11,6 +12,4 @@ public abstract class Navigator : MonoBehaviour, IInitializable
     }
 
     public abstract void Init();
-
-    public abstract void TriggerNav(Vector2 dir);
 }

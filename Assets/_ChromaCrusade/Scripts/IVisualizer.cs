@@ -7,4 +7,11 @@ public interface IVisualizer
     void MatchRectScale(RectTransform rect);
     void ResetScale();
     void SetExpanded(bool expanded);
+    RectTransform GetRect();
+    Coroutine LerpWithRect(RectTransform rt);
+
+    void Flip(FlipAxis axis);
+    void FlipImmediate(FlipAxis axis);
+    void Rotate(float angle);
+    void RotateImmediate(float angle);
 }

@@ -16,7 +16,7 @@ public class GrabCommand : IEditorCommand
     public void Execute()
     {
         ctx.SetExpanded(true);
-        EditorShipPart part = ctx.GrabFromGrid(grabbedFromCell);
+        ShipPart part = ctx.GrabFromGrid(grabbedFromCell);
         ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
@@ -30,7 +30,7 @@ public class GrabCommand : IEditorCommand
 
     public void Undo()
     {
-        EditorShipPart part = ctx.GetHeldPart();
+        ShipPart part = ctx.GetHeldPart();
         ctx.PlacePart(part, partCenterCell);
         ctx.ResetScale();
         ctx.SetExpanded(false);
@@ -56,7 +56,7 @@ public class PlaceCommand : IEditorCommand
 
     public void Execute()
     {
-        EditorShipPart part = ctx.GetHeldPart();
+        ShipPart part = ctx.GetHeldPart();
         ctx.PlacePart(part, cell);
 
         cellPlacedAt = part.cellPlacedAt;
@@ -70,7 +70,7 @@ public class PlaceCommand : IEditorCommand
     public void Undo()
     {
         ctx.SetExpanded(true);
-        EditorShipPart part = ctx.GrabFromGrid(cellPlacedAt);
+        ShipPart part = ctx.GrabFromGrid(cellPlacedAt);
         ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
@@ -92,15 +92,15 @@ public class NavigateCommand : IEditorCommand
     ICommandContext ctx;
     Vector2 totalInput;
 
-    public NavigateCommand(ICommandContext ctx, Vector2 input)
+    public NavigateCommand(ICommandContext ctx, Vector2 input, EditorState state)
     {
         this.ctx = ctx;
         this.totalInput = input;
     }
 
-    public void Execute() => ctx.TriggerNav(totalInput);
+    public void Execute() => ctx.TriggerGridNav(totalInput);
 
-    public void Undo() => ctx.TriggerNav(-totalInput);
+    public void Undo() => ctx.TriggerGridNav(-totalInput);
 
     public void Redo() => Execute();
 
@@ -111,7 +111,7 @@ public class NavigateCommand : IEditorCommand
 
         totalInput += other.totalInput;
 
-        ctx.TriggerNav(other.totalInput);
+        ctx.TriggerGridNav(other.totalInput);
 
         return true;
     }
@@ -166,7 +166,7 @@ public class ExitGridModeCommand : IEditorCommand
     bool yFlipped;
     float rotation;
 
-    public ExitGridModeCommand(ICommandContext ctx, EditorShipPart heldPart)
+    public ExitGridModeCommand(ICommandContext ctx, ShipPart heldPart)
     {
         this.ctx = ctx;
 
@@ -184,7 +184,7 @@ public class ExitGridModeCommand : IEditorCommand
         if (partData != null)
         {
             ctx.AddPart(partData);
-            EditorShipPart heldPart = ctx.GetHeldPart();
+            ShipPart heldPart = ctx.GetHeldPart();
             ctx.DestroyPart(heldPart);
         }
 
@@ -196,7 +196,7 @@ public class ExitGridModeCommand : IEditorCommand
     {
         if (partData != null)
         {
-            bool success = ctx.TryTakePart(partData, out EditorShipPart part);
+            bool success = ctx.TryTakePart(partData, out ShipPart part);
 
             if (success)
             {
@@ -249,7 +249,7 @@ public class InventoryGrabCommand : IEditorCommand
 
     public void Execute()
     {
-        bool success = ctx.TryTakePart(partData, out EditorShipPart newPart);
+        bool success = ctx.TryTakePart(partData, out ShipPart newPart);
 
         if (UIManager.Smoothing)
             ctx.GrabFrameLate(newPart, true);
@@ -267,7 +267,7 @@ public class InventoryGrabCommand : IEditorCommand
     {
         ctx.AddPart(partData);
 
-        EditorShipPart heldPart = ctx.GetHeldPart();
+        ShipPart heldPart = ctx.GetHeldPart();
         if (heldPart != null) ctx.DestroyPart(heldPart);
 
         ctx.SetExpanded(false);
@@ -276,7 +276,7 @@ public class InventoryGrabCommand : IEditorCommand
 
     public void Redo()
     {
-        bool success = ctx.TryTakePart(partData, out EditorShipPart newPart);
+        bool success = ctx.TryTakePart(partData, out ShipPart newPart);
 
         if (!success) return;
 
@@ -318,7 +318,7 @@ public class DeleteCommand : IEditorCommand
 
     public void Execute()
     {
-        EditorShipPart heldPart = ctx.GetHeldPart();
+        ShipPart heldPart = ctx.GetHeldPart();
 
         if (heldPart != null)
         {
@@ -337,7 +337,7 @@ public class DeleteCommand : IEditorCommand
         {
             wasPlaced = true;
 
-            EditorShipPart part = ctx.GrabFromGrid(ctx.GetCurrentGridCell());
+            ShipPart part = ctx.GrabFromGrid(ctx.GetCurrentGridCell());
             partData = part.partData;
             partPosition = part.position;
             ctx.AddPart(part.partData);
@@ -388,7 +388,7 @@ public class ResetCommand : IEditorCommand
     public void Execute()
     {
         ctx.ResetGridPosition();
-        ctx.InitNavMode();
+        ctx.InitGridMode();
     }
 
     public void Undo()

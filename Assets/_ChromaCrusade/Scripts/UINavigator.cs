@@ -1,27 +1,9 @@
 using UnityEngine;
 
-public class UINavigator : Navigator
+public class UINavigator : Navigator, IUINavigator
 {
     [SerializeField] NavItem initialHoveredItem;
-
-    NavItem hoveredItem;
-    public NavItem HoveredItem
-    {
-        get => hoveredItem;
-        set
-        {
-            if (hoveredItem == value) return;
-            lastHoveredItem = hoveredItem;
-            hoveredItem = value;
-        }
-    }
-
-    NavItem lastHoveredItem;
-    public NavItem LastHoveredItem
-    {
-        get => lastHoveredItem;
-        set { lastHoveredItem = value; }
-    }
+    public IGridNavigator gridNav;
 
     protected override void Start()
     {
@@ -31,7 +13,7 @@ public class UINavigator : Navigator
     public override void Init()
     {
         NavItem targetItem = null;
-        if (lastHoveredItem != null) targetItem = lastHoveredItem;
+        if (EditorState.LastHoveredItem != null) targetItem = EditorState.LastHoveredItem;
         else if (initialHoveredItem != null) targetItem = initialHoveredItem;
         else targetItem = GetComponentInChildren<NavItem>();
         NavToItem(targetItem);
@@ -40,17 +22,30 @@ public class UINavigator : Navigator
         visualizer.ResetScale();
     }
 
-    public override void TriggerNav(Vector2 dir)
+    public void NavToItem(NavItem item)
     {
-        if (HoveredItem == null)
+        if (item == null) return;
+        EditorState.HoveredItem = item;
+        EditorState.HoveredItem.OnHighlighted();
+        visualizer.HighlightItem(EditorState.HoveredItem);
+    }
+
+    public void InitItemMode()
+    {
+        Init();
+    }
+
+    public void TriggerItemNav(Vector2 dir)
+    {
+        if (EditorState.HoveredItem == null)
             return;
 
         NavItem next = null;
 
-        if (dir.y > 0.5f) next = HoveredItem.navUp;
-        else if (dir.y < -0.5f) next = HoveredItem.navDown;
-        else if (dir.x < -0.5f) next = HoveredItem.navLeft;
-        else if (dir.x > 0.5f) next = HoveredItem.navRight;
+        if (dir.y > 0.5f) next = EditorState.HoveredItem.navUp;
+        else if (dir.y < -0.5f) next = EditorState.HoveredItem.navDown;
+        else if (dir.x < -0.5f) next = EditorState.HoveredItem.navLeft;
+        else if (dir.x > 0.5f) next = EditorState.HoveredItem.navRight;
 
         if (next == null)
             return;
@@ -58,11 +53,10 @@ public class UINavigator : Navigator
         NavToItem(next);
     }
 
-    public void NavToItem(NavItem item)
+    public void SwitchToGridMode()
     {
-        if (item == null) return;
-        HoveredItem = item;
-        HoveredItem.OnHighlighted();
-        visualizer.HighlightItem(HoveredItem);
+        if (EditorState.navMode == NavMode.Grid) return;
+        EditorState.navMode = NavMode.Grid;
+        gridNav.InitGridMode();
     }
 }

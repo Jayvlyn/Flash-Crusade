@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IPartPlacer
 {
-    void PlacePart(EditorShipPart part, Vector2Int cell);
-    EditorShipPart GetHeldPart();
+    void PlacePart(ShipPart part, Vector2Int cell);
+    ShipPart GetHeldPart();
 }

@@ -36,22 +36,6 @@ public class ShipPartData : ScriptableObject
     }
 }
 
-[System.Serializable]
-public class PartSegment
-{
-    public SegmentState segmentState;
-    public PartConnection topConnection;
-    public PartConnection leftConnection;
-    public PartConnection rightConnection;
-    public PartConnection bottomConnection;
-}
-
-[System.Serializable]
-public class PartConnection
-{
-    public ConnectionState connectionState;
-}
-
 public enum ConnectionState { Blocked, Disabled, Enabled }
 public enum SegmentState { Disabled, Enabled }
 public enum PartType

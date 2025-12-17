@@ -1690,7 +1690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 23.6
+      value: 20.1
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -2795,6 +2795,10 @@ GameObject:
   - component: {fileID: 579940306}
   - component: {fileID: 579940312}
   - component: {fileID: 579940311}
+  - component: {fileID: 579940313}
+  - component: {fileID: 579940316}
+  - component: {fileID: 579940315}
+  - component: {fileID: 579940314}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2903,12 +2907,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavManager
   buildWindow: {fileID: 1809799018}
-  visualizer: {fileID: 1036409155}
   exitItem: {fileID: 1054526086}
   buildArea: {fileID: 227269911}
-  partOrganizer: {fileID: 658380378}
-  gridNav: {fileID: 579940312}
+  visualizer: {fileID: 1036409155}
   uiNav: {fileID: 579940311}
+  gridNav: {fileID: 579940312}
+  inventoryManager: {fileID: 658380378}
+  partDestroyer: {fileID: 579940313}
+  partPlacer: {fileID: 579940316}
+  partGrabber: {fileID: 579940315}
+  partTransformer: {fileID: 579940314}
 --- !u!114 &579940311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2937,6 +2945,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridNavigator
   visualizer: {fileID: 1036409155}
   centerGridCell: {fileID: 217396645}
+--- !u!114 &579940313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abb93086ad25df4cad47bdbd33ab2a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDestroyer
+--- !u!114 &579940314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53945c339a86e11478c1063e39e364b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartTransformer
+--- !u!114 &579940315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115abefc7c1bc06449c58fed1b0ffad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartGrabber
+  buildArea: {fileID: 0}
+--- !u!114 &579940316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579940305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb331229ef904349b63991ea2c163f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartPlacer
+  buildArea: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,8 +5178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NavVisualizer
   transitionDuration: 0.12
   centerGridCell: {fileID: 0}
-  rect: {fileID: 0}
-  expanded: 0
 --- !u!114 &1036409156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5973,7 +6029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 23.6
+      value: 20.1
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -7590,7 +7646,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.4
+  m_fontSize: 21
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9115,7 +9171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.5
+  m_fontSize: 37
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9178,7 +9234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3372704094139123462, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_fontSize
-      value: 43.5
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Pivot.x
@@ -9287,7 +9343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 23.2
+      value: 19.7
       objectReference: {fileID: 0}
     - target: {fileID: 1258948047804769387, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: navDown
@@ -9383,7 +9439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770168939380860893, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 23.2
+      value: 19.7
       objectReference: {fileID: 0}
     - target: {fileID: 7592103861028924198, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_Name

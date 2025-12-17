@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface ICommandContext :
     IInventoryManager,
-    INavigator,
+    IUINavigator,
+    IGridNavigator,
     IPartDestroyer,
     IPartPlacer,
     IPartGrabber,

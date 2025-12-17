@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EditorShipPart : MonoBehaviour
+public class ShipPart : MonoBehaviour
 {
     public enum PartState { Inventory, Grabbed, PlacedConnected, PlacedDisconnected}
     public PartState partState;
 
-    public EditorPartSegment[,] segments = new EditorPartSegment[3,3];
+    public PartSegment[,] segments = new PartSegment[3,3];
     /*
         (0,0) (1,0) (2,0)
         (0,1) (1,1) (2,1)
@@ -53,7 +53,7 @@ public class EditorShipPart : MonoBehaviour
         {
             for(int  y = 0; y < 3; y++)
             {
-                segments[x, y] = new EditorPartSegment();
+                segments[x, y] = new PartSegment();
             }
         }
     }
@@ -69,7 +69,7 @@ public class EditorShipPart : MonoBehaviour
             int x = i % width;
             int y = i / width;
 
-            EditorPartSegment segment = segments[x, y];
+            PartSegment segment = segments[x, y];
             PartSegment dataSegment = partData.segments[i];
 
             segment.segmentState = dataSegment.segmentState;

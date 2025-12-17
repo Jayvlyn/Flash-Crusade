@@ -8,18 +8,19 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
     public float transitionDuration = 0.12f;
 
     [HideInInspector] public RectTransform centerGridCell;
-    [HideInInspector] public RectTransform rect;
+    RectTransform rect;
 
     public bool IsLerping => lerpRoutine != null;
     public bool IsRotateLerping => rotateLerpRoutine != null;
     public bool IsFlipLerping => flipLerpRoutine != null;
 
-    NavItem currentItem;
     Coroutine lerpRoutine;
     Coroutine rotateLerpRoutine;
     Coroutine flipLerpRoutine;
     float targetRotation;
     bool expanded;
+
+    public EditorState EditorState { get; set; }
 
     #region Lifecycle
 
@@ -84,13 +85,24 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
 
     public void SetExpanded(bool expanded) => this.expanded = expanded;
 
+    public RectTransform GetRect()
+    {
+        return rect;
+    }
+
+    public Coroutine LerpWithRect(RectTransform rt)
+    {
+        CancelLerp();
+        return lerpRoutine = StartCoroutine(LerpRect(rt));
+    }
+
     #endregion
 
     #region Item Navigation
 
     public void HighlightItem(NavItem newItem)
     {
-        currentItem = newItem;
+        EditorState.currentItem = newItem;
 
         if (UIManager.Smoothing)
             HighlightItemLerp();
@@ -100,26 +112,25 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
 
     public void HighlightItemImmediate()
     {
-        if (currentItem == null) return;
+        if (EditorState.currentItem == null) return;
 
-        GetWorldRectValues(currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
+        GetWorldRectValues(EditorState.currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
 
         rect.anchoredPosition = targetPos;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    private void HighlightItemLerp()
+    void HighlightItemLerp()
     {
         CancelLerp();
-
         lerpRoutine = StartCoroutine(LerpToRectTarget(
             getTarget: () =>
             {
-                GetWorldRectValues(currentItem.rect, out var p, out var s);
+                GetWorldRectValues(EditorState.currentItem.rect, out var p, out var s);
                 return (p, s);
             },
-            shouldAbort: () => currentItem == null
+            shouldAbort: () => EditorState.currentItem == null
         ));
     }
 
@@ -129,8 +140,6 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
 
     public void HighlightCell(Vector2Int cell)
     {
-        currentItem = null;
-
         if (UIManager.Smoothing)
             HighlightCellLerp(cell);
         else
@@ -148,18 +157,12 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
             getTarget: () =>
             {
                 GetCellRectValues(centerGridCell, cell, out var p, out var s);
-                if (expanded) 
+                if (expanded)
                     s *= 3;
                 return (p, s);
             },
-            shouldAbort: () => currentItem != null
+            shouldAbort: () => false
         ));
-    }
-
-    public Coroutine LerpWithRect(RectTransform rt)
-    {
-        CancelLerp();
-        return lerpRoutine = StartCoroutine(LerpRect(rt));
     }
 
     private IEnumerator LerpRect(RectTransform rt)

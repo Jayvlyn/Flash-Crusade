@@ -1,14 +1,9 @@
 using UnityEngine;
 
-public class GridNavigator : Navigator
+public class GridNavigator : Navigator, IGridNavigator
 {
     [SerializeField] RectTransform centerGridCell;
-
-    private Vector2Int currentGridCell;
-    public Vector2Int CurrentGridCell { 
-        get { return currentGridCell; } 
-        set { currentGridCell = value; }
-    }
+    public IUINavigator uiNav;
 
     void OnEnable()
     {
@@ -28,35 +23,53 @@ public class GridNavigator : Navigator
 
     public override void Init()
     {
-        NavToCell(currentGridCell);
+        NavToCell(EditorState.currentGridCell);
     }
 
-    public override void TriggerNav(Vector2 dir)
+    public void TriggerGridNav(Vector2 dir)
     {
         Vector2Int offset = new Vector2Int((int)dir.x, (int)dir.y);
 
         if (offset == Vector2Int.zero)
             return;
 
-        Vector2Int newCell = CurrentGridCell + offset;
+        Vector2Int newCell = EditorState.currentGridCell + offset;
 
         NavToCell(newCell);
     }
 
     void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
-        visualizer.HighlightCellImmediate(currentGridCell);
+        visualizer.HighlightCellImmediate(EditorState.currentGridCell);
     }
 
     public void NavToCell(Vector2Int cell)
     {
-        currentGridCell = cell;
-        visualizer.HighlightCell(currentGridCell);
+        EditorState.currentItem = null;
+        EditorState.HoveredItem = null;
+        EditorState.currentGridCell = cell;
+        visualizer.HighlightCell(EditorState.currentGridCell);
     }
 
     public void ResetGridPosition()
     {
-        currentGridCell = Vector2Int.zero;
+        EditorState.currentGridCell = Vector2Int.zero;
     }
 
+    public Vector2Int GetCurrentGridCell()
+    {
+        return EditorState.currentGridCell;
+    }
+
+    public void InitGridMode()
+    {
+        Init();
+    }
+
+    public void SwitchToItemMode()
+    {
+        if (EditorState.navMode == NavMode.Item) return;
+        EditorState.navMode = NavMode.Item;
+        uiNav.InitItemMode();
+    }
 }

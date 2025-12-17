@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IInventoryManager
 {
-    bool TryTakePart(ShipPartData data, out EditorShipPart part);
+    bool TryTakePart(ShipPartData data, out ShipPart part);
     void AddPart(ShipPartData data);
-    void SetPartToDefaultStart(EditorShipPart part);
+    void SetPartToDefaultStart(ShipPart part);
 }

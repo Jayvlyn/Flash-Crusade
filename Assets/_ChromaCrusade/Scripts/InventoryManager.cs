@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EditorInventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IInventoryManager
 {
     [Header("Refs")]
     public RectTransform itemPanel;
@@ -10,7 +10,7 @@ public class EditorInventoryManager : MonoBehaviour
     public NavItem[] partSelectors;
 
     private PartCounter[] partCounters;
-    private List<EditorShipPart> shownParts;
+    private List<ShipPart> shownParts;
     private PartInventoryModel partInventory;
     private PartInventoryPager pager;
 
@@ -23,7 +23,7 @@ public class EditorInventoryManager : MonoBehaviour
 
     private void Init()
     {
-        shownParts = new List<EditorShipPart>();
+        shownParts = new List<ShipPart>();
 
         PartInventory inv = InventoryLoader.Load();
         partInventory = new PartInventoryModel(inv);
@@ -38,9 +38,9 @@ public class EditorInventoryManager : MonoBehaviour
 
     #endregion
 
-    #region Public API
+    #region IInventoryManager
 
-    public void SetPartToDefaultStart(EditorShipPart part)
+    public void SetPartToDefaultStart(ShipPart part)
     {
         part.rect.SetParent(defaultPartSpawn.parent, worldPositionStays: false);
         part.rtf.target = defaultPartSpawn;
@@ -50,7 +50,7 @@ public class EditorInventoryManager : MonoBehaviour
         part.rtf.Follow();
     }
 
-    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
+    public bool TryTakePart(ShipPartData data, out ShipPart part)
     {
         part = null;
 
@@ -97,7 +97,7 @@ public class EditorInventoryManager : MonoBehaviour
 
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
 
-            EditorShipPart part = obj.GetComponent<EditorShipPart>();
+            ShipPart part = obj.GetComponent<ShipPart>();
             part.Init(entry.data);
 
             part.rtf.enabled = true;
@@ -143,10 +143,10 @@ public class EditorInventoryManager : MonoBehaviour
 
     #region Factory
 
-    EditorShipPart CreateInventoryPart(ShipPartData data)
+    ShipPart CreateInventoryPart(ShipPartData data)
     {
         var obj = Instantiate(Assets.i.editorShipPartPrefab);
-        var part = obj.GetComponent<EditorShipPart>();
+        var part = obj.GetComponent<ShipPart>();
         part.Init(data);
         return part;
     }

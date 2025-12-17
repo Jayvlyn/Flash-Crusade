@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IEditorCommandContext :
+public interface ICommandContext :
     IInventoryManager,
     INavigator,
     IPartDestroyer,

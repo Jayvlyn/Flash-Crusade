@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class GrabCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     Vector2Int partCenterCell;
     Vector2Int grabbedFromCell;
 
-    public GrabCommand(IEditorCommandContext ctx, Vector2Int partCenterCell, Vector2Int grabbingFromCell)
+    public GrabCommand(ICommandContext ctx, Vector2Int partCenterCell, Vector2Int grabbingFromCell)
     {
         this.ctx = ctx;
         this.partCenterCell = partCenterCell;
@@ -44,11 +44,11 @@ public class GrabCommand : IEditorCommand
 
 public class PlaceCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     Vector2Int cell;
     Vector2Int cellPlacedAt;
 
-    public PlaceCommand(IEditorCommandContext ctx, Vector2Int cell)
+    public PlaceCommand(ICommandContext ctx, Vector2Int cell)
     {
         this.ctx = ctx;
         this.cell = cell;
@@ -89,10 +89,10 @@ public class PlaceCommand : IEditorCommand
 
 public class NavigateCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     Vector2 totalInput;
 
-    public NavigateCommand(IEditorCommandContext ctx, Vector2 input)
+    public NavigateCommand(ICommandContext ctx, Vector2 input)
     {
         this.ctx = ctx;
         this.totalInput = input;
@@ -119,10 +119,10 @@ public class NavigateCommand : IEditorCommand
 
 public class RotateCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     float angle;
 
-    public RotateCommand(IEditorCommandContext ctx, float angle)
+    public RotateCommand(ICommandContext ctx, float angle)
     {
         this.ctx = ctx;
         this.angle = angle;
@@ -139,10 +139,10 @@ public class RotateCommand : IEditorCommand
 
 public class FlipCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     FlipAxis axis;
 
-    public FlipCommand(IEditorCommandContext ctx, FlipAxis axis)
+    public FlipCommand(ICommandContext ctx, FlipAxis axis)
     {
         this.ctx = ctx;
 
@@ -160,13 +160,13 @@ public class FlipCommand : IEditorCommand
 
 public class ExitGridModeCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     ShipPartData partData;
     bool xFlipped;
     bool yFlipped;
     float rotation;
 
-    public ExitGridModeCommand(IEditorCommandContext ctx, EditorShipPart heldPart)
+    public ExitGridModeCommand(ICommandContext ctx, EditorShipPart heldPart)
     {
         this.ctx = ctx;
 
@@ -220,9 +220,9 @@ public class ExitGridModeCommand : IEditorCommand
 
 public class EnterGridModeCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
 
-    public EnterGridModeCommand(IEditorCommandContext ctx)
+    public EnterGridModeCommand(ICommandContext ctx)
     {
         this.ctx = ctx;
     }
@@ -238,10 +238,10 @@ public class EnterGridModeCommand : IEditorCommand
 
 public class InventoryGrabCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     ShipPartData partData;
 
-    public InventoryGrabCommand(IEditorCommandContext ctx, ShipPartData partData)
+    public InventoryGrabCommand(ICommandContext ctx, ShipPartData partData)
     {
         this.ctx = ctx;
         this.partData = partData;
@@ -301,7 +301,7 @@ public class InventoryGrabCommand : IEditorCommand
 
 public class DeleteCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     Vector2Int startCell;
     Vector2Int partPosition;
     ShipPartData partData;
@@ -310,7 +310,7 @@ public class DeleteCommand : IEditorCommand
     bool yFlipped;
     float rotation;
 
-    public DeleteCommand(IEditorCommandContext ctx, Vector2Int startCell)
+    public DeleteCommand(ICommandContext ctx, Vector2Int startCell)
     {
         this.ctx = ctx;
         this.startCell = startCell;
@@ -376,10 +376,10 @@ public class DeleteCommand : IEditorCommand
 
 public class ResetCommand : IEditorCommand
 {
-    IEditorCommandContext ctx;
+    ICommandContext ctx;
     Vector2Int prevCell;
 
-    public ResetCommand(IEditorCommandContext ctx)
+    public ResetCommand(ICommandContext ctx)
     {
         this.ctx = ctx;
         prevCell = ctx.GetCurrentGridCell();

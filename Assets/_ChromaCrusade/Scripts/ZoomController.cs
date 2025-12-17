@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Belongs on the Build Area rect that is parent to the grid and parts
 /// </summary>
-public class EditorZoomController : MonoBehaviour
+public class ZoomController : MonoBehaviour
 {
     [SerializeField] Vector2 zoomRange = new Vector2(1, 10);
 

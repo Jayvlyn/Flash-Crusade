@@ -2,13 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EditorManager : MonoBehaviour, IEditorCommandContext
+public class EditorManager : MonoBehaviour, ICommandContext
 {
     [SerializeField] NavItem buildWindow;
     [SerializeField] NavVisualizer visualizer;
     [SerializeField] NavItem exitItem;
-    [SerializeField] EditorBuildArea buildArea;
-    [SerializeField] PartOrganizer partOrganizer;
+    [SerializeField] BuildArea buildArea;
+    [SerializeField] EditorInventoryManager partOrganizer;
     [SerializeField] GridNavigator gridNav;
     [SerializeField] UINavigator uiNav;
 
@@ -34,7 +34,7 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
 
     void Start()
     {
-        if (buildArea == null) buildArea = FindFirstObjectByType<EditorBuildArea>();
+        if (buildArea == null) buildArea = FindFirstObjectByType<BuildArea>();
         if (visualizer == null) visualizer = FindFirstObjectByType<NavVisualizer>();
         if (gridNav == null) gridNav = FindFirstObjectByType<GridNavigator>();
         if (uiNav == null) uiNav = FindFirstObjectByType<UINavigator>();
@@ -459,7 +459,7 @@ public class EditorManager : MonoBehaviour, IEditorCommandContext
 
     void OnNavigateInputEvent(NavigateInputEvent e)
     {
-        if (midGrab || EditorZoomController.MidZoom) return;
+        if (midGrab || ZoomController.MidZoom) return;
 
         Vector2 dir = e.dir;
 

@@ -150,7 +150,7 @@ public class EditorShipPart : MonoBehaviour
         rtf.target = visualizerRect;
     }
 
-    public void OnPlaced(Vector2Int position, EditorBuildArea buildArea)
+    public void OnPlaced(Vector2Int position, BuildArea buildArea)
     {
         this.position = position;
         rect.SetParent(buildArea.rect);

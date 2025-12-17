@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using static EditorShipPart;
 
-public class EditorBuildArea : MonoBehaviour
+public class BuildArea : MonoBehaviour
 {
     public Dictionary<Vector2Int, EditorShipPart> occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
     [HideInInspector] public RectTransform rect;

@@ -1,0 +1,16 @@
+{
+    "name": "CC.ShipEditor.PartListGenerator",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cd3f4d5d713e24e4692973de52e49c6f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

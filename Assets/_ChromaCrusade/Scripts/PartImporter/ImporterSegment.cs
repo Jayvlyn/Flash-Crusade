@@ -17,8 +17,6 @@ public class ImporterSegment : MonoBehaviour
 
     public SegmentState segmentState;
 
-    public struct SegmentToggledEvent { }
-
     private void Awake()
     {
         button = GetComponent<Button>();

@@ -29,12 +29,12 @@ public class ImporterConnection : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
+        EventBus.Subscribe<SegmentToggledEvent>(OnSegmentToggled);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<ImporterSegment.SegmentToggledEvent>(OnSegmentToggled);
+        EventBus.Unsubscribe<SegmentToggledEvent>(OnSegmentToggled);
     }
 
     private void ChangeState(ConnectionState state)
@@ -82,7 +82,7 @@ public class ImporterConnection : MonoBehaviour
         else if (connectionState == ConnectionState.Blocked) ChangeState(prevState);
     }
 
-    public void OnSegmentToggled(ImporterSegment.SegmentToggledEvent e)
+    public void OnSegmentToggled(SegmentToggledEvent e)
     {
         UpdateState();
     }

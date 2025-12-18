@@ -2,7 +2,8 @@
     "name": "CC.ShipEditor.EditorState",
     "rootNamespace": "",
     "references": [
-        "GUID:199b28df04ec87c448fb2a39cc36ceca"
+        "GUID:199b28df04ec87c448fb2a39cc36ceca",
+        "GUID:bfefc9aef8e33b04fbd8b168d6985215"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

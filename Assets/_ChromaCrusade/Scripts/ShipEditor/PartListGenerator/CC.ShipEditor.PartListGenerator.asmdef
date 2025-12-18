@@ -2,7 +2,8 @@
     "name": "CC.ShipEditor.PartListGenerator",
     "rootNamespace": "",
     "references": [
-        "GUID:cd3f4d5d713e24e4692973de52e49c6f"
+        "GUID:cd3f4d5d713e24e4692973de52e49c6f",
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

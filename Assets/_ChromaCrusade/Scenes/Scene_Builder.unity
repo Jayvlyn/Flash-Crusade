@@ -6923,7 +6923,6 @@ MonoBehaviour:
   - {fileID: 1460786041}
   - {fileID: 2051465185}
   - {fileID: 266385988}
-  navVisualizer: {fileID: 1036409155}
 --- !u!114 &1567530962
 MonoBehaviour:
   m_ObjectHideFlags: 0

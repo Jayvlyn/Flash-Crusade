@@ -2,12 +2,12 @@ using UnityEngine;
 
 public abstract class Navigator : MonoBehaviour, IInitializable
 {
-    [SerializeField] protected NavVisualizer visualizer;
+    [SerializeField] protected EditorNavVisualizer visualizer;
     public EditorState EditorState { get; set; }
 
     protected virtual void Start()
     {
-        if (visualizer == null) visualizer = FindFirstObjectByType<NavVisualizer>();
+        if (visualizer == null) visualizer = FindFirstObjectByType<EditorNavVisualizer>();
         visualizer.gameObject.SetActive(true);
     }
 

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-public class NavVisualizer : MonoBehaviour, IVisualizer
+public class EditorNavVisualizer : MonoBehaviour, IVisualizer
 {
     [Header("Settings")] 
     public float transitionDuration = 0.12f;
@@ -24,15 +24,21 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
 
     #region Lifecycle
 
-    private void Awake()
+    private void OnEnable()
     {
-        rect = GetComponent<RectTransform>();
+        EventBus.Subscribe<TabSizeUpdatedEvent>(OnTabSizeUpdatedEvent);
     }
 
     private void OnDisable()
     {
         CancelLerp();
         CancelRotateLerp();
+        EventBus.Unsubscribe<TabSizeUpdatedEvent>(OnTabSizeUpdatedEvent);
+    }
+
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
     }
 
     #endregion
@@ -120,6 +126,8 @@ public class NavVisualizer : MonoBehaviour, IVisualizer
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
+
+    private void OnTabSizeUpdatedEvent(TabSizeUpdatedEvent e) => HighlightItemImmediate();
 
     void HighlightItemLerp()
     {

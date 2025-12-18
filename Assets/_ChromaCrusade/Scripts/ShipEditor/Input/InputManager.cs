@@ -280,15 +280,15 @@ public class InputManager : MonoBehaviour
     float diagonalHoldTime;
     Vector2 FilterDiagonalTransitions(Vector2 raw)
     {
-        bool rawIsNeutral = IsNeutral(raw);
-        bool rawIsCardinal = IsCardinal(raw);
-        bool rawIsDiagonal = IsDiagonal(raw);
+        bool rawIsNeutral = VectorUtilities.IsNeutral(raw);
+        bool rawIsCardinal = VectorUtilities.IsCardinal(raw);
+        bool rawIsDiagonal = VectorUtilities.IsDiagonal(raw);
         float pendingWindow = Mathf.Clamp(Time.deltaTime * 3f, 0.02f, 0.04f);
         if (rawIsDiagonal)
         {
             diagonalHoldTime += Time.deltaTime;
 
-            if (IsCardinal(prevStableInput))
+            if (VectorUtilities.IsCardinal(prevStableInput))
             {
                 if (cardinalHoldTime > 0.2f || diagonalHoldTime > 0.2f)
                 {
@@ -327,7 +327,7 @@ public class InputManager : MonoBehaviour
         {
             cardinalHoldTime += Time.deltaTime;
 
-            if (IsDiagonal(prevStableInput))
+            if (VectorUtilities.IsDiagonal(prevStableInput))
             {
                 stuckHits++;
                 if (stuckHits > stuckHitThreshold)
@@ -356,21 +356,6 @@ public class InputManager : MonoBehaviour
         }
 
         return prevStableInput;
-    }
-
-    bool IsDiagonal(Vector2 v)
-    {
-        return Mathf.Abs(v.x) > 0.1f && Mathf.Abs(v.y) > 0.1f;
-    }
-
-    bool IsCardinal(Vector2 v)
-    {
-        return Mathf.Abs(v.x) > 0.1f ^ Mathf.Abs(v.y) > 0.1f;
-    }
-
-    bool IsNeutral(Vector2 v)
-    {
-        return v.sqrMagnitude < 0.01f;
     }
 
     #endregion

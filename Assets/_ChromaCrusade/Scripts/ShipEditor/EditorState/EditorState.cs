@@ -29,5 +29,3 @@ public class EditorState
         set { lastHoveredItem = value; }
     }
 }
-
-public enum NavMode { Item, Grid };

@@ -8,7 +8,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] NavItem exitItem;
     [SerializeField] BuildArea buildArea;
 
-    [SerializeField] NavVisualizer visualizer;
+    [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] UINavigator uiNav;
     [SerializeField] GridNavigator gridNav;
     [SerializeField] InventoryManager inventoryManager;

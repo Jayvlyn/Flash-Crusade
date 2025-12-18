@@ -17,7 +17,6 @@ public class TabManager : MonoBehaviour
     [Range(0f, 0.1f)] public float tabMargin = 0.01f;
 
     public NavTab[] tabs;
-    public NavVisualizer navVisualizer;
 
     private NavTab activeTab;
     private NavTab lastActiveTab;
@@ -29,7 +28,6 @@ public class TabManager : MonoBehaviour
             t.owner = this;
 
         UpdateTabAnchors();
-
     }
 
     private void Start()
@@ -78,7 +76,7 @@ public class TabManager : MonoBehaviour
             if (lastActiveTab != null)
                 LerpAnchors(lastActiveTab.rect, lastMin, lastMax, lastActiveTab.anchorMinInactive, lastActiveTab.anchorMaxInactive, s);
 
-            navVisualizer.HighlightItemImmediate();
+            EventBus.Publish(new TabSizeUpdatedEvent());
             yield return null;
         }
 
@@ -91,7 +89,7 @@ public class TabManager : MonoBehaviour
         if (lastActiveTab != null) SetTabState(lastActiveTab, false);
 
         Canvas.ForceUpdateCanvases();
-        if (activeTab != null) navVisualizer.HighlightItemImmediate();
+        if (activeTab != null) EventBus.Publish(new TabSizeUpdatedEvent());
     }
 
     #region Anchor Helpers

@@ -230,6 +230,7 @@ public class ImporterPart : MonoBehaviour
                 bottomConnection = new PartConnection { connectionState = source.bottomConnection.connectionState }
             };
 
+            partData.segments = new PartSegment[segments.Length];
             partData.segments[i] = seg;
         }
 

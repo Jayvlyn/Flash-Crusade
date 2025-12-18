@@ -1,0 +1,17 @@
+{
+    "name": "CC.Data.ShipPart",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

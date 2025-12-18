@@ -154,7 +154,8 @@ public class ImporterPart : MonoBehaviour
         if (existing != null)
         {
             Debug.LogWarning($"Overwriting existing asset at {assetPath}");
-            existing.Apply(this);
+            //existing.Apply(this);
+            ApplyStats(existing);
             EditorUtility.SetDirty(existing);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -162,7 +163,8 @@ public class ImporterPart : MonoBehaviour
         }
 
         var so = ScriptableObject.CreateInstance(SoTypeMap[partType]) as ShipPartData;
-        so.Apply(this);
+        //so.Apply(this);
+        ApplyStats(so);
         AssetDatabase.CreateAsset(so, assetPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -207,5 +209,51 @@ public class ImporterPart : MonoBehaviour
     private void ResetButton()
     {
         resetClicked = true;
+    }
+
+    private void ApplyStats(ShipPartData partData)
+    {
+        partData.sprite = partSprite;
+        partData.mass = mass;
+        partData.price = price;
+
+
+        for (int i = 0; i < segments.Length; i++)
+        {
+            var source = segments[i];
+            var seg = new PartSegment
+            {
+                segmentState = source.segmentState,
+                topConnection = new PartConnection { connectionState = source.topConnection.connectionState },
+                leftConnection = new PartConnection { connectionState = source.leftConnection.connectionState },
+                rightConnection = new PartConnection { connectionState = source.rightConnection.connectionState },
+                bottomConnection = new PartConnection { connectionState = source.bottomConnection.connectionState }
+            };
+
+            partData.segments[i] = seg;
+        }
+
+        if (partData is ShipWingData shipWingData)
+        {
+            shipWingData.mobility = mobility;
+        }
+        else if (partData is ShipCabinData shipCabinData)
+        {
+            shipCabinData.handling = handling;
+        }
+        else if (partData is ShipCoreData shipCoreData)
+        {
+            shipCoreData.energy = energy;
+        }
+        else if (partData is ShipWeaponData shipWeaponData)
+        {
+            shipWeaponData.damage = damage;
+            shipWeaponData.projectileSpeed = projectileSpeed;
+            shipWeaponData.fireRate = fireRate;
+        }
+        else if (partData is ShipUtilityData shipUtilityData)
+        {
+            shipUtilityData.utilityType = (ShipUtilityData.UtilityType)(int)utilityType;
+        }
     }
 }

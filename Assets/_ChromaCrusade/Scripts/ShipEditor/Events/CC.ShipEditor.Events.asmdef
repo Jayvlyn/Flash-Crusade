@@ -1,0 +1,17 @@
+{
+    "name": "CC.ShipEditor.Events",
+    "rootNamespace": "",
+    "references": [
+        "GUID:da089e7eb1f249a4e8f700287ca818f3",
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

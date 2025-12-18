@@ -1,0 +1,19 @@
+{
+    "name": "CC.ShipEditor.ShipPart",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25",
+        "GUID:ebfb28c9f5f123c48aebc2feeee43fc4",
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb",
+        "GUID:da089e7eb1f249a4e8f700287ca818f3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -11,27 +11,27 @@ public class ShipPartData : ScriptableObject
 
     public PartSegment[] segments;
 
-    public virtual void Apply(ImporterPart importer)
-    {
-        sprite = importer.partSprite;
-        mass = importer.mass;
-        price = importer.price;
+    //public virtual void Apply(ImporterPart importer)
+    //{
+    //    sprite = importer.partSprite;
+    //    mass = importer.mass;
+    //    price = importer.price;
 
-        segments = new PartSegment[importer.segments.Length];
+    //    segments = new PartSegment[importer.segments.Length];
 
-        for (int i = 0; i < importer.segments.Length; i++)
-        {
-            var source = importer.segments[i];
-            var seg = new PartSegment
-            {
-                segmentState = source.segmentState,
-                topConnection = new PartConnection { connectionState = source.topConnection.connectionState },
-                leftConnection = new PartConnection { connectionState = source.leftConnection.connectionState },
-                rightConnection = new PartConnection { connectionState = source.rightConnection.connectionState },
-                bottomConnection = new PartConnection { connectionState = source.bottomConnection.connectionState }
-            };
+    //    for (int i = 0; i < importer.segments.Length; i++)
+    //    {
+    //        var source = importer.segments[i];
+    //        var seg = new PartSegment
+    //        {
+    //            segmentState = source.segmentState,
+    //            topConnection = new PartConnection { connectionState = source.topConnection.connectionState },
+    //            leftConnection = new PartConnection { connectionState = source.leftConnection.connectionState },
+    //            rightConnection = new PartConnection { connectionState = source.rightConnection.connectionState },
+    //            bottomConnection = new PartConnection { connectionState = source.bottomConnection.connectionState }
+    //        };
 
-            segments[i] = seg;
-        }
-    }
+    //        segments[i] = seg;
+    //    }
+    //}
 }

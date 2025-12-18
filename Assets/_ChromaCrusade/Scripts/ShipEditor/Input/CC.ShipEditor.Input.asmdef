@@ -1,0 +1,21 @@
+{
+    "name": "CC.ShipEditor.Input",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3838979ef187a084e82a9bd55d5017c6",
+        "GUID:174a50165e7edd24ebce68c58996a127",
+        "GUID:035c78fadd13b0b458e6d6939eb4c391",
+        "GUID:da089e7eb1f249a4e8f700287ca818f3",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:e60ee0dd147f198419a7b3016a0b4b50"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

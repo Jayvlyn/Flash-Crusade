@@ -7,9 +7,9 @@ public class ShipCabinData : ShipPartData
 
     public override PartType PartType => PartType.Cabin;
 
-    public override void Apply(ImporterPart importer)
-    {
-        base.Apply(importer);
-        handling = importer.handling;
-    }
+    //public override void Apply(ImporterPart importer)
+    //{
+    //    base.Apply(importer);
+    //    handling = importer.handling;
+    //}
 }

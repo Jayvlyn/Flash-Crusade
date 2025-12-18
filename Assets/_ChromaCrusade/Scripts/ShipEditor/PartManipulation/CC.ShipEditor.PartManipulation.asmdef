@@ -1,0 +1,21 @@
+{
+    "name": "CC.ShipEditor.PartManipulation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bfefc9aef8e33b04fbd8b168d6985215",
+        "GUID:a1fc47236d1b6944e988ddb9c2c22a06",
+        "GUID:cd3f4d5d713e24e4692973de52e49c6f",
+        "GUID:8162417b1db43304a8e519f382de0521",
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb",
+        "GUID:da089e7eb1f249a4e8f700287ca818f3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

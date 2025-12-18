@@ -1,0 +1,16 @@
+{
+    "name": "CC.ShipEditor.EditorState",
+    "rootNamespace": "",
+    "references": [
+        "GUID:199b28df04ec87c448fb2a39cc36ceca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

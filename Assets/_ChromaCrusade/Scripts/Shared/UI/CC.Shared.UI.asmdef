@@ -1,0 +1,18 @@
+{
+    "name": "CC.Shared.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3838979ef187a084e82a9bd55d5017c6",
+        "GUID:da089e7eb1f249a4e8f700287ca818f3",
+        "GUID:bfefc9aef8e33b04fbd8b168d6985215"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

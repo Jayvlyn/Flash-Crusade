@@ -7,9 +7,9 @@ public class ShipCoreData : ShipPartData
 
     public override PartType PartType => PartType.Core;
 
-    public override void Apply(ImporterPart importer)
-    {
-        base.Apply(importer);
-        energy = importer.energy;
-    }
+    //public override void Apply(ImporterPart importer)
+    //{
+    //    base.Apply(importer);
+    //    energy = importer.energy;
+    //}
 }

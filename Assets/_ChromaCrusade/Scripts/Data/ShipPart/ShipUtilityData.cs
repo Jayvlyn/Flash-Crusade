@@ -16,9 +16,9 @@ public class ShipUtilityData : ShipPartData
     }
     public UtilityType utilityType;
 
-    public override void Apply(ImporterPart importer)
-    {
-        base.Apply(importer);
-        utilityType = (UtilityType)(int)importer.utilityType;
-    }
+    //public override void Apply(ImporterPart importer)
+    //{
+    //    base.Apply(importer);
+    //    utilityType = (UtilityType)(int)importer.utilityType;
+    //}
 }

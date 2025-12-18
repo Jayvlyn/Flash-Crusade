@@ -1,0 +1,20 @@
+{
+    "name": "CC.ShipEditor.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3838979ef187a084e82a9bd55d5017c6",
+        "GUID:8162417b1db43304a8e519f382de0521",
+        "GUID:199b28df04ec87c448fb2a39cc36ceca",
+        "GUID:da089e7eb1f249a4e8f700287ca818f3",
+        "GUID:e60ee0dd147f198419a7b3016a0b4b50"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

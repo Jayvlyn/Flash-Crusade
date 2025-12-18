@@ -7,9 +7,9 @@ public class ShipWingData : ShipPartData
 
     public override PartType PartType => PartType.Wing;
 
-    public override void Apply(ImporterPart importer)
-    {
-        base.Apply(importer);
-        mobility = importer.mobility;
-    }
+    //public override void Apply(ImporterPart importer)
+    //{
+    //    base.Apply(importer);
+    //    mobility = importer.mobility;
+    //}
 }

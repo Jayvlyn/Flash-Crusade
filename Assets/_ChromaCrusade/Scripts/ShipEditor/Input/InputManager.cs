@@ -21,6 +21,19 @@ public class InputManager : MonoBehaviour
     [SerializeField] InputActionReference modifyAction;
     [SerializeField] InputActionReference deleteAction;
 
+    public InputActionReference NavigateAction => navigateAction;
+    public InputActionReference SubmitAction => submitAction;
+    public InputActionReference CancelAction => cancelAction;
+    public InputActionReference ModeAction => modeAction;
+    public InputActionReference ResetAction => resetAction;
+    public InputActionReference ZoomAction => zoomAction;
+    public InputActionReference UndoAction => undoAction;
+    public InputActionReference RedoAction => redoAction;
+    public InputActionReference RotateAction => rotateAction;
+    public InputActionReference FlipAction => flipAction;
+    public InputActionReference ModifyAction => modifyAction;
+    public InputActionReference DeleteAction => deleteAction;
+
     #region Lifecycle
 
     private void OnEnable()

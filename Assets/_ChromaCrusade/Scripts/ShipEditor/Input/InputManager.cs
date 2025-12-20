@@ -167,8 +167,8 @@ public class InputManager : MonoBehaviour
         float input = ctx.ReadValue<float>();
 
         ZoomDirection zoomDir;
-        if (input < 0.5f) zoomDir = ZoomDirection.In;
-        else if (input > 0.5f) zoomDir = ZoomDirection.Out;
+        if (input > 0.5f) zoomDir = ZoomDirection.In;
+        else if (input < 0.5f) zoomDir = ZoomDirection.Out;
         else return;
 
         EventBus.Publish(new ZoomInputEvent { zoomDirection = zoomDir });

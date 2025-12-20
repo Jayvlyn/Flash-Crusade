@@ -90,8 +90,6 @@ public class ZoomController : MonoBehaviour
         MidZoom = false;
     }
 
-
-
     void OnZoomInputEvent(ZoomInputEvent e)
     {
         ZoomDirection zoomDir = e.zoomDirection;

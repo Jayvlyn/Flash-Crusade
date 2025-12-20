@@ -40,7 +40,8 @@ public class GridNavigator : Navigator, IGridNavigator
 
     void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
-        visualizer.HighlightCellImmediate(EditorState.currentGridCell);
+        if(EditorState.navMode == NavMode.Grid) 
+            visualizer.HighlightCellImmediate(EditorState.currentGridCell);
     }
 
     public void NavToCell(Vector2Int cell)

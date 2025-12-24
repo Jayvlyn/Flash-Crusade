@@ -550,6 +550,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeTab",
+                    "type": "Button",
+                    "id": "d9aad307-8e62-4938-9c5d-a97d76eee08a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -995,17 +1004,6 @@
                 },
                 {
                     "name": "",
-                    "id": "c354fca5-5d92-48da-a238-67d01683f44c",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Mode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "8679f9dc-7b3d-4546-a773-c8c893551478",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -1232,6 +1230,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "443c68fd-2020-45bc-a219-ee69ef957bcd",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18ab23fe-df61-43a9-b3cb-8715a13d6f70",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8daf7f33-01b4-4aef-a809-a648e9798030",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeTab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62b49b5d-055d-42b3-b463-85acea85fdc4",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeTab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

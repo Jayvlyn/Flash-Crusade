@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] InputActionReference flipAction;
     [SerializeField] InputActionReference modifyAction;
     [SerializeField] InputActionReference deleteAction;
+    [SerializeField] InputActionReference tabAction;
 
     public InputActionReference NavigateAction => navigateAction;
     public InputActionReference SubmitAction => submitAction;
@@ -33,6 +34,7 @@ public class InputManager : MonoBehaviour
     public InputActionReference FlipAction => flipAction;
     public InputActionReference ModifyAction => modifyAction;
     public InputActionReference DeleteAction => deleteAction;
+    public InputActionReference TabAction => tabAction;
 
     #region Lifecycle
 
@@ -88,6 +90,7 @@ public class InputManager : MonoBehaviour
         flipAction.action.Enable();
         modifyAction.action.Enable();
         deleteAction.action.Enable();
+        tabAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -115,6 +118,7 @@ public class InputManager : MonoBehaviour
         flipAction.action.performed += OnFlipPerformed;
         modifyAction.action.performed += OnModifyPerformed;
         deleteAction.action.performed += OnDeletePerformed;
+        tabAction.action.performed += OnTabPerformed;
     }
 
     private void DisableMainInputs()
@@ -130,6 +134,7 @@ public class InputManager : MonoBehaviour
         flipAction.action.performed -= OnFlipPerformed;
         modifyAction.action.performed -= OnModifyPerformed;
         deleteAction.action.performed -= OnDeletePerformed;
+        tabAction.action.performed -= OnTabPerformed;
     }
 
     private void OnApplicationFocus(bool hasFocus)
@@ -161,6 +166,8 @@ public class InputManager : MonoBehaviour
     private void OnResetPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new ResetInputEvent { });
     
     private void OnDeletePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new DeleteInputEvent { });
+
+    private void OnTabPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new TabInputEvent { });
 
     private void OnZoomPerformed(InputAction.CallbackContext ctx)
     {

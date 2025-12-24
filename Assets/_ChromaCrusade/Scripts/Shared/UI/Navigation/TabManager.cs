@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,6 +23,20 @@ public class TabManager : MonoBehaviour
     private NavTab lastActiveTab;
     private Coroutine tabRoutine;
 
+    private int activeTabIndex => Array.IndexOf(tabs, activeTab);
+
+    #region Lifecycle
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<TabInputEvent>(OnTabInputEvent);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<TabInputEvent>(OnTabInputEvent);
+    }
+
     private void Awake()
     {
         foreach (var t in tabs)
@@ -32,9 +47,10 @@ public class TabManager : MonoBehaviour
 
     private void Start()
     {
-        SwitchToTab(tabs[0]);
         tabs[0].OnSelected();
     }
+
+    #endregion
 
     public void SwitchToTab(NavTab newTab)
     {
@@ -54,6 +70,13 @@ public class TabManager : MonoBehaviour
         {
             SnapTabs();
         }
+    }
+
+    public void NextTab()
+    {
+        int i = activeTabIndex;
+        if (++i >= tabs.Length) i = 0;
+        tabs[i].OnSelected();
     }
 
     private IEnumerator LerpTabs()
@@ -91,6 +114,8 @@ public class TabManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         if (activeTab != null) EventBus.Publish(new TabSizeUpdatedEvent());
     }
+
+    private void OnTabInputEvent(TabInputEvent e) => NextTab();
 
     #region Anchor Helpers
 

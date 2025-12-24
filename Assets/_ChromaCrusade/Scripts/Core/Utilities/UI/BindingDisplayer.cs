@@ -184,15 +184,18 @@ public static class BindingDisplayer
             {
                 InputSystem.FindControls(effectivePath, ref controls);
 
-                var keyboardControls = controls.Where(c => c.device is Keyboard).ToArray();
-                if (keyboardControls.Length > 0)
+                // Iterate directly without creating an array
+                foreach (var control in controls)
                 {
-                    string key = InputControlPath.ToHumanReadableString(
-                        keyboardControls[0].path,
-                        InputControlPath.HumanReadableStringOptions.OmitDevice |
-                        InputControlPath.HumanReadableStringOptions.UseShortNames
-                    );
-                    return ShortenKey(CapitalizeFirst(key));
+                    if (control.device is Keyboard)
+                    {
+                        string key = InputControlPath.ToHumanReadableString(
+                            control.path,
+                            InputControlPath.HumanReadableStringOptions.OmitDevice |
+                            InputControlPath.HumanReadableStringOptions.UseShortNames
+                        );
+                        return ShortenKey(CapitalizeFirst(key));
+                    }
                 }
             }
             finally

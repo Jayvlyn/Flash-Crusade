@@ -1235,39 +1235,6 @@
                 },
                 {
                     "name": "",
-                    "id": "443c68fd-2020-45bc-a219-ee69ef957bcd",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ChangeTab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "18ab23fe-df61-43a9-b3cb-8715a13d6f70",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "ChangeTab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8daf7f33-01b4-4aef-a809-a648e9798030",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ChangeTab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "62b49b5d-055d-42b3-b463-85acea85fdc4",
                     "path": "<Keyboard>/tab",
                     "interactions": "",

@@ -72,6 +72,13 @@ public class TabManager : MonoBehaviour
         }
     }
 
+    public void PrevTab()
+    {
+        int i = activeTabIndex;
+        if (--i < 0) i = tabs.Length-1;
+        tabs[i].OnSelected();
+    }
+
     public void NextTab()
     {
         int i = activeTabIndex;
@@ -115,7 +122,12 @@ public class TabManager : MonoBehaviour
         if (activeTab != null) EventBus.Publish(new TabSizeUpdatedEvent());
     }
 
-    private void OnTabInputEvent(TabInputEvent e) => NextTab();
+    private void OnTabInputEvent(TabInputEvent e)
+    {
+        if (e.modHeld) PrevTab();
+        else           NextTab();
+
+    }
 
     #region Anchor Helpers
 

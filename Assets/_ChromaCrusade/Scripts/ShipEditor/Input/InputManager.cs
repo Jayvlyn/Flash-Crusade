@@ -167,7 +167,7 @@ public class InputManager : MonoBehaviour
     
     private void OnDeletePerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new DeleteInputEvent { });
 
-    private void OnTabPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new TabInputEvent { });
+    private void OnTabPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new TabInputEvent { modHeld = modifyHeld });
 
     private void OnZoomPerformed(InputAction.CallbackContext ctx)
     {

@@ -179,20 +179,25 @@ public static class BindingDisplayer
             if (string.IsNullOrEmpty(effectivePath))
                 continue;
 
-            // TryFindControls resolves the abstract [Any] path to actual controls
-            var controls = InputSystem.FindControls(effectivePath)
-                                      .Where(c => c.device is Keyboard)
-                                      .ToArray();
-
-            if (controls.Length > 0)
+            InputControlList<InputControl> controls = new InputControlList<InputControl>();
+            try
             {
-                // Pick the first control (usually what you want)
-                string key = InputControlPath.ToHumanReadableString(
-                    controls[0].path,
-                    InputControlPath.HumanReadableStringOptions.OmitDevice |
-                    InputControlPath.HumanReadableStringOptions.UseShortNames
-                );
-                return ShortenKey(CapitalizeFirst(key));
+                InputSystem.FindControls(effectivePath, ref controls);
+
+                var keyboardControls = controls.Where(c => c.device is Keyboard).ToArray();
+                if (keyboardControls.Length > 0)
+                {
+                    string key = InputControlPath.ToHumanReadableString(
+                        keyboardControls[0].path,
+                        InputControlPath.HumanReadableStringOptions.OmitDevice |
+                        InputControlPath.HumanReadableStringOptions.UseShortNames
+                    );
+                    return ShortenKey(CapitalizeFirst(key));
+                }
+            }
+            finally
+            {
+                controls.Dispose();
             }
         }
 

@@ -1,1 +1,4 @@
-public struct TabInputEvent { }
+public struct TabInputEvent 
+{
+    public bool modHeld;
+}

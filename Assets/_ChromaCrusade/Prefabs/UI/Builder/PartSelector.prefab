@@ -169,15 +169,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cbbc4f2b298c0664c906b77445941880, type: 2}
-  m_sharedMaterial: {fileID: -4410188272083061382, guid: cbbc4f2b298c0664c906b77445941880, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d2147b7c0458716429d8d97a6fa5af36, type: 2}
+  m_sharedMaterial: {fileID: -4410188272083061382, guid: d2147b7c0458716429d8d97a6fa5af36, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294954240
-  m_fontColor: {r: 0, g: 0.8046403, b: 1, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.UI::PartCounter
   countText: {fileID: 5609739222697950135}
+  outlineText: {fileID: 0}
 --- !u!223 &23262505331918750
 Canvas:
   m_ObjectHideFlags: 0

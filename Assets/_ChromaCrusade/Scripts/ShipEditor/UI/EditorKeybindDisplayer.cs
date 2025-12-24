@@ -24,7 +24,7 @@ public class EditorKeybindDisplayer : MonoBehaviour
         sb.Append("Select: ");
         sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.SubmitAction.action));
 
-        sb.Append("   ");
+        sb.Append("                     ");
 
         sb.Append("Change Mode: ");
         sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.ModeAction.action));
@@ -34,7 +34,7 @@ public class EditorKeybindDisplayer : MonoBehaviour
         sb.Append("Zoom: ");
         sb.Append(BindingDisplayer.GetKeyboardZoomBinding(inputManager.ZoomAction.action));
 
-        sb.Append(" \n");
+        sb.Append("\n");
 
         sb.Append("Rotate: ");
         sb.Append(BindingDisplayer.GetKeyboard1DAxisBinding(inputManager.RotateAction.action));
@@ -43,6 +43,28 @@ public class EditorKeybindDisplayer : MonoBehaviour
 
         sb.Append("Flip: ");
         sb.Append(BindingDisplayer.GetKeyboard1DAxisBinding(inputManager.FlipAction.action));
+
+        sb.Append("                                  ");
+
+        sb.Append("Delete: ");
+        sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.DeleteAction.action));
+
+        sb.Append("   ");
+
+        sb.Append("Back: ");
+        sb.Append(BindingDisplayer.GetKeyboardBindingFromAny(inputManager.CancelAction.action));
+
+        sb.Append("\n");
+
+        sb.Append("Undo: ");
+        sb.Append(BindingDisplayer.GetModifiedKeyboardBinding(inputManager.UndoAction.action));
+
+        sb.Append("   ");
+
+        sb.Append("Redo: ");
+        sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.ModifyAction.action));
+        sb.Append("+");
+        sb.Append(BindingDisplayer.GetModifiedKeyboardBinding(inputManager.UndoAction.action));
 
         bindingText.text = sb.ToString();
     }

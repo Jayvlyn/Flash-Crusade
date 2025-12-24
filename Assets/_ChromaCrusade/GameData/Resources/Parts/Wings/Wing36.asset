@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c1275da390bfa429174c2f7d79119d, type: 3}
+  m_Name: Wing36
+  m_EditorClassIdentifier: CC.Data.ShipPart::ShipWingData
+  sprite: {fileID: 1195245533, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  mass: 1
+  price: 100
+  segments:
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 2
+  mobility: 1

@@ -1021,7 +1021,7 @@
                     "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1032,7 +1032,7 @@
                     "path": "<Keyboard>/home",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Reset",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1219,7 +1219,7 @@
                     "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1230,7 +1230,7 @@
                     "path": "<Keyboard>/delete",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false

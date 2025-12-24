@@ -217,7 +217,7 @@ public class ImporterPart : MonoBehaviour
         partData.mass = mass;
         partData.price = price;
 
-
+        partData.segments = new PartSegment[segments.Length];
         for (int i = 0; i < segments.Length; i++)
         {
             var source = segments[i];
@@ -230,7 +230,6 @@ public class ImporterPart : MonoBehaviour
                 bottomConnection = new PartConnection { connectionState = source.bottomConnection.connectionState }
             };
 
-            partData.segments = new PartSegment[segments.Length];
             partData.segments[i] = seg;
         }
 

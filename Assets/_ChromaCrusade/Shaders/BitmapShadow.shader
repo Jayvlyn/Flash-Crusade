@@ -6,6 +6,7 @@ Shader "TextMeshPro/BitmapShadow"
         _FaceColor ("Face Color", Color) = (1,1,1,1)
         _OutlineColor ("Outline Color", Color) = (0,0,0,1)
         _OutlineSize ("Outline Size (pixels)", Float) = 1
+        _Corners ("Fill Outline Corners", Float) = 1
     }
 
     SubShader
@@ -35,6 +36,7 @@ Shader "TextMeshPro/BitmapShadow"
             fixed4 _FaceColor;
             fixed4 _OutlineColor;
             float _OutlineSize;
+            float _Corners;
 
             struct appdata
             {
@@ -62,19 +64,22 @@ Shader "TextMeshPro/BitmapShadow"
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 texel = _MainTex_TexelSize.xy * _OutlineSize;
-
                 float center = tex2D(_MainTex, i.uv).a;
 
                 float outline =
                     tex2D(_MainTex, i.uv + float2( texel.x,  0)).a +
                     tex2D(_MainTex, i.uv + float2(-texel.x,  0)).a +
                     tex2D(_MainTex, i.uv + float2( 0,  texel.y)).a +
-                    tex2D(_MainTex, i.uv + float2( 0, -texel.y)).a +
+                    tex2D(_MainTex, i.uv + float2( 0, -texel.y)).a;
 
-                    tex2D(_MainTex, i.uv + float2( texel.x,  texel.y)).a +
-                    tex2D(_MainTex, i.uv + float2(-texel.x,  texel.y)).a +
-                    tex2D(_MainTex, i.uv + float2( texel.x, -texel.y)).a +
-                    tex2D(_MainTex, i.uv + float2(-texel.x, -texel.y)).a;
+                if (_Corners > 0.5)
+                {
+                    outline +=
+                        tex2D(_MainTex, i.uv + float2( texel.x,  texel.y)).a +
+                        tex2D(_MainTex, i.uv + float2(-texel.x,  texel.y)).a +
+                        tex2D(_MainTex, i.uv + float2( texel.x, -texel.y)).a +
+                        tex2D(_MainTex, i.uv + float2(-texel.x, -texel.y)).a;
+                }
 
                 outline = saturate(outline);
 

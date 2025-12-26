@@ -25,7 +25,7 @@ public class PartGrabber : MonoBehaviour, IPartGrabber
     public void GrabImmediate(ShipPart part, bool fromInv)
     {
         part.OnGrabbed(visualizer.GetRect());
-        if (!fromInv) EditorState.currentGridCell = part.position;
+        if (!fromInv) EditorState.CurrentGridCell = part.position;
         EditorState.heldPart = part;
     }
 
@@ -49,7 +49,7 @@ public class PartGrabber : MonoBehaviour, IPartGrabber
         yield return visualizer.LerpWithRect(part.rect); // waits until done
 
         part.OnGrabbed(visualizer.GetRect());
-        if (!fromInv) EditorState.currentGridCell = part.position;
+        if (!fromInv) EditorState.CurrentGridCell = part.position;
         EditorState.heldPart = part;
         EditorState.midGrab = false;
         if (fromInv) uiNav.SwitchToGridMode();

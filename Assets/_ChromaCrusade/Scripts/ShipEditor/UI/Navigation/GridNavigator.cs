@@ -23,7 +23,7 @@ public class GridNavigator : Navigator, IGridNavigator
 
     public override void Init()
     {
-        NavToCell(EditorState.currentGridCell);
+        NavToCell(EditorState.CurrentGridCell);
     }
 
     public void TriggerGridNav(Vector2 dir)
@@ -33,7 +33,7 @@ public class GridNavigator : Navigator, IGridNavigator
         if (offset == Vector2Int.zero)
             return;
 
-        Vector2Int newCell = EditorState.currentGridCell + offset;
+        Vector2Int newCell = EditorState.CurrentGridCell + offset;
 
         NavToCell(newCell);
     }
@@ -41,25 +41,25 @@ public class GridNavigator : Navigator, IGridNavigator
     void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
         if(EditorState.navMode == NavMode.Grid) 
-            visualizer.HighlightCellImmediate(EditorState.currentGridCell);
+            visualizer.HighlightCellImmediate(EditorState.CurrentGridCell);
     }
 
     public void NavToCell(Vector2Int cell)
     {
         EditorState.currentItem = null;
         EditorState.HoveredItem = null;
-        EditorState.currentGridCell = cell;
-        visualizer.HighlightCell(EditorState.currentGridCell);
+        EditorState.CurrentGridCell = cell;
+        visualizer.HighlightCell(EditorState.CurrentGridCell);
     }
 
     public void ResetGridPosition()
     {
-        EditorState.currentGridCell = Vector2Int.zero;
+        EditorState.CurrentGridCell = Vector2Int.zero;
     }
 
     public Vector2Int GetCurrentGridCell()
     {
-        return EditorState.currentGridCell;
+        return EditorState.CurrentGridCell;
     }
 
     public void InitGridMode()

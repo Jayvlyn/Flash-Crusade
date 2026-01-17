@@ -129,7 +129,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: CCShipParts
     originalName: 
-    pivot: {x: 0.5, y: -0.43165466}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -138,7 +138,7 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 199
-      height: 139
+      height: 199
     spriteID: a41bdbdb5111d644ba4d607c54deeacd
     spriteBone: []
     spriteOutline: []
@@ -168,9 +168,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 60
+        y: 0
         width: 199
-        height: 139
+        height: 199
       spriteId: a41bdbdb5111d644ba4d607c54deeacd
     linkedCells: []
     tileCells: []

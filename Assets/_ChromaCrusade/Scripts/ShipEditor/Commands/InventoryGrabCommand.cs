@@ -36,27 +36,7 @@ public class InventoryGrabCommand : ICommand
         ctx.SwitchToItemMode();
     }
 
-    public void Redo()
-    {
-        bool success = ctx.TryTakePart(partData, out ShipPart newPart);
-
-        if (!success) return;
-
-        ctx.SetPartToDefaultStart(newPart);
-
-        if (UIManager.Smoothing)
-        {
-            ctx.SetExpanded(true);
-            ctx.GrabWithLerp(newPart, true);
-        }
-        else
-        {
-            ctx.UpdateWithRectImmediate(newPart.rect);
-            ctx.GrabImmediate(newPart, true);
-            ctx.SetExpanded(true);
-            ctx.SwitchToGridMode();
-        }
-    }
+    public void Redo() => Execute();
 
     public bool TryMerge(ICommand next) => false;
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class UINavigator : Navigator, IUINavigator
 {
     [SerializeField] NavItem initialHoveredItem;
+    [SerializeField] Transform parent;
     public IGridNavigator gridNav;
 
     protected override void Start()
@@ -12,6 +13,8 @@ public class UINavigator : Navigator, IUINavigator
 
     public override void Init()
     {
+        visualizer.transform.SetParent(parent);
+        visualizer.transform.localScale = Vector3.one;
         NavItem targetItem = null;
         if (EditorState.LastHoveredItem != null) targetItem = EditorState.LastHoveredItem;
         else if (initialHoveredItem != null) targetItem = initialHoveredItem;

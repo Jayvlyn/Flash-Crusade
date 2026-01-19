@@ -3031,6 +3031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UINavigator
   visualizer: {fileID: 1036409155}
   initialHoveredItem: {fileID: 1809799018}
+  parent: {fileID: 579940309}
 --- !u!114 &579940312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,6 +3046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridNavigator
   visualizer: {fileID: 1036409155}
   centerGridCell: {fileID: 217396645}
+  parent: {fileID: 227269908}
 --- !u!114 &579940313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7500,7 +7502,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 19.4
+      value: 19.45
       objectReference: {fileID: 0}
     - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_margin.x
@@ -7640,7 +7642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770168939380860893, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontSize
-      value: 19.4
+      value: 19.45
       objectReference: {fileID: 0}
     - target: {fileID: 4770168939380860893, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_fontAsset

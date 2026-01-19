@@ -95,6 +95,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     #region IUINavigator
 
     public void InitItemMode() => uiNav.InitItemMode();
+    
 
     public void TriggerItemNav(Vector2 dir) => uiNav.TriggerItemNav(dir);
 

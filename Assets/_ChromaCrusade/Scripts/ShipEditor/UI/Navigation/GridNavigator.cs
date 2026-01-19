@@ -5,6 +5,8 @@ public class GridNavigator : Navigator, IGridNavigator
     [SerializeField] RectTransform centerGridCell;
     public IUINavigator uiNav;
 
+    [SerializeField] Transform parent;
+
     void OnEnable()
     {
         EventBus.Subscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
@@ -23,6 +25,8 @@ public class GridNavigator : Navigator, IGridNavigator
 
     public override void Init()
     {
+        visualizer.transform.SetParent(parent);
+        visualizer.transform.localScale = Vector3.one;
         NavToCell(EditorState.CurrentGridCell);
     }
 

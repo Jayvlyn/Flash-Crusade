@@ -146,14 +146,14 @@ public class ShipPart : MonoBehaviour
         ChangeState(PartState.Grabbed);
         rect.SetParent(visualizerRect.parent);
         int currentIndex = rect.GetSiblingIndex();
-        rect.SetSiblingIndex(Mathf.Max(0, currentIndex - 1));
+        visualizerRect.SetSiblingIndex(rect.parent.childCount-1);
         rtf.target = visualizerRect;
     }
 
     public void OnPlaced(Vector2Int position, BuildArea buildArea)
     {
         this.position = position;
-        rect.SetParent(buildArea.rect);
+        //rect.SetParent(buildArea.rect); // should already have correct parent
     }
 
     public void Rotate(float angle)

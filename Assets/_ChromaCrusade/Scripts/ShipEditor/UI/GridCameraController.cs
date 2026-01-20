@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class GridCameraController : MonoBehaviour
 {
@@ -25,12 +24,10 @@ public class GridCameraController : MonoBehaviour
     void OnNewGridCellEvent(NewGridCellEvent e)
     {
         if (rect == null) return;
-        Debug.Log(e.cell);
         Vector2 pos = rect.localPosition;
         pos.x = e.cell.x * pixelsPerCell;
         pos.y = e.cell.y * pixelsPerCell;
         MoveCameraSmooth(-pos);
-
     }
 
     private void MoveCameraSmooth(Vector2 pos)
@@ -58,6 +55,6 @@ public class GridCameraController : MonoBehaviour
             yield return null;
         }
 
-        rect.localPosition = pos;
+        rect.localPosition = targetPos;
     }
 }

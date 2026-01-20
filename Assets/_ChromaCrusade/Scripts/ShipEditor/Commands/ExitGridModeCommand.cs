@@ -34,6 +34,8 @@ public class ExitGridModeCommand : ICommand
 
     public void Undo()
     {
+        ctx.SwitchToGridMode();
+
         if (partData != null)
         {
             bool success = ctx.TryTakePart(partData, out ShipPart part);
@@ -46,8 +48,6 @@ public class ExitGridModeCommand : ICommand
                 ctx.GrabImmediate(part, true);
             }
         }
-
-        ctx.SwitchToGridMode();
 
         if (ctx.GetHeldPart() != null)
             ctx.RestorePartTransformations(rotation, xFlipped, yFlipped);

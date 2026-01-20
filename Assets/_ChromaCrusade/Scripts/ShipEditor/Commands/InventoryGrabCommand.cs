@@ -13,16 +13,18 @@ public class InventoryGrabCommand : ICommand
     {
         bool success = ctx.TryTakePart(partData, out ShipPart newPart);
 
+        ctx.SetExpanded(true);
+        ctx.SwitchToGridMode();
+
         if (UIManager.Smoothing)
+        {
             ctx.GrabFrameLate(newPart, true);
+        }
         else
         {
             ctx.UpdateWithRectImmediate(newPart.rect);
             ctx.GrabImmediate(newPart, true);
         }
-
-        ctx.SetExpanded(true);
-        ctx.SwitchToGridMode();
     }
 
     public void Undo()

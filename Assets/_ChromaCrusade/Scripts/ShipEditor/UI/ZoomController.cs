@@ -17,7 +17,6 @@ public class ZoomController : MonoBehaviour
         get => zoomLevel;
         set => zoomLevel = (int)Mathf.Clamp(value, zoomRange.x, zoomRange.y);
     }
-
     #region Lifecycle
 
     void OnEnable()

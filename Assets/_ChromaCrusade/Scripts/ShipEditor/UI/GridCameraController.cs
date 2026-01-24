@@ -4,7 +4,7 @@ using UnityEngine;
 public class GridCameraController : MonoBehaviour
 {
     RectTransform rect;
-    float pixelsPerCell = 16;
+    public RectTransform centerCellRt;
 
     private void OnEnable()
     {
@@ -25,8 +25,16 @@ public class GridCameraController : MonoBehaviour
     {
         if (rect == null) return;
         Vector2 pos = rect.localPosition;
-        pos.x = e.cell.x * pixelsPerCell;
-        pos.y = e.cell.y * pixelsPerCell;
+
+        Vector3[] corners = new Vector3[4];
+        centerCellRt.GetWorldCorners(corners);
+
+        Vector2 bl = RectTransformUtility.WorldToScreenPoint(null, corners[0]);
+        Vector2 tr = RectTransformUtility.WorldToScreenPoint(null, corners[2]);
+
+        float pixels = tr.x - bl.x;
+        pos.x = e.cell.x * pixels;
+        pos.y = e.cell.y * pixels;
         MoveCameraSmooth(-pos);
     }
 

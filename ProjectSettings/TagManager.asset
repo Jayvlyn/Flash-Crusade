@@ -43,29 +43,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 1762990731
-    locked: 0
-  - name: PlayerShip
-    uniqueID: 175713521
-    locked: 0
-  - name: AllyShip
-    uniqueID: 3337914345
-    locked: 0
-  - name: FriendlyProjectile
-    uniqueID: 1185545059
-    locked: 0
-  - name: EnemyShip
-    uniqueID: 2835525979
-    locked: 0
-  - name: EnemyProjectile
-    uniqueID: 1595859431
+  - name: Background
+    uniqueID: 3093560753
     locked: 0
   - name: CelestialBody
     uniqueID: 3526954119
     locked: 0
-  - name: Background
-    uniqueID: 3093560753
+  - name: AllyShip
+    uniqueID: 3337914345
+    locked: 0
+  - name: EnemyShip
+    uniqueID: 2835525979
+    locked: 0
+  - name: FriendlyProjectile
+    uniqueID: 1185545059
+    locked: 0
+  - name: EnemyProjectile
+    uniqueID: 1595859431
+    locked: 0
+  - name: PlayerShip
+    uniqueID: 175713521
+    locked: 0
+  - name: UI
+    uniqueID: 1762990731
     locked: 0
   m_RenderingLayers:
   - Default

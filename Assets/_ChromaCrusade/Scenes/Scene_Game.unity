@@ -707,11 +707,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1636777219433649161, guid: 897969441feaa7a48a1bf38810eff60d, type: 3}
       propertyPath: x
-      value: 0.01
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 1636777219433649161, guid: 897969441feaa7a48a1bf38810eff60d, type: 3}
       propertyPath: y
-      value: 0.01
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 5447660380826081074, guid: 897969441feaa7a48a1bf38810eff60d, type: 3}
       propertyPath: m_Pivot.x

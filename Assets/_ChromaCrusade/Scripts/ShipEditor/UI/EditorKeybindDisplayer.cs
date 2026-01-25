@@ -17,20 +17,20 @@ public class EditorKeybindDisplayer : MonoBehaviour
         StringBuilder sb = new StringBuilder();
 
         //sb.Append("<color=#272727>");
-        sb.Append("Move: ");
-        sb.Append(BindingDisplayer.GetKeyboardCompositeBinding(inputManager.NavigateAction.action));
         //sb.Append("</color>");
+        sb.Append("Select: ");
+        sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.SubmitAction.action));
 
         sb.Append("\n");
         //sb.Append("<color=#2F2F2F>");
-        sb.Append("Select: ");
-        sb.Append(BindingDisplayer.GetFirstKeyboardBinding(inputManager.SubmitAction.action));
         //sb.Append("</color>");
+        sb.Append("Back: ");
+        sb.Append(BindingDisplayer.GetKeyboardBindingFromAny(inputManager.CancelAction.action));
 
         sb.Append("\n");
         //sb.Append("<color=#272727>");
-        sb.Append("Back: ");
-        sb.Append(BindingDisplayer.GetKeyboardBindingFromAny(inputManager.CancelAction.action));
+        sb.Append("Move: ");
+        sb.Append(BindingDisplayer.GetKeyboardCompositeBinding(inputManager.NavigateAction.action));
         //sb.Append("</color>");
 
         sb.Append("\n");

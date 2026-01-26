@@ -7,6 +7,7 @@ public class EditorState
     public bool midUndoDelete;
     public bool midGrab;
     public bool inInputField;
+    public bool enteringGrid = false;
     public NavItem currentItem;
 
     private Vector2Int currentGridCell;
@@ -16,7 +17,8 @@ public class EditorState
         set 
         {
             currentGridCell = value;
-            EventBus.Publish(new NewGridCellEvent { cell = currentGridCell });
+            if(!enteringGrid) EventBus.Publish(new NewGridCellEvent { cell = currentGridCell });
+            enteringGrid = false;
         }
     }
 

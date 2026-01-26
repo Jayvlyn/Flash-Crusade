@@ -1547,7 +1547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1607,6 +1607,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
   anchorMinInactive: {x: 0, y: 0}
@@ -1821,7 +1822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1881,6 +1882,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
   anchorMinInactive: {x: 0, y: 0}
@@ -1933,7 +1935,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7983662a87710e2458c1752b2bb988fb, type: 3}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.a
-      value: 0.19607843
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.b
@@ -2058,7 +2060,7 @@ PrefabInstance:
     - target: {fileID: 8073353028189379613, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: navLeft
       value: 
-      objectReference: {fileID: 295307811}
+      objectReference: {fileID: 0}
     - target: {fileID: 8073353028189379613, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: navRight
       value: 
@@ -2169,7 +2171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2646,7 +2648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2706,6 +2708,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
   anchorMinInactive: {x: 0, y: 0}
@@ -3881,6 +3884,7 @@ GameObject:
   - component: {fileID: 658380377}
   - component: {fileID: 658380376}
   - component: {fileID: 658380378}
+  - component: {fileID: 658380379}
   m_Layer: 5
   m_Name: PartsWindow
   m_TagString: Untagged
@@ -3980,6 +3984,21 @@ MonoBehaviour:
   - {fileID: 247980232}
   - {fileID: 1799806372}
   - {fileID: 1120102742}
+--- !u!114 &658380379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658380374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8549fb7a406a445a1d95cba51c51dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.ShipEditor.Inventory::ScrollButtonController
+  inventoryManager: {fileID: 658380378}
+  scrollUpButton: {fileID: 356721942}
+  scrollDownButton: {fileID: 2051440842}
 --- !u!114 &663647019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4575,6 +4594,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
 --- !u!114 &810847129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4615,7 +4635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4820,7 +4840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4868,6 +4888,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   rect: {fileID: 0}
+  image: {fileID: 0}
 --- !u!114 &945632138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5744,7 +5765,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7983662a87710e2458c1752b2bb988fb, type: 3}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.a
-      value: 0.19607843
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.b
@@ -6167,7 +6188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6227,6 +6248,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
   anchorMinInactive: {x: 0, y: 0}
@@ -7450,6 +7472,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
 --- !u!114 &1809799019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8063,7 +8086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  m_Color: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8123,6 +8146,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
   owner: {fileID: 0}
   selected: 0
   anchorMinInactive: {x: 0, y: 0}
@@ -8405,7 +8429,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 4bedcdab44f5e9c4694b427fa7d7a1cf, type: 3}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.a
-      value: 0.19607843
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 1330788965870858569, guid: ddf492d87e97c9d418efc84330492587, type: 3}
       propertyPath: m_Color.b
@@ -8741,7 +8765,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: f6ee5d2d168b7f44a8f5630b65d8f2ad, type: 3}
     - target: {fileID: 9221545260348722798, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_Color.a
-      value: 0.19607843
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 9221545260348722798, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_Color.b

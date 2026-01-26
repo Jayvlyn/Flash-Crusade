@@ -27,6 +27,7 @@ public class GridNavigator : Navigator, IGridNavigator
     {
         visualizer.transform.SetParent(parent);
         visualizer.transform.localScale = Vector3.one;
+        EditorState.enteringGrid = true;
         NavToCell(EditorState.CurrentGridCell);
     }
 

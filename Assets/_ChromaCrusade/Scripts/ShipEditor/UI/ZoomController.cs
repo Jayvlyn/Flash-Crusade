@@ -22,13 +22,11 @@ public class ZoomController : MonoBehaviour
     void OnEnable()
     {
         EventBus.Subscribe<ZoomInputEvent>(OnZoomInputEvent);
-        EventBus.Subscribe<NewGridCellEvent>(OnNewGridCellEvent);
     }
 
     void OnDisable()
     {
         EventBus.Unsubscribe<ZoomInputEvent>(OnZoomInputEvent);
-        EventBus.Unsubscribe<NewGridCellEvent>(OnNewGridCellEvent);
     }
 
     void Awake()
@@ -99,40 +97,4 @@ public class ZoomController : MonoBehaviour
         else if (zoomDir == ZoomDirection.Out) ZoomLevel++;
         OnNewZoomLevel();
     }
-
-    void OnNewGridCellEvent(NewGridCellEvent e)
-    {
-        //if(delayedPivotChange != null) StopCoroutine(delayedPivotChange);
-        //delayedPivotChange = StartCoroutine(DelayedPivotChange(e));
-    }
-
-    Coroutine delayedPivotChange;
-    IEnumerator DelayedPivotChange(NewGridCellEvent e)
-    {
-        yield return new WaitForSeconds(1f);
-
-        RectTransform rect = (RectTransform)transform;
-
-        Vector2 oldPivot = rect.pivot;
-        Vector2 size = rect.rect.size;
-        Vector3 scale = rect.localScale;
-
-        Vector2 cellOffsetPx = new Vector2(e.cell.x * 25f, e.cell.y * 25f);
-
-        Vector2 newPivot;
-        newPivot.x = 0.5f + (cellOffsetPx.x / size.x);
-        newPivot.y = 0.5f + (cellOffsetPx.y / size.y);
-
-        Vector2 pivotDelta = newPivot - oldPivot;
-
-        Vector3 positionDelta = new Vector3(
-            pivotDelta.x * size.x * scale.x,
-            pivotDelta.y * size.y * scale.y,
-            0f
-        );
-
-        rect.localPosition += positionDelta;
-        rect.pivot = newPivot;
-    }
-
 }

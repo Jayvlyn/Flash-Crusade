@@ -5,15 +5,18 @@ public class GridCameraController : MonoBehaviour
 {
     RectTransform rect;
     public RectTransform centerCellRt;
+    public RectTransform target;
 
     private void OnEnable()
     {
-        EventBus.Subscribe<NewGridCellEvent>(OnNewGridCellEvent);
+        EventBus.Subscribe<NewGridCellEvent>(OnAdjustGridCameraEvent);
+        EventBus.Subscribe<CancelCameraMovementEvent>(OnCancelCameraMovementEvent);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<NewGridCellEvent>(OnNewGridCellEvent);
+        EventBus.Unsubscribe<NewGridCellEvent>(OnAdjustGridCameraEvent);
+        EventBus.Unsubscribe<CancelCameraMovementEvent>(OnCancelCameraMovementEvent);
     }
 
     private void Start()
@@ -21,48 +24,52 @@ public class GridCameraController : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    void OnNewGridCellEvent(NewGridCellEvent e)
+    void OnAdjustGridCameraEvent(NewGridCellEvent e)
     {
-        if (rect == null) return;
-        Vector2 pos = rect.localPosition;
-
-        Vector3[] corners = new Vector3[4];
-        centerCellRt.GetWorldCorners(corners);
-
-        Vector2 bl = RectTransformUtility.WorldToScreenPoint(null, corners[0]);
-        Vector2 tr = RectTransformUtility.WorldToScreenPoint(null, corners[2]);
-
-        float pixels = tr.x - bl.x;
-        pos.x = e.cell.x * pixels;
-        pos.y = e.cell.y * pixels;
-        MoveCameraSmooth(-pos);
+        if (rect == null || target == null) return;
+        MoveCameraSmooth();
     }
 
-    private void MoveCameraSmooth(Vector2 pos)
+    void OnCancelCameraMovementEvent(CancelCameraMovementEvent e)
     {
-        if(cameraMoveRoutine!=null) StopCoroutine(cameraMoveRoutine);
-        cameraMoveRoutine = StartCoroutine(MoveCameraSmooth(pos, 0.5f));
+        if (cameraMoveRoutine != null) StopCoroutine(cameraMoveRoutine);
+    }
+
+    private void MoveCameraSmooth()
+    {
+        if (cameraMoveRoutine != null) StopCoroutine(cameraMoveRoutine);
+        cameraMoveRoutine = StartCoroutine(MoveCameraSmooth(0.5f));
     }
 
     Coroutine cameraMoveRoutine;
-    IEnumerator MoveCameraSmooth(Vector2 pos, float duration)
+    IEnumerator MoveCameraSmooth(float duration)
     {
-        Vector2 startPos = rect.localPosition;
-        Vector2 targetPos = pos;
-
         float t = 0;
 
-        while(t < duration)
+        Vector2 startPos = rect.localPosition;
+        float scale = rect.localScale.x;
+        Vector2 endPos = target.localPosition;
+        endPos = new Vector2(-endPos.x * scale, -endPos.y * scale);
+
+        while (t < duration)
         {
+            endPos = target.localPosition;
+            endPos = new Vector2(-endPos.x * scale, -endPos.y * scale);
             t += Time.deltaTime;
-            float s = Mathf.Clamp01(t/duration);
+            float s = Mathf.Clamp01(t / duration);
 
             s = Mathf.SmoothStep(0, 1, s);
 
-            rect.localPosition = Vector3.Lerp(startPos, targetPos, s);
+            SetPos(Vector3.Lerp(startPos, endPos, s));
             yield return null;
         }
+        endPos = target.localPosition;
+        endPos = new Vector2(-endPos.x * scale, -endPos.y * scale);
+        SetPos(endPos);
+    }
 
-        rect.localPosition = targetPos;
+    public void SetPos(Vector2 pos)
+    {
+        rect.localPosition = pos;
     }
 }

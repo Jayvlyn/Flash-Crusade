@@ -44,7 +44,7 @@ public class GridNavigator : Navigator, IGridNavigator
 
     void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
-        if(EditorState.navMode == NavMode.Grid) 
+        if (EditorState.navMode == NavMode.Grid) 
             visualizer.HighlightCellImmediate(EditorState.CurrentGridCell);
     }
 
@@ -74,6 +74,7 @@ public class GridNavigator : Navigator, IGridNavigator
     public void SwitchToItemMode()
     {
         if (EditorState.navMode == NavMode.Item) return;
+        EventBus.Publish(new CancelCameraMovementEvent());
         EditorState.navMode = NavMode.Item;
         uiNav.InitItemMode();
     }

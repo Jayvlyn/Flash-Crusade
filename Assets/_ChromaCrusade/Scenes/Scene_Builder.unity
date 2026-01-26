@@ -5500,6 +5500,11 @@ MonoBehaviour:
   color1: {r: 1, g: 1, b: 1, a: 1}
   color2: {r: 1, g: 1, b: 1, a: 0.16078432}
   blinkRate: 0.5
+--- !u!1 &1053448516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7592103861028924198, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+  m_PrefabInstance: {fileID: 8857798747385103948}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1054526082 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4695493086273103675, guid: ddf492d87e97c9d418efc84330492587, type: 3}
@@ -6238,12 +6243,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1258948047804769387, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
   m_PrefabInstance: {fileID: 8857798747385103948}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1053448516}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5563e8eaca89e584c8e16c7b30e5277a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavItem
+--- !u!114 &1478069471 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8582599402620106172, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+  m_PrefabInstance: {fileID: 8857798747385103948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053448516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &1478069472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9221545260348722798, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+  m_PrefabInstance: {fileID: 8857798747385103948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053448516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &1478069474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053448516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65dfb11ab8bd3b241a328ba91bf8ee1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.ShipEditor.UI::ShipNameValidator
+  input: {fileID: 1478069471}
+  image: {fileID: 1478069472}
 --- !u!114 &1483751138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8717,7 +8758,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7592103861028924198, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1478069474}
   m_SourcePrefab: {fileID: 100100000, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

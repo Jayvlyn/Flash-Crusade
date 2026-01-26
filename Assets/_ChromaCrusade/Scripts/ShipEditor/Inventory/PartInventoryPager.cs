@@ -33,7 +33,9 @@ public class PartInventoryPager
         bool canPage = CanPageUp();
 
         if (canPage)
+        {
             CurrentPage--;
+        }
 
         return canPage;
     }
@@ -43,7 +45,9 @@ public class PartInventoryPager
         bool canPage = CanPageDown();
 
         if (canPage)
+        {
             CurrentPage++;
+        }
 
         return canPage;
     }

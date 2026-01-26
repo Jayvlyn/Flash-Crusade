@@ -76,6 +76,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         var parts = partInventory.GetParts(showState);
         ShowParts(parts);
+        EventBus.Publish(new InventoryPageChangedEvent());
     }
 
     void ShowParts(IReadOnlyList<PartInventoryModel.Entry> parts)
@@ -172,4 +173,6 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     }
 
     #endregion
+
+    public PartInventoryPager GetPager() => pager;
 }

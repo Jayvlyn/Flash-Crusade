@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.Utilities::CodeMonkey.Assets
   editorShipPartPrefab: {fileID: 7175469603136724573, guid: 39a71316016edc44b9a19e9fa051676c, type: 3}
+  uiGreen: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
+  uiRed: {r: 0.84705883, g: 0.21176471, b: 0.21176471, a: 0.19607843}

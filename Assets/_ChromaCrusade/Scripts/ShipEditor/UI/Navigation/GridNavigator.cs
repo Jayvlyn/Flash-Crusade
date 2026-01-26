@@ -27,7 +27,7 @@ public class GridNavigator : Navigator, IGridNavigator
     {
         visualizer.transform.SetParent(parent);
         visualizer.transform.localScale = Vector3.one;
-        EditorState.enteringGrid = true;
+        EditorState.enteringGrid = true; // when current cell is initialized the camera wont try to follow it with this
         NavToCell(EditorState.CurrentGridCell);
     }
 

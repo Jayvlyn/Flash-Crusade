@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(RectTransform))]
-public class NavItem : MonoBehaviour
+public class NavItem : MonoBehaviour, IPointerDownHandler
 {
     public NavItem navUp;
     public NavItem navLeft;
@@ -46,5 +47,10 @@ public class NavItem : MonoBehaviour
     {
         if (Disabled) return;
         onSelected?.Invoke();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnSelected();
     }
 }

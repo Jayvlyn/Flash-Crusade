@@ -1,7 +1,7 @@
-using UnityEngine;
-
 public class FloatingPartBuildRule : BuildRule
 {
+    BuildArea buildArea;
+
     public FloatingPartBuildRule(BuildArea buildArea)
     {
         this.buildArea = buildArea;

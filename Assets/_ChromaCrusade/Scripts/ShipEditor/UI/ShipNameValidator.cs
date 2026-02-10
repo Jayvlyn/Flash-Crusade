@@ -7,9 +7,16 @@ public class ShipNameValidator : MonoBehaviour
     [SerializeField] private TMP_InputField input;
     [SerializeField] private Image image;
 
-    private void Awake()
+    void Awake()
     {
         input.onValueChanged.AddListener(OnValueChanged); 
+    }
+
+    public bool IsValid()
+    {
+        string text = input.text;
+
+        return !string.IsNullOrEmpty(text);
     }
 
     void OnValueChanged(string value)
@@ -18,12 +25,5 @@ public class ShipNameValidator : MonoBehaviour
             image.color = Assets.i.uiGreen;
         else
             image.color = Assets.i.uiRed;
-    }
-
-    private bool IsValid()
-    {
-        string text = input.text;
-
-        return !string.IsNullOrEmpty(text);
     }
 }

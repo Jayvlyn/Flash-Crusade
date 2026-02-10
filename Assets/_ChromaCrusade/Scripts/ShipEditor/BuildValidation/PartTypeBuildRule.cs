@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class PartTypeBuildRule : BuildRule
 {
-    public PartType requiredType;
-    public int requiredAmount;
+    BuildArea buildArea;
+    PartType requiredType;
 
-    public PartTypeBuildRule(BuildArea buildArea, PartType requiredType, int requiredAmount)
+    public PartTypeBuildRule(BuildArea buildArea, PartType requiredType)
     {
         this.buildArea = buildArea;
         this.requiredType = requiredType;
-        this.requiredAmount = requiredAmount;
     }
 
     public override bool CheckRule()

@@ -1,0 +1,17 @@
+{
+    "name": "CC.ShipEditor.BuildValidation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25",
+        "GUID:bfefc9aef8e33b04fbd8b168d6985215"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

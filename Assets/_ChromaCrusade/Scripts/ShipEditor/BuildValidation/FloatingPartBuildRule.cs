@@ -9,6 +9,6 @@ public class FloatingPartBuildRule : BuildRule
 
     public override bool CheckRule()
     {
-        throw new System.NotImplementedException();
+        return !buildArea.HasDisconnectedPart();
     }
 }

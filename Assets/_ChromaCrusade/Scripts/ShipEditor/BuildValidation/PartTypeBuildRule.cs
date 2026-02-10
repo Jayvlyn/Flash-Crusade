@@ -14,6 +14,6 @@ public class PartTypeBuildRule : BuildRule
 
     public override bool CheckRule()
     {
-        throw new System.NotImplementedException();
+        return buildArea.HasPartType(requiredType);
     }
 }

@@ -22,6 +22,11 @@ public class ShipBuildValidator
 
     public bool ValidateCurrentBuild()
     {
-        return false;
+        foreach(BuildRule rule in rules)
+        {
+            if (!rule.CheckRule()) 
+                return false;
+        }
+        return true;
     }
 }

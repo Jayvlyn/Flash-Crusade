@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using UnityEngine;
 using static ShipPart;
@@ -86,6 +87,25 @@ public class BuildArea : MonoBehaviour
             CheckAndPropagateDisconnect(n);
 
         return partAtCell;
+    }
+
+    public bool HasPartType(PartType type)
+    {
+        foreach(ShipPart part in allParts)
+        {
+            if (part.partData.PartType == type) 
+                return true;
+        }
+        return false;
+    }
+
+    public bool HasDisconnectedPart()
+    {
+        foreach(ShipPart part in allParts)
+        {
+            if (part.partState == PartState.PlacedDisconnected) return true;
+        }
+        return false;
     }
 
     #region Old Grab & Place (Full Recompute)

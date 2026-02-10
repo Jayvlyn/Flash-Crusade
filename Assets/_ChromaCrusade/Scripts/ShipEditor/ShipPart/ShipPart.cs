@@ -34,14 +34,6 @@ public class ShipPart : MonoBehaviour
 
     public bool debugState = false;
 
-    private void Update()
-    {
-        if(debugState)
-        {
-            Debug.Log(partState.ToString());
-        }
-    }
-
     private void Awake()
     {
         image = GetComponent<Image>();

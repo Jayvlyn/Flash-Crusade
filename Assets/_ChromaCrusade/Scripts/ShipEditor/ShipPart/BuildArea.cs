@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using UnityEngine;
 using static ShipPart;
@@ -7,6 +6,7 @@ using static ShipPart;
 public class BuildArea : MonoBehaviour
 {
     public Dictionary<Vector2Int, ShipPart> occupiedCells = new Dictionary<Vector2Int, ShipPart>();
+    public IEnumerable<ShipPart> Parts => allParts;
     [HideInInspector] public RectTransform rect;
 
     private void Awake()
@@ -163,7 +163,7 @@ public class BuildArea : MonoBehaviour
 
     #region Spacial Helpers
 
-    private bool ForEachSegment(ShipPart part, Vector2Int centerCell, System.Func<PartSegment, Vector2Int, bool> callback)
+    public bool ForEachSegment(ShipPart part, Vector2Int centerCell, System.Func<PartSegment, Vector2Int, bool> callback)
     {
         for (int y = 0; y < 3; y++)
         {

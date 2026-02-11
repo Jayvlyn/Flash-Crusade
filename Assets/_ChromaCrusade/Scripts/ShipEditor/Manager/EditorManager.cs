@@ -413,6 +413,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
         string result = validator.ValidateCurrentBuild();
         //Debug.Log(result);
 
+
+        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea);
+
+        spriteCombiner.CombinePartSprites();
+
         if(result.Equals("Valid"))
         {
             // save ship

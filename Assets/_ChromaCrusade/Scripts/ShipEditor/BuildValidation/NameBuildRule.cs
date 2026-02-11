@@ -7,8 +7,11 @@ public class NameBuildRule : BuildRule
         this.nameValidator = nameValidator;
     }
 
-    public override bool CheckRule()
+    public override string CheckRule()
     {
-        return nameValidator.IsValid();
+        if (nameValidator.IsValid()) 
+            return passingString;
+
+        return "You must enter a valid name for your ship!";
     }
 }

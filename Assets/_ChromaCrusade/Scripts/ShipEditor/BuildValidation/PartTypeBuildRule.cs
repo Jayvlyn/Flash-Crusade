@@ -11,8 +11,11 @@ public class PartTypeBuildRule : BuildRule
         this.requiredType = requiredType;
     }
 
-    public override bool CheckRule()
+    public override string CheckRule()
     {
-        return buildArea.HasPartType(requiredType);
+        if(buildArea.HasPartType(requiredType))
+            return passingString;
+
+        return $"Your ship needs at least one {requiredType.ToString()}!";
     }
 }

@@ -7,6 +7,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] NavItem buildWindow;
     [SerializeField] NavItem exitItem;
     [SerializeField] BuildArea buildArea;
+    [SerializeField] ShipNameValidator nameValidator;
 
     [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] UINavigator uiNav;
@@ -398,7 +399,30 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnEnterInputField(EnterInputFieldEvent e) => editorState.inInputField = true;
 
-    public void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e) => CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
+    void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e) => CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
+
+    public void OnExitButtonSelected()
+    {
+        Debug.Log("exit pressed");
+    }
+
+    public void OnCompleteButtonSelected()
+    {
+        ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
+
+        string result = validator.ValidateCurrentBuild();
+        Debug.Log(result);
+
+        if(result.Equals("Valid"))
+        {
+            // save ship
+            Debug.Log("ship is valid");
+        }
+        else
+        {
+            Debug.Log("ship is NOT valid");
+        }
+    }
 
     #endregion
 }

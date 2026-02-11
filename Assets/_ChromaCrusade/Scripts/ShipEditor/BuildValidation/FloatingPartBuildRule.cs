@@ -7,8 +7,10 @@ public class FloatingPartBuildRule : BuildRule
         this.buildArea = buildArea;
     }
 
-    public override bool CheckRule()
+    public override string CheckRule()
     {
-        return !buildArea.HasDisconnectedPart();
+        if (buildArea.HasDisconnectedPart())
+            return "All ship parts in the build area must be connected! (No floating parts)";
+        return passingString;
     }
 }

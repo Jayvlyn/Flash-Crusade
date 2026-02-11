@@ -12,124 +12,114 @@ public class PartSpriteCombiner
 
     public Sprite CombinePartSprites()
     {
-        int padding = 3;
+        const int paddingPixels = 3;
 
         int topBound = 0;
         int bottomBound = 0;
         int leftBound = 0;
         int rightBound = 0;
 
-        foreach(ShipPart part in buildArea.Parts)
+        foreach (ShipPart part in buildArea.Parts)
         {
-            leftBound   = Mathf.Min(leftBound,   part.position.x - 1);
-            rightBound  = Mathf.Max(rightBound,  part.position.x + 1);
+            leftBound = Mathf.Min(leftBound, part.position.x - 1);
+            rightBound = Mathf.Max(rightBound, part.position.x + 1);
             bottomBound = Mathf.Min(bottomBound, part.position.y - 1);
-            topBound    = Mathf.Max(topBound,    part.position.y + 1);
+            topBound = Mathf.Max(topBound, part.position.y + 1);
         }
 
-        int width = (rightBound - leftBound + 1) * pixelsPerCell + padding * 2;
-        int height = (topBound - bottomBound + 1) * pixelsPerCell + padding * 2;
+        int atlasWidthPixels = (rightBound - leftBound + 1) * pixelsPerCell + paddingPixels * 2;
+        int atlasHeightPixels = (topBound - bottomBound + 1) * pixelsPerCell + paddingPixels * 2;
 
-        Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
-        tex.filterMode = FilterMode.Point;
-        
+        Texture2D atlasTexture = new Texture2D(atlasWidthPixels, atlasHeightPixels, TextureFormat.RGBA32, false);
+        atlasTexture.filterMode = FilterMode.Point;
 
-        Rect rect = new Rect(0, 0, width, height);
-
-        int originX = leftBound;
-        int originY = bottomBound;
-
-        // clean texture (probably not needed, already fresh texture)
-        Color32[] clear = new Color32[width * height];
-        tex.SetPixels32(clear);
+        Color32[] atlasPixels = new Color32[atlasWidthPixels * atlasHeightPixels];
 
         foreach (ShipPart part in buildArea.Parts)
         {
-            int partPixelSize = pixelsPerCell * 3;
+            int atlasBaseX = paddingPixels + (part.position.x - leftBound - 1) * pixelsPerCell;
+            int atlasBaseY = paddingPixels + (part.position.y - bottomBound - 1) * pixelsPerCell;
 
-            int atlasBaseX = padding + (part.position.x - leftBound - 1) * pixelsPerCell;
-            int atlasBaseY = padding + (part.position.y - bottomBound - 1) * pixelsPerCell;
+            Sprite sourceSprite = part.image.sprite;
+            Texture2D sourceTexture = sourceSprite.texture;
+            Rect sourceRect = sourceSprite.textureRect;
 
-            Sprite srcSprite = part.image.sprite;
-            Texture2D srcTex = srcSprite.texture;
-            Rect r = srcSprite.textureRect;
+            int sourceWidthPixels = (int)sourceRect.width;
+            int sourceHeightPixels = (int)sourceRect.height;
 
-            int w = (int)r.width;
-            int h = (int)r.height;
+            Color32[] sourcePixels = sourceTexture.GetPixels32();
 
-            Color32[] src = srcTex.GetPixels32();
+            int rotationDegrees = Mathf.RoundToInt(part.Rotation) % 360;
 
-            int rot = Mathf.RoundToInt(part.Rotation) % 360;
-
-            for(int sy = 0; sy < h; sy++)
+            for (int sourceY = 0; sourceY < sourceHeightPixels; sourceY++)
             {
-                for (int sx = 0; sx < w; sx++) 
+                for (int sourceX = 0; sourceX < sourceWidthPixels; sourceX++)
                 {
-                    int fx = sx;
-                    int fy = sy;
+                    int flippedX = sourceX;
+                    int flippedY = sourceY;
 
-                    if (part.xFlipped) fx = w - 1 - fx;
-                    if (part.yFlipped) fy = h - 1 - fy;
+                    if (part.xFlipped) flippedX = sourceWidthPixels - 1 - flippedX;
+                    if (part.yFlipped) flippedY = sourceHeightPixels - 1 - flippedY;
 
-                    int tx, ty;
+                    int transformedX;
+                    int transformedY;
 
-                    switch (rot)
+                    switch (rotationDegrees)
                     {
                         case 90:
-                            tx = fy;
-                            ty = w - 1 - fx;
+                            transformedX = flippedY;
+                            transformedY = sourceWidthPixels - 1 - flippedX;
                             break;
 
                         case 180:
-                            tx = w - 1 - fx;
-                            ty = h - 1 - fy;
+                            transformedX = sourceWidthPixels - 1 - flippedX;
+                            transformedY = sourceHeightPixels - 1 - flippedY;
                             break;
 
                         case 270:
-                            tx = h - 1 - fy;
-                            ty = fx;
+                            transformedX = sourceHeightPixels - 1 - flippedY;
+                            transformedY = flippedX;
                             break;
 
                         default: // 0
-                            tx = fx;
-                            ty = fy;
+                            transformedX = flippedX;
+                            transformedY = flippedY;
                             break;
                     }
 
-                    int srcX = (int)r.x + sx;
-                    int srcY = (int)r.y + sy;
+                    int sourcePixelX = (int)sourceRect.x + sourceX;
+                    int sourcePixelY = (int)sourceRect.y + sourceY;
 
+                    Color32 pixelColor = sourcePixels[sourcePixelY * sourceTexture.width + sourcePixelX];
+                    if (pixelColor.a == 0) continue;
 
-                    Color32 c = src[srcY * srcTex.width + srcX];
+                    int atlasX = atlasBaseX + transformedX;
+                    int atlasY = atlasBaseY + transformedY;
 
-                    if (c.a == 0) continue;
-
-                    tex.SetPixel(atlasBaseX + tx, atlasBaseY + ty, c);
+                    atlasPixels[atlasY * atlasWidthPixels + atlasX] = pixelColor;
                 }
             }
         }
-        tex.Apply();
 
+        atlasTexture.SetPixels32(atlasPixels);
+        atlasTexture.Apply();
 
-        Sprite combined = Sprite.Create(
-            tex,
-            rect,
+        Sprite combinedSprite = Sprite.Create(
+            atlasTexture,
+            new Rect(0, 0, atlasWidthPixels, atlasHeightPixels),
             new Vector2(0.5f, 0.5f),
             pixelsPerCell
         );
 
-        // for testing:
-        GameObject go = new GameObject("CombinedShip");
+        #region testing
+        GameObject previewObject = new GameObject("CombinedShip");
+        previewObject.AddComponent<SpriteRenderer>().sprite = combinedSprite;
 
-        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = combined;
+        float centerWorldX = (leftBound + rightBound + 1) * 0.5f;
+        float centerWorldY = (bottomBound + topBound + 1) * 0.5f;
+        previewObject.transform.position = new Vector3(centerWorldX, centerWorldY, 0f);
+        #endregion
 
-        float centerX = (leftBound + rightBound + 1) * 0.5f;
-        float centerY = (bottomBound + topBound + 1) * 0.5f;
-
-        go.transform.position = new Vector3(centerX, centerY, 0f);
-        // end of testing
-
-        return combined;
+        return combinedSprite;
     }
 }

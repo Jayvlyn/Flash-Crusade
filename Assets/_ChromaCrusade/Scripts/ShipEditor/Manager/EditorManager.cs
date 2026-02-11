@@ -411,16 +411,16 @@ public class EditorManager : MonoBehaviour, ICommandContext
         ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
 
         string result = validator.ValidateCurrentBuild();
-        Debug.Log(result);
+        //Debug.Log(result);
 
         if(result.Equals("Valid"))
         {
             // save ship
-            Debug.Log("ship is valid");
+            //Debug.Log("ship is valid");
         }
         else
         {
-            Debug.Log("ship is NOT valid");
+            //Debug.Log("ship is NOT valid");
         }
     }
 

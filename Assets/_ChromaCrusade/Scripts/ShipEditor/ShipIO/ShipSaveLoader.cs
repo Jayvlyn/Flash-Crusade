@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class ShipSaveLoader
@@ -22,9 +22,37 @@ public class ShipSaveLoader
 
     public void SaveCurrentBuild(string shipName)
     {
-        PartSpriteCombiner psc = new PartSpriteCombiner(buildArea);
-        Texture2D shipTexture = psc.CreateCombinedTexture();
+        // Save Sprite
+        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea);
+        Texture2D shipTexture = spriteCombiner.CreateCombinedTexture();
         SaveShipTexture(shipTexture, shipName);
+
+        // Save Build Data
+        var shipSave = new ShipSave
+        {
+            shipName = shipName,
+            partList = new List<PartStruct>()
+        };
+
+        foreach(var part in buildArea.Parts)
+        {
+            shipSave.partList.Add(new PartStruct
+            {
+                partName = part.partData.name,
+                posX = part.position.x,
+                posY = part.position.y,
+                xFlipped = part.xFlipped,
+                yFlipped = part.yFlipped,
+                rotation = Mathf.RoundToInt(part.Rotation) % 360
+            });
+        }
+
+        string json = JsonUtility.ToJson(shipSave, true);
+
+        File.WriteAllText(
+            Path.Combine(ShipDataPath, $"{shipName}.json"),
+            json
+        );
     }
 
     #endregion
@@ -36,5 +64,7 @@ public class ShipSaveLoader
         string path = Path.Combine(ShipSpritePath, $"{shipName}.png");
 
         File.WriteAllBytes(path, pngBytes);
+
+        Object.Destroy(texture);
     }
 }

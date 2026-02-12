@@ -16,7 +16,25 @@ public class ShipNameValidator : MonoBehaviour
     {
         string text = input.text;
 
-        return !string.IsNullOrEmpty(text);
+        if (string.IsNullOrWhiteSpace(text))
+            return false;
+
+        // Windows / cross-platform invalid filename chars (/ \ : * ? " < > |)
+        char[] invalidChars = System.IO.Path.GetInvalidFileNameChars();
+
+        if (text.IndexOfAny(invalidChars) >= 0)
+            return false;
+
+        // prevent names that are only dots or spaces
+        if (text.Trim('.', ' ').Length == 0)
+            return false;
+
+        return true;
+    }
+
+    public string GetName()
+    {
+        return input.text;
     }
 
     void OnValueChanged(string value)

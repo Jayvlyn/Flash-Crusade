@@ -12,6 +12,6 @@ public class NameBuildRule : BuildRule
         if (nameValidator.IsValid()) 
             return passingString;
 
-        return "You must enter a valid name for your ship!";
+        return "You must enter a valid name for your ship! (Avoid special characters)";
     }
 }

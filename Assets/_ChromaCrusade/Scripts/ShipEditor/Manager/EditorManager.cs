@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +9,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] NavItem exitItem;
     [SerializeField] BuildArea buildArea;
     [SerializeField] ShipNameValidator nameValidator;
+    [SerializeField] TMP_Text validationResponseText;
 
     [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] UINavigator uiNav;
@@ -411,22 +413,34 @@ public class EditorManager : MonoBehaviour, ICommandContext
         ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
 
         string result = validator.ValidateCurrentBuild();
-        //Debug.Log(result);
-
-
-        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea);
-
-        spriteCombiner.CombinePartSprites();
 
         if(result.Equals("Valid"))
         {
-            // save ship
-            //Debug.Log("ship is valid");
+            ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea);
+            ShipSL.SaveCurrentBuild(nameValidator.GetName());
         }
         else
         {
-            //Debug.Log("ship is NOT valid");
+            SetResponseText(result);
         }
+    }
+
+    #endregion
+
+    #region Validation Response
+
+    void SetResponseText(string content, float duration = 5)
+    {
+        validationResponseText.text = content;
+        if(validationTextClearerCoroutine != null) StopCoroutine(validationTextClearerCoroutine);
+        validationTextClearerCoroutine = StartCoroutine(ValidationResponseTextClearer(duration));
+    }
+
+    Coroutine validationTextClearerCoroutine;
+    IEnumerator ValidationResponseTextClearer(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        validationResponseText.text = "";
     }
 
     #endregion

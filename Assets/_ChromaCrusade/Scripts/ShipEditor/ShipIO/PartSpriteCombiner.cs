@@ -10,10 +10,8 @@ public class PartSpriteCombiner
         this.buildArea = buildArea;
     }
 
-    public Sprite CombinePartSprites()
+    public Texture2D CreateCombinedTexture(int paddingPixels = 3)
     {
-        const int paddingPixels = 3;
-
         int topBound = 0;
         int bottomBound = 0;
         int leftBound = 0;
@@ -104,20 +102,25 @@ public class PartSpriteCombiner
         atlasTexture.SetPixels32(atlasPixels);
         atlasTexture.Apply();
 
+        return atlasTexture;
+    }
+
+    public Sprite CreateShipSpriteFromTexture(Texture2D texture)
+    {
         Sprite combinedSprite = Sprite.Create(
-            atlasTexture,
-            new Rect(0, 0, atlasWidthPixels, atlasHeightPixels),
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
             new Vector2(0.5f, 0.5f),
             pixelsPerCell
         );
 
         #region testing
-        GameObject previewObject = new GameObject("CombinedShip");
-        previewObject.AddComponent<SpriteRenderer>().sprite = combinedSprite;
+        //GameObject previewObject = new GameObject("CombinedShip");
+        //previewObject.AddComponent<SpriteRenderer>().sprite = combinedSprite;
 
-        float centerWorldX = (leftBound + rightBound + 1) * 0.5f;
-        float centerWorldY = (bottomBound + topBound + 1) * 0.5f;
-        previewObject.transform.position = new Vector3(centerWorldX, centerWorldY, 0f);
+        //float centerWorldX = (leftBound + rightBound + 1) * 0.5f;
+        //float centerWorldY = (bottomBound + topBound + 1) * 0.5f;
+        //previewObject.transform.position = new Vector3(centerWorldX, centerWorldY, 0f);
         #endregion
 
         return combinedSprite;

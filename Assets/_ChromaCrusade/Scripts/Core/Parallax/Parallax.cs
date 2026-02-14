@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Parallax : MonoBehaviour
 {
     [SerializeField] private RawImage img;
-    [SerializeField] private float x, y;
+    public float x, y;
 
     private void Update()
     {

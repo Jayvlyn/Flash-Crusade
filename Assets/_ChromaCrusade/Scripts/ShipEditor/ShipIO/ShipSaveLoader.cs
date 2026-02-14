@@ -55,6 +55,26 @@ public class ShipSaveLoader
         );
     }
 
+    public void LoadBuild(string shipName)
+    {
+        string path = Path.Combine(ShipDataPath, $"{shipName}.json");
+
+        if (!File.Exists(path))
+        {
+            Debug.LogError("Ship save not found: " + path);
+            return;
+        }
+
+        string json = File.ReadAllText(path);
+
+        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+
+        if (shipSave.partList == null)
+            return;
+
+        Debug.Log("unfinished");
+    }
+
     #endregion
 
     private void SaveShipTexture(Texture2D texture, string shipName)

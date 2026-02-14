@@ -361,7 +361,6 @@ GameObject:
   - component: {fileID: 8582599402620106172}
   - component: {fileID: 1258948047804769387}
   - component: {fileID: 7423884619790597555}
-  - component: {fileID: 2648874326692456869}
   m_Layer: 5
   m_Name: InputField_Scalable
   m_TagString: Untagged
@@ -563,6 +562,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   rect: {fileID: 0}
+  image: {fileID: 0}
 --- !u!114 &7423884619790597555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,17 +575,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57051c4d42dc27f4692f88962d6e12d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavInputHelper
---- !u!114 &2648874326692456869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7592103861028924198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
-  m_AspectMode: 2
-  m_AspectRatio: 7.5

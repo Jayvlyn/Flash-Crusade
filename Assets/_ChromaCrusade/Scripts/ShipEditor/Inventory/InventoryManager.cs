@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     private PartCounter[] partCounters;
     private List<ShipPart> shownParts;
+    private List<ShipPart> nextParts;
     private PartInventoryModel partInventory;
     private PartInventoryPager pager;
 
@@ -78,21 +79,26 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     void RefreshCurrentPage()
     {
         var parts = partInventory.GetParts(showState);
-        //ShowParts(parts);
+        ShowParts(parts);
+        EventBus.Publish(new InventoryPageChangedEvent());
+    }
+
+    void SlidePage()
+    {
+        var parts = partInventory.GetParts(showState);
         ShowPartsNextPage(parts);
         EventBus.Publish(new InventoryPageChangedEvent());
     }
 
     void ShowPartsNextPage(IReadOnlyList<PartInventoryModel.Entry> parts)
     {
-        ClearParts();
-
         DoSmoothScroll();
 
         int elementsPerPage = partSelectors.Length / 2;
         pager.Recalculate(parts.Count, elementsPerPage);
         var (startIndex, endIndex) = pager.GetRange(parts.Count, elementsPerPage);
 
+        nextParts = new List<ShipPart>();
 
         int selectorIndex = elementsPerPage;
         for (int i = startIndex; i < endIndex; i++)
@@ -108,7 +114,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             ShipPart part = obj.GetComponent<ShipPart>();
             part.Init(entry.data);
 
-            shownParts.Add(part);
+            nextParts.Add(part);
 
             partCounters[selectorIndex].SetCount(entry.count);
 
@@ -216,16 +222,35 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             NavItem sourceSelector = partSelectors[i];
             NavItem targetSelector = partSelectors[selectorIndex];
 
-            Transform part = sourceSelector.transform.GetChild(0);
-            part.SetParent(targetSelector.transform, false);
-            part.SetAsFirstSibling();
+            if (sourceSelector.transform.childCount > 1)
+            {
+                Transform part = sourceSelector.transform.GetChild(0);
+                part.SetParent(targetSelector.transform, false);
+                part.SetAsFirstSibling();
+            }
 
             PartCounter originCounter = partCounters[i];
             PartCounter targetCounter = partCounters[selectorIndex];
 
-            targetCounter.countText.text = originCounter.countText.text;
+            Debug.Log(targetSelector.transform.childCount);
+
+            if (targetSelector.transform.childCount < 2)
+            {
+                targetCounter.countText.text = "";
+            }
+            else
+            {
+                targetCounter.countText.text = originCounter.countText.text;
+            }
 
             selectorIndex++;
+        }
+
+        ClearParts();
+
+        for (int i = 0; i < nextParts.Count; i++)
+        {
+            shownParts.Add(nextParts[i]);
         }
     }
 
@@ -266,12 +291,12 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public void OnUpSelected()
     {
-        if(pager.PageUp()) RefreshCurrentPage();
+        if(pager.PageUp()) SlidePage();
     }
 
     public void OnDownSelected()
     {
-        if(pager.PageDown()) RefreshCurrentPage();
+        if(pager.PageDown()) SlidePage();
     }
 
     #endregion

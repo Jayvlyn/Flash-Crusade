@@ -252,4 +252,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.UI::PartCounter
   countText: {fileID: 5609739222697950135}
-  outlineText: {fileID: 0}

@@ -83,7 +83,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         ClearParts();
 
-        int elementsPerPage = partSelectors.Length;
+        int elementsPerPage = partSelectors.Length/2;
         pager.Recalculate(parts.Count, elementsPerPage);
         var (startIndex, endIndex) = pager.GetRange(parts.Count, elementsPerPage);
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour, IInventoryManager
 {
     [Header("Refs")]
-    public RectTransform itemPanel;
+    public RectTransform partParent;
     public RectTransform defaultPartSpawn;
     public NavItem[] partSelectors;
 
@@ -96,7 +96,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             NavItem partSelector = partSelectors[selectorIndex];
             partSelector.onSelected.RemoveAllListeners();
 
-            GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, itemPanel);
+            GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, partParent);
 
             ShipPart part = obj.GetComponent<ShipPart>();
             part.Init(entry.data);

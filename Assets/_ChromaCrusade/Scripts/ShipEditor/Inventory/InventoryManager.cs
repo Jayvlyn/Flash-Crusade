@@ -96,13 +96,14 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             NavItem partSelector = partSelectors[selectorIndex];
             partSelector.onSelected.RemoveAllListeners();
 
-            GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, partParent);
+            GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, partSelector.transform);
+            obj.transform.SetSiblingIndex(0);
 
             ShipPart part = obj.GetComponent<ShipPart>();
             part.Init(entry.data);
 
-            part.rtf.enabled = true;
-            part.rtf.target = partSelector.rect;
+            //part.rtf.enabled = true;
+            //part.rtf.target = partSelector.rect;
 
             shownParts.Add(part);
 

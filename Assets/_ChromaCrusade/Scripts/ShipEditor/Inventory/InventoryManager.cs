@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour, IInventoryManager
 {
+    public static bool Scrolling = false;
+
     [Header("Refs")]
     public RectTransform grid;
     public RectTransform defaultPartSpawn;
@@ -186,6 +188,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     IEnumerator SmoothScroll(float duration)
     {
+        Scrolling = true;
         float elapsed = 0f;
 
         float startY = grid.anchoredPosition.y;
@@ -209,6 +212,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         WrapSelectors();
 
         grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, 0);
+        Scrolling = false;
     }
 
     void WrapSelectors()

@@ -114,6 +114,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         pager.Recalculate(parts.Count, elementsPerPage);
         var (startIndex, endIndex) = pager.GetRange(parts.Count, elementsPerPage);
 
+        int primarySelectorIndex = 0;
         int selectorIndex = selectorStartIndex;
 
         for (int i = startIndex; i < endIndex; i++)
@@ -121,7 +122,9 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             var entry = parts[i];
 
             NavItem selector = partSelectors[selectorIndex];
-            selector.onSelected.RemoveAllListeners();
+            NavItem primarySelector = partSelectors[primarySelectorIndex];
+
+            primarySelector.onSelected.RemoveAllListeners();
 
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, selector.transform);
             obj.transform.SetAsFirstSibling();
@@ -133,11 +136,12 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             partCounters[selectorIndex].SetCount(entry.count);
 
             var capturedData = entry.data;
-            selector.onSelected.AddListener(() =>
+            primarySelector.onSelected.AddListener(() =>
             {
                 EventBus.Publish(new InventoryPartGrabbedEvent { part = capturedData });
             });
 
+            primarySelectorIndex++;
             selectorIndex++;
         }
 

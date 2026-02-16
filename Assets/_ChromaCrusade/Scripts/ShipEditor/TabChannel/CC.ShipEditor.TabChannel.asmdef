@@ -1,0 +1,17 @@
+{
+    "name": "CC.ShipEditor.TabChannel",
+    "rootNamespace": "",
+    "references": [
+        "CC.ShipEditor.Inventory",
+        "CC.Shared.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

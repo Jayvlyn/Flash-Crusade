@@ -155,7 +155,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     void DoSmoothScroll(bool scrollDown = true)
     {
         if(scrollRoutine != null) StopCoroutine(scrollRoutine);
-        scrollRoutine = StartCoroutine(SmoothScroll(scrollDown, 0.5f));
+        scrollRoutine = StartCoroutine(SmoothScroll(scrollDown, 0.2f));
     }
 
     Coroutine scrollRoutine;
@@ -275,9 +275,34 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     void ChangeShowState(PartType showState)
     {
+        var prevState = this.showState;
         this.showState = showState;
         pager.Reset();
-        ShowParts();
+
+        switch (prevState)
+        {
+            case PartType.Cabin:
+                ScrollDown();
+                break;
+            case PartType.Core:
+                if (showState == PartType.Cabin) ScrollUp();
+                else ScrollDown();
+                break;
+            case PartType.Wing:
+                if (showState == PartType.Cabin || showState == PartType.Core) ScrollUp();
+                else ScrollDown();
+                break;
+            case PartType.Weapon:
+                if (showState == PartType.Utility) ScrollDown();
+                else ScrollUp();
+                break;
+            case PartType.Utility:
+                ScrollUp();
+                break;
+            default:
+                ShowParts();
+                break;
+        }
     }
 
     #endregion

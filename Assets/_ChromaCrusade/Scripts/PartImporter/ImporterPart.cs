@@ -42,12 +42,9 @@ public class ImporterPart : MonoBehaviour
     [Header("Utility Attributes")]
     [ShowIf(nameof(IsUtility))] public UtilityType utilityType;
     public enum UtilityType { Select = 0,
-        Dock = 1,       // other ships can dock here
-        Reflector = 2,  // bullets get reflected back
-        Charger = 3,    // Recharges energy passively
-        Converter = 4,  // Converts ice to energy
-        Repulsor = 4,   // Launches away nearby enemies
-        TractorBeam // Pulls in objects/enemies
+        Dock = 1,       // Other ships can dock here, more options when piloting ship. "space station"
+        Enhancer = 2,   // Enhances connected weapons
+        Capacitor = 3,    // Recharges energy passively
     }
 
     private static readonly Dictionary<PartType, string> FolderNames = new()

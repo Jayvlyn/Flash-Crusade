@@ -8,7 +8,7 @@ public class PartDestroyer : MonoBehaviour, IPartDestroyer
     public IPartGrabber grabber;
     public IPartTransformer transformer;
     public IPartPlacer placer;
-    public IVisualizer visualizer;
+    public IEditorNavVisualizer visualizer;
     public IGridNavigator gridNav;
     public IInventoryManager inventory;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GridNavigator : Navigator, IGridNavigator
+public class EditorGridNavigator : EditorNavigator, IGridNavigator
 {
     [SerializeField] RectTransform centerGridCell;
     public IUINavigator uiNav;

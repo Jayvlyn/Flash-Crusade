@@ -7,7 +7,7 @@ public class PartGrabber : MonoBehaviour, IPartGrabber
     public EditorState EditorState { get; set; }
 
     public IUINavigator uiNav;
-    public IVisualizer visualizer;
+    public IEditorNavVisualizer visualizer;
 
     #region IPartGrabber
 
@@ -52,6 +52,6 @@ public class PartGrabber : MonoBehaviour, IPartGrabber
         if (!fromInv) EditorState.CurrentGridCell = part.position;
         EditorState.heldPart = part;
         EditorState.midGrab = false;
-        if (fromInv) uiNav.SwitchToGridMode();
+        if (fromInv) uiNav.SwitchOff();
     }
 }

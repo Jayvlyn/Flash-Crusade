@@ -14,7 +14,7 @@ public class InventoryGrabCommand : ICommand
         bool success = ctx.TryTakePart(partData, out ShipPart newPart);
 
         ctx.SetExpanded(true);
-        ctx.SwitchToGridMode();
+        ctx.SwitchOff();
 
         if (UIManager.Smoothing)
         {

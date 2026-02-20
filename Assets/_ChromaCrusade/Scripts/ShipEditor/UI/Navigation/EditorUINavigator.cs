@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UINavigator : Navigator, IUINavigator
+public class EditorUINavigator : EditorNavigator, IUINavigator
 {
     [SerializeField] NavItem initialHoveredItem;
     [SerializeField] Transform parent;
@@ -56,7 +56,7 @@ public class UINavigator : Navigator, IUINavigator
         NavToItem(next);
     }
 
-    public void SwitchToGridMode()
+    public void SwitchOff()
     {
         if (EditorState.navMode == NavMode.Grid) return;
         EditorState.navMode = NavMode.Grid;

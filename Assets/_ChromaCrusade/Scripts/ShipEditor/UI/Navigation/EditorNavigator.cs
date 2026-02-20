@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Navigator : MonoBehaviour, IInitializable
+public abstract class EditorNavigator : MonoBehaviour, IInitializable
 {
     [SerializeField] protected EditorNavVisualizer visualizer;
     public EditorState EditorState { get; set; }

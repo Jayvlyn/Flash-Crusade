@@ -34,7 +34,7 @@ public class ExitGridModeCommand : ICommand
 
     public void Undo()
     {
-        ctx.SwitchToGridMode();
+        ctx.SwitchOff();
 
         if (partData != null)
         {

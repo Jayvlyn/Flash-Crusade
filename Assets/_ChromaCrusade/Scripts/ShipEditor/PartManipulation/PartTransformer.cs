@@ -4,7 +4,7 @@ public class PartTransformer : MonoBehaviour, IPartTransformer
 {
     public EditorState EditorState { get; set; }
 
-    public IVisualizer visualizer;
+    public IEditorNavVisualizer visualizer;
 
     public void FlipPart(FlipAxis axis)
     {

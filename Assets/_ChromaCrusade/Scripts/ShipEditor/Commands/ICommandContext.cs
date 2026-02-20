@@ -8,5 +8,5 @@ public interface ICommandContext :
     IPartPlacer,
     IPartGrabber,
     IPartTransformer,
-    IVisualizer
+    IEditorNavVisualizer
 { }

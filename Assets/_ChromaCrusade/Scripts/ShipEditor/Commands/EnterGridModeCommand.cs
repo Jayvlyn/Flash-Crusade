@@ -7,7 +7,7 @@ public class EnterGridModeCommand : ICommand
         this.ctx = ctx;
     }
 
-    public void Execute() => ctx.SwitchToGridMode();
+    public void Execute() => ctx.SwitchOff();
 
     public void Undo() => ctx.SwitchToItemMode();
 

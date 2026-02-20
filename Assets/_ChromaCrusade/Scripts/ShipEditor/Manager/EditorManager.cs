@@ -12,8 +12,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] TMP_Text validationResponseText;
 
     [SerializeField] EditorNavVisualizer visualizer;
-    [SerializeField] UINavigator uiNav;
-    [SerializeField] GridNavigator gridNav;
+    [SerializeField] EditorUINavigator uiNav;
+    [SerializeField] EditorGridNavigator gridNav;
     [SerializeField] InventoryManager inventoryManager;
     [SerializeField] PartDestroyer partDestroyer;
     [SerializeField] PartPlacer partPlacer;
@@ -56,7 +56,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         partDestroyer.grabber = (IPartGrabber) partGrabber;
         partDestroyer.transformer = (IPartTransformer) partTransformer;
         partDestroyer.placer = (IPartPlacer) partPlacer;
-        partDestroyer.visualizer = (IVisualizer) visualizer;
+        partDestroyer.visualizer = (IEditorNavVisualizer) visualizer;
         partDestroyer.gridNav = (IGridNavigator) gridNav;
         partDestroyer.inventory = (IInventoryManager) inventoryManager;
 
@@ -66,11 +66,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
         partGrabber.EditorState = editorState;
         partGrabber.buildArea = buildArea;
         partGrabber.uiNav = (IUINavigator)uiNav;
-        partGrabber.visualizer = (IVisualizer)visualizer;
+        partGrabber.visualizer = (IEditorNavVisualizer)visualizer;
 
 
         partTransformer.EditorState = editorState;
-        partTransformer.visualizer = (IVisualizer)visualizer;
+        partTransformer.visualizer = (IEditorNavVisualizer)visualizer;
 
         visualizer.gameObject.SetActive(true);
         gridNav.ResetGridPosition();
@@ -102,7 +102,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     public void TriggerItemNav(Vector2 dir) => uiNav.TriggerItemNav(dir);
 
-    public void SwitchToGridMode() => uiNav.SwitchToGridMode();
+    public void SwitchOff() => uiNav.SwitchOff();
     
     void GoBack()
     {

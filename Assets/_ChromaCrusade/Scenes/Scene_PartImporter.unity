@@ -752,7 +752,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3533762930656290565, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1438,7 +1438,6 @@ MonoBehaviour:
   partName: 
   partSprite: {fileID: 0}
   partType: 0
-  mass: 1
   price: 1
   damage: 77
   projectileSpeed: 1

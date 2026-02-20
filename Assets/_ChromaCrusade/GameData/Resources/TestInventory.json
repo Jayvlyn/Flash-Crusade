@@ -11,50 +11,6 @@
         {
             "name": "Cabin3",
             "count": 99
-        },
-        {
-            "name": "Cabin4",
-            "count": 99
-        },
-        {
-            "name": "Cabin5",
-            "count": 99
-        },
-        {
-            "name": "Cabin6",
-            "count": 99
-        },
-        {
-            "name": "Cabin7",
-            "count": 99
-        },
-        {
-            "name": "Cabin8",
-            "count": 99
-        },
-        {
-            "name": "Cabin9",
-            "count": 99
-        },
-        {
-            "name": "Cabin10",
-            "count": 99
-        },
-        {
-            "name": "Cabin11",
-            "count": 99
-        },
-        {
-            "name": "Cabin12",
-            "count": 99
-        },
-        {
-            "name": "Cabin13",
-            "count": 99
-        },
-        {
-            "name": "Cabin14",
-            "count": 99
         }
     ],
     "cores": [
@@ -81,38 +37,6 @@
         {
             "name": "Core6",
             "count": 99
-        },
-        {
-            "name": "Core7",
-            "count": 99
-        },
-        {
-            "name": "Core8",
-            "count": 99
-        },
-        {
-            "name": "Core9",
-            "count": 99
-        },
-        {
-            "name": "Core10",
-            "count": 99
-        },
-        {
-            "name": "Core11",
-            "count": 99
-        },
-        {
-            "name": "Core12",
-            "count": 99
-        },
-        {
-            "name": "Core13",
-            "count": 99
-        },
-        {
-            "name": "Core14",
-            "count": 99
         }
     ],
     "wings": [
@@ -135,194 +59,6 @@
         {
             "name": "Wing5",
             "count": 99
-        },
-        {
-            "name": "Wing6",
-            "count": 99
-        },
-        {
-            "name": "Wing7",
-            "count": 99
-        },
-        {
-            "name": "Wing8",
-            "count": 99
-        },
-        {
-            "name": "Wing9",
-            "count": 99
-        },
-        {
-            "name": "Wing10",
-            "count": 99
-        },
-        {
-            "name": "Wing11",
-            "count": 99
-        },
-        {
-            "name": "Wing12",
-            "count": 99
-        },
-        {
-            "name": "Wing13",
-            "count": 99
-        },
-        {
-            "name": "Wing14",
-            "count": 99
-        },
-        {
-            "name": "Wing15",
-            "count": 99
-        },
-        {
-            "name": "Wing16",
-            "count": 99
-        },
-        {
-            "name": "Wing17",
-            "count": 99
-        },
-        {
-            "name": "Wing18",
-            "count": 99
-        },
-        {
-            "name": "Wing19",
-            "count": 99
-        },
-        {
-            "name": "Wing20",
-            "count": 99
-        },
-        {
-            "name": "Wing21",
-            "count": 99
-        },
-        {
-            "name": "Wing22",
-            "count": 99
-        },
-        {
-            "name": "Wing23",
-            "count": 99
-        },
-        {
-            "name": "Wing24",
-            "count": 99
-        },
-        {
-            "name": "Wing25",
-            "count": 99
-        },
-        {
-            "name": "Wing26",
-            "count": 99
-        },
-        {
-            "name": "Wing27",
-            "count": 99
-        },
-        {
-            "name": "Wing28",
-            "count": 99
-        },
-        {
-            "name": "Wing29",
-            "count": 99
-        },
-        {
-            "name": "Wing30",
-            "count": 99
-        },
-        {
-            "name": "Wing31",
-            "count": 99
-        },
-        {
-            "name": "Wing32",
-            "count": 99
-        },
-        {
-            "name": "Wing33",
-            "count": 99
-        },
-        {
-            "name": "Wing34",
-            "count": 99
-        },
-        {
-            "name": "Wing35",
-            "count": 99
-        },
-        {
-            "name": "Wing36",
-            "count": 99
-        },
-        {
-            "name": "Wing37",
-            "count": 99
-        },
-        {
-            "name": "Wing38",
-            "count": 99
-        },
-        {
-            "name": "Wing39",
-            "count": 99
-        },
-        {
-            "name": "Wing40",
-            "count": 99
-        },
-        {
-            "name": "Wing41",
-            "count": 99
-        },
-        {
-            "name": "Wing42",
-            "count": 99
-        },
-        {
-            "name": "Wing43",
-            "count": 99
-        },
-        {
-            "name": "Wing44",
-            "count": 99
-        },
-        {
-            "name": "Wing45",
-            "count": 99
-        },
-        {
-            "name": "Wing46",
-            "count": 99
-        },
-        {
-            "name": "Wing47",
-            "count": 99
-        },
-        {
-            "name": "Wing48",
-            "count": 99
-        },
-        {
-            "name": "Wing49",
-            "count": 99
-        },
-        {
-            "name": "Wing50",
-            "count": 99
-        },
-        {
-            "name": "Wing51",
-            "count": 99
-        },
-        {
-            "name": "Wing52",
-            "count": 99
         }
     ],
     "weapons": [
@@ -337,79 +73,36 @@
         {
             "name": "Weapon3",
             "count": 99
-        },
-        {
-            "name": "Weapon4",
-            "count": 99
-        },
-        {
-            "name": "Weapon5",
-            "count": 99
-        },
-        {
-            "name": "Weapon6",
-            "count": 99
-        },
-        {
-            "name": "Weapon7",
-            "count": 99
-        },
-        {
-            "name": "Weapon8",
-            "count": 99
-        },
-        {
-            "name": "Weapon9",
-            "count": 99
-        },
-        {
-            "name": "Weapon10",
-            "count": 99
-        },
-        {
-            "name": "Weapon11",
-            "count": 99
-        },
-        {
-            "name": "Weapon12",
-            "count": 99
-        },
-        {
-            "name": "Weapon13",
-            "count": 99
-        },
-        {
-            "name": "Weapon14",
-            "count": 99
-        },
-        {
-            "name": "Weapon15",
-            "count": 99
-        },
-        {
-            "name": "Weapon16",
-            "count": 99
-        },
-        {
-            "name": "Weapon17",
-            "count": 99
-        },
-        {
-            "name": "Weapon18",
-            "count": 99
-        },
-        {
-            "name": "Weapon19",
-            "count": 99
-        },
-        {
-            "name": "Weapon20",
-            "count": 99
-        },
-        {
-            "name": "Weapon21",
-            "count": 99
         }
     ],
-    "utilities": []
+    "utilities": [
+        {
+            "name": "Capacitor1",
+            "count": 99
+        },
+        {
+            "name": "Capacitor2",
+            "count": 99
+        },
+        {
+            "name": "Capacitor3",
+            "count": 99
+        },
+        {
+            "name": "Dock1",
+            "count": 99
+        },
+        {
+            "name": "Dock2",
+            "count": 99
+        },
+        {
+            "name": "Enhancer1",
+            "count": 99
+        },
+        {
+            "name": "Enhancer2",
+            "count": 99
+        }
+    ]
 }

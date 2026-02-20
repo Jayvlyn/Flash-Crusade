@@ -9,28 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93adc69edc2f56848a422f29a02a429e, type: 3}
-  m_Name: Core4
-  m_EditorClassIdentifier: CC.Data.ShipPart::ShipCoreData
-  sprite: {fileID: 1864236572, guid: 44a5bafeb54066647b3c2dc2a8869a38, type: 3}
-  mass: 18
-  price: 240
+  m_Script: {fileID: 11500000, guid: 61fa7ea9632999e4893cbaa207cffa07, type: 3}
+  m_Name: Enhancer2
+  m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
+  sprite: {fileID: 988942086, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
+  mass: 30
+  price: 900
   segments:
-  - segmentState: 0
-    topConnection:
-      connectionState: 2
-    leftConnection:
-      connectionState: 2
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 2
     leftConnection:
       connectionState: 2
     rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 0
+    rightConnection:
       connectionState: 2
     bottomConnection:
       connectionState: 0
@@ -43,9 +43,9 @@ MonoBehaviour:
       connectionState: 2
     bottomConnection:
       connectionState: 1
-  - segmentState: 0
+  - segmentState: 1
     topConnection:
-      connectionState: 1
+      connectionState: 0
     leftConnection:
       connectionState: 2
     rightConnection:
@@ -56,23 +56,23 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 2
+      connectionState: 0
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
       connectionState: 1
   - segmentState: 0
     topConnection:
-      connectionState: 1
+      connectionState: 0
     leftConnection:
       connectionState: 2
     rightConnection:
@@ -83,18 +83,18 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 2
+      connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
-  energy: 12
+      connectionState: 1
+  utilityType: 2

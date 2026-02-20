@@ -22,7 +22,7 @@ public class ImporterPart : MonoBehaviour
     public Sprite partSprite;
     [ValidateInput(nameof(TypeSelected), "Must select part type!")]
     public PartType partType = PartType.Select;
-    public float mass = 1;
+    private float mass = 1;
     public int price = 100;
 
     [Header("Weapon Attributes")]
@@ -211,6 +211,7 @@ public class ImporterPart : MonoBehaviour
     private void ApplyStats(ShipPartData partData)
     {
         partData.sprite = partSprite;
+        CheckMass();
         partData.mass = mass;
         partData.price = price;
 
@@ -252,5 +253,41 @@ public class ImporterPart : MonoBehaviour
         {
             shipUtilityData.utilityType = (ShipUtilityData.UtilityType)(int)utilityType;
         }
+    }
+
+    /// <summary>
+    /// Mass will be set to the number of non-transparent pixels on the sprite
+    /// </summary>
+    private void CheckMass()
+    {
+        if (image == null || image.sprite == null)
+        {
+            mass = 0;
+            return;
+        }
+
+        Sprite sprite = image.sprite;
+        Texture2D tex = sprite.texture;
+
+        Rect rect = sprite.textureRect;
+
+        int xMin = Mathf.FloorToInt(rect.x);
+        int yMin = Mathf.FloorToInt(rect.y);
+        int width = Mathf.FloorToInt(rect.width);
+        int height = Mathf.FloorToInt(rect.height);
+
+        Color[] pixels = tex.GetPixels(xMin, yMin, width, height);
+
+        int count = 0;
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].a > 0.1f)
+                count++;
+        }
+
+        mass = count;
+
+        Debug.Log(mass);
     }
 }

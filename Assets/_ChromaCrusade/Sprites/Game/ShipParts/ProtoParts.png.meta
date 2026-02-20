@@ -1,0 +1,6465 @@
+fileFormatVersion: 2
+guid: 4aba37c0028ee80479ca71fddf946bb9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3533762930656290565
+    second: CCShipParts_0
+  - first:
+      213: -4769060707430027932
+    second: CCShipParts_1
+  - first:
+      213: -8965491556996309296
+    second: CCShipParts_2
+  - first:
+      213: -1226067062839431145
+    second: CCShipParts_3
+  - first:
+      213: -6782851120473692358
+    second: CCShipParts_4
+  - first:
+      213: -8970484836548310903
+    second: CCShipParts_5
+  - first:
+      213: 2259575648446179564
+    second: CCShipParts_6
+  - first:
+      213: 7406450930660106829
+    second: CCShipParts_7
+  - first:
+      213: 8712875205740303607
+    second: CCShipParts_8
+  - first:
+      213: 8874625734699179729
+    second: CCShipParts_9
+  - first:
+      213: 6168048986480202168
+    second: CCShipParts_10
+  - first:
+      213: 4835384902716865376
+    second: CCShipParts_11
+  - first:
+      213: -1716237649748320005
+    second: CCShipParts_12
+  - first:
+      213: 6460797956903468866
+    second: CCShipParts_13
+  - first:
+      213: 3294175664424592206
+    second: CCShipParts_14
+  - first:
+      213: 3243100495566292255
+    second: CCShipParts_15
+  - first:
+      213: 1102196655860287663
+    second: CCShipParts_16
+  - first:
+      213: 6127297626812172627
+    second: CCShipParts_17
+  - first:
+      213: -7757452281694535883
+    second: CCShipParts_18
+  - first:
+      213: -6893344889736903929
+    second: CCShipParts_19
+  - first:
+      213: -8925005933649089565
+    second: CCShipParts_20
+  - first:
+      213: 6010539825150831703
+    second: CCShipParts_21
+  - first:
+      213: -3446499831591620053
+    second: CCShipParts_22
+  - first:
+      213: 7856977485587046957
+    second: CCShipParts_23
+  - first:
+      213: -4190412532074505608
+    second: CCShipParts_24
+  - first:
+      213: 6348299237509042316
+    second: CCShipParts_25
+  - first:
+      213: 2381692899163183857
+    second: CCShipParts_26
+  - first:
+      213: -5658240185647258431
+    second: CCShipParts_27
+  - first:
+      213: -1480903582662506321
+    second: CCShipParts_28
+  - first:
+      213: -2256995922170501359
+    second: CCShipParts_29
+  - first:
+      213: 4557336564700290626
+    second: CCShipParts_30
+  - first:
+      213: -7572716506165842774
+    second: CCShipParts_31
+  - first:
+      213: -291023935996114166
+    second: CCShipParts_32
+  - first:
+      213: -702514943488983506
+    second: CCShipParts_33
+  - first:
+      213: 3507243169103026952
+    second: CCShipParts_34
+  - first:
+      213: -8879624796708285564
+    second: CCShipParts_35
+  - first:
+      213: -5573099612987492326
+    second: CCShipParts_36
+  - first:
+      213: -4548969747818142855
+    second: CCShipParts_37
+  - first:
+      213: -4908254171289682073
+    second: CCShipParts_38
+  - first:
+      213: -6212127282320914600
+    second: CCShipParts_39
+  - first:
+      213: -5927879260502562634
+    second: CCShipParts_40
+  - first:
+      213: -8718360598432817909
+    second: CCShipParts_41
+  - first:
+      213: -4829905934042541487
+    second: CCShipParts_42
+  - first:
+      213: 8754340860358804872
+    second: CCShipParts_43
+  - first:
+      213: 7215959518755969017
+    second: CCShipParts_44
+  - first:
+      213: -3964438663731247159
+    second: CCShipParts_45
+  - first:
+      213: 9088513750722110977
+    second: CCShipParts_46
+  - first:
+      213: 4832774557507786991
+    second: CCShipParts_47
+  - first:
+      213: 5184754834060528121
+    second: CCShipParts_48
+  - first:
+      213: -4889397497280947335
+    second: CCShipParts_49
+  - first:
+      213: -4920349795641077556
+    second: CCShipParts_50
+  - first:
+      213: -5894380354292203024
+    second: CCShipParts_51
+  - first:
+      213: 1361825646186162346
+    second: CCShipParts_52
+  - first:
+      213: 7440599070834725429
+    second: CCShipParts_53
+  - first:
+      213: 4903383710288917287
+    second: CCShipParts_54
+  - first:
+      213: 619959464498290880
+    second: CCShipParts_55
+  - first:
+      213: 5880178106278554596
+    second: CCShipParts_56
+  - first:
+      213: 921606952158476303
+    second: CCShipParts_57
+  - first:
+      213: -62567845092611782
+    second: CCShipParts_58
+  - first:
+      213: 9113446814990790736
+    second: CCShipParts_59
+  - first:
+      213: 5032684012455000391
+    second: CCShipParts_60
+  - first:
+      213: 2362679331834900789
+    second: CCShipParts_61
+  - first:
+      213: 5477984555245630966
+    second: CCShipParts_62
+  - first:
+      213: 7330730635368595714
+    second: CCShipParts_63
+  - first:
+      213: -4109211321573510202
+    second: CCShipParts_64
+  - first:
+      213: -2606862457630635106
+    second: CCShipParts_65
+  - first:
+      213: -728695340025293954
+    second: CCShipParts_66
+  - first:
+      213: 3347519529788238251
+    second: CCShipParts_67
+  - first:
+      213: -7828029732013607580
+    second: CCShipParts_68
+  - first:
+      213: -290589440295458896
+    second: CCShipParts_69
+  - first:
+      213: -4843408015589411189
+    second: CCShipParts_70
+  - first:
+      213: 1091780151698038382
+    second: CCShipParts_71
+  - first:
+      213: 3585288691917054816
+    second: CCShipParts_72
+  - first:
+      213: 494581914880461572
+    second: CCShipParts_73
+  - first:
+      213: 8857040988300502485
+    second: CCShipParts_74
+  - first:
+      213: 3240644458129429974
+    second: CCShipParts_75
+  - first:
+      213: 565905684597788720
+    second: CCShipParts_76
+  - first:
+      213: -7211372887276373865
+    second: CCShipParts_77
+  - first:
+      213: 2551529364556720484
+    second: CCShipParts_78
+  - first:
+      213: -8744803972848786189
+    second: CCShipParts_79
+  - first:
+      213: 1188400931545396202
+    second: CCShipParts_80
+  - first:
+      213: 3327064785102368185
+    second: CCShipParts_81
+  - first:
+      213: 671907327386985769
+    second: CCShipParts_82
+  - first:
+      213: -8935167052632577691
+    second: CCShipParts_83
+  - first:
+      213: -885003824998412145
+    second: CCShipParts_84
+  - first:
+      213: -5803061681583013526
+    second: CCShipParts_85
+  - first:
+      213: 7935266016599984750
+    second: CCShipParts_86
+  - first:
+      213: 8089975499937854697
+    second: CCShipParts_87
+  - first:
+      213: -4852190365407742826
+    second: CCShipParts_88
+  - first:
+      213: 3144470225308973687
+    second: CCShipParts_89
+  - first:
+      213: 6890588222674646381
+    second: CCShipParts_90
+  - first:
+      213: -533766539053068049
+    second: CCShipParts_91
+  - first:
+      213: 1681744746021383355
+    second: CCShipParts_92
+  - first:
+      213: -1734563986644194184
+    second: CCShipParts_93
+  - first:
+      213: 1559656283646798510
+    second: CCShipParts_94
+  - first:
+      213: -8734742930166513155
+    second: CCShipParts_95
+  - first:
+      213: -1564805600306573985
+    second: CCShipParts_96
+  - first:
+      213: -4754240310208214930
+    second: CCShipParts_97
+  - first:
+      213: 7755183498461410594
+    second: CCShipParts_98
+  - first:
+      213: -560583494282991189
+    second: CCShipParts_99
+  - first:
+      213: -3989205551390420872
+    second: CCShipParts_100
+  - first:
+      213: 3054155330611753075
+    second: CCShipParts_101
+  - first:
+      213: -261885593989572139
+    second: CCShipParts_102
+  - first:
+      213: -75206518943498968
+    second: CCShipParts_103
+  - first:
+      213: 3342680122894734794
+    second: CCShipParts_104
+  - first:
+      213: 6788391148819480965
+    second: CCShipParts_105
+  - first:
+      213: -5979111673853029926
+    second: CCShipParts_106
+  - first:
+      213: 2690538286333495660
+    second: CCShipParts_107
+  - first:
+      213: 2796497137750087627
+    second: CCShipParts_108
+  - first:
+      213: 6650729363075556071
+    second: CCShipParts_109
+  - first:
+      213: 3880530311975942073
+    second: CCShipParts_110
+  - first:
+      213: 20803837177228042
+    second: CCShipParts_111
+  - first:
+      213: 4988769254195519568
+    second: CCShipParts_112
+  - first:
+      213: -7381237337330575954
+    second: CCShipParts_113
+  - first:
+      213: -8476826878452660758
+    second: CCShipParts_114
+  - first:
+      213: -445027761674571988
+    second: CCShipParts_115
+  - first:
+      213: 8734974523802727990
+    second: CCShipParts_116
+  - first:
+      213: -2362918477940328709
+    second: CCShipParts_117
+  - first:
+      213: -5517621902165396407
+    second: CCShipParts_118
+  - first:
+      213: -8617384040117850919
+    second: CCShipParts_119
+  - first:
+      213: -7791916124343380167
+    second: CCShipParts_120
+  - first:
+      213: 590855481883715167
+    second: CCShipParts_121
+  - first:
+      213: -3270226798669838225
+    second: CCShipParts_122
+  - first:
+      213: -5557608385202144406
+    second: CCShipParts_123
+  - first:
+      213: 738822488580697121
+    second: CCShipParts_124
+  - first:
+      213: -4415634747760827767
+    second: CCShipParts_125
+  - first:
+      213: 3175802567447575973
+    second: CCShipParts_126
+  - first:
+      213: -1575667814127609404
+    second: CCShipParts_127
+  - first:
+      213: -7587938831058425880
+    second: CCShipParts_128
+  - first:
+      213: 2659955823181936973
+    second: CCShipParts_129
+  - first:
+      213: -6252674196082827409
+    second: CCShipParts_130
+  - first:
+      213: 757458112567232471
+    second: CCShipParts_131
+  - first:
+      213: 1505604055573213854
+    second: CCShipParts_132
+  - first:
+      213: 3719605751616502408
+    second: CCShipParts_133
+  - first:
+      213: 75151758837634698
+    second: CCShipParts_134
+  - first:
+      213: -639736932945998596
+    second: CCShipParts_135
+  - first:
+      213: 4723102624249604180
+    second: CCShipParts_136
+  - first:
+      213: 2868413640999561527
+    second: CCShipParts_137
+  - first:
+      213: -9188180183596396008
+    second: CCShipParts_138
+  - first:
+      213: -6303725922060756782
+    second: CCShipParts_139
+  - first:
+      213: 9056160856388865507
+    second: CCShipParts_140
+  - first:
+      213: -2081216884120003908
+    second: CCShipParts_141
+  - first:
+      213: -3086122556577379478
+    second: CCShipParts_142
+  - first:
+      213: -6796840696055337503
+    second: CCShipParts_143
+  - first:
+      213: -4018449466091724280
+    second: CCShipParts_144
+  - first:
+      213: -2241210053627281620
+    second: CCShipParts_145
+  - first:
+      213: -8936382232152674495
+    second: CCShipParts_146
+  - first:
+      213: -4150639784242435949
+    second: CCShipParts_147
+  - first:
+      213: -7985009751839631956
+    second: CCShipParts_148
+  - first:
+      213: 7767105384856395254
+    second: CCShipParts_149
+  - first:
+      213: 8615871692575415901
+    second: CCShipParts_150
+  - first:
+      213: 8288341656261979964
+    second: CCShipParts_151
+  - first:
+      213: -3426007857579564601
+    second: CCShipParts_152
+  - first:
+      213: -6438222031393733094
+    second: CCShipParts_153
+  - first:
+      213: -8626952175035101278
+    second: CCShipParts_154
+  - first:
+      213: -973089362073533642
+    second: CCShipParts_155
+  - first:
+      213: -5616862483760321212
+    second: CCShipParts_156
+  - first:
+      213: 6427341636055993524
+    second: CCShipParts_157
+  - first:
+      213: 5063298783573366255
+    second: CCShipParts_158
+  - first:
+      213: 2402536101880760893
+    second: CCShipParts_159
+  - first:
+      213: -8566224030192628545
+    second: CCShipParts_160
+  - first:
+      213: -6653163585613538068
+    second: CCShipParts_161
+  - first:
+      213: -7216642892175754690
+    second: CCShipParts_162
+  - first:
+      213: 24369236333421001
+    second: CCShipParts_163
+  - first:
+      213: -602962550339831072
+    second: CCShipParts_164
+  - first:
+      213: -7053057842215677062
+    second: CCShipParts_165
+  - first:
+      213: 4932484153610344183
+    second: CCShipParts_166
+  - first:
+      213: 1108763974682004707
+    second: CCShipParts_167
+  - first:
+      213: 98054239574448597
+    second: CCShipParts_168
+  - first:
+      213: -234980411517018403
+    second: CCShipParts_169
+  - first:
+      213: -4227039876848519848
+    second: CCShipParts_170
+  - first:
+      213: 8389216808932124486
+    second: CCShipParts_171
+  - first:
+      213: 3098885414593524849
+    second: CCShipParts_172
+  - first:
+      213: -7713035389905912520
+    second: CCShipParts_173
+  - first:
+      213: 4067777150820558774
+    second: CCShipParts_174
+  - first:
+      213: 563803988541957802
+    second: CCShipParts_175
+  - first:
+      213: 8742237995406664513
+    second: CCShipParts_176
+  - first:
+      213: 8558968506721923693
+    second: CCShipParts_177
+  - first:
+      213: 1075645340647708732
+    second: CCShipParts_178
+  - first:
+      213: 6920536788532507990
+    second: CCShipParts_179
+  - first:
+      213: -7941766247766693573
+    second: CCShipParts_180
+  - first:
+      213: -2413950646963320594
+    second: CCShipParts_181
+  - first:
+      213: -4653273214867271266
+    second: CCShipParts_182
+  - first:
+      213: 4032506491780687023
+    second: CCShipParts_183
+  - first:
+      213: 4715678152728952908
+    second: CCShipParts_184
+  - first:
+      213: 7551481064554160587
+    second: CCShipParts_185
+  - first:
+      213: -4831589613843540455
+    second: CCShipParts_186
+  - first:
+      213: -488147531501452209
+    second: CCShipParts_187
+  - first:
+      213: 7759249038991254357
+    second: CCShipParts_188
+  - first:
+      213: -6873317579229297556
+    second: CCShipParts_189
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 9
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ProtoParts_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee2cba6c990ee24c831b5f23f9de896
+      internalID: 1909714146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 825126f6204c076419778bfd045688cd
+      internalID: 704223031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79625e09f1755864ba1179d3da7c2e7b
+      internalID: -628754706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 250bd71c6b200ed4baf281f6d61e308f
+      internalID: -379429258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_4
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a033c436af21b054abc8659e848c2f9d
+      internalID: 1035169138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_5
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5e35e1e72a0b0244bf5f74246599233
+      internalID: -1782939621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_6
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d72103d4b1f644c9ce6b61cd107503
+      internalID: -2102807800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_7
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98abe8d5f9bfe894ca387233fa06be6e
+      internalID: -487122855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_8
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af2ec8a0cf7ac2e40a70c60da852d355
+      internalID: -2083615788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_9
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4602982d8aa83124bb49136d1a6f8e67
+      internalID: 628494314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_10
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cecd7a5e3436eb94ab7686548eec1740
+      internalID: 685319069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_11
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1564d3ff77f1664890ebe6ad3a0fd46
+      internalID: 515355806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_12
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8636dc796fbd5f04a89239a23d5c63b7
+      internalID: 1726729711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_13
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24de64c6e50f76147824e26eb0736248
+      internalID: -1511259236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_14
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1ddb95ecdb6ead4c918c29eb253e1eb
+      internalID: -1039284652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_15
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c09fae96d8f87d4184263adf1d235fa
+      internalID: 1846790781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_16
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6104c8edb66a8a14697f64acafa004ca
+      internalID: 822879937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_17
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df7c937c0331be54b9eb8659f07c4082
+      internalID: 805762041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_18
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8839735142afbcf4cb96a578e949a19d
+      internalID: 1679546878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_19
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 190
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a62ddad909d442a47ab85a3e0a67babb
+      internalID: 362018345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dd6b5198847d7348b45f7391f154f74
+      internalID: -1517772696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_21
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0e69b804616cbd45b8a61614c204256
+      internalID: 1151712269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_22
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9d6f904bb6970d41939353a3f8c9267
+      internalID: -141449796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_23
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9346ee5782e87d14ba494ae6b7d654e9
+      internalID: 954245281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_24
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aca8513b3b06f14fb3b30fe717f2263
+      internalID: -1603813129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_25
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5202c56115053d49ab63e5d0917914d
+      internalID: 68627878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_26
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ded023eddd93bfe4580cce3a09c79afb
+      internalID: 1648669405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_27
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05d587228ce7684fbf867fb481ee434
+      internalID: 199425719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_28
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6228012030d566a4fb67b5832421c2fb
+      internalID: -1401573380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_29
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e14048e05804f9342ad65ebaa3744233
+      internalID: 1154710011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_30
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80dc358c784c4cf489161599cc0bf528
+      internalID: 1498259891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_31
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d730de6d7ce9111479cb3ae8209b0aea
+      internalID: -921742497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_32
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38640c185b0dc9245bb4669274e3c4bd
+      internalID: 1117584276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_33
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e73cfa02566b59b46907a1ff82ad525a
+      internalID: 1484853717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_34
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7d79697b4027fe4eada84c301ea60de
+      internalID: 176880415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_35
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4d7dc4b92b097d43a76871f476b08b5
+      internalID: -340083416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_36
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a50e01878beb324ead90cc8d7ad57fd
+      internalID: -1071786430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_37
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5266a639af597d14da1251950cb052b5
+      internalID: 411852170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_38
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7da715ccd5b2b45ac756a0576dcf33
+      internalID: -97063394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_39
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 180
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 112ed9621456d684a8ff336da121b7f6
+      internalID: -1231938124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9ed737b2260d9b4ab43b8866bab257b
+      internalID: -1403485152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_41
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbbed7f892a954645b6d6abf3e7a01d0
+      internalID: -750999454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_42
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45b2e96f4d0524498a98e7cc275816d
+      internalID: 502955082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_43
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe83243c4dd804c4a83699c540448616
+      internalID: -2003815031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_44
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5463dde005e419641a67606d89f392f0
+      internalID: 240282772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_45
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e2f026f1653e454587c520c681b174e
+      internalID: 722004999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_46
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8ecf148f2edab49b5c827cdee7d7e2
+      internalID: -1235034861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_47
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a932f46956d9d04daf6b3b921e0c36c
+      internalID: 142172326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_48
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2fc4b1b4f65d8a4dbcb28da3c19214d
+      internalID: 320914169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_49
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad3a7a6c12505624383bd38beb6df05e
+      internalID: 2065734458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_50
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739404ce4208aed42b9c0e6fd0f7e69e
+      internalID: -1509661488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_51
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1539dd6e5e43bad42b96a19e5a3031ec
+      internalID: 594607367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_52
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e192e0bc624e694a9dc08e3fae78323
+      internalID: 1504260123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_53
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26dd3636e9022f745a34f0bf8c2595e9
+      internalID: 1182214325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_54
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfe24aedd5213354093e9b1db03774bc
+      internalID: -588220321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_55
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c41bd812c20770409a1e0b7da62499c
+      internalID: -1973804430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_56
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4dbfd3e172cd14ea750a825bf1ac2f
+      internalID: -752739831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_57
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87fbe0d1b96d07c4eaee85100af975d6
+      internalID: 1681307605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_58
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4badcb847b95b4d438f99f87a22d2185
+      internalID: -1846501938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_59
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 170
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec7f21bdf6acdd946bd8bbd1ab50c6ad
+      internalID: -888576787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffdf4ba3cbd5a2f48a135f2ae127c2a6
+      internalID: 1937163825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_61
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63da63795c4e4914ba996bbedd3dfbf4
+      internalID: 1149727193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_62
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8a854d29548aa64eb9783bd2c400e33
+      internalID: 1570359281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_63
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee7623b6f1b698c4c8278844e8494aef
+      internalID: -2138515157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_64
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca2d5fde956485a4b91a26a959be51af
+      internalID: 53303271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_65
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a94195d287c134a83130cb4ca6dadb
+      internalID: -720850933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_66
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f69b41b48bf109e4e8aa55f16b8ff58a
+      internalID: 1213765803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_67
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24be32139dd16b44290dfe9d9c718220
+      internalID: -1874376584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_68
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18a90929becac5442be7e4dc8ca7ea9f
+      internalID: -2057917020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_69
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fddc9f586ce3e064c99c7b44fe3d05d4
+      internalID: -364894522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_70
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd59bcd7639747d4d9df8b39f0bd06ac
+      internalID: -1574220599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_71
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2788101f7ae48b047b353bfed1670b19
+      internalID: 769957051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_72
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2964a9a220ee4f743ac74ad28c8ca1e0
+      internalID: -1271938137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_73
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db2378b72010a854b94df5e9fee73545
+      internalID: 2063689371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_74
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d71095df0387de4395c7dc3c03dc616
+      internalID: 744358211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_75
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce9e8d22337546944a4fc5a6231e69ec
+      internalID: -890072631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_76
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cfef75f30b2ecf489c81532ff1ee811
+      internalID: -1142175773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_77
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b8a457010ff01c43912bf9c33c3e18e
+      internalID: 749079699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_78
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bef5ae701420bc244ab4797e29c45565
+      internalID: 1225550552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_79
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 160
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45dc4ca7faaf3a64b8d4b4929d5a4356
+      internalID: 207564877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd390f4a3912cac4d82b960a137fe920
+      internalID: 564634962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_81
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eee823999235d84fb5e1bcb9e10b1ef
+      internalID: -1478647314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_82
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e966f9a98b8e89a4a881653a03bc1d8c
+      internalID: 1009714700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_83
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc085f55ea2beeb49bb1b5e0d37193e9
+      internalID: -1634590230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_84
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46aba620ccdfa2b4fa2bec0845080fec
+      internalID: 390095551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_85
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8623f6bc7bb90bd408a73288ef1bbf53
+      internalID: -1883982807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_86
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 268f7860ce5b1f24ebe29f2309018f08
+      internalID: -995026256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_87
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d66536dccb985245a7204829f132c5c
+      internalID: -1918847622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_88
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67648e82d2619e542bee90b24af2a173
+      internalID: 2126663397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_89
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f4f48bf0757a454480f02f1c3d0720a
+      internalID: 875966390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_90
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a57f48495f1bb4a98bb64c303e80b3
+      internalID: 1249483854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_91
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e11069fbf64e164cab58f8ae5bbc7aa
+      internalID: -657973470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_92
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cb9a81351a8ce946990161d5469f677
+      internalID: -1714967586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_93
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b12362b83bd7b9443898d8b95058cd7d
+      internalID: 1135381110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_94
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 150
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbae2de7ab9b3c74c9c8f8ad7ac42acf
+      internalID: -2003965710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_95
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 584aea24eb5dd084295da7168eace586
+      internalID: -1998747387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_96
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65c8d9270824a444da5d30f0b0762cee
+      internalID: -1268053660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_97
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4f4714cb92facf43b841d41c932d8d0
+      internalID: -962470418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_98
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2754909fceb400f4a8a611f93eed73d6
+      internalID: -408045577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_99
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a19e27f11bb10f74f87740d5b0cfacda
+      internalID: 626396131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_100
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 493ac57ef594eca409cac2e69c6a4c80
+      internalID: -610096758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_101
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a8d3ef20dff1694da5c84feadc04a94
+      internalID: -1406922778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_102
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f956a6499bcd49f47a453a44a31239f2
+      internalID: -1536957573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_103
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b98c107192e1141439c90f8346525aec
+      internalID: -1571928979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_104
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32eef69378ac1f14e916271b7bce3fa1
+      internalID: 1013171057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_105
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dfe27263a5069e4f8634a043f7f2f8e
+      internalID: -508785245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_106
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25870a970b61ae344aa9abb19d0fb842
+      internalID: -390409433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_107
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb406c7b69568204892e4cc1c7b0d98e
+      internalID: 1679000281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_108
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f3e87986cd16b409848a7cdbe86d65
+      internalID: 75097232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_109
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aae38b4a0959bc438c4defebb0f63b7
+      internalID: -124277318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_110
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60cadfb0d97ffcf4a9e97bf073defb93
+      internalID: -215260546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_111
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588b63d3100613848b0183fa11534f38
+      internalID: 833837193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_112
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf9540dfd7b9964a8b5b85a97a74de6
+      internalID: 1755910747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_113
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 604a93603eb2c074aab19a6c0aa61356
+      internalID: -1747658841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_114
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 140
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebb3315d98a882544aec2d903bdc8352
+      internalID: 13451944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_115
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e628d9f8f7fa0d428b8f19e942b09c7
+      internalID: 1068369923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_116
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 168d1d796903ee84796943d7bae5b209
+      internalID: -1047575773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_117
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 906d822500b4e394aaf9d97cfa23594a
+      internalID: 990704560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_118
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5736ad3c8e31c3242af6ee752a0fbb8a
+      internalID: 1175415193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_119
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d25d1041599588439cf76af7076471f
+      internalID: 1250468228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_120
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7da42d081fac1948b39e213f529e269
+      internalID: 1282314009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_121
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f027343a91a95940b88d6da2d54abe1
+      internalID: -401710207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_122
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f63b508fe15cc444f98b4eaeef220ed3
+      internalID: 1666494384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_123
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d23bc9f5e3f1334fab36fa00a8cd3a5
+      internalID: -1149358594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_124
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55a41c8cba409d4bbe2931cc53bb59c
+      internalID: -1809985436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_125
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a98a13cb8aab416449a6d8ddccf07120
+      internalID: 965105570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_126
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4855f5feeb8199545b37eb7e5b798f48
+      internalID: -1936716802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_127
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be520fd50ad9794081b14ca7a99f199
+      internalID: -322337638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_128
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 130
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7220007d982b914388601aab8e6ff18
+      internalID: 1653501466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_129
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b31964912859a45a9d19d2a80a42e6
+      internalID: 414721380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_130
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70aa119ea99b5064c9bc477a1fa32914
+      internalID: 404199788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_131
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22651012d878a0746ab615c6bb6afc34
+      internalID: -669073870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_132
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 401e6cf3a221f664ead4f556b7233793
+      internalID: -1524519309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_133
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e99fc21dbe9974141b84815a72667d48
+      internalID: 1316223743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_134
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1bd58df58868c14eb79d1287e3ecad6
+      internalID: -1431309432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_135
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e9c68cd021460e4da8b4e1891b30191
+      internalID: 1937997365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_136
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef003ce1a01e26a4d8269be1d2c4155e
+      internalID: 1503024656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_137
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 652fe80518d78c346bc78e23bf9117e1
+      internalID: 1082635866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_138
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d077d69d4fa89340bdc2d05880d7942
+      internalID: 38961299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_139
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dc1ac644ccad0841aa11cf658a70c9f
+      internalID: 1025379154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_140
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e496ba5f8d675894a9cfed8700ca4c4a
+      internalID: -1093172644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_141
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef3aed638bcd0c345817a6eb93c7d7d3
+      internalID: -135401506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_142
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c191c7c93ffb344bfbb83946d1a4ae
+      internalID: -1555565048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_143
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f5aa093fe9f034ea3baabe86cdb866
+      internalID: -297178628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_144
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7403634dcf834974fa7f0990dcbe600e
+      internalID: 1362888521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_145
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b8f8ffc9065af4438afad1c9b7b0742
+      internalID: -1889799176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_146
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d953990043bae94cb58714072d7a14c
+      internalID: 382604390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_147
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d49ffdca3c12afd4c92f4c91279362e2
+      internalID: 1502163796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_148
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c322b97eb9816c54b9fc577a92a1fe5d
+      internalID: -1253732135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_149
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d1cb8c592190194ab45e860102aaced
+      internalID: 1516716920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_150
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453d2cc730e0219449b7321a06ebdf03
+      internalID: 399149475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_151
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94801529161996243af9cd0a4eb889bd
+      internalID: 1166974175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_152
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 750ce51628398c3469cb11fec354caab
+      internalID: -465719333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_153
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef74f19f3fc992f43a53d83eee4a6d90
+      internalID: 1819316836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_154
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d53dc003cfba69458fa89c75f8b2d34
+      internalID: -190967046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_155
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34afd44759e784d4ca1a0923455ae05e
+      internalID: -610777734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_156
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cee18d8ea640f74cb056cc94d2bfeb7
+      internalID: 57909803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_157
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ffa7d545ccf0ce4a95303170db26c77
+      internalID: 504053602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_158
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baeb8846b26ea9c43a4407ffcd2972e2
+      internalID: 1109938167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_159
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01de43690e4322f4d884bd58c10a8868
+      internalID: -1789305019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_160
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22a1cdf87330d244d96053ab436a16d1
+      internalID: 328986512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_161
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20cea8fbc01803f428a83c3bfe448db6
+      internalID: 1401769731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_162
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35fc46f26e8537643aeb25c69b2d5908
+      internalID: -2107750241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_163
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2acbe9fdf17c7a46abbd0cd901d3bcd
+      internalID: -1532836762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_164
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c64c95b0cd52f48923e1084afd4962
+      internalID: -1177257476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_165
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ea2cbf52f73f954d9198c228e7866d0
+      internalID: -733792570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_166
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95aca93b0cb246046a94ad87479785bd
+      internalID: 923919375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_167
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83122980e13455c47a58f7c7a7d30b2d
+      internalID: -1187956369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_168
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 110
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 798b2f68416450648be75b6fe1b712b1
+      internalID: 1879046929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_169
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72f2c0a7528dabc41bd4a5df6d0975a5
+      internalID: -1995000483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_170
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049a482b862a67a4cb0b4b98e2b285c1
+      internalID: -1057596406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_171
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e1b15af7adf6d443a33b3bdf6c53a26
+      internalID: -503910595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_172
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05d84bcfb4924f043ac8ad48d03239ec
+      internalID: -485873791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_173
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390323ae29c4092429c05dfd1b9a7c82
+      internalID: -1185497178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_174
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 863b86e987cc55741a1ba5fc026ca45c
+      internalID: -1138585283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_175
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b66ca5893631b14491c456db6ad1a10
+      internalID: -1775942863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_176
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f4c6fd6f95e2984aa3f5fadd24c992c
+      internalID: -515696622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_177
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f2e434c44256d74182de8090160c1b0
+      internalID: 632497073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_178
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61604306531412c42b79eaade6577622
+      internalID: -2055880297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_179
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6481f0b20c8d5c648a582358912495a5
+      internalID: -1715659553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_180
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e03f986f43cdb924497fbe6fb4646607
+      internalID: 102747645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_181
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc37355f86942b14cb7d27984b9a359b
+      internalID: -727482484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_182
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6af57758e9f9834a8bc8afbc79ca496
+      internalID: 1723470279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_183
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2550aa272accb042ae49e58d9f96900
+      internalID: 1015354051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_184
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2b749e14bc984b469e3902999b8bd46
+      internalID: 1611262784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_185
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f8c949736b0a134b8712bf2904de065
+      internalID: 1804263981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_186
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e8571f2dcc359649bee4ec6134fbbba
+      internalID: 1797077006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_187
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d65e8cbc93ff2bb49812b9d8589d8738
+      internalID: -1548628576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_188
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 100
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4c963a212fe0d04499c9f78fb74fced
+      internalID: -165651508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_189
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 776b280286b405c4cae758292f26f3de
+      internalID: -696154403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_190
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bb34837eeac82f4fa67ff81e7c73de9
+      internalID: 1959082219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_191
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de75794b959cb1a4a93e542bd2b1f198
+      internalID: -2025506129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_192
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94c95fc7aca5c12468909aeb24ab539b
+      internalID: -625072973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_193
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aca124cdf2d18842a0edb91be8d07a6
+      internalID: -1863592425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_194
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c02f9bb2a1d611942b52fa5c6dff3b4b
+      internalID: 487582362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_195
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9b452ba5c4aed548a7bc93cb5a65c6c
+      internalID: 214679036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_196
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a439e0ee666752409b24d5acb5a8414
+      internalID: 541309082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_197
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9658bc6b34380be44bb3cebbef3adb57
+      internalID: 1111407580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_198
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24253c2934886e54c83ab84c39e1c94c
+      internalID: 750965926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_199
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bf5f1cf431fe3c4cb3c8d4d10445b23
+      internalID: -1037939880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_200
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90bd2d80b73cf624aa58fcba2412c174
+      internalID: 1918829230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_201
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59a675b1704728943ba642ea1026faf1
+      internalID: 1517177672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_202
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ea79b7edf5e76742a743c67f57f8745
+      internalID: 1487183784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_203
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c2830b7dee8d874c9fe950bdc9ef197
+      internalID: 1502251464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_204
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e1ac98881d61e49b25a50fa79db374
+      internalID: -1653046214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_205
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 282bdbfbe57370d43a69a6191a162c78
+      internalID: 1532507722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_206
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e24ba135e6ec5446be86a3b3107d5f8
+      internalID: -565529742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_207
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d7837f1f289572408108be9689d654e
+      internalID: 922151199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_208
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 90
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecd71641837e0fe4da51ddd325ea3348
+      internalID: 857464141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_209
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 657404eac7118534ab8e1d45dc739523
+      internalID: -888261939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_210
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0150256145104e44181e40495a75f20d
+      internalID: -1566382956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_211
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51afa532ca7a6c24f88a4fc720953d8d
+      internalID: -1308326884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_212
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdb4bbfb6a8ddb5498fcc90e3ba3cc03
+      internalID: 156128335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_213
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d6f217f70578f044857a06bfca639a8
+      internalID: 711610284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_214
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2f34aa574fbd3548856e85f6620d27e
+      internalID: -1882194387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_215
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb955058c117bdd46a4023f0d98ded97
+      internalID: 1549182000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_216
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b6f8352bcbb8c40baf19e922f8c7b4
+      internalID: -1570334008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_217
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 772edb88c9f149a4b94365c2083cc2f8
+      internalID: 366379504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_218
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe20c16c8bfd7374985e60c107325d4c
+      internalID: -548117202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_219
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28551d19c5d4cf54abfd86939a86751f
+      internalID: -1369469811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_220
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4d3ca7c7f91209469623f866b6f74ef
+      internalID: 477321833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_221
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee60b4abe75783d41b5d502b1dad5b45
+      internalID: -1247175948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_222
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 509232f85cc81a744b75d1e1bc423337
+      internalID: -607258805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_223
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae065aa6c20ea3d42b3372258b2760fa
+      internalID: -727536820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_224
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b32669dadc4ab44a99552900bb0002
+      internalID: -854525648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_225
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d9e7160964b91c4eabf6d7631204084
+      internalID: 34273832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_226
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c70b1f66683a344a8d52e333662e041
+      internalID: -1402671238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_227
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e63e618651072841b78e17781104746
+      internalID: -2026353231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_228
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 80
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fc6318cd11a54645996ff5bcbb7b1a3
+      internalID: -310627366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_229
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e778423e4347b934f856c65bd30b211b
+      internalID: -1250425892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_230
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33ee07279039cde4ca89b4f16f74987d
+      internalID: 356557524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_231
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 628433d3feeeb3a49a842f53fbc5e078
+      internalID: 885118059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_232
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb4cb1ff81afc904883dd116f01c49e7
+      internalID: -697768296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_233
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e21fb99f94c60d4da3a0a729ab44f88
+      internalID: 2139047434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_234
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7216e28cfb25d9499e17cf559b4c4b3
+      internalID: -1216092710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_235
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 857fb1bbc060a7e40bc4fc0de21cfaf9
+      internalID: 1058581354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_236
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afc997afc54cbd2488dd9edde748e0e2
+      internalID: -453752200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_237
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22ce8623a3e7127478ba6564a48a421b
+      internalID: -1152836207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_238
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db28ae14900a97243a4b5186c2d82cb1
+      internalID: -239482757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_239
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da57609fb43e6245b67a91eada9ce2b
+      internalID: 2045009186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_240
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b4a87357516d704ca120ac3a3be66d4
+      internalID: 1634892870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_241
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e9f734ca0704c44b9b524e5e2eb5ebc
+      internalID: 124160641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_242
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a22c2cd9a1bf204faeb112d6e38cbb7
+      internalID: 270220098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_243
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c27312597f5c0a74ab0fcc7ee72435ab
+      internalID: 1716720399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_244
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2292178c39b014d46bc98974452b2cee
+      internalID: 2119615763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_245
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a251726110ac0c245be86527deeca92d
+      internalID: 987503015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_246
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8187aeb0af86d83469a0f67bd4c8eadc
+      internalID: -937751407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_247
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8868572221e9644a9215be9df51d3b5
+      internalID: 57035116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_248
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 70
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971ca286383a8374292bf11b8ec17b88
+      internalID: 2117813156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProtoParts_249
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ddc8bc69ee705148a0f9742bc3ae811
+      internalID: -149680838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":9.0,"y":9.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":1.0,"y":1.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      ProtoParts_0: 1909714146
+      ProtoParts_1: 704223031
+      ProtoParts_10: 685319069
+      ProtoParts_100: -610096758
+      ProtoParts_101: -1406922778
+      ProtoParts_102: -1536957573
+      ProtoParts_103: -1571928979
+      ProtoParts_104: 1013171057
+      ProtoParts_105: -508785245
+      ProtoParts_106: -390409433
+      ProtoParts_107: 1679000281
+      ProtoParts_108: 75097232
+      ProtoParts_109: -124277318
+      ProtoParts_11: 515355806
+      ProtoParts_110: -215260546
+      ProtoParts_111: 833837193
+      ProtoParts_112: 1755910747
+      ProtoParts_113: -1747658841
+      ProtoParts_114: 13451944
+      ProtoParts_115: 1068369923
+      ProtoParts_116: -1047575773
+      ProtoParts_117: 990704560
+      ProtoParts_118: 1175415193
+      ProtoParts_119: 1250468228
+      ProtoParts_12: 1726729711
+      ProtoParts_120: 1282314009
+      ProtoParts_121: -401710207
+      ProtoParts_122: 1666494384
+      ProtoParts_123: -1149358594
+      ProtoParts_124: -1809985436
+      ProtoParts_125: 965105570
+      ProtoParts_126: -1936716802
+      ProtoParts_127: -322337638
+      ProtoParts_128: 1653501466
+      ProtoParts_129: 414721380
+      ProtoParts_13: -1511259236
+      ProtoParts_130: 404199788
+      ProtoParts_131: -669073870
+      ProtoParts_132: -1524519309
+      ProtoParts_133: 1316223743
+      ProtoParts_134: -1431309432
+      ProtoParts_135: 1937997365
+      ProtoParts_136: 1503024656
+      ProtoParts_137: 1082635866
+      ProtoParts_138: 38961299
+      ProtoParts_139: 1025379154
+      ProtoParts_14: -1039284652
+      ProtoParts_140: -1093172644
+      ProtoParts_141: -135401506
+      ProtoParts_142: -1555565048
+      ProtoParts_143: -297178628
+      ProtoParts_144: 1362888521
+      ProtoParts_145: -1889799176
+      ProtoParts_146: 382604390
+      ProtoParts_147: 1502163796
+      ProtoParts_148: -1253732135
+      ProtoParts_149: 1516716920
+      ProtoParts_15: 1846790781
+      ProtoParts_150: 399149475
+      ProtoParts_151: 1166974175
+      ProtoParts_152: -465719333
+      ProtoParts_153: 1819316836
+      ProtoParts_154: -190967046
+      ProtoParts_155: -610777734
+      ProtoParts_156: 57909803
+      ProtoParts_157: 504053602
+      ProtoParts_158: 1109938167
+      ProtoParts_159: -1789305019
+      ProtoParts_16: 822879937
+      ProtoParts_160: 328986512
+      ProtoParts_161: 1401769731
+      ProtoParts_162: -2107750241
+      ProtoParts_163: -1532836762
+      ProtoParts_164: -1177257476
+      ProtoParts_165: -733792570
+      ProtoParts_166: 923919375
+      ProtoParts_167: -1187956369
+      ProtoParts_168: 1879046929
+      ProtoParts_169: -1995000483
+      ProtoParts_17: 805762041
+      ProtoParts_170: -1057596406
+      ProtoParts_171: -503910595
+      ProtoParts_172: -485873791
+      ProtoParts_173: -1185497178
+      ProtoParts_174: -1138585283
+      ProtoParts_175: -1775942863
+      ProtoParts_176: -515696622
+      ProtoParts_177: 632497073
+      ProtoParts_178: -2055880297
+      ProtoParts_179: -1715659553
+      ProtoParts_18: 1679546878
+      ProtoParts_180: 102747645
+      ProtoParts_181: -727482484
+      ProtoParts_182: 1723470279
+      ProtoParts_183: 1015354051
+      ProtoParts_184: 1611262784
+      ProtoParts_185: 1804263981
+      ProtoParts_186: 1797077006
+      ProtoParts_187: -1548628576
+      ProtoParts_188: -165651508
+      ProtoParts_189: -696154403
+      ProtoParts_19: 362018345
+      ProtoParts_190: 1959082219
+      ProtoParts_191: -2025506129
+      ProtoParts_192: -625072973
+      ProtoParts_193: -1863592425
+      ProtoParts_194: 487582362
+      ProtoParts_195: 214679036
+      ProtoParts_196: 541309082
+      ProtoParts_197: 1111407580
+      ProtoParts_198: 750965926
+      ProtoParts_199: -1037939880
+      ProtoParts_2: -628754706
+      ProtoParts_20: -1517772696
+      ProtoParts_200: 1918829230
+      ProtoParts_201: 1517177672
+      ProtoParts_202: 1487183784
+      ProtoParts_203: 1502251464
+      ProtoParts_204: -1653046214
+      ProtoParts_205: 1532507722
+      ProtoParts_206: -565529742
+      ProtoParts_207: 922151199
+      ProtoParts_208: 857464141
+      ProtoParts_209: -888261939
+      ProtoParts_21: 1151712269
+      ProtoParts_210: -1566382956
+      ProtoParts_211: -1308326884
+      ProtoParts_212: 156128335
+      ProtoParts_213: 711610284
+      ProtoParts_214: -1882194387
+      ProtoParts_215: 1549182000
+      ProtoParts_216: -1570334008
+      ProtoParts_217: 366379504
+      ProtoParts_218: -548117202
+      ProtoParts_219: -1369469811
+      ProtoParts_22: -141449796
+      ProtoParts_220: 477321833
+      ProtoParts_221: -1247175948
+      ProtoParts_222: -607258805
+      ProtoParts_223: -727536820
+      ProtoParts_224: -854525648
+      ProtoParts_225: 34273832
+      ProtoParts_226: -1402671238
+      ProtoParts_227: -2026353231
+      ProtoParts_228: -310627366
+      ProtoParts_229: -1250425892
+      ProtoParts_23: 954245281
+      ProtoParts_230: 356557524
+      ProtoParts_231: 885118059
+      ProtoParts_232: -697768296
+      ProtoParts_233: 2139047434
+      ProtoParts_234: -1216092710
+      ProtoParts_235: 1058581354
+      ProtoParts_236: -453752200
+      ProtoParts_237: -1152836207
+      ProtoParts_238: -239482757
+      ProtoParts_239: 2045009186
+      ProtoParts_24: -1603813129
+      ProtoParts_240: 1634892870
+      ProtoParts_241: 124160641
+      ProtoParts_242: 270220098
+      ProtoParts_243: 1716720399
+      ProtoParts_244: 2119615763
+      ProtoParts_245: 987503015
+      ProtoParts_246: -937751407
+      ProtoParts_247: 57035116
+      ProtoParts_248: 2117813156
+      ProtoParts_249: -149680838
+      ProtoParts_25: 68627878
+      ProtoParts_26: 1648669405
+      ProtoParts_27: 199425719
+      ProtoParts_28: -1401573380
+      ProtoParts_29: 1154710011
+      ProtoParts_3: -379429258
+      ProtoParts_30: 1498259891
+      ProtoParts_31: -921742497
+      ProtoParts_32: 1117584276
+      ProtoParts_33: 1484853717
+      ProtoParts_34: 176880415
+      ProtoParts_35: -340083416
+      ProtoParts_36: -1071786430
+      ProtoParts_37: 411852170
+      ProtoParts_38: -97063394
+      ProtoParts_39: -1231938124
+      ProtoParts_4: 1035169138
+      ProtoParts_40: -1403485152
+      ProtoParts_41: -750999454
+      ProtoParts_42: 502955082
+      ProtoParts_43: -2003815031
+      ProtoParts_44: 240282772
+      ProtoParts_45: 722004999
+      ProtoParts_46: -1235034861
+      ProtoParts_47: 142172326
+      ProtoParts_48: 320914169
+      ProtoParts_49: 2065734458
+      ProtoParts_5: -1782939621
+      ProtoParts_50: -1509661488
+      ProtoParts_51: 594607367
+      ProtoParts_52: 1504260123
+      ProtoParts_53: 1182214325
+      ProtoParts_54: -588220321
+      ProtoParts_55: -1973804430
+      ProtoParts_56: -752739831
+      ProtoParts_57: 1681307605
+      ProtoParts_58: -1846501938
+      ProtoParts_59: -888576787
+      ProtoParts_6: -2102807800
+      ProtoParts_60: 1937163825
+      ProtoParts_61: 1149727193
+      ProtoParts_62: 1570359281
+      ProtoParts_63: -2138515157
+      ProtoParts_64: 53303271
+      ProtoParts_65: -720850933
+      ProtoParts_66: 1213765803
+      ProtoParts_67: -1874376584
+      ProtoParts_68: -2057917020
+      ProtoParts_69: -364894522
+      ProtoParts_7: -487122855
+      ProtoParts_70: -1574220599
+      ProtoParts_71: 769957051
+      ProtoParts_72: -1271938137
+      ProtoParts_73: 2063689371
+      ProtoParts_74: 744358211
+      ProtoParts_75: -890072631
+      ProtoParts_76: -1142175773
+      ProtoParts_77: 749079699
+      ProtoParts_78: 1225550552
+      ProtoParts_79: 207564877
+      ProtoParts_8: -2083615788
+      ProtoParts_80: 564634962
+      ProtoParts_81: -1478647314
+      ProtoParts_82: 1009714700
+      ProtoParts_83: -1634590230
+      ProtoParts_84: 390095551
+      ProtoParts_85: -1883982807
+      ProtoParts_86: -995026256
+      ProtoParts_87: -1918847622
+      ProtoParts_88: 2126663397
+      ProtoParts_89: 875966390
+      ProtoParts_9: 628494314
+      ProtoParts_90: 1249483854
+      ProtoParts_91: -657973470
+      ProtoParts_92: -1714967586
+      ProtoParts_93: 1135381110
+      ProtoParts_94: -2003965710
+      ProtoParts_95: -1998747387
+      ProtoParts_96: -1268053660
+      ProtoParts_97: -962470418
+      ProtoParts_98: -408045577
+      ProtoParts_99: 626396131
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

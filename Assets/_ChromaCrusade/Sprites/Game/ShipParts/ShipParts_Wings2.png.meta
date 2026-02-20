@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b0f8f686069a4da469f30751dd14f5e5
+guid: 1909edb1602f1f54db8f9b00e4fccb4e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ShipParts_Utilities_0
+      name: ShipParts_Wings2_0
       rect:
         serializedVersion: 2
         x: 1
@@ -138,14 +138,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 887b838fb2909ca4a885a91d915ac7b0
-      internalID: 1257370768
+      spriteID: cc721e6d445c6be4eabaeed973fa3f6f
+      internalID: 1640493993
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_1
+      name: ShipParts_Wings2_1
       rect:
         serializedVersion: 2
         x: 11
@@ -160,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4d65707f3d6e41428a0435df764dae1
-      internalID: -1877425858
+      spriteID: bfd66e3ea023e6445bd78f7898745ffd
+      internalID: 423089213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_2
+      name: ShipParts_Wings2_2
       rect:
         serializedVersion: 2
         x: 21
@@ -182,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e79708f366769424684083eebb33bb0d
-      internalID: 1223022965
+      spriteID: 9d3d04fb9b1fcd4478816f4c8f93cea2
+      internalID: -948074633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_3
+      name: ShipParts_Wings2_3
       rect:
         serializedVersion: 2
         x: 31
@@ -204,14 +204,124 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 305e2aa657cda5849be15ccb576dd671
-      internalID: 188667650
+      spriteID: 09479db8387370c4ea20adafdc8c52e2
+      internalID: -723268984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_4
+      name: ShipParts_Wings2_4
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 81
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afd07f1917bd422468e10c67ef2f7898
+      internalID: 1900717331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_5
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 81
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea5e6030f67ffd489ca94ab431c46f5
+      internalID: 675671294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_6
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 81
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e54ab8c1acdb78147b66e05ab543a057
+      internalID: -1633154316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_7
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 81
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3993e3e8aa97ff41919ba3cf539d3a6
+      internalID: 387566317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_8
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 81
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b5eebcf1552984fae1a42a4443f134
+      internalID: -276253199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_9
       rect:
         serializedVersion: 2
         x: 1
@@ -226,14 +336,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b37a691356ab2ed4784732bf6a32596e
-      internalID: -655459849
+      spriteID: 949191c5e85d0b740846873ff6425dfd
+      internalID: 3310748
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_5
+      name: ShipParts_Wings2_10
       rect:
         serializedVersion: 2
         x: 11
@@ -248,14 +358,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7746a847d5e583640a7075d61606b95a
-      internalID: 932228359
+      spriteID: 32bd243af38f30a429b1d52a54dd1929
+      internalID: 1999131463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_6
+      name: ShipParts_Wings2_11
       rect:
         serializedVersion: 2
         x: 21
@@ -270,14 +380,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75891bcb6fc375c4fbac649c3409eef7
-      internalID: 219289805
+      spriteID: 246d39d6a4cc6684ca919bb51c5a598e
+      internalID: 1497702541
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_7
+      name: ShipParts_Wings2_12
       rect:
         serializedVersion: 2
         x: 31
@@ -292,14 +402,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c91b2a7b390379b48b985148c02e139a
-      internalID: 1572075843
+      spriteID: 686c3e23c53581641a73b5ba011e60f0
+      internalID: -2103378721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_8
+      name: ShipParts_Wings2_13
       rect:
         serializedVersion: 2
         x: 41
@@ -314,14 +424,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11b841a653937cb4abb287e978990d0b
-      internalID: 817500365
+      spriteID: 95e8496a420d97f4dbe07b0b846ffdff
+      internalID: -1405747688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_9
+      name: ShipParts_Wings2_14
       rect:
         serializedVersion: 2
         x: 51
@@ -336,14 +446,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ac5fc1fe8a4b5e4c8acecb12a17d9ce
-      internalID: 208681543
+      spriteID: d1afc06ec53831a4dbe4bd5b82957a72
+      internalID: 1402131844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_10
+      name: ShipParts_Wings2_15
       rect:
         serializedVersion: 2
         x: 61
@@ -358,14 +468,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41ec7c9c668409944956c671094d13bc
-      internalID: 988942086
+      spriteID: ce6dcd715e4290e42873c17b8645bc28
+      internalID: -1329037197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_11
+      name: ShipParts_Wings2_16
       rect:
         serializedVersion: 2
         x: 71
@@ -380,14 +490,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0f26f6706c456449c92e3d165fc79e
-      internalID: 1223748074
+      spriteID: ef3ec6c4187617e4495b7f561665c18b
+      internalID: 1401949570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_12
+      name: ShipParts_Wings2_17
       rect:
         serializedVersion: 2
         x: 81
@@ -402,14 +512,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 443948350eb142145bd8731b26860fdd
-      internalID: 427526303
+      spriteID: c3b1751c92dd7824ca75546b2e41f14b
+      internalID: -1588236789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_13
+      name: ShipParts_Wings2_18
       rect:
         serializedVersion: 2
         x: 1
@@ -424,14 +534,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acdd7bdebdfa21e4ebae02a998bb7ad4
-      internalID: -456303946
+      spriteID: a714d60bc6c1cb344a60e7c9d4034bdf
+      internalID: -1635967817
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_14
+      name: ShipParts_Wings2_19
       rect:
         serializedVersion: 2
         x: 11
@@ -446,14 +556,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af43f6ad27f2e7f4e9bc43c629baee45
-      internalID: 746227796
+      spriteID: bf684567ffff9a3449d36efd711df388
+      internalID: 1437838163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_15
+      name: ShipParts_Wings2_20
       rect:
         serializedVersion: 2
         x: 21
@@ -468,14 +578,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d69f9a9f24a807840b78a41a5fbd7060
-      internalID: 381973894
+      spriteID: c362ff1cf8342e9469d91082735ff5da
+      internalID: 931732810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_16
+      name: ShipParts_Wings2_21
       rect:
         serializedVersion: 2
         x: 31
@@ -490,14 +600,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de9d61fb4ef2a12488051faa24d68306
-      internalID: 1089629519
+      spriteID: 91e98b0f99835bd40b9d06e96870da0f
+      internalID: -1032684054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_17
+      name: ShipParts_Wings2_22
       rect:
         serializedVersion: 2
         x: 41
@@ -512,14 +622,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42ec66fbcdf5cdd4a9f9b7a56d6ff237
-      internalID: -640427364
+      spriteID: 6b9a7ce228247a4429fe645e81170bf2
+      internalID: 1934091422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_18
+      name: ShipParts_Wings2_23
       rect:
         serializedVersion: 2
         x: 51
@@ -534,14 +644,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbe82f1de79c0bf489bc4c6c25255270
-      internalID: -1102429675
+      spriteID: a7eba977bb572a34db078aacf1324b87
+      internalID: 984347447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_19
+      name: ShipParts_Wings2_24
       rect:
         serializedVersion: 2
         x: 61
@@ -556,14 +666,58 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25121a9fb058457469f48150cf730783
-      internalID: -1126085885
+      spriteID: 17ac4806309fb364b9b96f83f966a09e
+      internalID: 753384070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_20
+      name: ShipParts_Wings2_25
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 61
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1a3c3b183ac30744aa5fa78dfcd2bc3
+      internalID: 794361330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_26
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 61
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15b37f2b595f09643b25c35793e25a34
+      internalID: 1104618662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_27
       rect:
         serializedVersion: 2
         x: 1
@@ -578,14 +732,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e77382103a3ec5943b54b3a9d93912ca
-      internalID: -467053801
+      spriteID: 4ce83be8bbb87f14e9a55c1086b1aff8
+      internalID: 2055763345
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_21
+      name: ShipParts_Wings2_28
       rect:
         serializedVersion: 2
         x: 11
@@ -600,14 +754,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a783e4a4c79a1ab449fdc15d7dffffef
-      internalID: -999208659
+      spriteID: 1b8814fec91a48f489d4ce8f800100b5
+      internalID: 1351246713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_22
+      name: ShipParts_Wings2_29
       rect:
         serializedVersion: 2
         x: 21
@@ -622,14 +776,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55739462338c87e4aa2e283b3dc89cf8
-      internalID: -2003717053
+      spriteID: 26c7cc8869584ef44b6d2d54fcc6ecad
+      internalID: 358068711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_23
+      name: ShipParts_Wings2_30
       rect:
         serializedVersion: 2
         x: 31
@@ -644,14 +798,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0756d2c8716d1e45884c589ae791dca
-      internalID: -1936104494
+      spriteID: a3ee8121460cda34c95c5b86475b5f66
+      internalID: 845974638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_24
+      name: ShipParts_Wings2_31
       rect:
         serializedVersion: 2
         x: 41
@@ -666,14 +820,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6798e9e97a17a794ca8fedbeeb5c410c
-      internalID: -896966741
+      spriteID: ec0fc357735fab047a79fe880095f3e0
+      internalID: -96991134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_25
+      name: ShipParts_Wings2_32
       rect:
         serializedVersion: 2
         x: 51
@@ -688,14 +842,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f2157c3a224e0e429e5b9f433df9815
-      internalID: -847927762
+      spriteID: 313808a9b05ba6a41ac52ab37b0cae65
+      internalID: 1194023998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_26
+      name: ShipParts_Wings2_33
       rect:
         serializedVersion: 2
         x: 61
@@ -710,14 +864,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 293b831ab15aed240976814e97ec95db
-      internalID: 1300518448
+      spriteID: 3ee4a1c8022f06642969bb80d16a5c47
+      internalID: -1101917880
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_27
+      name: ShipParts_Wings2_34
       rect:
         serializedVersion: 2
         x: 71
@@ -732,14 +886,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a85c3ac0acbcba444af9abd1f7ab0c70
-      internalID: -538949533
+      spriteID: 2b1ecad286d15874998c3a5e35cb3d15
+      internalID: 1014289620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_28
+      name: ShipParts_Wings2_35
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 51
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fcd77a4f63c1f645bf802d195141726
+      internalID: -1221107382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_36
       rect:
         serializedVersion: 2
         x: 1
@@ -754,14 +930,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf548400c203a8347b5e87950656e2a7
-      internalID: -1213093216
+      spriteID: 189420dfa72e3f441a38dff86cdc0686
+      internalID: -1707072284
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_29
+      name: ShipParts_Wings2_37
       rect:
         serializedVersion: 2
         x: 11
@@ -776,14 +952,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7efdf9aacaecae43b4aba7cada1887f
-      internalID: -1152650599
+      spriteID: 0a99a266a57b9794593c41e7bdf4dfb5
+      internalID: 2097742112
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_30
+      name: ShipParts_Wings2_38
       rect:
         serializedVersion: 2
         x: 21
@@ -798,14 +974,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 441af0db91d93a3479ffc389a145a009
-      internalID: 1252377628
+      spriteID: 088a9ece2f7199d45bda5b7af9eb7bed
+      internalID: 1160659564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_31
+      name: ShipParts_Wings2_39
       rect:
         serializedVersion: 2
         x: 31
@@ -820,14 +996,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aeb4c5e9f99109e459de2967cf9e148a
-      internalID: -233834464
+      spriteID: 7a8805a4ce4fee04fa452643aede5679
+      internalID: -555961634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_32
+      name: ShipParts_Wings2_40
       rect:
         serializedVersion: 2
         x: 41
@@ -842,14 +1018,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f94a853397f1a04c989623dfc70897b
-      internalID: -1675704351
+      spriteID: db034e01431e89b4da8f9e09fd327110
+      internalID: -1390044213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_33
+      name: ShipParts_Wings2_41
       rect:
         serializedVersion: 2
         x: 51
@@ -864,14 +1040,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31bddd0278dde3f4387d0d60a25bdb7e
-      internalID: 1856792253
+      spriteID: 3916673f2a1ecb04a9931c92a6172fb6
+      internalID: 1574938661
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_34
+      name: ShipParts_Wings2_42
       rect:
         serializedVersion: 2
         x: 61
@@ -886,14 +1062,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e70b00fc700898244a45cb912adb8dac
-      internalID: 1616568599
+      spriteID: e15fb0b7428574d4da249a4771028573
+      internalID: 1931808316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_35
+      name: ShipParts_Wings2_43
       rect:
         serializedVersion: 2
         x: 71
@@ -908,14 +1084,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5e6c7a439b9d8a4aa54b9333b3a46db
-      internalID: 461832657
+      spriteID: 7504002f1ddd95b47a05575541057c96
+      internalID: -994993211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_36
+      name: ShipParts_Wings2_44
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 41
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f1fef13599fc1449b273dbd5288a333
+      internalID: -1461227269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_45
       rect:
         serializedVersion: 2
         x: 1
@@ -930,14 +1128,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5736becce2c58ff43bd768d8608d5f95
-      internalID: -1540437658
+      spriteID: dcf443804adb88346a84d4ee7d59bbcf
+      internalID: 1056828628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_37
+      name: ShipParts_Wings2_46
       rect:
         serializedVersion: 2
         x: 11
@@ -952,14 +1150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7262dfd7b85e3f24db79dd99d33f80df
-      internalID: 1710541204
+      spriteID: 25cc68112a8b01245893b1d69c0d5c9c
+      internalID: -43689536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_38
+      name: ShipParts_Wings2_47
       rect:
         serializedVersion: 2
         x: 21
@@ -974,14 +1172,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cd6ae056e261cc4c8dabc617ca09f0c
-      internalID: -579023476
+      spriteID: 8e026962a37dd714c8f78f6e12bf74df
+      internalID: 1662300207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_39
+      name: ShipParts_Wings2_48
       rect:
         serializedVersion: 2
         x: 31
@@ -996,14 +1194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 105873572ca0e914e97306fdc3a14fb4
-      internalID: 45852613
+      spriteID: 89fd728dbfd57aa41954162ac214d80c
+      internalID: -1893784366
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_40
+      name: ShipParts_Wings2_49
       rect:
         serializedVersion: 2
         x: 41
@@ -1018,14 +1216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a65d89d23110f634899b1a11b0d2ed6b
-      internalID: -1967682326
+      spriteID: a2fc0b8cf8e3bd54c8c8a4a43c31e0c9
+      internalID: -201775038
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_41
+      name: ShipParts_Wings2_50
       rect:
         serializedVersion: 2
         x: 51
@@ -1040,14 +1238,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28adc8ba4d620d745a9785892ba27f10
-      internalID: -2014043643
+      spriteID: b4f0ba73a2bac954f81afd1404a5df6d
+      internalID: -1525807594
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_42
+      name: ShipParts_Wings2_51
       rect:
         serializedVersion: 2
         x: 61
@@ -1062,14 +1260,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 845587e70b9cde84fb1046836c18ef14
-      internalID: 933015965
+      spriteID: bbf51799bcc0e664fbb72d5435dcf977
+      internalID: -1689293428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_43
+      name: ShipParts_Wings2_52
       rect:
         serializedVersion: 2
         x: 71
@@ -1084,14 +1282,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d63fc6ad254bed4b9da150fd11bc5f6
-      internalID: 169198301
+      spriteID: a4e4629dda37e3442b3041c18f7f1efe
+      internalID: -105693403
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_44
+      name: ShipParts_Wings2_53
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 31
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3ede9e4cc810d944825e4beab4db468
+      internalID: 1931694030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_54
       rect:
         serializedVersion: 2
         x: 1
@@ -1106,14 +1326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 103127eac0ead0f4092439e7eb9d34b5
-      internalID: 574119623
+      spriteID: 4b12be3636bef3c4385dc79b2f913d07
+      internalID: -844036534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_45
+      name: ShipParts_Wings2_55
       rect:
         serializedVersion: 2
         x: 11
@@ -1128,14 +1348,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b52c33fbf15817c46868bf0ca9345ebd
-      internalID: -2003904428
+      spriteID: a009049e4415fef498e4264b532d7930
+      internalID: -985653650
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_46
+      name: ShipParts_Wings2_56
       rect:
         serializedVersion: 2
         x: 21
@@ -1150,14 +1370,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bddafa7b4b5fb56498b85ab774aa99fb
-      internalID: -1520137047
+      spriteID: 237005d35cbf10b40a0051230f57ca69
+      internalID: 92456631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_47
+      name: ShipParts_Wings2_57
       rect:
         serializedVersion: 2
         x: 31
@@ -1172,14 +1392,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eee2c0715b64a954f983df5b049b6f31
-      internalID: -1996473288
+      spriteID: bb230bd07933ccf48870ba5d2da3b160
+      internalID: 101766418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_48
+      name: ShipParts_Wings2_58
       rect:
         serializedVersion: 2
         x: 41
@@ -1194,14 +1414,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a9b2033106bd5b438f1ba6dcbd387c5
-      internalID: 1916099093
+      spriteID: 47c73de82e80b6749a0db102ed4cd872
+      internalID: 141336293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_49
+      name: ShipParts_Wings2_59
       rect:
         serializedVersion: 2
         x: 51
@@ -1216,14 +1436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d743884823150bd4fbcd62ff55d7c71c
-      internalID: 1918297029
+      spriteID: f44752d95de55dd4b98dfa566a8f00ff
+      internalID: -239824345
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_50
+      name: ShipParts_Wings2_60
       rect:
         serializedVersion: 2
         x: 61
@@ -1238,14 +1458,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f006eed1930f6eb46b7589f3aa9eb19e
-      internalID: -701553122
+      spriteID: 39a0475c7bfb8ce41a960fa2fe3c0548
+      internalID: 72485634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_51
+      name: ShipParts_Wings2_61
       rect:
         serializedVersion: 2
         x: 71
@@ -1260,14 +1480,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffb4d62c9d947eb4792a9d3b40b62aa5
-      internalID: 253531445
+      spriteID: cb85051b19e542a40a6a35b0436bf0fd
+      internalID: -1143394511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_52
+      name: ShipParts_Wings2_62
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 21
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54a02f78361a17c4187d3fb19215ece7
+      internalID: 1348879254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_63
       rect:
         serializedVersion: 2
         x: 1
@@ -1282,14 +1524,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c903672eea1ea548981f0d2a7f41c47
-      internalID: -1374627784
+      spriteID: 2516b27f02b51b340a74f3a912aa5846
+      internalID: -290060389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_53
+      name: ShipParts_Wings2_64
       rect:
         serializedVersion: 2
         x: 11
@@ -1304,14 +1546,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd6091404ae9e744483af4f6d0a2e47c
-      internalID: 929293681
+      spriteID: 33622a6005ddd5049979d56c97ec77e6
+      internalID: -993591069
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_54
+      name: ShipParts_Wings2_65
       rect:
         serializedVersion: 2
         x: 21
@@ -1326,14 +1568,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f02fb6ecf4ee93740a27405d86d878d6
-      internalID: 1159779684
+      spriteID: 83f356158bfad9b42b7b40a1794c7631
+      internalID: -1143802691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_55
+      name: ShipParts_Wings2_66
       rect:
         serializedVersion: 2
         x: 31
@@ -1348,14 +1590,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 243768a48a32cdc4e883175cee0f2454
-      internalID: 1390526490
+      spriteID: 9fe07c082b4ec56409a5d9192bb8ba90
+      internalID: 915961421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_56
+      name: ShipParts_Wings2_67
       rect:
         serializedVersion: 2
         x: 41
@@ -1370,14 +1612,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: caa189098f989744fa21ea1dd0d1c7c3
-      internalID: 884852370
+      spriteID: bb8eaf58bc7b064428f6b6c8f58baa00
+      internalID: -1347131471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_57
+      name: ShipParts_Wings2_68
       rect:
         serializedVersion: 2
         x: 51
@@ -1392,14 +1634,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 992771723509a794bbd1114bd069e401
-      internalID: -1257707028
+      spriteID: c2d8e36b5c37cc345800298e2b777913
+      internalID: 100964242
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_58
+      name: ShipParts_Wings2_69
       rect:
         serializedVersion: 2
         x: 61
@@ -1414,14 +1656,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 176b8a0be93c1574d8fc564741b793be
-      internalID: 572297430
+      spriteID: d8828c07b05a6ee449af0b78d2d58a9d
+      internalID: -1872079621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_59
+      name: ShipParts_Wings2_70
       rect:
         serializedVersion: 2
         x: 71
@@ -1436,14 +1678,36 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eae923686cc22cd44aa0316b9f5d17e4
-      internalID: -121252579
+      spriteID: 4b2906f8cd31eb4409618a0e27daefe3
+      internalID: -1468762854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_60
+      name: ShipParts_Wings2_71
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 11
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b70a550df9bf104a87151657ab12878
+      internalID: -117717587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_72
       rect:
         serializedVersion: 2
         x: 1
@@ -1458,14 +1722,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc65b09d4a213de4e858e960ea47b362
-      internalID: 676024213
+      spriteID: 325e572591a8593409f10606ff210a45
+      internalID: -2041035615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_61
+      name: ShipParts_Wings2_73
       rect:
         serializedVersion: 2
         x: 11
@@ -1480,14 +1744,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c84658a1ba4408445b632efdc1f75db4
-      internalID: -2106429830
+      spriteID: 752cb4a0c2b43114491f42cbb9a083fd
+      internalID: 458099672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_62
+      name: ShipParts_Wings2_74
       rect:
         serializedVersion: 2
         x: 21
@@ -1502,14 +1766,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69d905a5c2fc4f3429dce670c505552f
-      internalID: 672675556
+      spriteID: d334a08d45849b945a1b219c56f220fe
+      internalID: 1670500281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_63
+      name: ShipParts_Wings2_75
       rect:
         serializedVersion: 2
         x: 31
@@ -1524,14 +1788,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b201e3117956f147874e893414773b6
-      internalID: -1706463515
+      spriteID: 0e03665fb4ff1cf40a27df24f4c85c50
+      internalID: 309532428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_64
+      name: ShipParts_Wings2_76
       rect:
         serializedVersion: 2
         x: 41
@@ -1546,14 +1810,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bef7292f529cab14cacdb09e8e8adc57
-      internalID: 777039486
+      spriteID: e75ede5e226976e44bfde1fbeb70be9d
+      internalID: 1323180670
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_65
+      name: ShipParts_Wings2_77
       rect:
         serializedVersion: 2
         x: 51
@@ -1568,14 +1832,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c419830905d7c9444803c3b5982fb8dc
-      internalID: 99874097
+      spriteID: 6e05bd2c42c88bc4f9f25f6b5931b2a7
+      internalID: -819014676
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_66
+      name: ShipParts_Wings2_78
       rect:
         serializedVersion: 2
         x: 61
@@ -1590,14 +1854,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d121ddc4acb8e34abf357901756a931
-      internalID: -857791121
+      spriteID: 17d7782b1fbab10418e61e627880c9db
+      internalID: 1847121726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShipParts_Utilities_67
+      name: ShipParts_Wings2_79
       rect:
         serializedVersion: 2
         x: 71
@@ -1612,8 +1876,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf756d47d56d5c3499f9ece2a7b0a053
-      internalID: 146825469
+      spriteID: 39f31c97fe99420478b12f2255d67f51
+      internalID: 1442845286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShipParts_Wings2_80
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 1
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b382c5b91d0a8714080997b391e00280
+      internalID: -1193142457
       vertices: []
       indices: 
       edges: []
@@ -1634,74 +1920,87 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":9.0,"y":9.0},"gridSpriteOffset":{"x":1.0,"y":1.0},"gridSpritePadding":{"x":1.0,"y":1.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      ShipParts_Utilities_0: 1257370768
-      ShipParts_Utilities_1: -1877425858
-      ShipParts_Utilities_10: 988942086
-      ShipParts_Utilities_11: 1223748074
-      ShipParts_Utilities_12: 427526303
-      ShipParts_Utilities_13: -456303946
-      ShipParts_Utilities_14: 746227796
-      ShipParts_Utilities_15: 381973894
-      ShipParts_Utilities_16: 1089629519
-      ShipParts_Utilities_17: -640427364
-      ShipParts_Utilities_18: -1102429675
-      ShipParts_Utilities_19: -1126085885
-      ShipParts_Utilities_2: 1223022965
-      ShipParts_Utilities_20: -467053801
-      ShipParts_Utilities_21: -999208659
-      ShipParts_Utilities_22: -2003717053
-      ShipParts_Utilities_23: -1936104494
-      ShipParts_Utilities_24: -896966741
-      ShipParts_Utilities_25: -847927762
-      ShipParts_Utilities_26: 1300518448
-      ShipParts_Utilities_27: -538949533
-      ShipParts_Utilities_28: -1213093216
-      ShipParts_Utilities_29: -1152650599
-      ShipParts_Utilities_3: 188667650
-      ShipParts_Utilities_30: 1252377628
-      ShipParts_Utilities_31: -233834464
-      ShipParts_Utilities_32: -1675704351
-      ShipParts_Utilities_33: 1856792253
-      ShipParts_Utilities_34: 1616568599
-      ShipParts_Utilities_35: 461832657
-      ShipParts_Utilities_36: -1540437658
-      ShipParts_Utilities_37: 1710541204
-      ShipParts_Utilities_38: -579023476
-      ShipParts_Utilities_39: 45852613
-      ShipParts_Utilities_4: -655459849
-      ShipParts_Utilities_40: -1967682326
-      ShipParts_Utilities_41: -2014043643
-      ShipParts_Utilities_42: 933015965
-      ShipParts_Utilities_43: 169198301
-      ShipParts_Utilities_44: 574119623
-      ShipParts_Utilities_45: -2003904428
-      ShipParts_Utilities_46: -1520137047
-      ShipParts_Utilities_47: -1996473288
-      ShipParts_Utilities_48: 1916099093
-      ShipParts_Utilities_49: 1918297029
-      ShipParts_Utilities_5: 932228359
-      ShipParts_Utilities_50: -701553122
-      ShipParts_Utilities_51: 253531445
-      ShipParts_Utilities_52: -1374627784
-      ShipParts_Utilities_53: 929293681
-      ShipParts_Utilities_54: 1159779684
-      ShipParts_Utilities_55: 1390526490
-      ShipParts_Utilities_56: 884852370
-      ShipParts_Utilities_57: -1257707028
-      ShipParts_Utilities_58: 572297430
-      ShipParts_Utilities_59: -121252579
-      ShipParts_Utilities_6: 219289805
-      ShipParts_Utilities_60: 676024213
-      ShipParts_Utilities_61: -2106429830
-      ShipParts_Utilities_62: 672675556
-      ShipParts_Utilities_63: -1706463515
-      ShipParts_Utilities_64: 777039486
-      ShipParts_Utilities_65: 99874097
-      ShipParts_Utilities_66: -857791121
-      ShipParts_Utilities_67: 146825469
-      ShipParts_Utilities_7: 1572075843
-      ShipParts_Utilities_8: 817500365
-      ShipParts_Utilities_9: 208681543
+      ShipParts_Wings2_0: 1640493993
+      ShipParts_Wings2_1: 423089213
+      ShipParts_Wings2_10: 1999131463
+      ShipParts_Wings2_11: 1497702541
+      ShipParts_Wings2_12: -2103378721
+      ShipParts_Wings2_13: -1405747688
+      ShipParts_Wings2_14: 1402131844
+      ShipParts_Wings2_15: -1329037197
+      ShipParts_Wings2_16: 1401949570
+      ShipParts_Wings2_17: -1588236789
+      ShipParts_Wings2_18: -1635967817
+      ShipParts_Wings2_19: 1437838163
+      ShipParts_Wings2_2: -948074633
+      ShipParts_Wings2_20: 931732810
+      ShipParts_Wings2_21: -1032684054
+      ShipParts_Wings2_22: 1934091422
+      ShipParts_Wings2_23: 984347447
+      ShipParts_Wings2_24: 753384070
+      ShipParts_Wings2_25: 794361330
+      ShipParts_Wings2_26: 1104618662
+      ShipParts_Wings2_27: 2055763345
+      ShipParts_Wings2_28: 1351246713
+      ShipParts_Wings2_29: 358068711
+      ShipParts_Wings2_3: -723268984
+      ShipParts_Wings2_30: 845974638
+      ShipParts_Wings2_31: -96991134
+      ShipParts_Wings2_32: 1194023998
+      ShipParts_Wings2_33: -1101917880
+      ShipParts_Wings2_34: 1014289620
+      ShipParts_Wings2_35: -1221107382
+      ShipParts_Wings2_36: -1707072284
+      ShipParts_Wings2_37: 2097742112
+      ShipParts_Wings2_38: 1160659564
+      ShipParts_Wings2_39: -555961634
+      ShipParts_Wings2_4: 1900717331
+      ShipParts_Wings2_40: -1390044213
+      ShipParts_Wings2_41: 1574938661
+      ShipParts_Wings2_42: 1931808316
+      ShipParts_Wings2_43: -994993211
+      ShipParts_Wings2_44: -1461227269
+      ShipParts_Wings2_45: 1056828628
+      ShipParts_Wings2_46: -43689536
+      ShipParts_Wings2_47: 1662300207
+      ShipParts_Wings2_48: -1893784366
+      ShipParts_Wings2_49: -201775038
+      ShipParts_Wings2_5: 675671294
+      ShipParts_Wings2_50: -1525807594
+      ShipParts_Wings2_51: -1689293428
+      ShipParts_Wings2_52: -105693403
+      ShipParts_Wings2_53: 1931694030
+      ShipParts_Wings2_54: -844036534
+      ShipParts_Wings2_55: -985653650
+      ShipParts_Wings2_56: 92456631
+      ShipParts_Wings2_57: 101766418
+      ShipParts_Wings2_58: 141336293
+      ShipParts_Wings2_59: -239824345
+      ShipParts_Wings2_6: -1633154316
+      ShipParts_Wings2_60: 72485634
+      ShipParts_Wings2_61: -1143394511
+      ShipParts_Wings2_62: 1348879254
+      ShipParts_Wings2_63: -290060389
+      ShipParts_Wings2_64: -993591069
+      ShipParts_Wings2_65: -1143802691
+      ShipParts_Wings2_66: 915961421
+      ShipParts_Wings2_67: -1347131471
+      ShipParts_Wings2_68: 100964242
+      ShipParts_Wings2_69: -1872079621
+      ShipParts_Wings2_7: 387566317
+      ShipParts_Wings2_70: -1468762854
+      ShipParts_Wings2_71: -117717587
+      ShipParts_Wings2_72: -2041035615
+      ShipParts_Wings2_73: 458099672
+      ShipParts_Wings2_74: 1670500281
+      ShipParts_Wings2_75: 309532428
+      ShipParts_Wings2_76: 1323180670
+      ShipParts_Wings2_77: -819014676
+      ShipParts_Wings2_78: 1847121726
+      ShipParts_Wings2_79: 1442845286
+      ShipParts_Wings2_8: -276253199
+      ShipParts_Wings2_80: -1193142457
+      ShipParts_Wings2_9: 3310748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

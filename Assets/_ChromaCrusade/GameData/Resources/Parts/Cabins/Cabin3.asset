@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80bebadcdb6a0f8449affbdeb77889b6, type: 3}
   m_Name: Cabin3
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipCabinData
-  sprite: {fileID: -1226067062839431145, guid: 4aba37c0028ee80479ca71fddf946bb9, type: 3}
-  mass: 1
-  price: 1
+  sprite: {fileID: 2003666798, guid: 44452ca424fa6a641a989d570b7990b2, type: 3}
+  mass: 25
+  price: 160
   segments:
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
@@ -24,17 +24,17 @@ MonoBehaviour:
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 0
+      connectionState: 1
   - segmentState: 1
     topConnection:
-      connectionState: 2
+      connectionState: 1
     leftConnection:
-      connectionState: 0
+      connectionState: 1
     rightConnection:
-      connectionState: 0
+      connectionState: 1
     bottomConnection:
       connectionState: 0
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
@@ -42,48 +42,39 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
+      connectionState: 1
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
       connectionState: 0
+    bottomConnection:
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 0
     leftConnection:
       connectionState: 2
     rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
       connectionState: 2
     bottomConnection:
       connectionState: 0
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
-      connectionState: 0
+      connectionState: 1
     leftConnection:
-      connectionState: 2
+      connectionState: 0
     rightConnection:
-      connectionState: 0
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
-  - segmentState: 1
+      connectionState: 1
+  - segmentState: 0
     topConnection:
-      connectionState: 0
+      connectionState: 1
     leftConnection:
-      connectionState: 0
+      connectionState: 2
     rightConnection:
       connectionState: 0
     bottomConnection:
@@ -92,9 +83,18 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
       connectionState: 0
     rightConnection:
       connectionState: 2
     bottomConnection:
       connectionState: 2
-  handling: 2
+  handling: 8

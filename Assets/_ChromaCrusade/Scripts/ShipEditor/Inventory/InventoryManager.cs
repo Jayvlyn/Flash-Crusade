@@ -256,7 +256,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             PartCounter originCounter = partCounters[i];
             PartCounter targetCounter = partCounters[selectorIndex];
 
-            Debug.Log(targetSelector.transform.childCount);
+            //Debug.Log(targetSelector.transform.childCount);
 
             if (targetSelector.transform.childCount < 2)
             {

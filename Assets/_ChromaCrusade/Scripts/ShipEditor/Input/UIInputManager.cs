@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class UIInputManager : MonoBehaviour
 {
     [Header("Input Settings")]
     [SerializeField] float inputRepeatDelay = 0.35f;

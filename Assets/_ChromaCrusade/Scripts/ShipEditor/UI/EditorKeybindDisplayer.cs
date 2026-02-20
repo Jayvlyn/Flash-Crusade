@@ -5,7 +5,7 @@ using UnityEngine;
 public class EditorKeybindDisplayer : MonoBehaviour
 {
     public TMP_Text bindingText;
-    public InputManager inputManager;
+    public UIInputManager inputManager;
 
     private void Start()
     {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class UINavigator : MonoBehaviour
+public class UINavigator : Navigator
+
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

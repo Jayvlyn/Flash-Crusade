@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class EditorState
 {
+    public EditorState()
+    {
+        navState = new NavState();
+    }
+
+    public NavState navState;
     public NavMode navMode = NavMode.Item;
     public ShipPart heldPart;
     public bool midUndoDelete;
     public bool midGrab;
-    public bool inInputField;
     public bool enteringGrid = false;
-    public NavItem currentItem;
 
     private Vector2Int currentGridCell;
     public Vector2Int CurrentGridCell
@@ -22,23 +26,27 @@ public class EditorState
         }
     }
 
-
-    NavItem hoveredItem;
-    public NavItem HoveredItem
+    public NavItem currentItem
     {
-        get => hoveredItem;
-        set
-        {
-            if (hoveredItem == value) return;
-            lastHoveredItem = hoveredItem;
-            hoveredItem = value;
-        }
+        get { return navState.currentItem; }
+        set { navState.currentItem = value; }
     }
 
-    NavItem lastHoveredItem;
+    public NavItem HoveredItem
+    {
+        get { return navState.HoveredItem; }
+        set { navState.HoveredItem = value; }
+    }
+
     public NavItem LastHoveredItem
     {
-        get => lastHoveredItem;
-        set { lastHoveredItem = value; }
+        get { return navState.LastHoveredItem; }
+        set { navState.LastHoveredItem = value; }
+    }
+
+    public bool inInputField
+    {
+        get { return navState.inInputField; }
+        set { navState.inInputField = value; }
     }
 }

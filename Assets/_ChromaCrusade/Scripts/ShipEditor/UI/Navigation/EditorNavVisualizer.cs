@@ -57,41 +57,7 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
 
     #region Item Navigation
 
-    public void HighlightItem(NavItem newItem)
-    {
-        EditorState.currentItem = newItem;
-
-        if (UIManager.Smoothing)
-            HighlightItemLerp();
-        else
-            HighlightItemImmediate();
-    }
-
-    public void HighlightItemImmediate()
-    {
-        if (EditorState.currentItem == null) return;
-
-        GetWorldRectValues(EditorState.currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
-
-        rect.anchoredPosition = targetPos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
-    }
-
     private void OnTabSizeUpdatedEvent(TabSizeUpdatedEvent e) => HighlightItemImmediate();
-
-    void HighlightItemLerp()
-    {
-        CancelLerp();
-        lerpRoutine = StartCoroutine(LerpToRectTarget(
-            getTarget: () =>
-            {
-                GetWorldRectValues(EditorState.currentItem.rect, out var p, out var s);
-                return (p, s);
-            },
-            shouldAbort: () => EditorState.currentItem == null
-        ));
-    }
 
     #endregion
 
@@ -272,43 +238,6 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
         GetWorldRectValues(target, out var p, out var s);
         pos = new Vector2(p.x + cell.x * s.x, p.y + cell.y * s.y);
         size = s;
-    }
-
-    private IEnumerator LerpToRectTarget(System.Func<(Vector2 pos, Vector2 size)> getTarget, System.Func<bool> shouldAbort)
-    {
-        Vector2 startPos = rect.anchoredPosition;
-        Vector2 startSize = rect.sizeDelta;
-
-        float t = 0f;
-
-        while (t < 1f)
-        {
-            if (shouldAbort())
-            {
-                CancelLerp();
-                yield break;
-            }
-
-            var (targetPos, targetSize) = getTarget();
-
-            t += Time.deltaTime / transitionDuration;
-            float s = Mathf.SmoothStep(0, 1, t);
-
-            rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
-
-            Vector2 newSize = Vector2.Lerp(startSize, targetSize, s);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newSize.x);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newSize.y);
-
-            yield return null;
-        }
-
-        var (finalPos, finalSize) = getTarget();
-        rect.anchoredPosition = finalPos;
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalSize.x);
-        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalSize.y);
-
-        lerpRoutine = null;
     }
 
     #endregion

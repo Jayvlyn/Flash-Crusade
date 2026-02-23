@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface IUINavigator
 {
-    void InitItemMode();
+    void Init();
     void TriggerItemNav(Vector2 dir);
+    void NavToItem(NavItem item);
     void SwitchOff();
 }

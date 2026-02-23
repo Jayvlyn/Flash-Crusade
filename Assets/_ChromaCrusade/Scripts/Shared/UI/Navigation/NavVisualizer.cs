@@ -9,6 +9,8 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
     public bool IsLerping => lerpRoutine != null;
     protected Coroutine lerpRoutine;
 
+    public NavState NavState { get; set; }
+
     protected RectTransform rect;
     public RectTransform GetRect()
     {
@@ -122,6 +124,77 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
         rect.rotation = Quaternion.Euler(rt.localEulerAngles);
+
+        lerpRoutine = null;
+    }
+
+    public void HighlightItem(NavItem newItem)
+    {
+        NavState.currentItem = newItem;
+
+        if (UIManager.Smoothing)
+            HighlightItemLerp();
+        else
+            HighlightItemImmediate();
+    }
+
+    public void HighlightItemImmediate()
+    {
+        if (NavState.currentItem == null) return;
+
+        GetWorldRectValues(NavState.currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
+
+        rect.anchoredPosition = targetPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
+    }
+
+    public void HighlightItemLerp()
+    {
+        CancelLerp();
+        lerpRoutine = StartCoroutine(LerpToRectTarget(
+            getTarget: () =>
+            {
+                GetWorldRectValues(NavState.currentItem.rect, out var p, out var s);
+                return (p, s);
+            },
+            shouldAbort: () => NavState.currentItem == null
+        ));
+    }
+
+    protected IEnumerator LerpToRectTarget(System.Func<(Vector2 pos, Vector2 size)> getTarget, System.Func<bool> shouldAbort)
+    {
+        Vector2 startPos = rect.anchoredPosition;
+        Vector2 startSize = rect.sizeDelta;
+
+        float t = 0f;
+
+        while (t < 1f)
+        {
+            if (shouldAbort())
+            {
+                CancelLerp();
+                yield break;
+            }
+
+            var (targetPos, targetSize) = getTarget();
+
+            t += Time.deltaTime / transitionDuration;
+            float s = Mathf.SmoothStep(0, 1, t);
+
+            rect.anchoredPosition = Vector2.Lerp(startPos, targetPos, s);
+
+            Vector2 newSize = Vector2.Lerp(startSize, targetSize, s);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, newSize.x);
+            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, newSize.y);
+
+            yield return null;
+        }
+
+        var (finalPos, finalSize) = getTarget();
+        rect.anchoredPosition = finalPos;
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalSize.x);
+        rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, finalSize.y);
 
         lerpRoutine = null;
     }

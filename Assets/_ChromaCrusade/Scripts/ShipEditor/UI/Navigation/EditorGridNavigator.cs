@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class EditorGridNavigator : EditorNavigator, IGridNavigator
+public class EditorGridNavigator : Navigator, IGridNavigator
 {
+    protected EditorNavVisualizer editorVisualizer;
+    public EditorState EditorState { get; set; }
+
     [SerializeField] RectTransform centerGridCell;
     public IUINavigator uiNav;
 
@@ -17,18 +20,20 @@ public class EditorGridNavigator : EditorNavigator, IGridNavigator
         EventBus.Unsubscribe<NewZoomLevelEvent>(OnNewZoomLevelEvent);
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        visualizer.centerGridCell = centerGridCell;
-    }
-
     public override void Init()
     {
+        base.Init();
+
+        if (editorVisualizer == null)
+            editorVisualizer = visualizer as EditorNavVisualizer;
+
+        editorVisualizer.centerGridCell = centerGridCell;
+
         visualizer.transform.SetParent(parent);
         visualizer.transform.localScale = Vector3.one;
         EditorState.enteringGrid = true; // when current cell is initialized the camera wont try to follow it with this
         NavToCell(EditorState.CurrentGridCell);
+
     }
 
     public void TriggerGridNav(Vector2 dir)
@@ -46,15 +51,15 @@ public class EditorGridNavigator : EditorNavigator, IGridNavigator
     void OnNewZoomLevelEvent(NewZoomLevelEvent e)
     {
         if (EditorState.navMode == NavMode.Grid) 
-            visualizer.HighlightCellImmediate(EditorState.CurrentGridCell);
+            editorVisualizer.HighlightCellImmediate(EditorState.CurrentGridCell);
     }
 
     public void NavToCell(Vector2Int cell)
     {
-        EditorState.currentItem = null;
-        EditorState.HoveredItem = null;
+        NavState.currentItem = null;
+        NavState.HoveredItem = null;
         EditorState.CurrentGridCell = cell;
-        visualizer.HighlightCell(EditorState.CurrentGridCell);
+        editorVisualizer.HighlightCell(EditorState.CurrentGridCell);
     }
 
     public void ResetGridPosition()
@@ -77,6 +82,6 @@ public class EditorGridNavigator : EditorNavigator, IGridNavigator
         if (EditorState.navMode == NavMode.Item) return;
         EventBus.Publish(new CancelCameraMovementEvent());
         EditorState.navMode = NavMode.Item;
-        uiNav.InitItemMode();
+        uiNav.Init();
     }
 }

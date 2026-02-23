@@ -3789,9 +3789,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4718efc688e5c304bad0e1701285c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UINavigator
-  visualizer: {fileID: 1036409155}
-  initialHoveredItem: {fileID: 0}
-  parent: {fileID: 579940309}
+  visualizerParent: {fileID: 579940309}
+  initialHoveredItem: {fileID: 1843815248}
 --- !u!114 &579940312
 MonoBehaviour:
   m_ObjectHideFlags: 0

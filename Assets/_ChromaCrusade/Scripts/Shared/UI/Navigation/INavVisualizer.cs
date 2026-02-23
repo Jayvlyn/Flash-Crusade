@@ -7,4 +7,7 @@ public interface INavVisualizer
     void ResetScale();
     RectTransform GetRect();
     Coroutine LerpWithRect(RectTransform rt);
+    void HighlightItem(NavItem newItem);
+    void HighlightItemImmediate();
+    void HighlightItemLerp();
 }

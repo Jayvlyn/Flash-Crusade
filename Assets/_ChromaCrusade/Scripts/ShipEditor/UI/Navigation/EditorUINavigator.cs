@@ -1,62 +1,24 @@
 using UnityEngine;
 
-public class EditorUINavigator : EditorNavigator, IUINavigator
+public class EditorUINavigator : UINavigator, IUINavigator
 {
-    [SerializeField] NavItem initialHoveredItem;
-    [SerializeField] Transform parent;
-    public IGridNavigator gridNav;
+    protected EditorNavVisualizer editorVisualizer;
+    public EditorState EditorState { get; set; }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
+    public IGridNavigator gridNav;
 
     public override void Init()
     {
-        visualizer.transform.SetParent(parent);
-        visualizer.transform.localScale = Vector3.one;
-        NavItem targetItem = null;
-        if (EditorState.LastHoveredItem != null) targetItem = EditorState.LastHoveredItem;
-        else if (initialHoveredItem != null) targetItem = initialHoveredItem;
-        else targetItem = GetComponentInChildren<NavItem>();
-        NavToItem(targetItem);
+        base.Init();
 
-        visualizer.ResetRotation();
-        visualizer.ResetScale();
+        if (editorVisualizer == null)
+            editorVisualizer = visualizer as EditorNavVisualizer;
+
+
+        editorVisualizer.ResetRotation();
     }
 
-    public void NavToItem(NavItem item)
-    {
-        if (item == null) return;
-        EditorState.HoveredItem = item;
-        EditorState.HoveredItem.OnHighlighted();
-        visualizer.HighlightItem(EditorState.HoveredItem);
-    }
-
-    public void InitItemMode()
-    {
-        Init();
-    }
-
-    public void TriggerItemNav(Vector2 dir)
-    {
-        if (EditorState.HoveredItem == null)
-            return;
-
-        NavItem next = null;
-
-        if (dir.y > 0.5f) next = EditorState.HoveredItem.navUp;
-        else if (dir.y < -0.5f) next = EditorState.HoveredItem.navDown;
-        else if (dir.x < -0.5f) next = EditorState.HoveredItem.navLeft;
-        else if (dir.x > 0.5f) next = EditorState.HoveredItem.navRight;
-
-        if (next == null)
-            return;
-
-        NavToItem(next);
-    }
-
-    public void SwitchOff()
+    public override void SwitchOff()
     {
         if (EditorState.navMode == NavMode.Grid) return;
         EditorState.navMode = NavMode.Grid;

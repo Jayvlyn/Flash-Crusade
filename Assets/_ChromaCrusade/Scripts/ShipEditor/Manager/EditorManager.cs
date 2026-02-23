@@ -74,7 +74,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         visualizer.gameObject.SetActive(true);
         gridNav.ResetGridPosition();
-        uiNav.InitItemMode();
+        uiNav.Init();
     }
 
     #endregion
@@ -97,8 +97,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #region IUINavigator
 
-    public void InitItemMode() => uiNav.InitItemMode();
-    
+    public void Init() => uiNav.Init();
 
     public void TriggerItemNav(Vector2 dir) => uiNav.TriggerItemNav(dir);
 
@@ -106,14 +105,14 @@ public class EditorManager : MonoBehaviour, ICommandContext
     
     void GoBack()
     {
-        if (editorState.inInputField)
+        if (uiNav.NavState.inInputField)
         {
-            editorState.inInputField = false;
+            uiNav.NavState.inInputField = false;
             EventSystem.current.SetSelectedGameObject(null);
         }
         else if (editorState.navMode == NavMode.Item)
         {
-            if (editorState.HoveredItem == exitItem) exitItem.OnSelected();
+            if (uiNav.NavState.HoveredItem == exitItem) exitItem.OnSelected();
             else uiNav.NavToItem(exitItem);
         }
         else if (editorState.navMode == NavMode.Grid)
@@ -127,6 +126,14 @@ public class EditorManager : MonoBehaviour, ICommandContext
         if (editorState.navMode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
         else if (editorState.navMode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, editorState.heldPart));
     }
+
+    public void NavToItem(NavItem item) => uiNav.NavToItem(item);
+
+    public void HighlightItem(NavItem newItem) => visualizer.HighlightItem(newItem);
+
+    public void HighlightItemImmediate() => visualizer.HighlightItemImmediate();
+
+    public void HighlightItemLerp() => visualizer.HighlightItemLerp();
 
     #endregion
 
@@ -269,10 +276,10 @@ public class EditorManager : MonoBehaviour, ICommandContext
     {
         if (editorState.navMode == NavMode.Item)
         {
-            if (editorState.HoveredItem != null)
+            if (uiNav.NavState.HoveredItem != null)
             {
-                if (editorState.HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
-                else editorState.HoveredItem.OnSelected();
+                if (uiNav.NavState.HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else uiNav.NavState.HoveredItem.OnSelected();
             }
         }
         else if (editorState.navMode == NavMode.Grid)
@@ -340,10 +347,10 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         if (editorState.navMode == NavMode.Item)
         {
-            editorState.HoveredItem = null;
-            editorState.LastHoveredItem = null;
+            uiNav.NavState.HoveredItem = null;
+            uiNav.NavState.LastHoveredItem = null;
             ResetGridPosition();
-            uiNav.InitItemMode();
+            uiNav.Init();
         }
         else if (editorState.navMode == NavMode.Grid)
         {
@@ -400,7 +407,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         CommandHistory.Execute(new RotateCommand(this, angle));
     }
 
-    void OnEnterInputField(EnterInputFieldEvent e) => editorState.inInputField = true;
+    void OnEnterInputField(EnterInputFieldEvent e) => uiNav.NavState.inInputField = true;
 
     void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e) => CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
 

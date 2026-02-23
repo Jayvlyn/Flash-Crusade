@@ -17,6 +17,11 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
         return rect;
     }
 
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
+
     public Coroutine LerpWithRect(RectTransform rt)
     {
         CancelLerp();

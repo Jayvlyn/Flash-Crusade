@@ -5,6 +5,11 @@ public class UINavigator : Navigator, IUINavigator
     [SerializeField] Transform visualizerParent;
     [SerializeField] NavItem initialHoveredItem;
 
+    private void Awake()
+    {
+        Init();
+    }
+
     public override void Init()
     {
         base.Init();

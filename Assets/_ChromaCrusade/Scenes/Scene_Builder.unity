@@ -3803,7 +3803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b80eb571f2d114b9d2c969b810e969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridNavigator
-  visualizer: {fileID: 1036409155}
   centerGridCell: {fileID: 217396645}
   parent: {fileID: 227269908}
 --- !u!114 &579940313

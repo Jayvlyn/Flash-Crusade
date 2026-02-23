@@ -31,11 +31,6 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
         EventBus.Unsubscribe<TabSizeUpdatedEvent>(OnTabSizeUpdatedEvent);
     }
 
-    private void Awake()
-    {
-        rect = GetComponent<RectTransform>();
-    }
-
     #endregion
 
     #region IVisualizer

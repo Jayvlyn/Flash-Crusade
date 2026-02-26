@@ -1,0 +1,16 @@
+{
+    "name": "CC.Game",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

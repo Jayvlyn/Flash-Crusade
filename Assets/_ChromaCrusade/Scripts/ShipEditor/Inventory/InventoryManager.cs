@@ -20,6 +20,8 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public PartInventoryPager GetPager() => pager;
 
+    public bool inCreativeMode => EditorState.creativeMode;
+
     #region Initialization 
 
     private void Awake()
@@ -35,9 +37,6 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         partInventory = new PartInventoryModel(inv);
 
         pager = new PartInventoryPager();
-
-
-        //if (EditorState.creativeMode) return;
 
         partCounters = new PartCounter[partSelectors.Length];
         for (int i = 0; i < partSelectors.Length; i++)
@@ -62,8 +61,11 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         part = null;
 
-        if (!partInventory.TryTake(data))
-            return false;
+        if(!inCreativeMode)
+        {
+            if (!partInventory.TryTake(data))
+                return false;
+        }
 
         part = CreateInventoryPart(data);
         ShowParts();
@@ -135,7 +137,14 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             part.Init(entry.data);
 
             targetList.Add(part);
-            partCounters[selectorIndex].SetCount(entry.count);
+            if(!EditorState.creativeMode)
+            {
+                partCounters[selectorIndex].SetCount(entry.count);
+            }
+            else
+            {
+                partCounters[selectorIndex].SetCount(0);
+            }
 
             var capturedData = entry.data;
             primarySelector.onSelected.AddListener(() =>

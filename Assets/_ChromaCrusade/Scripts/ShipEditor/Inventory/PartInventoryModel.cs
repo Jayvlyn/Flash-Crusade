@@ -1,3 +1,4 @@
+using NUnit;
 using System.Collections.Generic;
 
 public class PartInventoryModel
@@ -20,6 +21,15 @@ public class PartInventoryModel
         inventory[PartType.Utility] = Resolve(inv.utilities);
     }
 
+    public PartInventoryModel(ShipPartList fullList)
+    {
+        inventory[PartType.Cabin] = Resolve(fullList.cabins);
+        inventory[PartType.Core] = Resolve(fullList.cores);
+        inventory[PartType.Wing] = Resolve(fullList.wings);
+        inventory[PartType.Weapon] = Resolve(fullList.weapons);
+        inventory[PartType.Utility] = Resolve(fullList.utilities);
+    }
+
     private List<Entry> Resolve(List<PartStack> stackList)
     {
         var resolved = new List<Entry>();
@@ -30,6 +40,21 @@ public class PartInventoryModel
             if (data == null) continue;
 
             resolved.Add(new Entry { data = data, count = stack.count });
+        }
+
+        return resolved;
+    }
+
+    private List<Entry> Resolve(List<string> nameList)
+    {
+        var resolved = new List<Entry>();
+
+        foreach (var name in nameList)
+        {
+            var data = PartDatabase.Instance.Get(name);
+            if (data == null) continue;
+
+            resolved.Add(new Entry { data = data, count = 1 });
         }
 
         return resolved;

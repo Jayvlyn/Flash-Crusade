@@ -5,7 +5,7 @@ public class NavigateCommand : ICommand
     ICommandContext ctx;
     Vector2 totalInput;
 
-    public NavigateCommand(ICommandContext ctx, Vector2 input, EditorState state)
+    public NavigateCommand(ICommandContext ctx, Vector2 input)
     {
         this.ctx = ctx;
         this.totalInput = input;

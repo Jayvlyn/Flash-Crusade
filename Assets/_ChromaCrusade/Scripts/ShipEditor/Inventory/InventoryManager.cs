@@ -36,8 +36,10 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
         pager = new PartInventoryPager();
 
-        partCounters = new PartCounter[partSelectors.Length];
 
+        //if (EditorState.creativeMode) return;
+
+        partCounters = new PartCounter[partSelectors.Length];
         for (int i = 0; i < partSelectors.Length; i++)
             partCounters[i] = partSelectors[i].rect.GetChild(0).GetComponent<PartCounter>();   
     }

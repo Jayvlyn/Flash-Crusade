@@ -20,8 +20,6 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] PartGrabber partGrabber;
     [SerializeField] PartTransformer partTransformer;
 
-    EditorState editorState;
-
     #region Lifecycle
 
     void OnEnable()
@@ -42,17 +40,12 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void Awake()
     {
-        editorState = new EditorState();
+        EditorState.Init();
 
-        visualizer.EditorState = editorState;
-
-        uiNav.EditorState = editorState;
         uiNav.gridNav = (IGridNavigator)gridNav;
 
-        gridNav.EditorState = editorState;
         gridNav.uiNav = (IUINavigator)uiNav;
 
-        partDestroyer.EditorState = editorState;
         partDestroyer.grabber = (IPartGrabber) partGrabber;
         partDestroyer.transformer = (IPartTransformer) partTransformer;
         partDestroyer.placer = (IPartPlacer) partPlacer;
@@ -60,16 +53,12 @@ public class EditorManager : MonoBehaviour, ICommandContext
         partDestroyer.gridNav = (IGridNavigator) gridNav;
         partDestroyer.inventory = (IInventoryManager) inventoryManager;
 
-        partPlacer.EditorState = editorState;
         partPlacer.buildArea = buildArea;
 
-        partGrabber.EditorState = editorState;
         partGrabber.buildArea = buildArea;
         partGrabber.uiNav = (IUINavigator)uiNav;
         partGrabber.visualizer = (IEditorNavVisualizer)visualizer;
 
-
-        partTransformer.EditorState = editorState;
         partTransformer.visualizer = (IEditorNavVisualizer)visualizer;
 
         visualizer.gameObject.SetActive(true);
@@ -110,21 +99,21 @@ public class EditorManager : MonoBehaviour, ICommandContext
             uiNav.NavState.inInputField = false;
             EventSystem.current.SetSelectedGameObject(null);
         }
-        else if (editorState.navMode == NavMode.Item)
+        else if (EditorState.navMode == NavMode.Item)
         {
             if (uiNav.NavState.HoveredItem == exitItem) exitItem.OnSelected();
             else uiNav.NavToItem(exitItem);
         }
-        else if (editorState.navMode == NavMode.Grid)
+        else if (EditorState.navMode == NavMode.Grid)
         {
-            CommandHistory.Execute(new ExitGridModeCommand(this, editorState.heldPart));
+            CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
         }
     }
 
     void ToggleNavMode()
     {
-        if (editorState.navMode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
-        else if (editorState.navMode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, editorState.heldPart));
+        if (EditorState.navMode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
+        else if (EditorState.navMode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
     }
 
     public void NavToItem(NavItem item) => uiNav.NavToItem(item);
@@ -154,7 +143,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void TryPlacePart()
     {
-        if (buildArea.CanPlacePart(editorState.heldPart, gridNav.GetCurrentGridCell()))
+        if (buildArea.CanPlacePart(EditorState.heldPart, gridNav.GetCurrentGridCell()))
         {
             CommandHistory.Execute(new PlaceCommand(this, gridNav.GetCurrentGridCell()));
         }
@@ -274,7 +263,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnSubmitInputEvent(SubmitInputEvent e)
     {
-        if (editorState.navMode == NavMode.Item)
+        if (EditorState.navMode == NavMode.Item)
         {
             if (uiNav.NavState.HoveredItem != null)
             {
@@ -282,10 +271,10 @@ public class EditorManager : MonoBehaviour, ICommandContext
                 else uiNav.NavState.HoveredItem.OnSelected();
             }
         }
-        else if (editorState.navMode == NavMode.Grid)
+        else if (EditorState.navMode == NavMode.Grid)
         {
-            if (editorState.midGrab) return;
-            if (editorState.heldPart != null)
+            if (EditorState.midGrab) return;
+            if (EditorState.heldPart != null)
             {
                 if (UIManager.Smoothing)
                     StartCoroutine(TryPlacePartDelayed());
@@ -301,7 +290,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnCancelInputEvent(CancelInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || editorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
             return;
         
         GoBack();
@@ -309,7 +298,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnModeInputEvent(ModeInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || editorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         ToggleNavMode();
@@ -317,7 +306,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnUndoInputEvent(UndoInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || editorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         CommandHistory.Undo();
@@ -325,7 +314,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnRedoInputEvent(RedoInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || editorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         CommandHistory.Redo();
@@ -333,26 +322,26 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnDeleteInputEvent(DeleteInputEvent e)
     {
-        if (editorState.navMode != NavMode.Grid) return;
+        if (EditorState.navMode != NavMode.Grid) return;
         ShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
-        if (editorState.heldPart == null && part == null) return;
+        if (EditorState.heldPart == null && part == null) return;
 
         CommandHistory.Execute(new DeleteCommand(this, gridNav.GetCurrentGridCell()));
     }
 
     void OnResetInputEvent(ResetInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || editorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
-        if (editorState.navMode == NavMode.Item)
+        if (EditorState.navMode == NavMode.Item)
         {
             uiNav.NavState.HoveredItem = null;
             uiNav.NavState.LastHoveredItem = null;
             ResetGridPosition();
             uiNav.Init();
         }
-        else if (editorState.navMode == NavMode.Grid)
+        else if (EditorState.navMode == NavMode.Grid)
         {
             CommandHistory.Execute(new ResetCommand(this));
         }
@@ -360,7 +349,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnNavigateInputEvent(NavigateInputEvent e)
     {
-        if (editorState.midGrab || ZoomController.MidZoom) return;
+        if (EditorState.midGrab || ZoomController.MidZoom) return;
         if (InventoryManager.Scrolling) return;
 
         Vector2 dir = e.dir;
@@ -373,7 +362,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             dir.y *= 3;
         }
 
-        if (editorState.navMode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, dir, editorState));
+        if (EditorState.navMode == NavMode.Grid) CommandHistory.Execute(new NavigateCommand(this, dir));
         else
         {
             uiNav.TriggerItemNav(dir);
@@ -386,8 +375,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnFlipInputEvent(FlipInputEvent e)
     {
-        if (editorState.heldPart == null) return;
-        if (editorState.navMode != NavMode.Grid) return;
+        if (EditorState.heldPart == null) return;
+        if (EditorState.navMode != NavMode.Grid) return;
         if (visualizer.IsFlipLerping) return;
 
         CommandHistory.Execute(new FlipCommand(this, e.flipAxis));
@@ -395,8 +384,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnRotateInputEvent(RotateInputEvent e)
     {
-        if (editorState.heldPart == null) return;
-        if (editorState.navMode != NavMode.Grid) return;
+        if (EditorState.heldPart == null) return;
+        if (EditorState.navMode != NavMode.Grid) return;
         if (visualizer.IsRotateLerping) return;
 
         float angle = 0;

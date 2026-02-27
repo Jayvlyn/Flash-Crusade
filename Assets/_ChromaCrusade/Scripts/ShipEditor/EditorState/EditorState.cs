@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class EditorState
+public static class EditorState
 {
-    public NavMode navMode = NavMode.Item;
-    public ShipPart heldPart;
-    public bool midUndoDelete;
-    public bool midGrab;
-    public bool enteringGrid = false;
+    public static NavMode navMode;
+    public static ShipPart heldPart;
+    public static bool midUndoDelete;
+    public static bool midGrab;
+    public static bool enteringGrid;
+    public static bool creativeMode;
 
-    private Vector2Int currentGridCell;
-    public Vector2Int CurrentGridCell
+    private static Vector2Int currentGridCell;
+    public static Vector2Int CurrentGridCell
     {
         get { return currentGridCell; }
         set 
@@ -18,5 +19,16 @@ public class EditorState
             if(!enteringGrid) EventBus.Publish(new NewGridCellEvent { cell = currentGridCell });
             enteringGrid = false;
         }
+    }
+
+    public static void Init()
+    {
+        navMode = NavMode.Item;
+        heldPart = null;
+        midUndoDelete = false;
+        midGrab = false;
+        enteringGrid = false;
+        creativeMode = true; // false;
+        currentGridCell = Vector2Int.zero;
     }
 }

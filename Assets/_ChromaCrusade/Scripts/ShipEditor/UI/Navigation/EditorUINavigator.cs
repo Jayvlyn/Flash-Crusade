@@ -3,7 +3,6 @@ using UnityEngine;
 public class EditorUINavigator : UINavigator, IUINavigator
 {
     protected EditorNavVisualizer editorVisualizer;
-    public EditorState EditorState { get; set; }
 
     public IGridNavigator gridNav;
 

@@ -3,7 +3,6 @@ using UnityEngine;
 public class EditorGridNavigator : Navigator, IGridNavigator
 {
     protected EditorNavVisualizer editorVisualizer;
-    public EditorState EditorState { get; set; }
 
     [SerializeField] RectTransform centerGridCell;
     public IUINavigator uiNav;

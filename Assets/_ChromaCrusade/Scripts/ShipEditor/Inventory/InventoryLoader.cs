@@ -5,6 +5,7 @@ public static class InventoryLoader
 {
     // same path you used for test generation so your filler script can write to it
     private const string LoadPath = "Assets/_ChromaCrusade/GameData/Resources/TestInventory.json";
+    private const string ListLoadPath = "Assets/_ChromaCrusade/GameData/Resources/PartList.json";
 
     public static PartInventory Load()
     {
@@ -16,5 +17,17 @@ public static class InventoryLoader
 
         string json = File.ReadAllText(LoadPath);
         return JsonUtility.FromJson<PartInventory>(json);
+    }
+
+    public static ShipPartList LoadFullList()
+    {
+        if (!File.Exists(LoadPath))
+        {
+            Debug.LogWarning($"Inventory file not found at: {ListLoadPath}");
+            return new ShipPartList(); // empty fallback
+        }
+
+        string json = File.ReadAllText(LoadPath);
+        return JsonUtility.FromJson<ShipPartList>(json);
     }
 }

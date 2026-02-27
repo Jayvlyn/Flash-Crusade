@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PartTransformer : MonoBehaviour, IPartTransformer
 {
-    public EditorState EditorState { get; set; }
-
     public IEditorNavVisualizer visualizer;
 
     public void FlipPart(FlipAxis axis)

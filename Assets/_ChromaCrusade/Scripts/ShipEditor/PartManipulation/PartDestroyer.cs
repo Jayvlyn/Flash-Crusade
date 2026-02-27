@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PartDestroyer : MonoBehaviour, IPartDestroyer
 {
-    public EditorState EditorState { get; set; }
-
     public IPartGrabber grabber;
     public IPartTransformer transformer;
     public IPartPlacer placer;

@@ -15,8 +15,6 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
     Coroutine rotateLerpRoutine;
     Coroutine flipLerpRoutine;
 
-    public EditorState EditorState { get; set; }
-
     #region Lifecycle
 
     private void OnEnable()

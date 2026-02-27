@@ -3,7 +3,6 @@ using UnityEngine;
 public class PartPlacer : MonoBehaviour, IPartPlacer
 {
     [HideInInspector] public BuildArea buildArea;
-    public EditorState EditorState { get; set; }
 
     #region IPartPlacer
 

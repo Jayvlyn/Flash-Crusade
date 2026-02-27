@@ -4,7 +4,6 @@ using UnityEngine;
 public class PartGrabber : MonoBehaviour, IPartGrabber
 {
     [HideInInspector] public BuildArea buildArea;
-    public EditorState EditorState { get; set; }
 
     public IUINavigator uiNav;
     public IEditorNavVisualizer visualizer;

@@ -1,3 +1,4 @@
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class UINavigator : Navigator, IUINavigator
@@ -30,7 +31,8 @@ public class UINavigator : Navigator, IUINavigator
         if (item == null) return;
         NavState.HoveredItem = item;
         NavState.HoveredItem.OnHighlighted();
-        if(item.visualize) 
+        NavState.currentItem = item;
+        if (item.visualize) 
             visualizer.HighlightItem(NavState.HoveredItem);
     }
 

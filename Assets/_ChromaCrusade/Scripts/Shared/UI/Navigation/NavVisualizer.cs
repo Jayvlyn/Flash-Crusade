@@ -135,35 +135,33 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
 
     public void HighlightItem(NavItem newItem)
     {
-        NavState.currentItem = newItem;
-
         if (UIManager.Smoothing)
-            HighlightItemLerp();
+            HighlightItemLerp(newItem);
         else
-            HighlightItemImmediate();
+            HighlightItemImmediate(newItem);
     }
 
-    public void HighlightItemImmediate()
+    public void HighlightItemImmediate(NavItem item)
     {
-        if (NavState.currentItem == null) return;
+        if (item == null) return;
 
-        GetWorldRectValues(NavState.currentItem.rect, out Vector2 targetPos, out Vector2 targetSize);
+        GetWorldRectValues(item.rect, out Vector2 targetPos, out Vector2 targetSize);
 
         rect.anchoredPosition = targetPos;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, targetSize.y);
     }
 
-    public void HighlightItemLerp()
+    public void HighlightItemLerp(NavItem item)
     {
         CancelLerp();
         lerpRoutine = StartCoroutine(LerpToRectTarget(
             getTarget: () =>
             {
-                GetWorldRectValues(NavState.currentItem.rect, out var p, out var s);
+                GetWorldRectValues(item.rect, out var p, out var s);
                 return (p, s);
             },
-            shouldAbort: () => NavState.currentItem == null
+            shouldAbort: () => item == null
         ));
     }
 

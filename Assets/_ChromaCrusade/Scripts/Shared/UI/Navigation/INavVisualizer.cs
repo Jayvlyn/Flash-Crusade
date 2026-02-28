@@ -8,6 +8,6 @@ public interface INavVisualizer
     RectTransform GetRect();
     Coroutine LerpWithRect(RectTransform rt);
     void HighlightItem(NavItem newItem);
-    void HighlightItemImmediate();
-    void HighlightItemLerp();
+    void HighlightItemImmediate(NavItem newItem);
+    void HighlightItemLerp(NavItem newItem);
 }

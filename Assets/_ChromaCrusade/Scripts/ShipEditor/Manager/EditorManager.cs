@@ -121,9 +121,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     public void HighlightItem(NavItem newItem) => visualizer.HighlightItem(newItem);
 
-    public void HighlightItemImmediate() => visualizer.HighlightItemImmediate();
+    public void HighlightItemImmediate(NavItem newItem) => visualizer.HighlightItemImmediate(newItem);
 
-    public void HighlightItemLerp() => visualizer.HighlightItemLerp();
+    public void HighlightItemLerp(NavItem newItem) => visualizer.HighlightItemLerp(newItem);
 
     #endregion
 

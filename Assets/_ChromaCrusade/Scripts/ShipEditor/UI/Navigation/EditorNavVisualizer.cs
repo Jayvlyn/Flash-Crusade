@@ -50,7 +50,7 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
 
     #region Item Navigation
 
-    private void OnTabSizeUpdatedEvent(TabSizeUpdatedEvent e) => HighlightItemImmediate();
+    private void OnTabSizeUpdatedEvent(TabSizeUpdatedEvent e) => HighlightItemImmediate(NavState.currentItem);
 
     #endregion
 

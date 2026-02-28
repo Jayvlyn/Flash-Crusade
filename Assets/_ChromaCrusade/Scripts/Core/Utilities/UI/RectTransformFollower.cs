@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 //[ExecuteAlways]
@@ -16,14 +17,17 @@ public class RectTransformFollower : MonoBehaviour
         self = GetComponent<RectTransform>();
     }
 
-    private void Start()
+    private void LateUpdate()
     {
         Follow();
     }
 
-    private void LateUpdate()
+    private void Start()
     {
-        if(!startOnly) Follow();
+        if(startOnly)
+        {
+            StartCoroutine(Deactivator());
+        }
     }
 
     public void Follow()
@@ -43,5 +47,13 @@ public class RectTransformFollower : MonoBehaviour
 
 
         self.localEulerAngles = target.localEulerAngles;
+    }
+
+    IEnumerator Deactivator()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        this.enabled = false;
     }
 }

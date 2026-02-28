@@ -16,4 +16,9 @@ public abstract class Navigator : MonoBehaviour, IInitializable
             visualizer.NavState = NavState;
         }
     }
+
+    public void VisualHighlight(NavItem item)
+    {
+        visualizer.HighlightItem(item);
+    }
 }

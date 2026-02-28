@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public PartInventoryPager GetPager() => pager;
 
-    public bool inCreativeMode => EditorState.creativeMode;
+    public bool inCreativeMode => EditorState.context == EditorContext.Creative;
 
     #region Initialization 
 
@@ -137,14 +137,11 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             part.Init(entry.data);
 
             targetList.Add(part);
-            if(!EditorState.creativeMode)
-            {
+
+            if(!inCreativeMode)
                 partCounters[selectorIndex].SetCount(entry.count);
-            }
             else
-            {
                 partCounters[selectorIndex].SetCount(0);
-            }
 
             var capturedData = entry.data;
             primarySelector.onSelected.AddListener(() =>

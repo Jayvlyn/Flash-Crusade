@@ -2,8 +2,8 @@
     "name": "CC.ShipEditor.TabChannel",
     "rootNamespace": "",
     "references": [
-        "CC.ShipEditor.Inventory",
-        "CC.Shared.UI"
+        "CC.Shared.UI",
+        "CC.ShipEditor.EditorState"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

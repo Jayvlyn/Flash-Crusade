@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(RectTransform))]
 public class NavItem : MonoBehaviour, IPointerDownHandler
 {
+    public bool visualize = true;
     public NavItem navUp;
     public NavItem navLeft;
     public NavItem navRight;
@@ -39,9 +40,7 @@ public class NavItem : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnHighlighted()
     {
-        Debug.Log("Highlighted");
         if (Disabled) return;
-        Debug.Log("Not disabled");
         onHighlighted?.Invoke();
     }
 

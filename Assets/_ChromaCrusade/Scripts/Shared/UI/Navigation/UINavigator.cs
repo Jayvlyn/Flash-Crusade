@@ -30,7 +30,8 @@ public class UINavigator : Navigator, IUINavigator
         if (item == null) return;
         NavState.HoveredItem = item;
         NavState.HoveredItem.OnHighlighted();
-        visualizer.HighlightItem(NavState.HoveredItem);
+        if(item.visualize) 
+            visualizer.HighlightItem(NavState.HoveredItem);
     }
 
     public virtual void SwitchOff() {}

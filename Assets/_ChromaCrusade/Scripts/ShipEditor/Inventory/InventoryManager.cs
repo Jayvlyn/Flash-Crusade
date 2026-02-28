@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour, IInventoryManager
 {
-    public static bool Scrolling = false;
-
     [Header("Refs")]
     public RectTransform grid;
     public RectTransform defaultPartSpawn;
@@ -182,7 +180,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     IEnumerator SmoothScroll(bool scrollDown = true, float duration = 0.5f)
     {
-        Scrolling = true;
+        EditorState.Scrolling = true;
         float elapsed = 0f;
 
         float startY, targetY;
@@ -225,7 +223,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             shownParts.Add(nextParts[i]);
         }
 
-        Scrolling = false;
+        EditorState.Scrolling = false;
     }
 
 
@@ -349,13 +347,13 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public void OnUpSelected()
     {
-        if (Scrolling) return;
+        if (EditorState.Scrolling) return;
         if (pager.PageUp()) ScrollUp();
     }
 
     public void OnDownSelected()
     {
-        if (Scrolling) return;
+        if (EditorState.Scrolling) return;
         if (pager.PageDown()) ScrollDown();
     }
 

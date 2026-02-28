@@ -33,8 +33,16 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         shownParts = new List<ShipPart>();
 
-        PartInventory inv = InventoryLoader.Load();
-        partInventory = new PartInventoryModel(inv);
+        if(inCreativeMode)
+        {
+            ShipPartList list = InventoryLoader.LoadFullList();
+            partInventory = new PartInventoryModel(list);
+        }
+        else
+        {
+            PartInventory inv = InventoryLoader.Load();
+            partInventory = new PartInventoryModel(inv);
+        }
 
         pager = new PartInventoryPager();
 

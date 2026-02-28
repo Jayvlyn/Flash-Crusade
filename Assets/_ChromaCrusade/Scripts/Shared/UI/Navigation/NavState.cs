@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class NavState
 {
     public NavItem currentItem;

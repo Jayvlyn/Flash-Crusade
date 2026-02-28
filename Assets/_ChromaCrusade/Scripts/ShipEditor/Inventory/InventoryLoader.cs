@@ -21,13 +21,13 @@ public static class InventoryLoader
 
     public static ShipPartList LoadFullList()
     {
-        if (!File.Exists(LoadPath))
+        if (!File.Exists(ListLoadPath))
         {
             Debug.LogWarning($"Inventory file not found at: {ListLoadPath}");
             return new ShipPartList(); // empty fallback
         }
 
-        string json = File.ReadAllText(LoadPath);
+        string json = File.ReadAllText(ListLoadPath);
         return JsonUtility.FromJson<ShipPartList>(json);
     }
 }

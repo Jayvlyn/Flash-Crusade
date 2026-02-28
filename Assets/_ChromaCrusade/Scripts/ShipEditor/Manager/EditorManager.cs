@@ -106,6 +106,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         }
         else if (EditorState.navMode == NavMode.Grid)
         {
+            uiNav.NavState.LastHoveredItem = null;
             CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
         }
     }

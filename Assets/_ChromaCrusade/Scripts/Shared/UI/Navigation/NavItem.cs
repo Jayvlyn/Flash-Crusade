@@ -39,7 +39,9 @@ public class NavItem : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnHighlighted()
     {
+        Debug.Log("Highlighted");
         if (Disabled) return;
+        Debug.Log("Not disabled");
         onHighlighted?.Invoke();
     }
 

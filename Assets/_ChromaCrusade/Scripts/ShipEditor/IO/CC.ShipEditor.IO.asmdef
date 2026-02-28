@@ -1,10 +1,11 @@
 {
-    "name": "CC.ShipEditor.ShipIO",
+    "name": "CC.ShipEditor.IO",
     "rootNamespace": "",
     "references": [
         "GUID:bfefc9aef8e33b04fbd8b168d6985215",
         "GUID:c152956743b8dbe49bb7bff605ac8f25",
-        "GUID:d2ee3845b2dc8fc428a3336e433254bb"
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb",
+        "GUID:b83ae634df8eaf14faf376b9ac857438"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

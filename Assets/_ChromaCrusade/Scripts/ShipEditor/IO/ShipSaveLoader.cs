@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class ShipSaveLoader
 {
-    static string MainPath => Application.persistentDataPath;
-    static string ShipSpritePath => Path.Combine(MainPath, "ShipSprites");
-    static string ShipDataPath => Path.Combine(MainPath, "ShipData");
-
     BuildArea buildArea;
 
     #region Public API
@@ -16,8 +12,8 @@ public class ShipSaveLoader
     {
         this.buildArea = buildArea;
 
-        Directory.CreateDirectory(ShipSpritePath);
-        Directory.CreateDirectory(ShipDataPath);
+        Directory.CreateDirectory(Paths.ShipPresetSpritesPath);
+        Directory.CreateDirectory(Paths.ShipPresetDataPath);
     }
 
     public void SaveCurrentBuild(string shipName)
@@ -50,30 +46,30 @@ public class ShipSaveLoader
         string json = JsonUtility.ToJson(shipSave, true);
 
         File.WriteAllText(
-            Path.Combine(ShipDataPath, $"{shipName}.json"),
+            Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json"),
             json
         );
     }
 
-    public void LoadBuild(string shipName)
-    {
-        string path = Path.Combine(ShipDataPath, $"{shipName}.json");
+    //public void LoadBuild(string shipName)
+    //{
+    //    string path = Path.Combine(Paths.ShipDataPath, $"{shipName}.json");
 
-        if (!File.Exists(path))
-        {
-            Debug.LogError("Ship save not found: " + path);
-            return;
-        }
+    //    if (!File.Exists(path))
+    //    {
+    //        Debug.LogError("Ship save not found: " + path);
+    //        return;
+    //    }
 
-        string json = File.ReadAllText(path);
+    //    string json = File.ReadAllText(path);
 
-        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+    //    ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
 
-        if (shipSave.partList == null)
-            return;
+    //    if (shipSave.partList == null)
+    //        return;
 
-        Debug.Log("unfinished");
-    }
+    //    Debug.Log("unfinished");
+    //}
 
     #endregion
 
@@ -81,7 +77,7 @@ public class ShipSaveLoader
     {
         byte[] pngBytes = texture.EncodeToPNG();
 
-        string path = Path.Combine(ShipSpritePath, $"{shipName}.png");
+        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipName}.png");
 
         File.WriteAllBytes(path, pngBytes);
 

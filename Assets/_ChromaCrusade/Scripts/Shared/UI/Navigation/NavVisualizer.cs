@@ -6,10 +6,8 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
     [Header("Settings")]
     public float transitionDuration = 0.12f;
 
-    public bool IsLerping => lerpRoutine != null;
-    protected Coroutine lerpRoutine;
-
-    public NavState NavState { get; set; }
+    public static bool IsLerping => lerpRoutine != null;
+    protected static Coroutine lerpRoutine;
 
     protected RectTransform rect;
     public RectTransform GetRect()
@@ -22,7 +20,7 @@ public class NavVisualizer : MonoBehaviour, INavVisualizer
         rect = GetComponent<RectTransform>();
     }
 
-    public Coroutine LerpWithRect(RectTransform rt)
+    public virtual Coroutine LerpWithRect(RectTransform rt)
     {
         CancelLerp();
         return lerpRoutine = StartCoroutine(LerpRect(rt));

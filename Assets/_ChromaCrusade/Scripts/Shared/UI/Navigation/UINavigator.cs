@@ -1,4 +1,3 @@
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class UINavigator : Navigator, IUINavigator
@@ -29,6 +28,7 @@ public class UINavigator : Navigator, IUINavigator
     public void NavToItem(NavItem item)
     {
         if (item == null) return;
+        NavState.hoveringSelector = item.CompareTag("EditorInventorySelector");
         NavState.HoveredItem = item;
         NavState.HoveredItem.OnHighlighted();
         NavState.currentItem = item;

@@ -127,14 +127,17 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         int primarySelectorIndex = 0;
         int selectorIndex = selectorStartIndex;
 
+        for (int i = 0; i < partSelectors.Length/2; i++)
+        {
+            partSelectors[i].onSelected.RemoveAllListeners();
+        }
+
         for (int i = startIndex; i < endIndex; i++)
         {
             var entry = parts[i];
 
             NavItem selector = partSelectors[selectorIndex];
             NavItem primarySelector = partSelectors[primarySelectorIndex];
-
-            primarySelector.onSelected.RemoveAllListeners();
 
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, selector.transform);
             obj.transform.SetAsFirstSibling();

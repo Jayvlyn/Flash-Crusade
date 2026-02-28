@@ -1,10 +1,11 @@
-public class NavState
+public static class NavState
 {
-    public NavItem currentItem;
-    public bool inInputField;
+    public static NavItem currentItem;
+    public static bool inInputField;
+    public static bool hoveringSelector;
 
-    NavItem hoveredItem;
-    public NavItem HoveredItem
+    static NavItem hoveredItem;
+    public static NavItem HoveredItem
     {
         get => hoveredItem;
         set
@@ -15,10 +16,18 @@ public class NavState
         }
     }
 
-    NavItem lastHoveredItem;
-    public NavItem LastHoveredItem
+    static NavItem lastHoveredItem;
+    public static NavItem LastHoveredItem
     {
         get => lastHoveredItem;
         set { lastHoveredItem = value; }
+    }
+
+    public static void Init()
+    {
+        currentItem = null;
+        inInputField = false;
+        hoveredItem = null;
+        lastHoveredItem = null;
     }
 }

@@ -94,19 +94,19 @@ public class EditorManager : MonoBehaviour, ICommandContext
     
     void GoBack()
     {
-        if (uiNav.NavState.inInputField)
+        if (NavState.inInputField)
         {
-            uiNav.NavState.inInputField = false;
+            NavState.inInputField = false;
             EventSystem.current.SetSelectedGameObject(null);
         }
         else if (EditorState.navMode == NavMode.Item)
         {
-            if (uiNav.NavState.HoveredItem == exitItem) exitItem.OnSelected();
-            else uiNav.NavToItem(exitItem);
+            if (NavState.HoveredItem == exitItem) exitItem.OnSelected();
+            else NavToItem(exitItem);
         }
         else if (EditorState.navMode == NavMode.Grid)
         {
-            uiNav.NavState.LastHoveredItem = null;
+            NavState.LastHoveredItem = null;
             CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
         }
     }
@@ -156,7 +156,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         if (placeQueued) yield break; // prevents spam stacking
         placeQueued = true;
 
-        if (UIManager.Smoothing && visualizer.IsLerping)
+        if (UIManager.Smoothing && NavVisualizer.IsLerping)
             yield return visualizer.WaitUntilDone();
 
         TryPlacePart(); // safe now
@@ -266,10 +266,10 @@ public class EditorManager : MonoBehaviour, ICommandContext
     {
         if (EditorState.navMode == NavMode.Item)
         {
-            if (uiNav.NavState.HoveredItem != null)
+            if (NavState.HoveredItem != null)
             {
-                if (uiNav.NavState.HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
-                else uiNav.NavState.HoveredItem.OnSelected();
+                if (NavState.HoveredItem == buildWindow) CommandHistory.Execute(new EnterGridModeCommand(this));
+                else NavState.HoveredItem.OnSelected();
             }
         }
         else if (EditorState.navMode == NavMode.Grid)
@@ -291,7 +291,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnCancelInputEvent(CancelInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || NavVisualizer.IsLerping || EditorState.midUndoDelete)
             return;
         
         GoBack();
@@ -299,7 +299,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnModeInputEvent(ModeInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || NavVisualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         ToggleNavMode();
@@ -307,7 +307,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnUndoInputEvent(UndoInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || NavVisualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         CommandHistory.Undo();
@@ -315,7 +315,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnRedoInputEvent(RedoInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || NavVisualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         CommandHistory.Redo();
@@ -332,13 +332,13 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnResetInputEvent(ResetInputEvent e)
     {
-        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || visualizer.IsLerping || EditorState.midUndoDelete)
+        if (visualizer.IsRotateLerping || visualizer.IsFlipLerping || NavVisualizer.IsLerping || EditorState.midUndoDelete)
             return;
 
         if (EditorState.navMode == NavMode.Item)
         {
-            uiNav.NavState.HoveredItem = null;
-            uiNav.NavState.LastHoveredItem = null;
+            NavState.HoveredItem = null;
+            NavState.LastHoveredItem = null;
             ResetGridPosition();
             uiNav.Init();
         }
@@ -396,7 +396,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         CommandHistory.Execute(new RotateCommand(this, angle));
     }
 
-    void OnEnterInputField(EnterInputFieldEvent e) => uiNav.NavState.inInputField = true;
+    void OnEnterInputField(EnterInputFieldEvent e) => NavState.inInputField = true;
 
     void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e) => CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
 

@@ -14,7 +14,6 @@ public class EditorUINavigator : UINavigator, IUINavigator
         if (editorVisualizer == null)
             editorVisualizer = visualizer as EditorNavVisualizer;
 
-
         editorVisualizer.ResetRotation();
     }
 

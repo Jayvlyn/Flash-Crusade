@@ -2,27 +2,12 @@ using UnityEngine;
 
 public class StreamlinedScrollHelper : MonoBehaviour
 {
-    [SerializeField] NavItem leftUpItem;
-    [SerializeField] NavItem midUpItem;
-    [SerializeField] NavItem rightUpItem;
+    [SerializeField] NavItem[] topRowItems;
+    [SerializeField] NavItem[] bottomRowItems;
+    [SerializeField] NavItem[] topRowTargets;
+    [SerializeField] NavItem[] bottomRowTargets;
 
-    [SerializeField] NavItem leftDownItem;
-    [SerializeField] NavItem midDownItem;
-    [SerializeField] NavItem rightDownItem;
-
-
-
-    [SerializeField] NavItem leftUpItemTarget;
-    [SerializeField] NavItem midUpItemTarget;
-    [SerializeField] NavItem rightUpItemTarget;
-
-    [SerializeField] NavItem leftDownItemTarget;
-    [SerializeField] NavItem midDownItemTarget;
-    [SerializeField] NavItem rightDownItemTarget;
-
-
-    [SerializeField] InventoryManager inventoryManager;
-    //PartInventoryPager pager;
+    [SerializeField] Pager pager;
 
     private void OnEnable()
     {
@@ -36,34 +21,29 @@ public class StreamlinedScrollHelper : MonoBehaviour
 
     private void OnPageChange(InventoryPageChangedEvent e)
     {
-        if (inventoryManager == null || inventoryManager.GetPager() == null) return;
+        if (pager == null) return;
 
-        PartInventoryPager pager = inventoryManager.GetPager();
         if(pager.CanPageDown())
         {
-            leftDownItem.navDown = leftDownItemTarget;
-            midDownItem.navDown = midDownItemTarget;
-            rightDownItem.navDown = rightDownItemTarget;
+            for(int i = 0; i < bottomRowItems.Length; i++)
+                bottomRowItems[i].navDown = bottomRowTargets[i];
         }
         else
         {
-            leftDownItem.navDown = null;
-            midDownItem.navDown = null;
-            rightDownItem.navDown = null;
+            for (int i = 0; i < bottomRowItems.Length; i++)
+                bottomRowItems[i].navDown = bottomRowTargets[i];
         }
 
 
         if (pager.CanPageUp())
         {
-            leftUpItem.navUp = leftUpItemTarget;
-            midUpItem.navUp = midUpItemTarget;
-            rightUpItem.navUp = rightUpItemTarget;
+            for (int i = 0; i < topRowItems.Length; i++)
+                topRowItems[i].navUp = topRowTargets[i];
         }
         else
         {
-            leftUpItem.navUp = null;
-            midUpItem.navUp = null;
-            rightUpItem.navUp = null;
+            for (int i = 0; i < topRowItems.Length; i++)
+                topRowItems[i].navUp = null;
         }
     }
 }

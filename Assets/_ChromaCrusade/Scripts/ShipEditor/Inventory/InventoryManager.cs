@@ -10,13 +10,13 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     public RectTransform defaultPartSpawn;
     public NavItem[] partSelectors;
 
-    private PartCounter[] partCounters;
-    private List<ShipPart> shownParts;
-    private List<ShipPart> nextParts;
-    private PartInventoryModel partInventory;
-    private PartInventoryPager pager;
+    PartCounter[] partCounters;
+    List<ShipPart> shownParts;
+    List<ShipPart> nextParts;
+    PartInventoryModel partInventory;
+    [SerializeField] private Pager pager;
 
-    public PartInventoryPager GetPager() => pager;
+    public Pager GetPager() => pager;
 
     public bool inCreativeMode => EditorState.context == EditorContext.Creative;
 
@@ -51,8 +51,6 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             PartInventory inv = InventoryLoader.Load();
             partInventory = new PartInventoryModel(inv);
         }
-
-        pager = new PartInventoryPager();
 
         partCounters = new PartCounter[partSelectors.Length];
         for (int i = 0; i < partSelectors.Length; i++)
@@ -282,8 +280,6 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
             PartCounter originCounter = partCounters[i];
             PartCounter targetCounter = partCounters[selectorIndex];
-
-            //Debug.Log(targetSelector.transform.childCount);
 
             if (targetSelector.transform.childCount < 2)
             {

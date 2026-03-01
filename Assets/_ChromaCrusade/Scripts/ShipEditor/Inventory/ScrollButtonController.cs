@@ -6,7 +6,7 @@ public class ScrollButtonController : MonoBehaviour
     public NavItem scrollUpButton;
     public NavItem scrollDownButton;
 
-    private PartInventoryPager pager;
+    private Pager pager;
 
     private void OnEnable()
     {

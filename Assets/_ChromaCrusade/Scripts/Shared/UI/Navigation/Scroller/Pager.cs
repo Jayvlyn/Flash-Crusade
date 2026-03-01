@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PartInventoryPager
+public class Pager : MonoBehaviour
 {
     public int CurrentPage { get; private set; } = 1;
     public int PageCount { get; private set; } = 1;

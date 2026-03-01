@@ -22,6 +22,16 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     #region Initialization 
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ScrollInputEvent>(OnScrollInput);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<ScrollInputEvent>(OnScrollInput);
+    }
+
     private void Awake()
     {
         Init();
@@ -347,6 +357,12 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     public void OnWingTabSelected() => ChangeShowState(PartType.Wing);
     public void OnWeaponTabSelected() => ChangeShowState(PartType.Weapon);
     public void OnUtilityTabSelected() => ChangeShowState(PartType.Utility);
+
+    public void OnScrollInput(ScrollInputEvent e)
+    {
+        if (e.scrollDirection == ScrollDirection.Up) OnUpSelected();
+        else                                         OnDownSelected();
+    }
 
     public void OnUpSelected()
     {

@@ -5638,6 +5638,7 @@ GameObject:
   - component: {fileID: 810847128}
   - component: {fileID: 810847130}
   - component: {fileID: 810847129}
+  - component: {fileID: 810847134}
   m_Layer: 5
   m_Name: Button_Question
   m_TagString: Untagged
@@ -5768,6 +5769,33 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: -10}
   m_SizeDelta: {x: 0, y: 33}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &810847134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810847127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852eb202978a73b4699fc66a9e7b2f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.ShipEditor.Events::HelpInputEventListener
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 810847129}
+        m_TargetAssemblyTypeName: Toggler, CC.Core.Utilities
+        m_MethodName: Toggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &881866470 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1465304185225673591, guid: 8709e0e84737d0042a10d5b422e693f1, type: 3}
@@ -12342,6 +12370,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 998866718}
     - target: {fileID: 8856039557117289089, guid: 7902accf11132444abccf63f2c0668b9, type: 3}
+      propertyPath: helpAction
+      value: 
+      objectReference: {fileID: -8270562386906072754, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+    - target: {fileID: 8856039557117289089, guid: 7902accf11132444abccf63f2c0668b9, type: 3}
       propertyPath: modeAction
       value: 
       objectReference: {fileID: 1205080423}
@@ -12377,6 +12409,10 @@ PrefabInstance:
       propertyPath: rotateAction
       value: 
       objectReference: {fileID: 188439679}
+    - target: {fileID: 8856039557117289089, guid: 7902accf11132444abccf63f2c0668b9, type: 3}
+      propertyPath: scrollAction
+      value: 
+      objectReference: {fileID: 3935196804862990174, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
     - target: {fileID: 8856039557117289089, guid: 7902accf11132444abccf63f2c0668b9, type: 3}
       propertyPath: submitAction
       value: 

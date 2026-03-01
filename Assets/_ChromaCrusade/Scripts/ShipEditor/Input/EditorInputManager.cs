@@ -21,6 +21,8 @@ public class EditorInputManager : MonoBehaviour
     [SerializeField] InputActionReference modifyAction;
     [SerializeField] InputActionReference deleteAction;
     [SerializeField] InputActionReference tabAction;
+    [SerializeField] InputActionReference scrollAction;
+    [SerializeField] InputActionReference helpAction;
 
     public InputActionReference NavigateAction => navigateAction;
     public InputActionReference SubmitAction => submitAction;
@@ -35,6 +37,8 @@ public class EditorInputManager : MonoBehaviour
     public InputActionReference ModifyAction => modifyAction;
     public InputActionReference DeleteAction => deleteAction;
     public InputActionReference TabAction => tabAction;
+    public InputActionReference ScrollAction => scrollAction;
+    public InputActionReference HelpAction => helpAction;
 
     #region Lifecycle
 
@@ -91,6 +95,8 @@ public class EditorInputManager : MonoBehaviour
         modifyAction.action.Enable();
         deleteAction.action.Enable();
         tabAction.action.Enable();
+        scrollAction.action.Enable();
+        helpAction.action.Enable();
     }
 
     private void EnableInputs()
@@ -119,6 +125,8 @@ public class EditorInputManager : MonoBehaviour
         modifyAction.action.performed += OnModifyPerformed;
         deleteAction.action.performed += OnDeletePerformed;
         tabAction.action.performed += OnTabPerformed;
+        scrollAction.action.performed += OnScrollPerformed;
+        helpAction.action.performed += OnHelpPerformed;
     }
 
     private void DisableMainInputs()
@@ -135,6 +143,8 @@ public class EditorInputManager : MonoBehaviour
         modifyAction.action.performed -= OnModifyPerformed;
         deleteAction.action.performed -= OnDeletePerformed;
         tabAction.action.performed -= OnTabPerformed;
+        scrollAction.action.performed -= OnScrollPerformed;
+        helpAction.action.performed -= OnHelpPerformed;
     }
 
     private void OnApplicationFocus(bool hasFocus)
@@ -221,6 +231,16 @@ public class EditorInputManager : MonoBehaviour
 
         EventBus.Publish(new ModifyInputEvent { held = modifyHeld });
     }
+
+    private void OnScrollPerformed(InputAction.CallbackContext ctx)
+    {
+        float input = ctx.ReadValue<float>();
+        if (input == 0) return;
+        ScrollDirection direction = (input == 1) ? ScrollDirection.Up : ScrollDirection.Down;
+        EventBus.Publish(new ScrollInputEvent { scrollDirection = direction });
+    }
+
+    private void OnHelpPerformed(InputAction.CallbackContext ctx) => EventBus.Publish(new HelpInputEvent { });
 
     #endregion
 

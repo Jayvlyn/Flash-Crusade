@@ -31,7 +31,7 @@ public class StreamlinedScrollHelper : MonoBehaviour
         else
         {
             for (int i = 0; i < bottomRowItems.Length; i++)
-                bottomRowItems[i].navDown = bottomRowTargets[i];
+                bottomRowItems[i].navDown = null;
         }
 
 

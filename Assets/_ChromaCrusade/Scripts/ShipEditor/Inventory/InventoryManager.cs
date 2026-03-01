@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public Pager GetPager() => pager;
 
-    public bool inCreativeMode => EditorState.context == EditorContext.Creative;
+    public bool InCreativeMode => EditorState.context == EditorContext.Creative;
 
     #region Initialization 
 
@@ -41,7 +41,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         shownParts = new List<ShipPart>();
 
-        if(inCreativeMode)
+        if(InCreativeMode)
         {
             ShipPartList list = InventoryLoader.LoadFullList();
             partInventory = new PartInventoryModel(list);
@@ -75,7 +75,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         part = null;
 
-        if(!inCreativeMode)
+        if(!InCreativeMode)
         {
             if (!partInventory.TryTake(data))
                 return false;
@@ -155,7 +155,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
             targetList.Add(part);
 
-            if(!inCreativeMode)
+            if(!InCreativeMode)
                 partCounters[selectorIndex].SetCount(entry.count);
             else
                 partCounters[selectorIndex].SetCount(0);

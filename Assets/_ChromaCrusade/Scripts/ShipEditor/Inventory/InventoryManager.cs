@@ -103,7 +103,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         DoSmoothScroll(true);
 
         int elementsPerPage = partSelectors.Length / 2;
-        RenderPage(parts, elementsPerPage, nextParts);
+        SetPage(parts, elementsPerPage, nextParts);
         EventBus.Publish(new InventoryPageChangedEvent());
     }
 
@@ -113,7 +113,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         nextParts = new List<ShipPart>();
         DoSmoothScroll(false);
 
-        RenderPage(parts, 0, nextParts);
+        SetPage(parts, 0, nextParts);
         EventBus.Publish(new InventoryPageChangedEvent());
     }
 
@@ -121,11 +121,11 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         var parts = partInventory.GetParts(showState);
         ClearParts();
-        RenderPage(parts, 0, shownParts);
+        SetPage(parts, 0, shownParts);
         EventBus.Publish(new InventoryPageChangedEvent());
     }
 
-    void RenderPage(IReadOnlyList<PartInventoryModel.Entry> parts, int selectorStartIndex, List<ShipPart> targetList)
+    void SetPage(IReadOnlyList<PartInventoryModel.Entry> parts, int selectorStartIndex, List<ShipPart> targetList)
     {
         int elementsPerPage = partSelectors.Length / 2;
 
@@ -245,7 +245,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     /// Case 1: Need to scroll down -> set new parts to secondary selectors -> scroll down -> *snap new parts back to the primary selectors*
     /// Case 2: Need to scroll up -> *snap current parts to secondary selectors&* -> set new parts to primary selectors -> scroll up
     /// </summary>
-    /// <param name="wrapBackUp"></param>
+    /// <param name="case1"></param>
     void WrapSelectors(bool case1 = true)
     {
         int elementsPerPage = partSelectors.Length / 2;

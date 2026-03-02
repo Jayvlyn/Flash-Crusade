@@ -3,6 +3,7 @@ public static class NavState
     public static NavItem currentItem;
     public static bool inInputField;
     public static bool hoveringSelector;
+    public static bool Scrolling;
 
     static NavItem hoveredItem;
     public static NavItem HoveredItem
@@ -29,5 +30,6 @@ public static class NavState
         inInputField = false;
         hoveredItem = null;
         lastHoveredItem = null;
+        Scrolling = false;
     }
 }

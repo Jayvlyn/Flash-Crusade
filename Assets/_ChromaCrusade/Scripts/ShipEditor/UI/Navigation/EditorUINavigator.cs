@@ -23,20 +23,4 @@ public class EditorUINavigator : UINavigator, IUINavigator
         EditorState.navMode = NavMode.Grid;
         gridNav.InitGridMode();
     }
-
-
-    public void DoDelayedNav(NavItem target)
-    {
-        if(delayedNavRoutine != null) StopCoroutine(delayedNavRoutine);
-        delayedNavRoutine = StartCoroutine(DelayedNavigate(target));
-    }
-
-    Coroutine delayedNavRoutine;
-    IEnumerator DelayedNavigate(NavItem target)
-    {
-        while (EditorState.Scrolling)
-            yield return null;
-
-        NavToItem(target);
-    }
 }

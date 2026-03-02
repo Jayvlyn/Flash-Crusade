@@ -191,7 +191,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     IEnumerator SmoothScroll(bool scrollDown = true, float duration = 0.5f)
     {
-        EditorState.Scrolling = true;
+        NavState.Scrolling = true;
         float elapsed = 0f;
 
         float startY, targetY;
@@ -234,7 +234,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             shownParts.Add(nextParts[i]);
         }
 
-        EditorState.Scrolling = false;
+        NavState.Scrolling = false;
     }
 
 
@@ -362,13 +362,13 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     public void OnUpSelected()
     {
-        if (EditorState.Scrolling) return;
+        if (NavState.Scrolling) return;
         if (pager.PageUp()) ScrollUp();
     }
 
     public void OnDownSelected()
     {
-        if (EditorState.Scrolling) return;
+        if (NavState.Scrolling) return;
         if (pager.PageDown()) ScrollDown();
     }
 

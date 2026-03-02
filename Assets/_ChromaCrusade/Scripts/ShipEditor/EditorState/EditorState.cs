@@ -8,7 +8,6 @@ public static class EditorState
     public static bool midUndoDelete;
     public static bool midGrab;
     public static bool enteringGrid;
-    public static bool Scrolling;
     public static bool VisualizerLerping => NavVisualizer.IsLerping;
 
     private static Vector2Int currentGridCell;
@@ -31,7 +30,6 @@ public static class EditorState
         midUndoDelete = false;
         midGrab = false;
         enteringGrid = false;
-        Scrolling = false;
         currentGridCell = Vector2Int.zero;
     }
 }

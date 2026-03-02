@@ -350,7 +350,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnNavigateInputEvent(NavigateInputEvent e)
     {
-        if (EditorState.midGrab || ZoomController.MidZoom || EditorState.Scrolling) return;
+        if (EditorState.midGrab || ZoomController.MidZoom || NavState.Scrolling) return;
 
         Vector2 dir = e.dir;
 

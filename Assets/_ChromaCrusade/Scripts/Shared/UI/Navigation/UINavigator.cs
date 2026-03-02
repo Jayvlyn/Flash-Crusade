@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UINavigator : Navigator, IUINavigator
@@ -54,5 +55,20 @@ public class UINavigator : Navigator, IUINavigator
             return;
 
         NavToItem(next);
+    }
+
+    public void DoDelayedNav(NavItem target)
+    {
+        if (delayedNavRoutine != null) StopCoroutine(delayedNavRoutine);
+        delayedNavRoutine = StartCoroutine(DelayedNavigate(target));
+    }
+
+    Coroutine delayedNavRoutine;
+    IEnumerator DelayedNavigate(NavItem target)
+    {
+        while (NavState.Scrolling)
+            yield return null;
+
+        NavToItem(target);
     }
 }

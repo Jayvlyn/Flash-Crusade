@@ -9,17 +9,7 @@ public class StreamlinedScrollHelper : MonoBehaviour
 
     [SerializeField] Pager pager;
 
-    private void OnEnable()
-    {
-        EventBus.Subscribe<InventoryPageChangedEvent>(OnPageChange);
-    }
-
-    private void OnDisable()
-    {
-        EventBus.Unsubscribe<InventoryPageChangedEvent>(OnPageChange);
-    }
-
-    private void OnPageChange(InventoryPageChangedEvent e)
+    public void OnPageChange()
     {
         if (pager == null) return;
 

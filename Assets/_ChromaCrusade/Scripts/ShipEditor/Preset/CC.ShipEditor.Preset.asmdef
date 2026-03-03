@@ -1,0 +1,18 @@
+{
+    "name": "CC.ShipEditor.Preset",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25",
+        "GUID:b83ae634df8eaf14faf376b9ac857438",
+        "GUID:199b28df04ec87c448fb2a39cc36ceca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

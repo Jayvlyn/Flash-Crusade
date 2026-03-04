@@ -2039,6 +2039,7 @@ MonoBehaviour:
   - {fileID: 1434322165}
   - {fileID: 978531008}
   - {fileID: 1992437674}
+  scrollYTargetOffset: -6
   pager: {fileID: 174277082}
 --- !u!114 &174277084
 MonoBehaviour:

@@ -8,6 +8,7 @@ public class ScrollMenuManager : MonoBehaviour
     [SerializeField] private RectTransform grid;
     [SerializeField] private NavItem[] primaryNavItems;
     [SerializeField] private NavItem[] bufferNavItems;
+    [SerializeField] float scrollYTargetOffset = 0;
 
     List<RectTransform> shownRects;
     List<RectTransform> nextRects;
@@ -90,11 +91,11 @@ public class ScrollMenuManager : MonoBehaviour
         if (scrollDown)
         {
             startY = 0;
-            targetY = grid.sizeDelta.y;
+            targetY = grid.sizeDelta.y + scrollYTargetOffset;
         }
         else
         {
-            startY = grid.sizeDelta.y;
+            startY = grid.sizeDelta.y + scrollYTargetOffset;
             targetY = 0;
             Wrap(scrollDown);
             grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, startY);

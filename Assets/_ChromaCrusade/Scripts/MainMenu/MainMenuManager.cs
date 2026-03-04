@@ -9,12 +9,14 @@ public class MainMenuManager : MonoBehaviour
         //SceneManager.LoadScene("Scene_Opening");
         // then after opening scene:
         //SceneManager.LoadScene("Scene_Builder"); // build first ship
+        SceneManager.LoadScene("Scene_Game"); // temp
     }
 
     public void OnLoadGamePressed()
     {
         EditorState.context = EditorContext.MidGame;
-        SceneManager.LoadScene("Scene_Game");
+        //SceneManager.LoadScene("Scene_Game");
+        SceneManager.LoadScene("Scene_Builder"); // temp
     }
 
     public void OnCreativePressed()

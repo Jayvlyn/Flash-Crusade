@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     public RectTransform grid;
     public RectTransform defaultPartSpawn;
     public NavItem[] partSelectors;
+    public StreamlinedScrollHelper scrollHelper;
 
     PartCounter[] partCounters;
     List<ShipPart> shownParts;
@@ -105,6 +106,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         int elementsPerPage = partSelectors.Length / 2;
         SetPage(parts, elementsPerPage, nextParts);
         EventBus.Publish(new InventoryPageChangedEvent());
+        scrollHelper.OnPageChange();
     }
 
     void ScrollUp()
@@ -115,6 +117,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
         SetPage(parts, 0, nextParts);
         EventBus.Publish(new InventoryPageChangedEvent());
+        scrollHelper.OnPageChange();
     }
 
     void ShowParts()

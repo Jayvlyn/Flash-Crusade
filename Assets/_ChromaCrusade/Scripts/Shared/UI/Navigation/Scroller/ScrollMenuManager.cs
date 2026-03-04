@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class ScrollMenuManager : MonoBehaviour
 {
+    [Header("Refs")]
     [SerializeField] StreamlinedScrollHelper scrollHelper;
-    [SerializeField] private RectTransform grid;
-    [SerializeField] private NavItem[] primaryNavItems;
-    [SerializeField] private NavItem[] bufferNavItems;
-    [SerializeField] float scrollYTargetOffset = 0;
+    [SerializeField] RectTransform grid;
+    [SerializeField] NavItem[] primaryNavItems;
+    [SerializeField] NavItem[] bufferNavItems;
+    [SerializeField] Pager pager;
 
-    List<RectTransform> shownRects;
-    List<RectTransform> nextRects;
+    [Header("Config")]
+    [SerializeField] float scrollYTargetOffset = 0f;
 
-    [SerializeField] private Pager pager;
+    List<RectTransform> shownRects = new();
+    List<RectTransform> nextRects = new();
+
+    Coroutine scrollRoutine;
+
+    int ElementsPerPage => primaryNavItems.Length;
+    float PageHeight => grid.sizeDelta.y + scrollYTargetOffset;
 
     public void ShowPageOne(IReadOnlyList<RectTransform> collection)
     {
-        SetPage(collection);
+        SetPage(collection, false, false);
         scrollHelper.OnPageChange();
     }
 
@@ -25,81 +32,63 @@ public class ScrollMenuManager : MonoBehaviour
     {
         pager.PageDown();
         SetPage(collection, true, true);
-        DoSmoothScroll(true);
+        StartSmoothScroll(true);
         scrollHelper.OnPageChange();
     }
 
     public void ScrollUp(IReadOnlyList<RectTransform> collection)
     {
         pager.PageUp();
-        DoSmoothScroll(false);
+        StartSmoothScroll(false);
         SetPage(collection, true, false);
         scrollHelper.OnPageChange();
     }
 
-    // expects a list of items to display that already have data initialized on them
-    void SetPage(IReadOnlyList<RectTransform> collection, bool scrolling = false, bool scrollingDown = false)
+    void SetPage(IReadOnlyList<RectTransform> collection, bool scrolling, bool scrollingDown)
     {
-        if(scrolling) nextRects = new();
-        else shownRects = new();
+        var targetList = scrolling ? nextRects : shownRects;
+        if (scrolling) targetList.Clear();
+        else ClearShownRects();
 
-        int elementsPerPage = primaryNavItems.Length;
+        pager.Recalculate(collection.Count, ElementsPerPage);
+        var (start, end) = pager.GetRange(collection.Count, ElementsPerPage);
 
-        pager.Recalculate(collection.Count, elementsPerPage);
-        var (startIndex, endIndex) = pager.GetRange(collection.Count, elementsPerPage);
-
-        int navItemIndex = 0;
-        for (int i = startIndex; i < endIndex; i++, navItemIndex++)
+        for (int i = start, slot = 0; i < end; i++, slot++)
         {
             var entry = collection[i];
+            var parent = scrollingDown ? bufferNavItems[slot] : primaryNavItems[slot];
 
-            NavItem primary = primaryNavItems[navItemIndex];
-            NavItem buffer = bufferNavItems[navItemIndex];
-            if(scrollingDown)
-                entry.transform.SetParent(buffer.transform);
-            else 
-                entry.transform.SetParent(primary.transform);
-                
-            
+            entry.SetParent(parent.transform, false);
             entry.gameObject.SetActive(true);
-            entry.transform.localScale = Vector3.one;
-            entry.transform.SetAsFirstSibling();
+            entry.localScale = Vector3.one;
+            entry.SetAsFirstSibling();
 
-            if(scrolling)
-            {
-                nextRects.Add(entry);
-            }
-            else 
-                shownRects.Add(entry);
+            targetList.Add(entry);
         }
     }
 
-    void DoSmoothScroll(bool scrollDown = true)
+    void StartSmoothScroll(bool scrollDown)
     {
-        if (scrollRoutine != null) StopCoroutine(scrollRoutine);
+        if (scrollRoutine != null)
+            StopCoroutine(scrollRoutine);
+
         scrollRoutine = StartCoroutine(SmoothScroll(scrollDown, 0.2f));
     }
 
-    Coroutine scrollRoutine;
-
-    IEnumerator SmoothScroll(bool scrollDown = true, float duration = 0.25f)
+    IEnumerator SmoothScroll(bool scrollDown, float duration)
     {
         NavState.Scrolling = true;
-        float elapsed = 0f;
 
-        float startY, targetY;
-        if (scrollDown)
+        float startY = scrollDown ? 0f : PageHeight;
+        float targetY = scrollDown ? PageHeight : 0f;
+
+        if (!scrollDown)
         {
-            startY = 0;
-            targetY = grid.sizeDelta.y + scrollYTargetOffset;
+            Wrap(false);
+            SetGridY(startY);
         }
-        else
-        {
-            startY = grid.sizeDelta.y + scrollYTargetOffset;
-            targetY = 0;
-            Wrap(scrollDown);
-            grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, startY);
-        }
+
+        float elapsed = 0f;
 
         while (elapsed < duration)
         {
@@ -107,73 +96,55 @@ public class ScrollMenuManager : MonoBehaviour
             float t = Mathf.Clamp01(elapsed / duration);
             float eased = 1f - Mathf.Pow(1f - t, 3f);
 
-            float y = Mathf.LerpUnclamped(startY, targetY, eased);
-            grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, y);
-
+            SetGridY(Mathf.LerpUnclamped(startY, targetY, eased));
             yield return null;
         }
-        grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, targetY);
+
+        SetGridY(targetY);
 
         if (scrollDown)
         {
-            Wrap(scrollDown);
-            grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, startY);
+            Wrap(true);
+            SetGridY(startY);
         }
 
-        SetShownRects();
-
+        CommitNextAsShown();
         NavState.Scrolling = false;
     }
 
-    void SetShownRects()
+    void CommitNextAsShown()
     {
         ClearShownRects();
-
-        for (int i = 0; i < nextRects.Count; i++)
-            shownRects.Add(nextRects[i]);
-
+        shownRects.AddRange(nextRects);
         nextRects.Clear();
     }
 
-    // case1: wrap back to primary from buffer (wrap, start scroll)
-    // case2: wrap primary to buffer (finish scroll, then wrap)
-    void Wrap(bool scrollDown = true)
+    void Wrap(bool scrollDown)
     {
-        int elementsPerPage = primaryNavItems.Length;
+        var source = scrollDown ? bufferNavItems : primaryNavItems;
+        var target = scrollDown ? primaryNavItems : bufferNavItems;
 
-        NavItem[] sourceItems;
-        NavItem[] targetItems;
-
-        if (scrollDown)
+        for (int i = 0; i < ElementsPerPage; i++)
         {
-            sourceItems = bufferNavItems;
-            targetItems = primaryNavItems;
-        }
-        else
-        {
-            sourceItems = primaryNavItems;
-            targetItems = bufferNavItems;
-        }
+            if (source[i].transform.childCount == 0)
+                continue;
 
-        for (int i = 0; i < elementsPerPage; i++)
-        {
-            NavItem sourceItem = sourceItems[i];
-            NavItem targetItem = targetItems[i];
-
-            if (sourceItem.transform.childCount > 0)
-            {
-                Transform item = sourceItem.transform.GetChild(0);
-                item.SetParent(targetItem.transform, false);
-                item.SetAsFirstSibling();
-            }
+            var child = source[i].transform.GetChild(0);
+            child.SetParent(target[i].transform, false);
+            child.SetAsFirstSibling();
         }
     }
 
     void ClearShownRects()
     {
-        if (shownRects == null) shownRects = new();
         foreach (var rect in shownRects)
             rect.gameObject.SetActive(false);
+
         shownRects.Clear();
+    }
+
+    void SetGridY(float y)
+    {
+        grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, y);
     }
 }

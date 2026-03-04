@@ -20,6 +20,7 @@ public class Pager : MonoBehaviour
 
     public (int start, int end) GetRange(int totalItems, int itemsPerPage)
     {
+        Debug.Log(CurrentPage);
         int start = (CurrentPage - 1) * itemsPerPage;
         int end = Mathf.Min(start + itemsPerPage, totalItems);
         return (start, end);

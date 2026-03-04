@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScrollMenuManager : MonoBehaviour
 {
+    [SerializeField] StreamlinedScrollHelper scrollHelper;
     [SerializeField] private RectTransform grid;
     [SerializeField] private NavItem[] primaryNavItems;
     [SerializeField] private NavItem[] bufferNavItems;
@@ -15,46 +16,60 @@ public class ScrollMenuManager : MonoBehaviour
 
     public void ShowPageOne(IReadOnlyList<RectTransform> collection)
     {
-        SetPage(collection, shownRects);
+        SetPage(collection);
+        scrollHelper.OnPageChange();
     }
 
     public void ScrollDown(IReadOnlyList<RectTransform> collection)
     {
+        pager.PageDown();
+        SetPage(collection, true, true);
         DoSmoothScroll(true);
-        SetPage(collection, nextRects);
+        scrollHelper.OnPageChange();
     }
 
     public void ScrollUp(IReadOnlyList<RectTransform> collection)
     {
+        pager.PageUp();
         DoSmoothScroll(false);
-        SetPage(collection, nextRects);
+        SetPage(collection, true, false);
+        scrollHelper.OnPageChange();
     }
 
     // expects a list of items to display that already have data initialized on them
-    void SetPage(IReadOnlyList<RectTransform> collection, List<RectTransform> targetList)
+    void SetPage(IReadOnlyList<RectTransform> collection, bool scrolling = false, bool scrollingDown = false)
     {
-        targetList = new();
+        if(scrolling) nextRects = new();
+        else shownRects = new();
 
         int elementsPerPage = primaryNavItems.Length;
 
         pager.Recalculate(collection.Count, elementsPerPage);
         var (startIndex, endIndex) = pager.GetRange(collection.Count, elementsPerPage);
 
-        for (int i = 0; i < primaryNavItems.Length; i++)
-            primaryNavItems[i].onSelected.RemoveAllListeners();
-
-        for (int i = startIndex; i < endIndex; i++)
+        int navItemIndex = 0;
+        for (int i = startIndex; i < endIndex; i++, navItemIndex++)
         {
             var entry = collection[i];
 
-            NavItem primary = primaryNavItems[i];
-            NavItem buffer = bufferNavItems[i];
-
-            entry.transform.SetParent(primary.transform);
+            NavItem primary = primaryNavItems[navItemIndex];
+            NavItem buffer = bufferNavItems[navItemIndex];
+            if(scrollingDown)
+                entry.transform.SetParent(buffer.transform);
+            else 
+                entry.transform.SetParent(primary.transform);
+                
+            
             entry.gameObject.SetActive(true);
+            entry.transform.localScale = Vector3.one;
             entry.transform.SetAsFirstSibling();
 
-            targetList.Add(entry);
+            if(scrolling)
+            {
+                nextRects.Add(entry);
+            }
+            else 
+                shownRects.Add(entry);
         }
     }
 
@@ -104,24 +119,31 @@ public class ScrollMenuManager : MonoBehaviour
             grid.anchoredPosition = new Vector2(grid.anchoredPosition.x, startY);
         }
 
+        SetShownRects();
+
+        NavState.Scrolling = false;
+    }
+
+    void SetShownRects()
+    {
         ClearShownRects();
 
         for (int i = 0; i < nextRects.Count; i++)
             shownRects.Add(nextRects[i]);
 
-        NavState.Scrolling = false;
+        nextRects.Clear();
     }
 
     // case1: wrap back to primary from buffer (wrap, start scroll)
     // case2: wrap primary to buffer (finish scroll, then wrap)
-    void Wrap(bool case1 = true)
+    void Wrap(bool scrollDown = true)
     {
         int elementsPerPage = primaryNavItems.Length;
 
         NavItem[] sourceItems;
         NavItem[] targetItems;
 
-        if (case1)
+        if (scrollDown)
         {
             sourceItems = bufferNavItems;
             targetItems = primaryNavItems;
@@ -148,8 +170,9 @@ public class ScrollMenuManager : MonoBehaviour
 
     void ClearShownRects()
     {
+        if (shownRects == null) shownRects = new();
         foreach (var rect in shownRects)
-            Destroy(rect.gameObject);
+            rect.gameObject.SetActive(false);
         shownRects.Clear();
     }
 }

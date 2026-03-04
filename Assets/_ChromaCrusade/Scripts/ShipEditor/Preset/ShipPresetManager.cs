@@ -55,13 +55,13 @@ public class ShipPresetManager : MonoBehaviour
         }
     }
 
-    private void ScrollUp()
+    public void ScrollUp()
     {
-        Debug.Log("scroll up presets");
+        scrollMenu.ScrollUp(presetItems);
     }
 
-    private void ScrollDown()
+    public void ScrollDown()
     {
-        Debug.Log("scroll down presets");
+        scrollMenu.ScrollDown(presetItems);
     }
 }

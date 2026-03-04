@@ -10,6 +10,7 @@ public class ScrollMenuManager : MonoBehaviour
     [SerializeField] NavItem[] primaryNavItems;
     [SerializeField] NavItem[] bufferNavItems;
     [SerializeField] Pager pager;
+    public Pager Pager => pager;
 
     [Header("Config")]
     [SerializeField] float scrollYTargetOffset = 0f;
@@ -19,7 +20,7 @@ public class ScrollMenuManager : MonoBehaviour
 
     Coroutine scrollRoutine;
 
-    int ElementsPerPage => primaryNavItems.Length;
+    public int ElementsPerPage => primaryNavItems.Length;
     float PageHeight => grid.sizeDelta.y + scrollYTargetOffset;
 
     public void ShowPageOne(IReadOnlyList<RectTransform> collection)

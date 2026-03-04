@@ -18,4 +18,5 @@ public class Assets : MonoBehaviour
     public RectTransform uiShipPrefab;
     public Color uiGreen;
     public Color uiRed;
+    public Sprite shipSilhouette;
 }

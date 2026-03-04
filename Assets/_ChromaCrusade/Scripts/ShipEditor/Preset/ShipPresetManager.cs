@@ -1,11 +1,17 @@
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipPresetManager : MonoBehaviour
 {
     [SerializeField] ScrollMenuManager scrollMenu;
     private List<RectTransform> presetItems;
+
+    [SerializeField] Image previewImage;
+    [SerializeField] TMP_Text previewText;
 
     public void DisplayPresets()
     {
@@ -46,12 +52,13 @@ public class ShipPresetManager : MonoBehaviour
                 new Vector2(0.5f, 0.5f)
             );
 
-
             RectTransform obj = Instantiate(Assets.i.uiShipPrefab);
             var uiShip = obj.GetComponent<UIShip>();
             uiShip.Init(sprite, name);
             presetItems.Add(obj);
             obj.gameObject.SetActive(false);
+
+            OnPresetHovered(99);
         }
     }
 
@@ -63,5 +70,33 @@ public class ShipPresetManager : MonoBehaviour
     public void ScrollDown()
     {
         scrollMenu.ScrollDown(presetItems);
+    }
+
+    public void OnPresetSelected()
+    {
+        Debug.Log($"Selected {hoveredUIShip.shipName}");
+
+        //hoveredUIShip.somthing
+
+        
+    }
+
+    UIShip hoveredUIShip;
+    public void OnPresetHovered(int hoveredIndex)
+    {
+        var (start, end) = scrollMenu.Pager.GetRange(presetItems.Count, scrollMenu.ElementsPerPage);
+
+        int i = start + hoveredIndex;
+        if (i >= presetItems.Count)
+        {
+            previewImage.sprite = Assets.i.shipSilhouette;
+            previewText.text = "Select a preset";
+            return;
+        }
+        RectTransform hoveredPreset = presetItems[i];
+
+        hoveredUIShip = hoveredPreset.GetComponent<UIShip>();
+        previewImage.sprite = hoveredUIShip.shipSprite;
+        previewText.text = hoveredUIShip.shipName;
     }
 }

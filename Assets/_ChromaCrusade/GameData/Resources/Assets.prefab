@@ -48,3 +48,4 @@ MonoBehaviour:
   uiShipPrefab: {fileID: 911873583226963430, guid: b98a39b0c5aecc34e8b4e7d1b23032c7, type: 3}
   uiGreen: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.19607843}
   uiRed: {r: 0.84705883, g: 0.21176471, b: 0.21176471, a: 0.19607843}
+  shipSilhouette: {fileID: 21300000, guid: 0306349b9291835409554aaa34c5af56, type: 3}

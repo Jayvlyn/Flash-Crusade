@@ -11,6 +11,16 @@ public class UINavigator : Navigator, IUINavigator
         Init();
     }
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ItemNavEvent>(OnNavEvent);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<ItemNavEvent>(OnNavEvent);
+    }
+
     public override void Init()
     {
         base.Init();
@@ -25,6 +35,8 @@ public class UINavigator : Navigator, IUINavigator
 
         visualizer.ResetScale();
     }
+
+    void OnNavEvent(ItemNavEvent e) => NavToItem(e.target);
 
     public void NavToItem(NavItem item)
     {

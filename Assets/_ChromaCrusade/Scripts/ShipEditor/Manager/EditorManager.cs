@@ -13,6 +13,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] RectTransform presetMenu;
     [SerializeField] NavItem openPresetsButton;
     [SerializeField] NavItem savePresetButton;
+    [SerializeField] NavItem clearButton;
 
     [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] EditorUINavigator uiNav;
@@ -97,7 +98,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
     
     void GoBack()
     {
-        if(EditorState.inPresetMenu)
+        if(NavState.inConfirmScreen)
+        {
+            EventBus.Publish(new CloseConfirmScreenEvent());
+        }
+        else if(EditorState.inPresetMenu)
         {
             ClosePresetMenu();
         }
@@ -460,5 +465,23 @@ public class EditorManager : MonoBehaviour, ICommandContext
         validationResponseText.text = "";
     }
 
+    #endregion
+
+    #region Clearing
+    public void OnClearButtonPressed()
+    {
+        EventBus.Publish(new OpenConfirmScreenEvent {
+            message = "Are you sure you want to clear the build area?",
+            action = ClearBuildArea,
+            lastNavItem = clearButton
+        });
+    }
+
+    void ClearBuildArea()
+    {
+        ShipPart[] parts = buildArea.ClearParts();
+        foreach (ShipPart part in parts)
+            inventoryManager.AddPart(part.partData);
+    }
     #endregion
 }

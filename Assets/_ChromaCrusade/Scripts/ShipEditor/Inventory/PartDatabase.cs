@@ -48,7 +48,7 @@ public class PartDatabase : MonoBehaviour
                 Debug.LogWarning($"Duplicate part name detected: {part.name}");
         }
 
-        Debug.Log($"PartDatabase initialized with {lookup.Count} parts.");
+        //Debug.Log($"PartDatabase initialized with {lookup.Count} parts.");
     }
 
     public ShipPartData Get(string partName)

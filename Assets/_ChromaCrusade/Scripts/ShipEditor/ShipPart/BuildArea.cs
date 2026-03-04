@@ -64,29 +64,31 @@ public class BuildArea : MonoBehaviour
     public ShipPart GrabPart(Vector2Int cell)
     {
         ShipPart partAtCell = GetPartAtCell(cell);
-        if (partAtCell == null)
-            return null;
+        return GrabPart(partAtCell);
+    }
 
-        List<ShipPart> neighbors = adjacency.ContainsKey(partAtCell)
-            ? adjacency[partAtCell].ToList()
+    public ShipPart GrabPart(ShipPart part)
+    {
+        List<ShipPart> neighbors = adjacency.ContainsKey(part)
+            ? adjacency[part].ToList()
             : new List<ShipPart>();
 
-        ForEachSegment(partAtCell, partAtCell.position, (segment, c) =>
+        ForEachSegment(part, part.position, (segment, c) =>
         {
             occupiedCells.Remove(c);
             return true;
         });
 
-        RemoveNodeFromGraph(partAtCell);
+        RemoveNodeFromGraph(part);
 
-        allParts.Remove(partAtCell);
+        allParts.Remove(part);
 
-        if (partAtCell == centerPart) centerPart = null;
+        if (part == centerPart) centerPart = null;
 
         foreach (var n in neighbors)
             CheckAndPropagateDisconnect(n);
 
-        return partAtCell;
+        return part;
     }
 
     public bool HasPartType(PartType type)
@@ -106,6 +108,24 @@ public class BuildArea : MonoBehaviour
             if (part.partState == PartState.PlacedDisconnected) return true;
         }
         return false;
+    }
+
+    public ShipPart[] ClearParts()
+    {
+        ShipPart[] clearedParts = new ShipPart[allParts.Count];
+        allParts.CopyTo(clearedParts);
+
+        foreach(ShipPart part in allParts)
+        {
+            Destroy(part.gameObject);
+        }
+
+        occupiedCells = new Dictionary<Vector2Int, ShipPart>();
+        adjacency = new Dictionary<ShipPart, List<ShipPart>>();
+        allParts.Clear();
+        centerPart = null;
+
+        return clearedParts;
     }
 
     #region Old Grab & Place (Full Recompute)
@@ -260,7 +280,6 @@ public class BuildArea : MonoBehaviour
 
         return segment;
     }
-
 
     private bool CellsAvailable(Vector2Int centerCell, ShipPart part)
     {

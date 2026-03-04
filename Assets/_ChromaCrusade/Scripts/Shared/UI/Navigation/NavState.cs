@@ -2,6 +2,7 @@ public static class NavState
 {
     public static NavItem currentItem;
     public static bool inInputField;
+    public static bool inConfirmScreen;
     public static bool hoveringSelector;
     public static bool Scrolling;
 
@@ -31,5 +32,6 @@ public static class NavState
         hoveredItem = null;
         lastHoveredItem = null;
         Scrolling = false;
+        inConfirmScreen = false;
     }
 }

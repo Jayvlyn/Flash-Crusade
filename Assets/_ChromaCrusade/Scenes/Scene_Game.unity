@@ -837,7 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f071bded9f4b05f48b1079ee7a6860da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceObject
-  velocity: {x: 0, y: 2}
+  velocity: {x: 0, y: 0}
   angularVelocity: 0
   mass: 2
   drag: 0
@@ -975,9 +975,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f071bded9f4b05f48b1079ee7a6860da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceObject
-  velocity: {x: 0, y: 2}
+  velocity: {x: 0, y: 0}
   angularVelocity: 0
-  mass: 1
+  mass: 4
   drag: 0
   angularDrag: 0
   updateInterval: 0.02
@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceObject
   velocity: {x: 0, y: 0}
   angularVelocity: 0
-  mass: 8
+  mass: 1
   drag: 0
   angularDrag: 0
   updateInterval: 0.02

@@ -1,0 +1,16 @@
+{
+    "name": "CC.MainMenu",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8162417b1db43304a8e519f382de0521"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

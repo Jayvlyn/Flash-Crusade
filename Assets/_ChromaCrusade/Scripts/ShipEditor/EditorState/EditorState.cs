@@ -25,7 +25,7 @@ public static class EditorState
 
     public static void Init()
     {
-        context = EditorContext.MidGame;
+        //context = EditorContext.MidGame;
         navMode = NavMode.Item;
         heldPart = null;
         midUndoDelete = false;

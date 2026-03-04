@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class EditorManager : MonoBehaviour, ICommandContext
 {
@@ -414,7 +415,18 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     public void OnExitButtonSelected()
     {
-        Debug.Log("exit pressed");
+        EventBus.Publish(new OpenConfirmScreenEvent
+        {
+            message = "Are you sure you want to exit the editor? The current build will be discarded.",
+            action = ExitEditor,
+            lastNavItem = exitItem
+        });
+    }
+
+    void ExitEditor()
+    {
+        ClearBuildArea();
+        SceneManager.LoadScene("Scene_MainMenu");
     }
 
     public void OnCompleteButtonSelected()

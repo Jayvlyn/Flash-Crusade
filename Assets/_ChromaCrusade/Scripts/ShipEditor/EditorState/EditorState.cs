@@ -9,6 +9,7 @@ public static class EditorState
     public static bool midGrab;
     public static bool enteringGrid;
     public static bool VisualizerLerping => NavVisualizer.IsLerping;
+    public static bool inPresetMenu;
 
     private static Vector2Int currentGridCell;
     public static Vector2Int CurrentGridCell
@@ -31,6 +32,7 @@ public static class EditorState
         midGrab = false;
         enteringGrid = false;
         currentGridCell = Vector2Int.zero;
+        inPresetMenu = false;
     }
 }
 

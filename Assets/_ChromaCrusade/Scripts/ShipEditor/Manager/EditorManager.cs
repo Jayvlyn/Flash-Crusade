@@ -10,6 +10,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] BuildArea buildArea;
     [SerializeField] ShipNameValidator nameValidator;
     [SerializeField] TMP_Text validationResponseText;
+    [SerializeField] RectTransform presetMenu;
+    [SerializeField] NavItem openPresetsButton;
+    [SerializeField] NavItem savePresetButton;
 
     [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] EditorUINavigator uiNav;
@@ -94,7 +97,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
     
     void GoBack()
     {
-        if (NavState.inInputField)
+        if(EditorState.inPresetMenu)
+        {
+            ClosePresetMenu();
+        }
+        else if (NavState.inInputField)
         {
             NavState.inInputField = false;
             EventSystem.current.SetSelectedGameObject(null);
@@ -420,6 +427,19 @@ public class EditorManager : MonoBehaviour, ICommandContext
         {
             SetResponseText(result);
         }
+    }
+
+    public void OpenPresetMenu()
+    {
+        EditorState.inPresetMenu = true;
+        presetMenu.gameObject.SetActive(true);
+        NavToItem(savePresetButton);
+    }
+    public void ClosePresetMenu()
+    {
+        EditorState.inPresetMenu = false;
+        presetMenu.gameObject.SetActive(false);
+        NavToItem(openPresetsButton);
     }
 
     #endregion

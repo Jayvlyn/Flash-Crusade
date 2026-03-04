@@ -5,9 +5,16 @@ using UnityEngine;
 public class ShipPresetManager : MonoBehaviour
 {
     [SerializeField] ScrollMenuManager scrollMenu;
-    private List<ShipPresetItem> presetItems;
+    private List<RectTransform> presetItems;
 
-    private void LoadPresets()
+    public void DisplayPresets()
+    {
+        LoadPresetItems();
+
+        scrollMenu.ShowPageOne(presetItems);
+    }
+
+    void LoadPresetItems()
     {
         presetItems = new();
 
@@ -20,17 +27,18 @@ public class ShipPresetManager : MonoBehaviour
         string[] dataFiles = Directory.GetFiles(dataPath, "*.json", SearchOption.TopDirectoryOnly);
         string[] spriteFiles = Directory.GetFiles(spritesPath, "*.png", SearchOption.TopDirectoryOnly);
 
-        for(int i = 0; i < dataFiles.Length; i++)
+        for (int i = 0; i < dataFiles.Length; i++)
         {
-            string json = File.ReadAllText(dataFiles[i]);
-
-            var data = JsonUtility.FromJson<ShipSave>(json);
+            // dont need to load all this data for each ship, just name and sprite at this stage
+            //string json = File.ReadAllText(dataFiles[i]);
+            //var data = JsonUtility.FromJson<ShipSave>(json);
+            string name = Path.GetFileNameWithoutExtension(dataFiles[i]);
 
             byte[] spriteBytes = File.ReadAllBytes(spriteFiles[i]);
 
-
             Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
             texture.LoadImage(spriteBytes); // auto-resizes so 2,2 doesnt matter
+            texture.filterMode = FilterMode.Point;
 
             Sprite sprite = Sprite.Create(
                 texture,
@@ -38,8 +46,22 @@ public class ShipPresetManager : MonoBehaviour
                 new Vector2(0.5f, 0.5f)
             );
 
-            var item = new ShipPresetItem();
-        }
 
+            RectTransform obj = Instantiate(Assets.i.uiShipPrefab);
+            var uiShip = obj.GetComponent<UIShip>();
+            uiShip.Init(sprite, name);
+            presetItems.Add(obj);
+            obj.gameObject.SetActive(false);
+        }
+    }
+
+    private void ScrollUp()
+    {
+        Debug.Log("scroll up presets");
+    }
+
+    private void ScrollDown()
+    {
+        Debug.Log("scroll down presets");
     }
 }

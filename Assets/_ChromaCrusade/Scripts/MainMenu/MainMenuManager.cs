@@ -27,11 +27,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnOptionsPressed()
     {
-
+        Debug.Log("options pressed (incomplete)");
     }
 
     public void OnQuitPressed()
     {
-
+        Application.Quit();
     }
 }

@@ -15,6 +15,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
     [SerializeField] NavItem openPresetsButton;
     [SerializeField] NavItem savePresetButton;
     [SerializeField] NavItem clearButton;
+    [SerializeField] NavItem completeButton;
+    [SerializeField] ShipPresetManager presetManager;
 
     [SerializeField] EditorNavVisualizer visualizer;
     [SerializeField] EditorUINavigator uiNav;
@@ -437,8 +439,19 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         if(result.Equals("Valid"))
         {
-            ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea);
-            ShipSL.SaveCurrentBuild(nameValidator.GetName());
+            if(EditorState.context == EditorContext.Creative)
+            {
+                OpenPresetMenu();
+            }
+            else
+            {
+                EventBus.Publish(new OpenConfirmScreenEvent
+                {
+                    message = $"{nameValidator.GetName()} is complete! Finalize the build?",
+                    action = SaveBuild,
+                    lastNavItem = completeButton
+                });
+            }
         }
         else
         {
@@ -446,11 +459,18 @@ public class EditorManager : MonoBehaviour, ICommandContext
         }
     }
 
+    public void SaveBuild()
+    {
+        ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea);
+        ShipSL.SaveBuildAsPreset(nameValidator.GetName());
+    }
+
     public void OpenPresetMenu()
     {
         EditorState.inPresetMenu = true;
         presetMenu.gameObject.SetActive(true);
         NavToItem(savePresetButton);
+        presetManager.DisplayPresets();
     }
     public void ClosePresetMenu()
     {

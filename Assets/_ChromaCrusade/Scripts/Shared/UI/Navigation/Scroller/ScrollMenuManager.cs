@@ -13,16 +13,49 @@ public class ScrollMenuManager : MonoBehaviour
 
     [SerializeField] private Pager pager;
 
+    public void ShowPageOne(IReadOnlyList<RectTransform> collection)
+    {
+        SetPage(collection, shownRects);
+    }
+
     public void ScrollDown(IReadOnlyList<RectTransform> collection)
     {
         DoSmoothScroll(true);
-        SetPage(collection);
+        SetPage(collection, nextRects);
     }
 
     public void ScrollUp(IReadOnlyList<RectTransform> collection)
     {
         DoSmoothScroll(false);
-        SetPage(collection);
+        SetPage(collection, nextRects);
+    }
+
+    // expects a list of items to display that already have data initialized on them
+    void SetPage(IReadOnlyList<RectTransform> collection, List<RectTransform> targetList)
+    {
+        targetList = new();
+
+        int elementsPerPage = primaryNavItems.Length;
+
+        pager.Recalculate(collection.Count, elementsPerPage);
+        var (startIndex, endIndex) = pager.GetRange(collection.Count, elementsPerPage);
+
+        for (int i = 0; i < primaryNavItems.Length; i++)
+            primaryNavItems[i].onSelected.RemoveAllListeners();
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            var entry = collection[i];
+
+            NavItem primary = primaryNavItems[i];
+            NavItem buffer = bufferNavItems[i];
+
+            entry.transform.SetParent(primary.transform);
+            entry.gameObject.SetActive(true);
+            entry.transform.SetAsFirstSibling();
+
+            targetList.Add(entry);
+        }
     }
 
     void DoSmoothScroll(bool scrollDown = true)
@@ -77,34 +110,6 @@ public class ScrollMenuManager : MonoBehaviour
             shownRects.Add(nextRects[i]);
 
         NavState.Scrolling = false;
-    }
-
-
-    // expects a list of items to display that already have data initialized on them
-    void SetPage(IReadOnlyList<RectTransform> collection)
-    {
-        nextRects = new();
-
-        int elementsPerPage = primaryNavItems.Length;
-
-        pager.Recalculate(collection.Count, elementsPerPage);
-        var (startIndex, endIndex) = pager.GetRange(collection.Count, elementsPerPage);
-
-        for (int i = 0; i < primaryNavItems.Length; i++)
-            primaryNavItems[i].onSelected.RemoveAllListeners();
-
-        for (int i = startIndex; i < endIndex; i++)
-        {
-            var entry = collection[i];
-
-            NavItem primary = primaryNavItems[i];
-            NavItem buffer = bufferNavItems[i];
-
-            RectTransform obj = Instantiate(collection[i], primary.transform);
-            obj.transform.SetAsFirstSibling();
-
-            nextRects.Add(obj);
-        }
     }
 
     // case1: wrap back to primary from buffer (wrap, start scroll)

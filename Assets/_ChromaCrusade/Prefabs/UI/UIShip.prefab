@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6464883171420042033}
   - component: {fileID: 6067280408685715578}
   m_Layer: 5
-  m_Name: PresetItem
+  m_Name: UIShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

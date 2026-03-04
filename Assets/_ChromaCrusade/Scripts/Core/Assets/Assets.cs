@@ -15,6 +15,7 @@ public class Assets : MonoBehaviour
 
     // All references:
     public GameObject editorShipPartPrefab;
+    public RectTransform uiShipPrefab;
     public Color uiGreen;
     public Color uiRed;
 }

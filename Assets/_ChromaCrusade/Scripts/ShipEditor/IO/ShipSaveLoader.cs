@@ -16,12 +16,23 @@ public class ShipSaveLoader
         Directory.CreateDirectory(Paths.ShipPresetDataPath);
     }
 
-    public void SaveCurrentBuild(string shipName)
+    private void SaveShipPresetTexture(Texture2D texture, string shipName)
+    {
+        byte[] pngBytes = texture.EncodeToPNG();
+
+        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipName}.png");
+
+        File.WriteAllBytes(path, pngBytes);
+
+        Object.Destroy(texture);
+    }
+
+    public void SaveBuildAsPreset(string shipName)
     {
         // Save Sprite
         PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea);
         Texture2D shipTexture = spriteCombiner.CreateCombinedTexture();
-        SaveShipTexture(shipTexture, shipName);
+        SaveShipPresetTexture(shipTexture, shipName);
 
         // Save Build Data
         var shipSave = new ShipSave
@@ -71,16 +82,10 @@ public class ShipSaveLoader
     //    Debug.Log("unfinished");
     //}
 
-    #endregion
-
-    private void SaveShipTexture(Texture2D texture, string shipName)
+    public void LoadPreset(string presetName)
     {
-        byte[] pngBytes = texture.EncodeToPNG();
 
-        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipName}.png");
-
-        File.WriteAllBytes(path, pngBytes);
-
-        Object.Destroy(texture);
     }
+
+    #endregion
 }

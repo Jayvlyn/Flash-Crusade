@@ -72,13 +72,31 @@ public class ShipPresetManager : MonoBehaviour
         scrollMenu.ScrollDown(presetItems);
     }
 
+    public void LoadPresetAsBuild(string shipName)
+    {
+        string path = Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json");
+
+        if (!File.Exists(path))
+        {
+            Debug.LogError("Ship save not found: " + path);
+            return;
+        }
+
+        string json = File.ReadAllText(path);
+
+        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+
+        if (shipSave.partList == null)
+            return;
+
+        Debug.Log("unfinished");
+    }
+
     public void OnPresetSelected()
     {
         Debug.Log($"Selected {hoveredUIShip.shipName}");
-
-        //hoveredUIShip.somthing
-
-        
+        // send event with the ship name? instead below because we need editormanager for all that shi
+        LoadPresetAsBuild(hoveredUIShip.shipName);
     }
 
     UIShip hoveredUIShip;

@@ -27,8 +27,6 @@ public class ShipPresetManager : MonoBehaviour
     {
         LoadPresetItems();
         scrollMenu.ShowPageOne(presetItems);
-
-        //ShowDefaultPreview();
     }
 
     void LoadPresetItems()
@@ -104,8 +102,7 @@ public class ShipPresetManager : MonoBehaviour
     public void OnPresetSelected()
     {
         Debug.Log($"Selected {hoveredUIShip.ShipName}");
-        // send event with the ship name? instead below because we need editormanager for all that shi
-        //LoadPresetAsBuild(hoveredUIShip.shipName);
+        EventBus.Publish(new PresetSelectedEvent { presetName = hoveredUIShip.ShipName });
     }
 
     UIShip hoveredUIShip;

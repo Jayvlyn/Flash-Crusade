@@ -50,7 +50,7 @@ public class ExitGridModeCommand : ICommand
         }
 
         if (ctx.GetHeldPart() != null)
-            ctx.RestorePartTransformations(rotation, xFlipped, yFlipped);
+            ctx.RestoreHeldPartTransformations(rotation, xFlipped, yFlipped);
     }
 
     public void Redo() => Execute();

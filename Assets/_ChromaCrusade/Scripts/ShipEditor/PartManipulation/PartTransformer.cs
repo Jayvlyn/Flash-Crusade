@@ -15,11 +15,18 @@ public class PartTransformer : MonoBehaviour, IPartTransformer
         visualizer.Flip(axis);
     }
 
-    public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
+    public void RestoreHeldPartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         if (xFlipped) FlipPartImmediate(FlipAxis.Horizontal);
         if (yFlipped) FlipPartImmediate(FlipAxis.Vertical);
         if (rotation != 0) RotatePartImmediate(rotation);
+    }
+
+    public void RestorePartTransformations(ShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false)
+    {
+        part.Rotate(rotation);
+        if (xFlipped) part.Flip(FlipAxis.Horizontal);
+        if (yFlipped) part.Flip(FlipAxis.Vertical);
     }
 
     public void RotatePart(float angle)

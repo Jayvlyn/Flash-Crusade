@@ -4,8 +4,8 @@ using System;
 public struct PartStruct
 {
     public string partName;
-    public int posX;
-    public int posY;
+    public int xPos;
+    public int yPos;
     public bool xFlipped;
     public bool yFlipped;
     public int rotation;

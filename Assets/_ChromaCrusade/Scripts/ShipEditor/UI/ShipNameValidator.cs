@@ -37,6 +37,12 @@ public class ShipNameValidator : MonoBehaviour
         return input.text;
     }
 
+    public void SetName(string newName)
+    {
+        input.text = newName;
+        OnValueChanged(newName);
+    }
+
     void OnValueChanged(string value)
     {
         if (IsValid())

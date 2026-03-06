@@ -31,7 +31,7 @@ public class PartDestroyer : MonoBehaviour, IPartDestroyer
         bool success = inventory.TryTakePart(partData, out ShipPart part);
         if (success) grabber.GrabImmediate(part, true);
         yield return null;
-        transformer.RestorePartTransformations(rotation, xFlipped, yFlipped);
+        transformer.RestoreHeldPartTransformations(rotation, xFlipped, yFlipped);
         yield return null;
 
         if (wasPlaced)

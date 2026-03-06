@@ -4,7 +4,7 @@ public class EditorGridNavigator : Navigator, IGridNavigator
 {
     protected EditorNavVisualizer editorVisualizer;
 
-    [SerializeField] RectTransform centerGridCell;
+    public RectTransform centerGridCell;
     public IUINavigator uiNav;
 
     [SerializeField] Transform parent;

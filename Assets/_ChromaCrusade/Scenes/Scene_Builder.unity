@@ -21474,6 +21474,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 693217159}
     m_Modifications:
+    - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+      propertyPath: m_text
+      value: Enter Ship Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 453425378288042588, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+      propertyPath: m_fontSize
+      value: 19.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1258948047804769387, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: navUp
       value: 
@@ -21589,6 +21597,10 @@ PrefabInstance:
     - target: {fileID: 3834282853851169660, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770168939380860893, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
+      propertyPath: m_fontSize
+      value: 19.8
       objectReference: {fileID: 0}
     - target: {fileID: 7592103861028924198, guid: 2cb21da5c6bfd07478b55066ea4fcbf4, type: 3}
       propertyPath: m_Name

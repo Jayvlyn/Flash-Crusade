@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class ShipSaveLoader
 {
-    IEnumerable<ShipPart> parts;
-
     #region Public API
 
-    public ShipSaveLoader(IEnumerable<ShipPart> parts)
+    public ShipSaveLoader()
     {
-        this.parts = parts;
-
         Directory.CreateDirectory(Paths.ShipPresetSpritesPath);
         Directory.CreateDirectory(Paths.ShipPresetDataPath);
     }
@@ -27,7 +23,7 @@ public class ShipSaveLoader
         //Object.Destroy(shipData.shipSprite.texture);
     }
 
-    public void SaveBuildAsPreset(UIShipData shipData)
+    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<ShipPart> parts)
     {
         SaveShipPresetTexture(shipData);
 
@@ -43,8 +39,8 @@ public class ShipSaveLoader
             shipSave.partList.Add(new PartStruct
             {
                 partName = part.partData.name,
-                posX = part.position.x,
-                posY = part.position.y,
+                xPos = part.position.x,
+                yPos = part.position.y,
                 xFlipped = part.xFlipped,
                 yFlipped = part.yFlipped,
                 rotation = Mathf.RoundToInt(part.Rotation) % 360
@@ -59,29 +55,36 @@ public class ShipSaveLoader
         );
     }
 
-    //public void LoadBuild(string shipName)
-    //{
-    //    string path = Path.Combine(Paths.ShipDataPath, $"{shipName}.json");
-
-    //    if (!File.Exists(path))
-    //    {
-    //        Debug.LogError("Ship save not found: " + path);
-    //        return;
-    //    }
-
-    //    string json = File.ReadAllText(path);
-
-    //    ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
-
-    //    if (shipSave.partList == null)
-    //        return;
-
-    //    Debug.Log("unfinished");
-    //}
-
-    public void LoadPreset(string presetName)
+    public ShipSave GetShipBuild(string shipName, string activeSave)
     {
+        return GetShipSave(
+            Path.Combine(Paths.ShipBuildDataPath(activeSave), 
+            $"{shipName}.json"));
+    }
 
+    public ShipSave GetShipPreset(string presetName)
+    {
+        return GetShipSave(
+            Path.Combine(Paths.ShipPresetDataPath, 
+            $"{presetName}.json"));
+    }
+
+    public ShipSave GetShipSave(string path)
+    {
+        if (!File.Exists(path))
+        {
+            Debug.LogError("Ship save not found: " + path);
+            return new ShipSave();
+        }
+
+        string json = File.ReadAllText(path);
+
+        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+
+        if (shipSave.partList == null)
+            return new ShipSave();
+
+        return shipSave;
     }
 
     #endregion

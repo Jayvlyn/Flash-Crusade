@@ -1,9 +1,9 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AdaptivePerformance.Provider;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class EditorManager : MonoBehaviour, ICommandContext
 {
@@ -36,6 +36,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
         EventBus.Subscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
+        EventBus.Subscribe<PresetSelectedEvent>(OnPresetSelected);
     }
 
     void OnDisable()
@@ -44,6 +45,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
         EventBus.Unsubscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
+        EventBus.Unsubscribe<PresetSelectedEvent>(OnPresetSelected);
     }
 
     void Awake()
@@ -217,8 +219,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     public void FlipPart(FlipAxis axis) => partTransformer.FlipPart(axis);
 
-    public void RestorePartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) =>
-        partTransformer.RestorePartTransformations(rotation, xFlipped, yFlipped);
+    public void RestoreHeldPartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) =>
+        partTransformer.RestoreHeldPartTransformations(rotation, xFlipped, yFlipped);
+
+    public void RestorePartTransformations(ShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false) =>
+        partTransformer.RestorePartTransformations(part, rotation, xFlipped, yFlipped);
 
     #endregion
 
@@ -248,7 +253,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #endregion
 
-    #region Input Event Handling
+    #region Event Handling
 
     void SubscribeToInputEvents()
     {
@@ -428,25 +433,13 @@ public class EditorManager : MonoBehaviour, ICommandContext
         });
     }
 
-    void ExitEditor()
-    {
-        ClearBuildArea();
-        SceneManager.LoadScene("Scene_MainMenu");
-    }
-
-    public string ValidateBuild()
-    {
-        ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
-        return validator.ValidateCurrentBuild();
-    }
-
     public void OnCompleteButtonSelected()
     {
         string validationResult = ValidateBuild();
 
-        if(validationResult.Equals("Valid"))
+        if (validationResult.Equals("Valid"))
         {
-            if(EditorState.context == EditorContext.Creative)
+            if (EditorState.context == EditorContext.Creative)
             {
                 OpenPresetMenu(); // replace this with a confirmation to save as preset
             }
@@ -466,48 +459,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
         }
     }
 
-    public void SaveBuild()
+    void OnPresetSelected(PresetSelectedEvent e)
     {
-        ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea.Parts);
-        ShipSL.SaveBuildAsPreset(GetUIShipData());
-    }
-
-    public Texture2D GetShipTexture()
-    {
-        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea.Parts);
-        return spriteCombiner.CreateCombinedTexture();
-    }
-
-    public UIShipData GetUIShipData()
-    {
-        Texture2D texture = GetShipTexture();
-
-        Sprite sprite = Sprite.Create(
-            texture,
-            new Rect(0, 0, texture.width, texture.height),
-            new Vector2(0.5f, 0.5f)
-        );
-
-        return new UIShipData(sprite, nameValidator.GetName());
-    }
-
-    public void OpenPresetMenu()
-    {
-        EditorState.inPresetMenu = true;
-        presetMenu.gameObject.SetActive(true);
-        NavToItem(savePresetButton);
-
-        string valitation = ValidateBuild();
-        if (valitation == "Valid")
-            presetManager.DisplayPresets(GetUIShipData());
-        else
-            presetManager.DisplayPresets();
-    }
-    public void ClosePresetMenu()
-    {
-        EditorState.inPresetMenu = false;
-        presetMenu.gameObject.SetActive(false);
-        NavToItem(openPresetsButton);
+        LoadBuildPreset(e.presetName);
     }
 
     #endregion
@@ -547,4 +501,109 @@ public class EditorManager : MonoBehaviour, ICommandContext
             inventoryManager.AddPart(part.partData);
     }
     #endregion
+
+    void ExitEditor()
+    {
+        ClearBuildArea();
+        SceneManager.LoadScene("Scene_MainMenu");
+    }
+
+    public string ValidateBuild()
+    {
+        ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
+        return validator.ValidateCurrentBuild();
+    }
+
+    public Texture2D GetShipTexture()
+    {
+        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea.Parts);
+        return spriteCombiner.CreateCombinedTexture();
+    }
+
+    public UIShipData GetUIShipData()
+    {
+        Texture2D texture = GetShipTexture();
+
+        Sprite sprite = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f)
+        );
+
+        return new UIShipData(sprite, nameValidator.GetName());
+    }
+
+    public void OpenPresetMenu()
+    {
+        EditorState.inPresetMenu = true;
+        presetMenu.gameObject.SetActive(true);
+        NavToItem(savePresetButton);
+
+        string valitation = ValidateBuild();
+        if (valitation == "Valid")
+            presetManager.DisplayPresets(GetUIShipData());
+        else
+            presetManager.DisplayPresets();
+    }
+
+    public void ClosePresetMenu()
+    {
+        EditorState.inPresetMenu = false;
+        presetMenu.gameObject.SetActive(false);
+        NavToItem(openPresetsButton);
+    }
+
+    public void SaveBuild()
+    {
+        ShipSaveLoader ShipSL = new ShipSaveLoader();
+        ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts);
+    }
+
+    // loads a player save ship without taking from inventory
+    public void LoadBuild(string shipName)
+    {
+        ShipSaveLoader ShipSL = new ShipSaveLoader();
+        //ShipSL.GetShipBuild(shipName, **activeSave??**);
+    }
+
+    // loads preset. In creative for free, otherwise requires parts
+    public void LoadBuildPreset(string shipName)
+    {
+        ClearBuildArea();
+
+        ShipSaveLoader ShipSL = new ShipSaveLoader();
+        ShipSave save = ShipSL.GetShipPreset(shipName);
+
+        nameValidator.SetName(shipName);
+
+        foreach (PartStruct part in save.partList)
+        {
+            
+            RestorePart(part);
+        }
+
+        ClosePresetMenu();
+    }
+
+    void RestorePart(PartStruct partStruct)
+    {
+        ShipPartData partData = PartDatabase.Instance.Get(partStruct.partName);
+        bool success = inventoryManager.TryTakePart(partData, out ShipPart part);
+
+        partTransformer.RestorePartTransformations(part, partStruct.rotation, partStruct.xFlipped, partStruct.yFlipped);
+
+        part.transform.SetParent(buildArea.transform);
+        part.rect.sizeDelta = gridNav.centerGridCell.sizeDelta*3;
+        part.transform.localPosition = new Vector2(partStruct.xPos * gridNav.centerGridCell.sizeDelta.x, partStruct.yPos * gridNav.centerGridCell.sizeDelta.y);
+
+        part.rect.pivot = new Vector2(0.5f, 0.5f);
+        part.rect.localEulerAngles = new Vector3(0, 0, part.rect.localEulerAngles.z - part.Rotation);
+
+        part.transform.localScale = new Vector3(
+            part.xFlipped ? -1 : 1,
+            part.yFlipped ? -1 : 1,
+            1);
+
+        partPlacer.PlacePart(part, new Vector2Int(partStruct.xPos, partStruct.yPos));
+    }
 }

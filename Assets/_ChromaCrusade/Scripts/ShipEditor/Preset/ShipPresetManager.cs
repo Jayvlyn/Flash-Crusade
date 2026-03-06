@@ -135,7 +135,7 @@ public class ShipPresetManager : MonoBehaviour
         previewText.text = name;
     }
 
-    public void ShowDefaultPreview() => SetPresetPreview("Build is Invalid", Assets.i.shipSilhouette);
+    public void ShowDefaultPreview() => SetPresetPreview("Invalid Build", Assets.i.shipSilhouette);
 
     public void ShowBuildOrDefaultPreview()
     {

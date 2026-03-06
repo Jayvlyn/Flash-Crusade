@@ -8,16 +8,27 @@ using UnityEngine.UI;
 public class ShipPresetManager : MonoBehaviour
 {
     [SerializeField] ScrollMenuManager scrollMenu;
-    private List<RectTransform> presetItems;
-
     [SerializeField] Image previewImage;
     [SerializeField] TMP_Text previewText;
+
+    List<RectTransform> presetItems;
+    UIShipData currentBuildData;
+
+    public void DisplayPresets(UIShipData currentBuildData)
+    {
+        this.currentBuildData = currentBuildData;
+        SetPresetPreview(currentBuildData.shipName, currentBuildData.shipSprite);
+
+        LoadPresetItems();
+        scrollMenu.ShowPageOne(presetItems);
+    }
 
     public void DisplayPresets()
     {
         LoadPresetItems();
-
         scrollMenu.ShowPageOne(presetItems);
+
+        //ShowDefaultPreview();
     }
 
     void LoadPresetItems()
@@ -57,8 +68,6 @@ public class ShipPresetManager : MonoBehaviour
             uiShip.Init(sprite, name);
             presetItems.Add(obj);
             obj.gameObject.SetActive(false);
-
-            OnPresetHovered(99);
         }
     }
 
@@ -72,31 +81,31 @@ public class ShipPresetManager : MonoBehaviour
         scrollMenu.ScrollDown(presetItems);
     }
 
-    public void LoadPresetAsBuild(string shipName)
-    {
-        string path = Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json");
+    //public void LoadPresetAsBuild(string shipName)
+    //{
+    //    string path = Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json");
 
-        if (!File.Exists(path))
-        {
-            Debug.LogError("Ship save not found: " + path);
-            return;
-        }
+    //    if (!File.Exists(path))
+    //    {
+    //        Debug.LogError("Ship save not found: " + path);
+    //        return;
+    //    }
 
-        string json = File.ReadAllText(path);
+    //    string json = File.ReadAllText(path);
 
-        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+    //    ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
 
-        if (shipSave.partList == null)
-            return;
+    //    if (shipSave.partList == null)
+    //        return;
 
-        Debug.Log("unfinished");
-    }
+    //    Debug.Log("unfinished");
+    //}
 
     public void OnPresetSelected()
     {
-        Debug.Log($"Selected {hoveredUIShip.shipName}");
+        Debug.Log($"Selected {hoveredUIShip.ShipName}");
         // send event with the ship name? instead below because we need editormanager for all that shi
-        LoadPresetAsBuild(hoveredUIShip.shipName);
+        //LoadPresetAsBuild(hoveredUIShip.shipName);
     }
 
     UIShip hoveredUIShip;
@@ -107,14 +116,32 @@ public class ShipPresetManager : MonoBehaviour
         int i = start + hoveredIndex;
         if (i >= presetItems.Count)
         {
-            previewImage.sprite = Assets.i.shipSilhouette;
-            previewText.text = "Select a preset";
-            return;
+            ShowBuildOrDefaultPreview();
         }
-        RectTransform hoveredPreset = presetItems[i];
+        else
+        {
+            RectTransform hoveredPreset = presetItems[i];
 
-        hoveredUIShip = hoveredPreset.GetComponent<UIShip>();
-        previewImage.sprite = hoveredUIShip.shipSprite;
-        previewText.text = hoveredUIShip.shipName;
+            hoveredUIShip = hoveredPreset.GetComponent<UIShip>();
+
+            SetPresetPreview(hoveredUIShip.ShipName, hoveredUIShip.ShipSprite);
+        }
+
+    }
+
+    public void SetPresetPreview(string name, Sprite sprite)
+    {
+        previewImage.sprite = sprite;
+        previewText.text = name;
+    }
+
+    public void ShowDefaultPreview() => SetPresetPreview("Build is Invalid", Assets.i.shipSilhouette);
+
+    public void ShowBuildOrDefaultPreview()
+    {
+        if (currentBuildData.shipSprite != null)
+            SetPresetPreview(currentBuildData.shipName, currentBuildData.shipSprite);
+        else
+            ShowDefaultPreview();
     }
 }

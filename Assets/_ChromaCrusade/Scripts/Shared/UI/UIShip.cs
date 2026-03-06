@@ -6,14 +6,28 @@ public class UIShip : MonoBehaviour
     [SerializeField] RectTransform rect;
     [SerializeField] Image shipImage;
 
-    public Sprite shipSprite;
-    public string shipName;
+    UIShipData shipData;
+
+    public string ShipName => shipData.shipName;
+    public Sprite ShipSprite => shipData.shipSprite;
 
     public void Init(Sprite sprite, string name)
     {
-        shipSprite = sprite;
-        shipName = name;
+        shipData.shipSprite = sprite;
+        shipData.shipName = name;
 
-        shipImage.sprite = shipSprite;
+        shipImage.sprite = sprite;
+    }
+}
+
+public struct UIShipData
+{
+    public Sprite shipSprite;
+    public string shipName;
+
+    public UIShipData(Sprite shipSprite, string shipName)
+    {
+        this.shipSprite = shipSprite;
+        this.shipName = shipName;
     }
 }

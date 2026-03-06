@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AdaptivePerformance.Provider;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -128,6 +129,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void ToggleNavMode()
     {
+        if (EditorState.inPresetMenu || NavState.inConfirmScreen) return;
+
         if (EditorState.navMode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
         else if (EditorState.navMode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
     }
@@ -431,17 +434,21 @@ public class EditorManager : MonoBehaviour, ICommandContext
         SceneManager.LoadScene("Scene_MainMenu");
     }
 
-    public void OnCompleteButtonSelected()
+    public string ValidateBuild()
     {
         ShipBuildValidator validator = new ShipBuildValidator(buildArea, nameValidator);
+        return validator.ValidateCurrentBuild();
+    }
 
-        string result = validator.ValidateCurrentBuild();
+    public void OnCompleteButtonSelected()
+    {
+        string validationResult = ValidateBuild();
 
-        if(result.Equals("Valid"))
+        if(validationResult.Equals("Valid"))
         {
             if(EditorState.context == EditorContext.Creative)
             {
-                OpenPresetMenu();
+                OpenPresetMenu(); // replace this with a confirmation to save as preset
             }
             else
             {
@@ -455,14 +462,33 @@ public class EditorManager : MonoBehaviour, ICommandContext
         }
         else
         {
-            SetResponseText(result);
+            SetResponseText(validationResult);
         }
     }
 
     public void SaveBuild()
     {
-        ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea);
-        ShipSL.SaveBuildAsPreset(nameValidator.GetName());
+        ShipSaveLoader ShipSL = new ShipSaveLoader(buildArea.Parts);
+        ShipSL.SaveBuildAsPreset(GetUIShipData());
+    }
+
+    public Texture2D GetShipTexture()
+    {
+        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea.Parts);
+        return spriteCombiner.CreateCombinedTexture();
+    }
+
+    public UIShipData GetUIShipData()
+    {
+        Texture2D texture = GetShipTexture();
+
+        Sprite sprite = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f)
+        );
+
+        return new UIShipData(sprite, nameValidator.GetName());
     }
 
     public void OpenPresetMenu()
@@ -470,7 +496,12 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EditorState.inPresetMenu = true;
         presetMenu.gameObject.SetActive(true);
         NavToItem(savePresetButton);
-        presetManager.DisplayPresets();
+
+        string valitation = ValidateBuild();
+        if (valitation == "Valid")
+            presetManager.DisplayPresets(GetUIShipData());
+        else
+            presetManager.DisplayPresets();
     }
     public void ClosePresetMenu()
     {

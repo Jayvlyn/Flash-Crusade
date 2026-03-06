@@ -4,44 +4,41 @@ using UnityEngine;
 
 public class ShipSaveLoader
 {
-    BuildArea buildArea;
+    IEnumerable<ShipPart> parts;
 
     #region Public API
 
-    public ShipSaveLoader(BuildArea buildArea)
+    public ShipSaveLoader(IEnumerable<ShipPart> parts)
     {
-        this.buildArea = buildArea;
+        this.parts = parts;
 
         Directory.CreateDirectory(Paths.ShipPresetSpritesPath);
         Directory.CreateDirectory(Paths.ShipPresetDataPath);
     }
 
-    private void SaveShipPresetTexture(Texture2D texture, string shipName)
+    private void SaveShipPresetTexture(UIShipData shipData)
     {
-        byte[] pngBytes = texture.EncodeToPNG();
+        byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
 
-        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipName}.png");
+        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipData.shipName}.png");
 
         File.WriteAllBytes(path, pngBytes);
 
-        Object.Destroy(texture);
+        //Object.Destroy(shipData.shipSprite.texture);
     }
 
-    public void SaveBuildAsPreset(string shipName)
+    public void SaveBuildAsPreset(UIShipData shipData)
     {
-        // Save Sprite
-        PartSpriteCombiner spriteCombiner = new PartSpriteCombiner(buildArea);
-        Texture2D shipTexture = spriteCombiner.CreateCombinedTexture();
-        SaveShipPresetTexture(shipTexture, shipName);
+        SaveShipPresetTexture(shipData);
 
         // Save Build Data
         var shipSave = new ShipSave
         {
-            shipName = shipName,
+            shipName = shipData.shipName,
             partList = new List<PartStruct>()
         };
 
-        foreach(var part in buildArea.Parts)
+        foreach(var part in parts)
         {
             shipSave.partList.Add(new PartStruct
             {
@@ -57,7 +54,7 @@ public class ShipSaveLoader
         string json = JsonUtility.ToJson(shipSave, true);
 
         File.WriteAllText(
-            Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json"),
+            Path.Combine(Paths.ShipPresetDataPath, $"{shipData.shipName}.json"),
             json
         );
     }

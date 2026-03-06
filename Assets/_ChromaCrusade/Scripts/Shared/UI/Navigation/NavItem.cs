@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 [RequireComponent(typeof(RectTransform))]
 public class NavItem : MonoBehaviour, IPointerDownHandler
@@ -25,17 +26,24 @@ public class NavItem : MonoBehaviour, IPointerDownHandler
             {
                 float alpha = disabled ? 0.1f : 0.5f;
                 image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+                if(text != null)
+                {
+                    alpha = disabled ? 0.1f : 1f;
+                    text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+                }
             }
         }
     }
 
     [HideInInspector] public RectTransform rect;
     [HideInInspector] public Image image;
+    [HideInInspector] public TMP_Text text;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
         image = GetComponent<Image>();
+        text = GetComponentInChildren<TMP_Text>();
     }
 
     public virtual void OnHighlighted()

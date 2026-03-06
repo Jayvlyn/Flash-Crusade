@@ -10,6 +10,7 @@ public class ShipPresetManager : MonoBehaviour
     [SerializeField] ScrollMenuManager scrollMenu;
     [SerializeField] Image previewImage;
     [SerializeField] TMP_Text previewText;
+    [SerializeField] NavItem saveAsPresetButton;
 
     List<RectTransform> presetItems;
     UIShipData currentBuildData;
@@ -17,7 +18,7 @@ public class ShipPresetManager : MonoBehaviour
     public void DisplayPresets(UIShipData currentBuildData)
     {
         this.currentBuildData = currentBuildData;
-        SetPresetPreview(currentBuildData.shipName, currentBuildData.shipSprite);
+        SetCurrentBuildAsPreview();
 
         LoadPresetItems();
         scrollMenu.ShowPageOne(presetItems);
@@ -25,12 +26,24 @@ public class ShipPresetManager : MonoBehaviour
 
     public void DisplayPresets()
     {
+        currentBuildData.shipSprite = null;
+        currentBuildData.shipName = "";
+        ShowDefaultPreview();
+
         LoadPresetItems();
         scrollMenu.ShowPageOne(presetItems);
     }
 
     void LoadPresetItems()
     {
+        if(presetItems != null)
+        {
+            foreach (var preset in presetItems)
+            {
+                Destroy(preset.gameObject);
+            }
+        }
+
         presetItems = new();
 
         string dataPath = Paths.ShipPresetDataPath;
@@ -99,10 +112,16 @@ public class ShipPresetManager : MonoBehaviour
     //    Debug.Log("unfinished");
     //}
 
+    public void OnSaveBuildAsPresetSelected()
+    {
+        EventBus.Publish(new SavePresetEvent());
+    }
+
     public void OnPresetSelected()
     {
-        Debug.Log($"Selected {hoveredUIShip.ShipName}");
-        EventBus.Publish(new PresetSelectedEvent { presetName = hoveredUIShip.ShipName });
+        EventBus.Publish(new PresetSelectedEvent { 
+            presetName = hoveredUIShip.ShipName 
+        });
     }
 
     UIShip hoveredUIShip;
@@ -132,12 +151,22 @@ public class ShipPresetManager : MonoBehaviour
         previewText.text = name;
     }
 
-    public void ShowDefaultPreview() => SetPresetPreview("Invalid Build", Assets.i.shipSilhouette);
+    public void SetCurrentBuildAsPreview()
+    {
+        SetPresetPreview(currentBuildData.shipName, currentBuildData.shipSprite);
+        saveAsPresetButton.Disabled = false;
+    }
+
+    public void ShowDefaultPreview()
+    {
+        SetPresetPreview("Invalid Build", Assets.i.shipSilhouette);
+        saveAsPresetButton.Disabled = true;
+    }
 
     public void ShowBuildOrDefaultPreview()
     {
         if (currentBuildData.shipSprite != null)
-            SetPresetPreview(currentBuildData.shipName, currentBuildData.shipSprite);
+            SetCurrentBuildAsPreview();
         else
             ShowDefaultPreview();
     }

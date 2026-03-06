@@ -2241,6 +2241,7 @@ MonoBehaviour:
   scrollMenu: {fileID: 174277083}
   previewImage: {fileID: 1522829243}
   previewText: {fileID: 1244668541}
+  saveAsPresetButton: {fileID: 643857464}
 --- !u!114 &174277085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6352,7 +6353,19 @@ MonoBehaviour:
         m_CallState: 2
   onSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 174277084}
+        m_TargetAssemblyTypeName: ShipPresetManager, CC.ShipEditor.Preset
+        m_MethodName: OnSaveBuildAsPresetSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   rect: {fileID: 0}
   image: {fileID: 0}
 --- !u!114 &643857465
@@ -13114,8 +13127,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 336, y: 25}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 420, y: 25}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1396667824
 MonoBehaviour:
@@ -13137,9 +13150,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cbbc4f2b298c0664c906b77445941880, type: 2}
   m_sharedMaterial: {fileID: -4410188272083061382, guid: cbbc4f2b298c0664c906b77445941880, type: 2}
@@ -13166,15 +13177,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.8
+  m_fontSize: 14
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0
   m_fontSizeMax: 1000
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1

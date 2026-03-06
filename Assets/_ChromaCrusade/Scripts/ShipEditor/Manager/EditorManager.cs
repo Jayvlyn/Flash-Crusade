@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 public class EditorManager : MonoBehaviour, ICommandContext
 {
@@ -37,6 +38,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EventBus.Subscribe<EnterInputFieldEvent>(OnEnterInputField);
         EventBus.Subscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
         EventBus.Subscribe<PresetSelectedEvent>(OnPresetSelected);
+        EventBus.Subscribe<SavePresetEvent>(OnSaveBuildAsPreset);
     }
 
     void OnDisable()
@@ -46,6 +48,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EventBus.Unsubscribe<EnterInputFieldEvent>(OnEnterInputField);
         EventBus.Unsubscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
         EventBus.Unsubscribe<PresetSelectedEvent>(OnPresetSelected);
+        EventBus.Unsubscribe<SavePresetEvent>(OnSaveBuildAsPreset);
     }
 
     void Awake()
@@ -428,8 +431,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EventBus.Publish(new OpenConfirmScreenEvent
         {
             message = "Are you sure you want to exit the editor? The current build will be discarded.",
-            action = ExitEditor,
-            lastNavItem = exitItem
+            action = ExitEditor
         });
     }
 
@@ -448,21 +450,31 @@ public class EditorManager : MonoBehaviour, ICommandContext
                 EventBus.Publish(new OpenConfirmScreenEvent
                 {
                     message = $"{nameValidator.GetName()} is complete! Finalize the build?",
-                    action = SaveBuild,
-                    lastNavItem = completeButton
+                    action = SaveBuildAsPreset
                 });
             }
         }
         else
         {
             SetResponseText(validationResult);
+            SetResponseColor(Assets.i.uiRed);
         }
     }
 
     void OnPresetSelected(PresetSelectedEvent e)
     {
-        LoadBuildPreset(e.presetName);
+        presetToLoad = e.presetName;
+
+        EventBus.Publish(new OpenConfirmScreenEvent
+        {
+            message = $"Load {presetToLoad}? Anything in the build area will be replaced",
+            action = LoadPresetAfterConfirmation,
+            yesNavItem = buildWindow,
+            noNavItem = NavState.ItemBeforeConfirmScreen
+        });
     }
+
+    void OnSaveBuildAsPreset(SavePresetEvent e) => SaveBuildAsPresetAfterConfirm();
 
     #endregion
 
@@ -473,6 +485,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
         validationResponseText.text = content;
         if(validationTextClearerCoroutine != null) StopCoroutine(validationTextClearerCoroutine);
         validationTextClearerCoroutine = StartCoroutine(ValidationResponseTextClearer(duration));
+    }
+
+    void SetResponseColor(Color color)
+    {
+        validationResponseText.color = color;
     }
 
     Coroutine validationTextClearerCoroutine;
@@ -488,9 +505,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
     public void OnClearButtonPressed()
     {
         EventBus.Publish(new OpenConfirmScreenEvent {
-            message = "Are you sure you want to clear the build area?",
-            action = ClearBuildArea,
-            lastNavItem = clearButton
+            message = "Clear the build area?",
+            action = ClearBuildArea
         });
     }
 
@@ -540,7 +556,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         NavToItem(savePresetButton);
 
         string valitation = ValidateBuild();
-        if (valitation == "Valid")
+        if (valitation.Equals("Valid"))
             presetManager.DisplayPresets(GetUIShipData());
         else
             presetManager.DisplayPresets();
@@ -553,10 +569,22 @@ public class EditorManager : MonoBehaviour, ICommandContext
         NavToItem(openPresetsButton);
     }
 
-    public void SaveBuild()
+    public void SaveBuildAsPresetAfterConfirm()
+    {
+        string validation = ValidateBuild();
+        if (!validation.Equals("Valid")) return;
+        EventBus.Publish(new OpenConfirmScreenEvent
+        {
+            message = $"Save {nameValidator.GetName()} as a preset? You can delete it later.",
+            action = SaveBuildAsPreset
+        });
+    }
+
+    public void SaveBuildAsPreset()
     {
         ShipSaveLoader ShipSL = new ShipSaveLoader();
         ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts);
+        presetManager.DisplayPresets();
     }
 
     // loads a player save ship without taking from inventory
@@ -567,6 +595,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
     }
 
     // loads preset. In creative for free, otherwise requires parts
+    string presetToLoad;
+    public void LoadPresetAfterConfirmation() => LoadBuildPreset(presetToLoad);
+
     public void LoadBuildPreset(string shipName)
     {
         ClearBuildArea();
@@ -578,11 +609,13 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         foreach (PartStruct part in save.partList)
         {
-            
             RestorePart(part);
         }
 
         ClosePresetMenu();
+
+        SetResponseText($"Preset \"{shipName}\" loaded");
+        SetResponseColor(Assets.i.uiGreen);
     }
 
     void RestorePart(PartStruct partStruct)

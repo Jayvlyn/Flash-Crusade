@@ -7,7 +7,8 @@ public class ConfirmationScreen : MonoBehaviour
     [SerializeField] GameObject window;
     [SerializeField] TMP_Text message;
     [SerializeField] NavItem noButton;
-    NavItem lastNavItem;
+    NavItem yesNavItem;
+    NavItem noNavItem;
     Action action;
 
     void OnEnable()
@@ -23,35 +24,41 @@ public class ConfirmationScreen : MonoBehaviour
     }
 
     void OnCloseEvent(CloseConfirmScreenEvent e) => Close();
-    void OnOpenEvent(OpenConfirmScreenEvent e) => Open(e.message, e.action, e.lastNavItem);
+    void OnOpenEvent(OpenConfirmScreenEvent e) => Open(e.message, e.action, e.yesNavItem, e.noNavItem);
 
-    void Open(string message, Action action, NavItem lastNavItem)
+    void Open(string message, Action action, NavItem yesNavItem, NavItem noNavItem)
     {
+        NavState.ItemBeforeConfirmScreen = NavState.HoveredItem;
         this.message.text = message;
         this.action = action;
-        this.lastNavItem = lastNavItem;
+        this.yesNavItem = yesNavItem;
+        this.noNavItem = noNavItem;
         window.SetActive(true);
         NavState.inConfirmScreen = true;
         EventBus.Publish(new ItemNavEvent { target = noButton });
     }
 
-    void Close()
+    void Close(bool yes = false)
     {
-        EventBus.Publish(new ItemNavEvent { target = lastNavItem });
+        NavItem navTarget = yes ? yesNavItem : noNavItem;
+        if (navTarget == null) navTarget = NavState.ItemBeforeConfirmScreen;
+        EventBus.Publish(new ItemNavEvent { target = navTarget });
         action = null;
         message.text = string.Empty;
         window.SetActive(false);
         NavState.inConfirmScreen = false;
+        yesNavItem = null;
+        noNavItem = null;
     }
 
     public void OnYes()
     {
         action?.Invoke();
-        Close();
+        Close(true);
     }
 
     public void OnNo()
     {
-        Close();
+        Close(false);
     }
 }

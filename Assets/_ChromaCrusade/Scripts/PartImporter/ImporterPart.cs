@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿#if UNITY_EDITOR
+using NaughtyAttributes;
 using OdinSerializer.Utilities;
 using System.Collections.Generic;
 using UnityEditor;
@@ -291,3 +292,4 @@ public class ImporterPart : MonoBehaviour
         Debug.Log(mass);
     }
 }
+#endif

@@ -3,8 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 public class EditorManager : MonoBehaviour, ICommandContext
 {

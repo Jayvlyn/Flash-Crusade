@@ -1,5 +1,7 @@
+
 using UnityEngine;
 using UnityEditor;
+#if UNITY_EDITOR
 using System.IO;
 
 public class PartListGenerator
@@ -59,3 +61,4 @@ public class PartListGenerator
         Debug.Log($"Part list saved to {OutputPath}");
     }
 }
+#endif

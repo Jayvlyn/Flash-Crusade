@@ -5,9 +5,13 @@ public static class Paths
 {
     public static string MainPath => Application.persistentDataPath;
 
-    public static string ShipPresetsPath => Path.Combine(MainPath, "ShipPresets");
-    public static string ShipPresetSpritesPath => Path.Combine(ShipPresetsPath, "ShipSprites");
-    public static string ShipPresetDataPath => Path.Combine(ShipPresetsPath, "ShipData");
+    public static string PlayerPresetsPath => Path.Combine(MainPath, "PlayerPresets");
+    public static string PlayerPresetSpritesPath => Path.Combine(PlayerPresetsPath, "PlayerPresetSprites");
+    public static string PlayerPresetDataPath => Path.Combine(PlayerPresetsPath, "PlayerPresetData");
+
+    public static string DevPresetsPath => Path.Combine(MainPath, "DevPresets");
+    public static string DevPresetSpritesPath => Path.Combine(DevPresetsPath, "DevPresetSprites");
+    public static string DevPresetDataPath => Path.Combine(DevPresetsPath, "DevPresetData");
 
     public static string PlayerSavePath(string saveName) => Path.Combine(MainPath, saveName);
 

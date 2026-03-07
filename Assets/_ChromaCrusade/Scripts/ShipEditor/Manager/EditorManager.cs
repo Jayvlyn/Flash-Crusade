@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,6 +38,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EventBus.Subscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
         EventBus.Subscribe<PresetSelectedEvent>(OnPresetSelected);
         EventBus.Subscribe<SavePresetEvent>(OnSaveBuildAsPreset);
+#if UNITY_EDITOR
+        EventBus.Subscribe<SaveDevPresetEvent>(SaveBuildAsDevPreset);
+#endif
     }
 
     void OnDisable()
@@ -47,6 +51,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
         EventBus.Unsubscribe<InventoryPartGrabbedEvent>(OnInventoryPartGrabbedEvent);
         EventBus.Unsubscribe<PresetSelectedEvent>(OnPresetSelected);
         EventBus.Unsubscribe<SavePresetEvent>(OnSaveBuildAsPreset);
+#if UNITY_EDITOR
+        EventBus.Unsubscribe<SaveDevPresetEvent>(SaveBuildAsDevPreset);
+#endif
     }
 
     void Awake()
@@ -105,9 +112,10 @@ public class EditorManager : MonoBehaviour, ICommandContext
     
     void GoBack()
     {
-        if(NavState.inConfirmScreen)
+        if(NavState.inPopupScreen)
         {
             EventBus.Publish(new CloseConfirmScreenEvent());
+            EventBus.Publish(new CloseMessageScreenEvent());
         }
         else if(EditorState.inPresetMenu)
         {
@@ -132,7 +140,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void ToggleNavMode()
     {
-        if (EditorState.inPresetMenu || NavState.inConfirmScreen) return;
+        if (EditorState.inPresetMenu || NavState.inPopupScreen) return;
 
         if (EditorState.navMode == NavMode.Item) CommandHistory.Execute(new EnterGridModeCommand(this));
         else if (EditorState.navMode == NavMode.Grid) CommandHistory.Execute(new ExitGridModeCommand(this, EditorState.heldPart));
@@ -468,11 +476,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
             message = $"Load {presetToLoad}? Anything in the build area will be replaced",
             action = LoadPresetAfterConfirmation,
             yesNavItem = buildWindow,
-            noNavItem = NavState.ItemBeforeConfirmScreen
+            noNavItem = NavState.ItemBeforePopupScreen
         });
     }
 
-    void OnSaveBuildAsPreset(SavePresetEvent e) => SaveBuildAsPresetAfterConfirm();
+    void OnSaveBuildAsPreset(SavePresetEvent e) => SaveBuildAsPresetAfterValidation();
 
     #endregion
 
@@ -510,9 +518,14 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void ClearBuildArea()
     {
+        nameValidator.SetName(string.Empty);
+
         ShipPart[] parts = buildArea.ClearParts();
         foreach (ShipPart part in parts)
             inventoryManager.AddPart(part.partData);
+
+        SetResponseText("Build area cleared!");
+        SetResponseColor(Assets.i.uiGreen);
     }
     #endregion
 
@@ -567,15 +580,34 @@ public class EditorManager : MonoBehaviour, ICommandContext
         NavToItem(openPresetsButton);
     }
 
-    public void SaveBuildAsPresetAfterConfirm()
+    public void SaveBuildAsPresetAfterValidation()
     {
         string validation = ValidateBuild();
         if (!validation.Equals("Valid")) return;
-        EventBus.Publish(new OpenConfirmScreenEvent
+
+        string presetName = nameValidator.GetName();
+
+        if(presetManager.DevPresetNameExists(presetName))
         {
-            message = $"Save {nameValidator.GetName()} as a preset? You can delete it later.",
-            action = SaveBuildAsPreset
-        });
+            EventBus.Publish(new OpenMessageScreenEvent
+            {
+                message = $"\"{presetName}\" is a built-in preset that can't be overwritten.\nRename your build to save it as a preset"
+            });
+        }
+        else
+        {
+            string confirmMessage;
+            if (presetManager.PlayerPresetNameExists(presetName))
+                confirmMessage = $"The preset \"{presetName}\" already exists, overwrite it?";
+            else
+                confirmMessage = $"Save {presetName} as a preset? You can delete it later.";
+
+            EventBus.Publish(new OpenConfirmScreenEvent
+            {
+                message = confirmMessage,
+                action = SaveBuildAsPreset
+            });
+        }
     }
 
     public void SaveBuildAsPreset()
@@ -584,6 +616,15 @@ public class EditorManager : MonoBehaviour, ICommandContext
         ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts);
         presetManager.DisplayPresets();
     }
+
+#if UNITY_EDITOR
+    public void SaveBuildAsDevPreset(SaveDevPresetEvent e)
+    {
+        ShipSaveLoader ShipSL = new ShipSaveLoader();
+        ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts, true);
+        presetManager.DisplayPresets();
+    }
+#endif
 
     // loads a player save ship without taking from inventory
     public void LoadBuild(string shipName)
@@ -601,25 +642,51 @@ public class EditorManager : MonoBehaviour, ICommandContext
         ClearBuildArea();
 
         ShipSaveLoader ShipSL = new ShipSaveLoader();
-        ShipSave save = ShipSL.GetShipPreset(shipName);
+
+        bool dev = presetManager.DevPresetNameExists(shipName);
+
+        ShipSave save = ShipSL.GetShipPreset(shipName, dev);
 
         nameValidator.SetName(shipName);
 
+        int partCount = 0;
+        int successCount = 0;
+
         foreach (PartStruct part in save.partList)
         {
-            RestorePart(part);
+            partCount++;
+
+            if (RestorePart(part))
+                successCount++;
+            
         }
 
-        ClosePresetMenu();
+        if(successCount == 0) // couldnt load ANY parts
+        {
+            SetResponseText($"Preset \"{shipName}\" could not be loaded, no necessary parts were found in inventory.");
+            SetResponseColor(Assets.i.uiRed);
+        }
+        else if(partCount > successCount) // couldnt load all parts
+        {
+            SetResponseText($"Preset \"{shipName}\" partially loaded, not enough parts in inventory to finish.");
+            SetResponseColor(Assets.i.uiRed);
+        }
+        else
+        {
+            SetResponseText($"Preset \"{shipName}\" loaded!");
+            SetResponseColor(Assets.i.uiGreen);
+        }
 
-        SetResponseText($"Preset \"{shipName}\" loaded");
-        SetResponseColor(Assets.i.uiGreen);
+
+        ClosePresetMenu();
     }
 
-    void RestorePart(PartStruct partStruct)
+    bool RestorePart(PartStruct partStruct)
     {
         ShipPartData partData = PartDatabase.Instance.Get(partStruct.partName);
         bool success = inventoryManager.TryTakePart(partData, out ShipPart part);
+
+        if (!success) return false;
 
         partTransformer.RestorePartTransformations(part, partStruct.rotation, partStruct.xFlipped, partStruct.yFlipped);
 
@@ -636,5 +703,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             1);
 
         partPlacer.PlacePart(part, new Vector2Int(partStruct.xPos, partStruct.yPos));
+
+        return true;
     }
 }

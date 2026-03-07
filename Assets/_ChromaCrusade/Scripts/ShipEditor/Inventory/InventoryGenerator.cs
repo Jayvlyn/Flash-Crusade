@@ -13,30 +13,30 @@ public class InventoryGenerator
         var inventory = new PartInventory();
 
         // Fake test data
-        inventory.Add("Cabin1", PartType.Cabin, 99);
-        inventory.Add("Cabin2", PartType.Cabin, 99);
-        inventory.Add("Cabin3", PartType.Cabin, 99);
-        inventory.Add("Core1", PartType.Core, 99);
-        inventory.Add("Core2", PartType.Core, 99);
-        inventory.Add("Core3", PartType.Core, 99);
-        inventory.Add("Core4", PartType.Core, 99);
-        inventory.Add("Core5", PartType.Core, 99);
-        inventory.Add("Core6", PartType.Core, 99);
-        inventory.Add("Weapon1", PartType.Weapon, 99);
-        inventory.Add("Weapon2", PartType.Weapon, 99);
-        inventory.Add("Weapon3", PartType.Weapon, 99);
-        inventory.Add("Wing1", PartType.Wing, 99);
-        inventory.Add("Wing2", PartType.Wing, 99);
-        inventory.Add("Wing3", PartType.Wing, 99);
-        inventory.Add("Wing4", PartType.Wing, 99);
-        inventory.Add("Wing5", PartType.Wing, 99);
-        inventory.Add("Capacitor1", PartType.Utility, 99);
-        inventory.Add("Capacitor2", PartType.Utility, 99);
-        inventory.Add("Capacitor3", PartType.Utility, 99);
-        inventory.Add("Dock1", PartType.Utility, 99);
-        inventory.Add("Dock2", PartType.Utility, 99);
-        inventory.Add("Enhancer1", PartType.Utility, 99);
-        inventory.Add("Enhancer2", PartType.Utility, 99);
+        inventory.Add("Cabin1", PartType.Cabin, 10);
+        inventory.Add("Cabin2", PartType.Cabin, 10);
+        inventory.Add("Cabin3", PartType.Cabin, 10);
+        inventory.Add("Core1", PartType.Core, 10);
+        inventory.Add("Core2", PartType.Core, 10);
+        inventory.Add("Core3", PartType.Core, 10);
+        inventory.Add("Core4", PartType.Core, 10);
+        inventory.Add("Core5", PartType.Core, 10);
+        inventory.Add("Core6", PartType.Core, 10);
+        inventory.Add("Weapon1", PartType.Weapon, 10);
+        inventory.Add("Weapon2", PartType.Weapon, 10);
+        inventory.Add("Weapon3", PartType.Weapon, 10);
+        inventory.Add("Wing1", PartType.Wing, 10);
+        inventory.Add("Wing2", PartType.Wing, 10);
+        inventory.Add("Wing3", PartType.Wing, 10);
+        inventory.Add("Wing4", PartType.Wing, 10);
+        inventory.Add("Wing5", PartType.Wing, 10);
+        inventory.Add("Capacitor1", PartType.Utility, 10);
+        inventory.Add("Capacitor2", PartType.Utility, 10);
+        inventory.Add("Capacitor3", PartType.Utility, 10);
+        inventory.Add("Dock1", PartType.Utility, 10);
+        inventory.Add("Dock2", PartType.Utility, 10);
+        inventory.Add("Enhancer1", PartType.Utility, 10);
+        inventory.Add("Enhancer2", PartType.Utility, 10);
 
         string json = JsonUtility.ToJson(inventory, true);
 

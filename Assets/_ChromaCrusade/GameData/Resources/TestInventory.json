@@ -2,107 +2,107 @@
     "cabins": [
         {
             "name": "Cabin1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Cabin2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Cabin3",
-            "count": 99
+            "count": 10
         }
     ],
     "cores": [
         {
             "name": "Core1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Core2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Core3",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Core4",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Core5",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Core6",
-            "count": 99
+            "count": 10
         }
     ],
     "wings": [
         {
             "name": "Wing1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Wing2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Wing3",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Wing4",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Wing5",
-            "count": 99
+            "count": 10
         }
     ],
     "weapons": [
         {
             "name": "Weapon1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Weapon2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Weapon3",
-            "count": 99
+            "count": 10
         }
     ],
     "utilities": [
         {
             "name": "Capacitor1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Capacitor2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Capacitor3",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Dock1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Dock2",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Enhancer1",
-            "count": 99
+            "count": 10
         },
         {
             "name": "Enhancer2",
-            "count": 99
+            "count": 10
         }
     ]
 }

@@ -2,7 +2,7 @@ public static class NavState
 {
     public static NavItem currentItem;
     public static bool inInputField;
-    public static bool inConfirmScreen;
+    public static bool inPopupScreen;
     public static bool hoveringSelector;
     public static bool Scrolling;
 
@@ -26,7 +26,7 @@ public static class NavState
     }
 
     static NavItem itemBeforeConfirmScreen;
-    public static NavItem ItemBeforeConfirmScreen
+    public static NavItem ItemBeforePopupScreen
     {
         get => itemBeforeConfirmScreen;
         set { itemBeforeConfirmScreen = value; }
@@ -39,7 +39,7 @@ public static class NavState
         hoveredItem = null;
         lastHoveredItem = null;
         Scrolling = false;
-        inConfirmScreen = false;
+        inPopupScreen = false;
         itemBeforeConfirmScreen = null;
     }
 }

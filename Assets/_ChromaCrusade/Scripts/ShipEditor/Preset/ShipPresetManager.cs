@@ -15,12 +15,19 @@ public class ShipPresetManager : MonoBehaviour
     List<RectTransform> presetItems;
     UIShipData currentBuildData;
 
+    HashSet<string> devPresetNames;
+    public bool DevPresetNameExists(string name) => devPresetNames.Contains(name);
+
+    HashSet<string> playerPresetNames;
+    public bool PlayerPresetNameExists(string name) => playerPresetNames.Contains(name);
+
+
     public void DisplayPresets(UIShipData currentBuildData)
     {
         this.currentBuildData = currentBuildData;
         SetCurrentBuildAsPreview();
 
-        LoadPresetItems();
+        LoadAllPresetItems();
         scrollMenu.ShowPageOne(presetItems);
     }
 
@@ -30,11 +37,11 @@ public class ShipPresetManager : MonoBehaviour
         currentBuildData.shipName = "";
         ShowDefaultPreview();
 
-        LoadPresetItems();
+        LoadAllPresetItems();
         scrollMenu.ShowPageOne(presetItems);
     }
 
-    void LoadPresetItems()
+    void LoadAllPresetItems()
     {
         if(presetItems != null)
         {
@@ -46,9 +53,22 @@ public class ShipPresetManager : MonoBehaviour
 
         presetItems = new();
 
-        string dataPath = Paths.ShipPresetDataPath;
-        string spritesPath = Paths.ShipPresetSpritesPath;
+        string dataPath = Paths.DevPresetDataPath;
+        string spritesPath = Paths.DevPresetSpritesPath;
+        devPresetNames = new();
 
+        LoadPresetItems(dataPath, spritesPath, devPresetNames);
+
+        dataPath = Paths.PlayerPresetDataPath;
+        spritesPath = Paths.PlayerPresetSpritesPath;
+        playerPresetNames = new();
+
+        LoadPresetItems(dataPath, spritesPath, playerPresetNames);
+
+    }
+
+    void LoadPresetItems(string dataPath, string spritesPath, HashSet<string> names)
+    {
         if (!Directory.Exists(dataPath) || !Directory.Exists(spritesPath))
             return;
 
@@ -57,10 +77,8 @@ public class ShipPresetManager : MonoBehaviour
 
         for (int i = 0; i < dataFiles.Length; i++)
         {
-            // dont need to load all this data for each ship, just name and sprite at this stage
-            //string json = File.ReadAllText(dataFiles[i]);
-            //var data = JsonUtility.FromJson<ShipSave>(json);
             string name = Path.GetFileNameWithoutExtension(dataFiles[i]);
+            names.Add(name);
 
             byte[] spriteBytes = File.ReadAllBytes(spriteFiles[i]);
 
@@ -92,33 +110,20 @@ public class ShipPresetManager : MonoBehaviour
         scrollMenu.ScrollDown(presetItems);
     }
 
-    //public void LoadPresetAsBuild(string shipName)
-    //{
-    //    string path = Path.Combine(Paths.ShipPresetDataPath, $"{shipName}.json");
-
-    //    if (!File.Exists(path))
-    //    {
-    //        Debug.LogError("Ship save not found: " + path);
-    //        return;
-    //    }
-
-    //    string json = File.ReadAllText(path);
-
-    //    ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
-
-    //    if (shipSave.partList == null)
-    //        return;
-
-    //    Debug.Log("unfinished");
-    //}
-
     public void OnSaveBuildAsPresetSelected()
     {
         EventBus.Publish(new SavePresetEvent());
     }
 
+    [MenuItem("Tools/Save Dev Preset")]
+    public static void OnSaveDevPreset()
+    {
+        EventBus.Publish(new SaveDevPresetEvent());
+    }
+
     public void OnPresetSelected()
     {
+        if (hoveredUIShip == null) return;
         EventBus.Publish(new PresetSelectedEvent { 
             presetName = hoveredUIShip.ShipName 
         });

@@ -28,25 +28,25 @@ public class ConfirmationScreen : MonoBehaviour
 
     void Open(string message, Action action, NavItem yesNavItem, NavItem noNavItem)
     {
-        NavState.ItemBeforeConfirmScreen = NavState.HoveredItem;
+        NavState.ItemBeforePopupScreen = NavState.HoveredItem;
         this.message.text = message;
         this.action = action;
         this.yesNavItem = yesNavItem;
         this.noNavItem = noNavItem;
         window.SetActive(true);
-        NavState.inConfirmScreen = true;
+        NavState.inPopupScreen = true;
         EventBus.Publish(new ItemNavEvent { target = noButton });
     }
 
     void Close(bool yes = false)
     {
         NavItem navTarget = yes ? yesNavItem : noNavItem;
-        if (navTarget == null) navTarget = NavState.ItemBeforeConfirmScreen;
+        if (navTarget == null) navTarget = NavState.ItemBeforePopupScreen;
         EventBus.Publish(new ItemNavEvent { target = navTarget });
         action = null;
         message.text = string.Empty;
         window.SetActive(false);
-        NavState.inConfirmScreen = false;
+        NavState.inPopupScreen = false;
         yesNavItem = null;
         noNavItem = null;
     }

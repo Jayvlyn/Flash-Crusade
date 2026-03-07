@@ -8,24 +8,29 @@ public class ShipSaveLoader
 
     public ShipSaveLoader()
     {
-        Directory.CreateDirectory(Paths.ShipPresetSpritesPath);
-        Directory.CreateDirectory(Paths.ShipPresetDataPath);
+        Directory.CreateDirectory(Paths.PlayerPresetSpritesPath);
+        Directory.CreateDirectory(Paths.PlayerPresetDataPath);
+
+        Directory.CreateDirectory(Paths.DevPresetSpritesPath);
+        Directory.CreateDirectory(Paths.DevPresetDataPath);
     }
 
-    private void SaveShipPresetTexture(UIShipData shipData)
+    private void SaveShipPresetTexture(UIShipData shipData, bool dev = false)
     {
         byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
 
-        string path = Path.Combine(Paths.ShipPresetSpritesPath, $"{shipData.shipName}.png");
+        string path = dev ? Paths.DevPresetSpritesPath : Paths.PlayerPresetSpritesPath;
+
+        path = Path.Combine(path, $"{shipData.shipName}.png");
 
         File.WriteAllBytes(path, pngBytes);
 
         //Object.Destroy(shipData.shipSprite.texture);
     }
 
-    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<ShipPart> parts)
+    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<ShipPart> parts, bool dev = false)
     {
-        SaveShipPresetTexture(shipData);
+        SaveShipPresetTexture(shipData, dev);
 
         // Save Build Data
         var shipSave = new ShipSave
@@ -49,24 +54,28 @@ public class ShipSaveLoader
 
         string json = JsonUtility.ToJson(shipSave, true);
 
+        string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
+
         File.WriteAllText(
-            Path.Combine(Paths.ShipPresetDataPath, $"{shipData.shipName}.json"),
-            json
-        );
+            Path.Combine(path, $"{shipData.shipName}.json"), 
+            json );
     }
+
+    public ShipSave GetShipPreset(string presetName, bool dev = false)
+    {
+        string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
+
+        return GetShipSave(
+            Path.Combine(path, 
+            $"{presetName}.json"));
+    }
+
 
     public ShipSave GetShipBuild(string shipName, string activeSave)
     {
         return GetShipSave(
             Path.Combine(Paths.ShipBuildDataPath(activeSave), 
             $"{shipName}.json"));
-    }
-
-    public ShipSave GetShipPreset(string presetName)
-    {
-        return GetShipSave(
-            Path.Combine(Paths.ShipPresetDataPath, 
-            $"{presetName}.json"));
     }
 
     public ShipSave GetShipSave(string path)

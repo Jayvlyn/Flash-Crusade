@@ -1,0 +1,29 @@
+{
+    "shipName": "DevShip",
+    "partList": [
+        {
+            "partName": "Cabin3",
+            "xPos": 0,
+            "yPos": 2,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core6",
+            "xPos": 0,
+            "yPos": -1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing5",
+            "xPos": -1,
+            "yPos": -1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        }
+    ]
+}

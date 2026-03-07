@@ -3,31 +3,21 @@ using UnityEngine;
 
 public static class InventoryLoader
 {
-    // same path you used for test generation so your filler script can write to it
-    private const string LoadPath = "Assets/_ChromaCrusade/GameData/Resources/TestInventory.json";
-    private const string ListLoadPath = "Assets/_ChromaCrusade/GameData/Resources/PartList.json";
-
     public static PartInventory Load()
     {
-        if (!File.Exists(LoadPath))
-        {
-            Debug.LogWarning($"Inventory file not found at: {LoadPath}");
+        if (!File.Exists(Paths.TestInventoryPath))
             return new PartInventory(); // empty fallback
-        }
-
-        string json = File.ReadAllText(LoadPath);
+        
+        string json = File.ReadAllText(Paths.TestInventoryPath);
         return JsonUtility.FromJson<PartInventory>(json);
     }
 
     public static ShipPartList LoadFullList()
     {
-        if (!File.Exists(ListLoadPath))
-        {
-            Debug.LogWarning($"Inventory file not found at: {ListLoadPath}");
+        if (!File.Exists(Paths.PartListPath))
             return new ShipPartList(); // empty fallback
-        }
-
-        string json = File.ReadAllText(ListLoadPath);
+        
+        string json = File.ReadAllText(Paths.PartListPath);
         return JsonUtility.FromJson<ShipPartList>(json);
     }
 }

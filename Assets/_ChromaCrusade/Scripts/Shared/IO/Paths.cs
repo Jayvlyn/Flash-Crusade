@@ -6,6 +6,10 @@ public static class Paths
     public static string Persistent => Application.persistentDataPath;
     public static string Streaming => Application.streamingAssetsPath;
 
+    public static string ShipPartsPath => Path.Combine(Streaming, "ShipParts");
+    public static string PartListPath => Path.Combine(ShipPartsPath, "PartList.json");
+    public static string TestInventoryPath => Path.Combine(ShipPartsPath, "TestInventory.json");
+
     public static string PlayerPresetsPath => Path.Combine(Persistent, "PlayerPresets");
     public static string PlayerPresetSpritesPath => Path.Combine(PlayerPresetsPath, "PlayerPresetSprites");
     public static string PlayerPresetDataPath => Path.Combine(PlayerPresetsPath, "PlayerPresetData");

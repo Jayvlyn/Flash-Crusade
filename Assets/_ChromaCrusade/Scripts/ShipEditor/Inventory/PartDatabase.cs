@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class PartDatabase : MonoBehaviour
@@ -26,14 +27,8 @@ public class PartDatabase : MonoBehaviour
 
     private void LoadNamesFromJson()
     {
-        TextAsset json = Resources.Load<TextAsset>("PartList");
-        if (json == null)
-        {
-            Debug.LogError("PartList.json missing! Generate it from Tools > Generate Ship Part List");
-            return;
-        }
-
-        LoadedList = JsonUtility.FromJson<ShipPartList>(json.text);
+        string json = File.ReadAllText(Paths.PartListPath);
+        LoadedList = JsonUtility.FromJson<ShipPartList>(json);
     }
 
     private void LoadAssets()

@@ -5,14 +5,12 @@ using System.IO;
 
 public class InventoryGenerator
 {
-    private const string OutputPath = "Assets/_ChromaCrusade/GameData/Resources/TestInventory.json";
-
     [MenuItem("Tools/Generate Test Inventory")]
     public static void Generate()
     {
+        Directory.CreateDirectory(Paths.ShipPartsPath);
         var inventory = new PartInventory();
 
-        // Fake test data
         inventory.Add("Cabin1", PartType.Cabin, 10);
         inventory.Add("Cabin2", PartType.Cabin, 10);
         inventory.Add("Cabin3", PartType.Cabin, 10);
@@ -40,10 +38,8 @@ public class InventoryGenerator
 
         string json = JsonUtility.ToJson(inventory, true);
 
-        File.WriteAllText(OutputPath, json);
+        File.WriteAllText(Paths.TestInventoryPath, json);
         AssetDatabase.Refresh();
-
-        Debug.Log($"Test inventory saved to {OutputPath}");
     }
 }
 #endif

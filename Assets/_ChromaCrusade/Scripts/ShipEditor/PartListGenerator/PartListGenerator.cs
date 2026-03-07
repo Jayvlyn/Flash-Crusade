@@ -1,17 +1,18 @@
 
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
-#if UNITY_EDITOR
 using System.IO;
 
 public class PartListGenerator
 {
     public const string PartsRootFolder = "Assets/_ChromaCrusade/GameData/Resources/Parts";
-    private const string OutputPath = "Assets/_ChromaCrusade/GameData/Resources/PartList.json";
 
     [MenuItem("Tools/Generate Ship Part List")]
     public static void Generate()
     {
+        Directory.CreateDirectory(Paths.ShipPartsPath);
+
         var result = new ShipPartList();
 
         string[] guids = AssetDatabase.FindAssets("t:ShipPartData", new[] { PartsRootFolder });
@@ -53,12 +54,8 @@ public class PartListGenerator
 
         string json = JsonUtility.ToJson(result, true);
 
-        Directory.CreateDirectory(Path.GetDirectoryName(OutputPath));
-
-        File.WriteAllText(OutputPath, json);
+        File.WriteAllText(Paths.PartListPath, json);
         AssetDatabase.Refresh();
-
-        Debug.Log($"Part list saved to {OutputPath}");
     }
 }
 #endif

@@ -1,0 +1,36 @@
+{
+    "cabins": [
+        "Cabin1",
+        "Cabin2",
+        "Cabin3"
+    ],
+    "cores": [
+        "Core1",
+        "Core2",
+        "Core3",
+        "Core4",
+        "Core5",
+        "Core6"
+    ],
+    "utilities": [
+        "Capacitor1",
+        "Capacitor2",
+        "Capacitor3",
+        "Dock1",
+        "Dock2",
+        "Enhancer1",
+        "Enhancer2"
+    ],
+    "wings": [
+        "Wing1",
+        "Wing2",
+        "Wing3",
+        "Wing4",
+        "Wing5"
+    ],
+    "weapons": [
+        "Weapon1",
+        "Weapon2",
+        "Weapon3"
+    ]
+}

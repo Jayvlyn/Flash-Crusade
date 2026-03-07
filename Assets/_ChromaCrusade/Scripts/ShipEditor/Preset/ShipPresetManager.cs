@@ -21,6 +21,8 @@ public class ShipPresetManager : MonoBehaviour
     HashSet<string> playerPresetNames;
     public bool PlayerPresetNameExists(string name) => playerPresetNames.Contains(name);
 
+    UIShip hoveredUIShip;
+    public UIShip HoveredPreset => hoveredUIShip;
 
     public void DisplayPresets(UIShipData currentBuildData)
     {
@@ -131,7 +133,7 @@ public class ShipPresetManager : MonoBehaviour
         });
     }
 
-    UIShip hoveredUIShip;
+
     public void OnPresetHovered(int hoveredIndex)
     {
         var (start, end) = scrollMenu.Pager.GetRange(presetItems.Count, scrollMenu.ElementsPerPage);
@@ -140,6 +142,7 @@ public class ShipPresetManager : MonoBehaviour
         if (i >= presetItems.Count)
         {
             ShowBuildOrDefaultPreview();
+            hoveredUIShip = null;
         }
         else
         {
@@ -176,5 +179,19 @@ public class ShipPresetManager : MonoBehaviour
             SetCurrentBuildAsPreview();
         else
             ShowDefaultPreview();
+    }
+
+    public void DeletePreset(string name)
+    {
+        string jsonPath = Path.Combine(Paths.PlayerPresetDataPath, name + ".json");
+        string pngPath = Path.Combine(Paths.PlayerPresetSpritesPath, name + ".png");
+
+        if (File.Exists(jsonPath))
+            File.Delete(jsonPath);
+
+        if (File.Exists(pngPath))
+            File.Delete(pngPath);
+
+        DisplayPresets();
     }
 }

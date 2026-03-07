@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using TMPro;
 using UnityEngine;
@@ -355,11 +356,35 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnDeleteInputEvent(DeleteInputEvent e)
     {
-        if (EditorState.navMode != NavMode.Grid) return;
-        ShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
-        if (EditorState.heldPart == null && part == null) return;
+        if (EditorState.inPresetMenu)
+        {
+            if (presetManager.HoveredPreset == null) return;
 
-        CommandHistory.Execute(new DeleteCommand(this, gridNav.GetCurrentGridCell()));
+            string presetName = presetManager.HoveredPreset.ShipName;
+            
+            if(presetManager.DevPresetNameExists(presetName))
+            {
+                EventBus.Publish(new OpenMessageScreenEvent
+                {
+                    message = $"\"{presetName}\" is a built-in preset that can't be deleted."
+                });
+            }
+            else
+            {
+                presetToDelete = presetName;
+                EventBus.Publish(new OpenConfirmScreenEvent
+                {
+                    message = $"Are you sure you want to permanently delete the preset \"{presetName}\"?",
+                    action = DeletePreset
+                });
+            }
+        }
+        else if (EditorState.navMode == NavMode.Grid)
+        {
+            ShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
+            if (EditorState.heldPart == null && part == null) return;
+            CommandHistory.Execute(new DeleteCommand(this, gridNav.GetCurrentGridCell()));
+        }
     }
 
     void OnResetInputEvent(ResetInputEvent e)
@@ -707,5 +732,13 @@ public class EditorManager : MonoBehaviour, ICommandContext
         partPlacer.PlacePart(part, new Vector2Int(partStruct.xPos, partStruct.yPos));
 
         return true;
+    }
+
+    string presetToDelete;
+    void DeletePreset()
+    {
+        if (presetToDelete == null) return;
+        presetManager.DeletePreset(presetToDelete);
+        presetToDelete = null;
     }
 }

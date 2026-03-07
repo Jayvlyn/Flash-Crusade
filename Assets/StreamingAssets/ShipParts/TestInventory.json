@@ -59,6 +59,10 @@
         {
             "name": "Wing5",
             "count": 10
+        },
+        {
+            "name": "NewWingTest",
+            "count": 11
         }
     ],
     "weapons": [

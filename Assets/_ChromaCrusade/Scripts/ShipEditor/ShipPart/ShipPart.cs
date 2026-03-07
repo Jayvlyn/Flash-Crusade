@@ -16,9 +16,12 @@ public class ShipPart : MonoBehaviour
     [HideInInspector] public Vector2Int position; // center segment
     [HideInInspector] public Vector2Int cellPlacedAt;
 
-    [HideInInspector] public bool xFlipped;
-    [HideInInspector] public bool yFlipped;
+    [HideInInspector] 
+    public bool xFlipped;
+    [HideInInspector] 
+    public bool yFlipped;
 
+    //[SerializeField] 
     private float rotation;
     public float Rotation { get { return rotation; } }
 

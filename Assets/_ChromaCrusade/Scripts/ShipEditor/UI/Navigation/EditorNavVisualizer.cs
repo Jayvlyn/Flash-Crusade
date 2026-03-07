@@ -224,12 +224,6 @@ public class EditorNavVisualizer : NavVisualizer, IEditorNavVisualizer
         }
     }
 
-    public IEnumerator WaitUntilDone()
-    {
-        while (IsLerping)
-            yield return null;
-    }
-
     private void GetCellRectValues(RectTransform target, Vector2Int cell, out Vector2 pos, out Vector2 size)
     {
         GetWorldRectValues(target, out var p, out var s);

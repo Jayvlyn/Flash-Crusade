@@ -28,6 +28,7 @@ public class InventoryGenerator
         inventory.Add("Wing3", PartType.Wing, 10);
         inventory.Add("Wing4", PartType.Wing, 10);
         inventory.Add("Wing5", PartType.Wing, 10);
+        inventory.Add("NewWingTest", PartType.Wing, 11);
         inventory.Add("Capacitor1", PartType.Utility, 10);
         inventory.Add("Capacitor2", PartType.Utility, 10);
         inventory.Add("Capacitor3", PartType.Utility, 10);

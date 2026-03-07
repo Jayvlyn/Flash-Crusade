@@ -22,6 +22,7 @@
         "Enhancer2"
     ],
     "wings": [
+        "NewWingTest",
         "Wing1",
         "Wing2",
         "Wing3",

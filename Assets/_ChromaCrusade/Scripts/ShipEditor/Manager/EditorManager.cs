@@ -186,8 +186,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
         if (placeQueued) yield break; // prevents spam stacking
         placeQueued = true;
 
-        if (UIManager.Smoothing && NavVisualizer.IsLerping)
-            yield return visualizer.WaitUntilDone();
+        while (NavVisualizer.IsLerping || visualizer.IsRotateLerping || visualizer.IsFlipLerping)
+            yield return null;
 
         TryPlacePart(); // safe now
         placeQueued = false;

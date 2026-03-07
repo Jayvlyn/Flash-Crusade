@@ -526,6 +526,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         SetResponseText("Build area cleared!");
         SetResponseColor(Assets.i.uiGreen);
+
+        CommandHistory.ClearStacks();
     }
     #endregion
 
@@ -677,8 +679,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
             SetResponseColor(Assets.i.uiGreen);
         }
 
-
         ClosePresetMenu();
+        CommandHistory.ClearStacks();
     }
 
     bool RestorePart(PartStruct partStruct)

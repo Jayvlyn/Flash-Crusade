@@ -115,11 +115,13 @@ public class ShipPresetManager : MonoBehaviour
         EventBus.Publish(new SavePresetEvent());
     }
 
+#if UNITY_EDITOR
     [MenuItem("Tools/Save Dev Preset")]
     public static void OnSaveDevPreset()
     {
         EventBus.Publish(new SaveDevPresetEvent());
     }
+#endif
 
     public void OnPresetSelected()
     {

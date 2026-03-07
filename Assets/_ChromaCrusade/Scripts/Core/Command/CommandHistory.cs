@@ -39,4 +39,10 @@ public class CommandHistory : MonoBehaviour
         command.Redo();
         undoStack.Push(command);
     }
+
+    public static void ClearStacks()
+    {
+        undoStack.Clear(); 
+        redoStack.Clear();
+    }
 }

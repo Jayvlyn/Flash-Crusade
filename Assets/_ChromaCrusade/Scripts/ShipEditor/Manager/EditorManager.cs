@@ -356,6 +356,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnDeleteInputEvent(DeleteInputEvent e)
     {
+        if (NavState.inPopupScreen) return;
+
         if (EditorState.inPresetMenu)
         {
             if (presetManager.HoveredPreset == null) return;

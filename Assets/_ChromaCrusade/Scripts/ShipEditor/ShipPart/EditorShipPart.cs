@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipPart : MonoBehaviour
+public class EditorShipPart : MonoBehaviour
 {
     public enum PartState { Inventory, Grabbed, PlacedConnected, PlacedDisconnected}
     public PartState partState;
@@ -143,10 +143,9 @@ public class ShipPart : MonoBehaviour
         rtf.target = visualizerRect;
     }
 
-    public void OnPlaced(Vector2Int position, BuildArea buildArea)
+    public void OnPlaced(Vector2Int position)
     {
         this.position = position;
-        //rect.SetParent(buildArea.rect); // should already have correct parent
     }
 
     public void Rotate(float angle)

@@ -22,7 +22,7 @@ public class PartTransformer : MonoBehaviour, IPartTransformer
         if (rotation != 0) RotatePartImmediate(rotation);
     }
 
-    public void RestorePartTransformations(ShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false)
+    public void RestorePartTransformations(EditorShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         part.Rotate(rotation);
         if (xFlipped) part.Flip(FlipAxis.Horizontal);

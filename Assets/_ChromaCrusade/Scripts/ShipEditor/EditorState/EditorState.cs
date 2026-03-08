@@ -4,7 +4,7 @@ public static class EditorState
 {
     public static EditorContext context;
     public static NavMode navMode;
-    public static ShipPart heldPart;
+    public static EditorShipPart heldPart;
     public static bool midUndoDelete;
     public static bool midGrab;
     public static bool enteringGrid;

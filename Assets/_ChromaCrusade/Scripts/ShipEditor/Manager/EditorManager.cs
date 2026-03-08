@@ -159,7 +159,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #region IPartDestroyer
 
-    public void DestroyPart(ShipPart part) => partDestroyer.DestroyPart(part);
+    public void DestroyPart(EditorShipPart part) => partDestroyer.DestroyPart(part);
 
     public void HandleUndoRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false) =>
         partDestroyer.HandleUndoRoutine(wasPlaced, partData, partPosition, startCell, rotation, xFlipped, yFlipped);
@@ -168,9 +168,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #region IPartPlacer
 
-    public ShipPart GetHeldPart() => partPlacer.GetHeldPart();
+    public EditorShipPart GetHeldPart() => partPlacer.GetHeldPart();
 
-    public void PlacePart(ShipPart part, Vector2Int cell) => partPlacer.PlacePart(part, cell);
+    public void PlacePart(EditorShipPart part, Vector2Int cell) => partPlacer.PlacePart(part, cell);
 
     void TryPlacePart()
     {
@@ -197,17 +197,17 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #region IPartGrabber
 
-    public ShipPart GrabFromGrid(Vector2Int cell) => partGrabber.GrabFromGrid(cell);
+    public EditorShipPart GrabFromGrid(Vector2Int cell) => partGrabber.GrabFromGrid(cell);
 
-    public void GrabImmediate(ShipPart part, bool fromInv) => partGrabber.GrabImmediate(part, fromInv);
+    public void GrabImmediate(EditorShipPart part, bool fromInv) => partGrabber.GrabImmediate(part, fromInv);
 
-    public void GrabFrameLate(ShipPart part, bool fromInv) => partGrabber.GrabFrameLate(part, fromInv);
+    public void GrabFrameLate(EditorShipPart part, bool fromInv) => partGrabber.GrabFrameLate(part, fromInv);
 
-    public void GrabWithLerp(ShipPart part, bool fromInv) => partGrabber.GrabWithLerp(part, fromInv);
+    public void GrabWithLerp(EditorShipPart part, bool fromInv) => partGrabber.GrabWithLerp(part, fromInv);
 
     void TryGrabPart()
     {
-        ShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
+        EditorShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
         if (part) CommandHistory.Execute(new GrabCommand(this, part.position, gridNav.GetCurrentGridCell()));
     }
 
@@ -215,11 +215,11 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     #region IInventoryManager
 
-    public bool TryTakePart(ShipPartData data, out ShipPart part) => inventoryManager.TryTakePart(data, out part);
+    public bool TryTakePart(ShipPartData data, out EditorShipPart part) => inventoryManager.TryTakePart(data, out part);
 
     public void AddPart(ShipPartData data) => inventoryManager.AddPart(data);
 
-    public void SetPartToDefaultStart(ShipPart part) => inventoryManager.SetPartToDefaultStart(part);
+    public void SetPartToDefaultStart(EditorShipPart part) => inventoryManager.SetPartToDefaultStart(part);
 
     #endregion
 
@@ -232,7 +232,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     public void RestoreHeldPartTransformations(float rotation, bool xFlipped = false, bool yFlipped = false) =>
         partTransformer.RestoreHeldPartTransformations(rotation, xFlipped, yFlipped);
 
-    public void RestorePartTransformations(ShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false) =>
+    public void RestorePartTransformations(EditorShipPart part, float rotation, bool xFlipped = false, bool yFlipped = false) =>
         partTransformer.RestorePartTransformations(part, rotation, xFlipped, yFlipped);
 
     #endregion
@@ -383,7 +383,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         }
         else if (EditorState.navMode == NavMode.Grid)
         {
-            ShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
+            EditorShipPart part = buildArea.GetPartAtCell(gridNav.GetCurrentGridCell());
             if (EditorState.heldPart == null && part == null) return;
             CommandHistory.Execute(new DeleteCommand(this, gridNav.GetCurrentGridCell()));
         }
@@ -547,8 +547,8 @@ public class EditorManager : MonoBehaviour, ICommandContext
     {
         nameValidator.SetName(string.Empty);
 
-        ShipPart[] parts = buildArea.ClearParts();
-        foreach (ShipPart part in parts)
+        EditorShipPart[] parts = buildArea.ClearParts();
+        foreach (EditorShipPart part in parts)
             inventoryManager.AddPart(part.partData);
 
         SetResponseText("Build area cleared!");
@@ -713,7 +713,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     bool RestorePart(PartStruct partStruct)
     {
         ShipPartData partData = PartDatabase.Instance.Get(partStruct.partName);
-        bool success = inventoryManager.TryTakePart(partData, out ShipPart part);
+        bool success = inventoryManager.TryTakePart(partData, out EditorShipPart part);
 
         if (!success) return false;
 

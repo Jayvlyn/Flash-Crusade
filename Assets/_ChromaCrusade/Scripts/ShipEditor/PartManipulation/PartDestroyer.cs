@@ -12,7 +12,7 @@ public class PartDestroyer : MonoBehaviour, IPartDestroyer
 
     #region IPartDestroyer
 
-    public void DestroyPart(ShipPart part)
+    public void DestroyPart(EditorShipPart part)
     {
         if (part == EditorState.heldPart) EditorState.heldPart = null;
         Destroy(part.gameObject);
@@ -28,7 +28,7 @@ public class PartDestroyer : MonoBehaviour, IPartDestroyer
     IEnumerator UndoDeleteRoutine(bool wasPlaced, ShipPartData partData, Vector2Int partPosition, Vector2Int startCell, float rotation, bool xFlipped = false, bool yFlipped = false)
     {
         EditorState.midUndoDelete = true;
-        bool success = inventory.TryTakePart(partData, out ShipPart part);
+        bool success = inventory.TryTakePart(partData, out EditorShipPart part);
         if (success) grabber.GrabImmediate(part, true);
         yield return null;
         transformer.RestoreHeldPartTransformations(rotation, xFlipped, yFlipped);

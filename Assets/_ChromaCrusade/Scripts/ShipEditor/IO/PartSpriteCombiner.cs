@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PartSpriteCombiner
 {
-    IEnumerable<ShipPart> parts;
+    IEnumerable<EditorShipPart> parts;
     int pixelsPerCell = 3;
 
-    public PartSpriteCombiner(IEnumerable<ShipPart> parts) => this.parts = parts;
+    public PartSpriteCombiner(IEnumerable<EditorShipPart> parts) => this.parts = parts;
 
     public Texture2D CreateCombinedTexture(int paddingPixels = 3)
     {
@@ -16,7 +16,7 @@ public class PartSpriteCombiner
         int leftBound = 0;
         int rightBound = 0;
 
-        foreach (ShipPart part in parts)
+        foreach (EditorShipPart part in parts)
         {
             leftBound = Mathf.Min(leftBound, part.position.x - 1);
             rightBound = Mathf.Max(rightBound, part.position.x + 1);
@@ -32,7 +32,7 @@ public class PartSpriteCombiner
 
         Color32[] atlasPixels = new Color32[atlasWidthPixels * atlasHeightPixels];
 
-        foreach (ShipPart part in parts)
+        foreach (EditorShipPart part in parts)
         {
             int atlasBaseX = paddingPixels + (part.position.x - leftBound - 1) * pixelsPerCell;
             int atlasBaseY = paddingPixels + (part.position.y - bottomBound - 1) * pixelsPerCell;

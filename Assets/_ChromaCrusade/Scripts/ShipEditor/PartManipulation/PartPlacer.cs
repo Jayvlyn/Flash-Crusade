@@ -6,15 +6,15 @@ public class PartPlacer : MonoBehaviour, IPartPlacer
 
     #region IPartPlacer
 
-    public ShipPart GetHeldPart()
+    public EditorShipPart GetHeldPart()
     {
         return EditorState.heldPart;
     }
 
-    public void PlacePart(ShipPart part, Vector2Int cell)
+    public void PlacePart(EditorShipPart part, Vector2Int cell)
     {
         buildArea.PlacePart(part, cell);
-        part.OnPlaced(cell, buildArea);
+        part.OnPlaced(cell);
         EditorState.heldPart = null;
     }
 

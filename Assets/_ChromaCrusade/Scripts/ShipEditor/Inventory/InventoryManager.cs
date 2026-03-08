@@ -12,8 +12,8 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     public StreamlinedScrollHelper scrollHelper;
 
     PartCounter[] partCounters;
-    List<ShipPart> shownParts;
-    List<ShipPart> nextParts;
+    List<EditorShipPart> shownParts;
+    List<EditorShipPart> nextParts;
     PartInventoryModel partInventory;
     [SerializeField] private Pager pager;
 
@@ -40,7 +40,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     private void Init()
     {
-        shownParts = new List<ShipPart>();
+        shownParts = new List<EditorShipPart>();
 
         if(InCreativeMode)
         {
@@ -62,7 +62,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     #region IInventoryManager
 
-    public void SetPartToDefaultStart(ShipPart part)
+    public void SetPartToDefaultStart(EditorShipPart part)
     {
         part.rect.SetParent(defaultPartSpawn.parent, worldPositionStays: false);
         part.rtf.target = defaultPartSpawn;
@@ -72,7 +72,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         part.rtf.Follow();
     }
 
-    public bool TryTakePart(ShipPartData data, out ShipPart part)
+    public bool TryTakePart(ShipPartData data, out EditorShipPart part)
     {
         part = null;
 
@@ -100,7 +100,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     void ScrollDown()
     {
         var parts = partInventory.GetParts(showState);
-        nextParts = new List<ShipPart>();
+        nextParts = new List<EditorShipPart>();
         DoSmoothScroll(true);
 
         int elementsPerPage = partSelectors.Length / 2;
@@ -112,7 +112,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     void ScrollUp()
     {
         var parts = partInventory.GetParts(showState);
-        nextParts = new List<ShipPart>();
+        nextParts = new List<EditorShipPart>();
         DoSmoothScroll(false);
 
         SetPage(parts, 0, nextParts);
@@ -128,7 +128,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         EventBus.Publish(new InventoryPageChangedEvent());
     }
 
-    void SetPage(IReadOnlyList<PartInventoryModel.Entry> parts, int selectorStartIndex, List<ShipPart> targetList)
+    void SetPage(IReadOnlyList<PartInventoryModel.Entry> parts, int selectorStartIndex, List<EditorShipPart> targetList)
     {
         int elementsPerPage = partSelectors.Length / 2;
 
@@ -153,7 +153,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, selector.transform);
             obj.transform.SetAsFirstSibling();
 
-            ShipPart part = obj.GetComponent<ShipPart>();
+            EditorShipPart part = obj.GetComponent<EditorShipPart>();
             part.Init(entry.data);
 
             targetList.Add(part);
@@ -339,10 +339,10 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     #region Factory
 
-    ShipPart CreateInventoryPart(ShipPartData data)
+    EditorShipPart CreateInventoryPart(ShipPartData data)
     {
         var obj = Instantiate(Assets.i.editorShipPartPrefab);
-        var part = obj.GetComponent<ShipPart>();
+        var part = obj.GetComponent<EditorShipPart>();
         part.Init(data);
         return part;
     }

@@ -28,7 +28,7 @@ public class ImporterPart : MonoBehaviour
 
     [Header("Weapon Attributes")]
     [ShowIf(nameof(IsWeapon))] public int damage = 10;
-    [ShowIf(nameof(IsWeapon))] public int projectileSpeed = 1;
+    [ShowIf(nameof(IsWeapon))] public float spread = 1;
     [ShowIf(nameof(IsWeapon))] public float fireRate = 1;
 
     [Header("Energy Core Attributes")]
@@ -189,7 +189,7 @@ public class ImporterPart : MonoBehaviour
         mass = 1;
         price = 100;
         damage = 10;
-        projectileSpeed = 1;
+        spread = 1;
         fireRate = 1;
         energy = 100;
         mobility = 1;
@@ -247,7 +247,7 @@ public class ImporterPart : MonoBehaviour
         else if (partData is ShipWeaponData shipWeaponData)
         {
             shipWeaponData.damage = damage;
-            shipWeaponData.projectileSpeed = projectileSpeed;
+            shipWeaponData.spread = spread;
             shipWeaponData.fireRate = fireRate;
         }
         else if (partData is ShipUtilityData shipUtilityData)

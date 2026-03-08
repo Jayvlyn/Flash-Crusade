@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IPartDestroyer
 {
-    void DestroyPart(ShipPart part);
+    void DestroyPart(EditorShipPart part);
     void HandleUndoRoutine(bool wasPlaced,
         ShipPartData partData,
         Vector2Int partPosition,

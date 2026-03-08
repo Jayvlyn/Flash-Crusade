@@ -10,39 +10,39 @@ public class PartGrabber : MonoBehaviour, IPartGrabber
 
     #region IPartGrabber
 
-    public void GrabFrameLate(ShipPart part, bool fromInv)
+    public void GrabFrameLate(EditorShipPart part, bool fromInv)
     {
         EditorState.heldPart = part;
         StartCoroutine(GrabFrameLateRoutine(part, fromInv));
     }
 
-    public ShipPart GrabFromGrid(Vector2Int cell)
+    public EditorShipPart GrabFromGrid(Vector2Int cell)
     {
         return buildArea.GrabPart(cell);
     }
 
-    public void GrabImmediate(ShipPart part, bool fromInv)
+    public void GrabImmediate(EditorShipPart part, bool fromInv)
     {
         part.OnGrabbed(visualizer.GetRect());
         if (!fromInv) EditorState.CurrentGridCell = part.position;
         EditorState.heldPart = part;
     }
 
-    public void GrabWithLerp(ShipPart part, bool fromInv)
+    public void GrabWithLerp(EditorShipPart part, bool fromInv)
     {
         StartCoroutine(GrabWithLerpRoutine(part, fromInv));
     }
 
     #endregion
 
-    IEnumerator GrabFrameLateRoutine(ShipPart part, bool fromInv)
+    IEnumerator GrabFrameLateRoutine(EditorShipPart part, bool fromInv)
     {
         yield return null;
         visualizer.UpdateWithRectImmediate(part.rect);
         GrabImmediate(part, fromInv);
     }
 
-    IEnumerator GrabWithLerpRoutine(ShipPart part, bool fromInv)
+    IEnumerator GrabWithLerpRoutine(EditorShipPart part, bool fromInv)
     {
         EditorState.midGrab = true;
         yield return visualizer.LerpWithRect(part.rect); // waits until done

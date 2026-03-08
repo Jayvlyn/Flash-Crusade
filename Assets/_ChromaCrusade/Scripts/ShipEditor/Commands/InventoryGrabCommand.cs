@@ -11,7 +11,7 @@ public class InventoryGrabCommand : ICommand
 
     public void Execute()
     {
-        bool success = ctx.TryTakePart(partData, out ShipPart newPart);
+        bool success = ctx.TryTakePart(partData, out EditorShipPart newPart);
 
         ctx.SetExpanded(true);
         ctx.SwitchOff();
@@ -31,7 +31,7 @@ public class InventoryGrabCommand : ICommand
     {
         ctx.AddPart(partData);
 
-        ShipPart heldPart = ctx.GetHeldPart();
+        EditorShipPart heldPart = ctx.GetHeldPart();
         if (heldPart != null) ctx.DestroyPart(heldPart);
 
         ctx.SetExpanded(false);

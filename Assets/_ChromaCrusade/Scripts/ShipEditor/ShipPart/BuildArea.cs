@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static ShipPart;
+using static EditorShipPart;
 
 public class BuildArea : MonoBehaviour
 {
-    public Dictionary<Vector2Int, ShipPart> occupiedCells = new Dictionary<Vector2Int, ShipPart>();
-    public IEnumerable<ShipPart> Parts => allParts;
+    public Dictionary<Vector2Int, EditorShipPart> occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
+    public IEnumerable<EditorShipPart> Parts => allParts;
     [HideInInspector] public RectTransform rect;
 
     private void Awake()
@@ -16,18 +16,18 @@ public class BuildArea : MonoBehaviour
 
     #region Public API
 
-    public bool CanPlacePart(ShipPart part, Vector2Int centerCell)
+    public bool CanPlacePart(EditorShipPart part, Vector2Int centerCell)
     {
         return CellsAvailable(centerCell, part);
     }
 
-    public ShipPart GetPartAtCell(Vector2Int cell)
+    public EditorShipPart GetPartAtCell(Vector2Int cell)
     {
         if (occupiedCells.ContainsKey(cell)) return occupiedCells[cell];
         else return null;
     }
 
-    public bool PlacePart(ShipPart part, Vector2Int centerCell)
+    public bool PlacePart(EditorShipPart part, Vector2Int centerCell)
     {
         if (!CellsAvailable(centerCell, part))
             return false;
@@ -61,17 +61,17 @@ public class BuildArea : MonoBehaviour
         return true;
     }
 
-    public ShipPart GrabPart(Vector2Int cell)
+    public EditorShipPart GrabPart(Vector2Int cell)
     {
-        ShipPart partAtCell = GetPartAtCell(cell);
+        EditorShipPart partAtCell = GetPartAtCell(cell);
         return GrabPart(partAtCell);
     }
 
-    public ShipPart GrabPart(ShipPart part)
+    public EditorShipPart GrabPart(EditorShipPart part)
     {
-        List<ShipPart> neighbors = adjacency.ContainsKey(part)
+        List<EditorShipPart> neighbors = adjacency.ContainsKey(part)
             ? adjacency[part].ToList()
-            : new List<ShipPart>();
+            : new List<EditorShipPart>();
 
         ForEachSegment(part, part.position, (segment, c) =>
         {
@@ -93,7 +93,7 @@ public class BuildArea : MonoBehaviour
 
     public bool HasPartType(PartType type)
     {
-        foreach(ShipPart part in allParts)
+        foreach(EditorShipPart part in allParts)
         {
             if (part.partData.PartType == type) 
                 return true;
@@ -103,25 +103,25 @@ public class BuildArea : MonoBehaviour
 
     public bool HasDisconnectedPart()
     {
-        foreach(ShipPart part in allParts)
+        foreach(EditorShipPart part in allParts)
         {
             if (part.partState == PartState.PlacedDisconnected) return true;
         }
         return false;
     }
 
-    public ShipPart[] ClearParts()
+    public EditorShipPart[] ClearParts()
     {
-        ShipPart[] clearedParts = new ShipPart[allParts.Count];
+        EditorShipPart[] clearedParts = new EditorShipPart[allParts.Count];
         allParts.CopyTo(clearedParts);
 
-        foreach(ShipPart part in allParts)
+        foreach(EditorShipPart part in allParts)
         {
             Destroy(part.gameObject);
         }
 
-        occupiedCells = new Dictionary<Vector2Int, ShipPart>();
-        adjacency = new Dictionary<ShipPart, List<ShipPart>>();
+        occupiedCells = new Dictionary<Vector2Int, EditorShipPart>();
+        adjacency = new Dictionary<EditorShipPart, List<EditorShipPart>>();
         allParts.Clear();
         centerPart = null;
 
@@ -183,7 +183,7 @@ public class BuildArea : MonoBehaviour
 
     #region Spacial Helpers
 
-    public bool ForEachSegment(ShipPart part, Vector2Int centerCell, System.Func<PartSegment, Vector2Int, bool> callback)
+    public bool ForEachSegment(EditorShipPart part, Vector2Int centerCell, System.Func<PartSegment, Vector2Int, bool> callback)
     {
         for (int y = 0; y < 3; y++)
         {
@@ -214,7 +214,7 @@ public class BuildArea : MonoBehaviour
         return true;
     }
 
-    private Vector2Int TransformDirection(Vector2Int dir, ShipPart part)
+    private Vector2Int TransformDirection(Vector2Int dir, EditorShipPart part)
     {
         Vector2Int d = dir;
 
@@ -231,7 +231,7 @@ public class BuildArea : MonoBehaviour
         };
     }
 
-    private Vector2Int InverseTransformDirection(Vector2Int dir, ShipPart part)
+    private Vector2Int InverseTransformDirection(Vector2Int dir, EditorShipPart part)
     {
         Vector2Int d = dir;
 
@@ -250,7 +250,7 @@ public class BuildArea : MonoBehaviour
         return d;
     }
 
-    private PartSegment GetSegmentAtCell(ShipPart part, Vector2Int cell)
+    private PartSegment GetSegmentAtCell(EditorShipPart part, Vector2Int cell)
     {
         Vector2Int offset = cell - part.position;
 
@@ -281,7 +281,7 @@ public class BuildArea : MonoBehaviour
         return segment;
     }
 
-    private bool CellsAvailable(Vector2Int centerCell, ShipPart part)
+    private bool CellsAvailable(Vector2Int centerCell, EditorShipPart part)
     {
         return ForEachSegment(part, centerCell, (segment, cell) =>
             !occupiedCells.ContainsKey(cell)
@@ -292,19 +292,19 @@ public class BuildArea : MonoBehaviour
 
     #region Graph
 
-    private Dictionary<ShipPart, List<ShipPart>> adjacency = new Dictionary<ShipPart, List<ShipPart>>();
-    private HashSet<ShipPart> allParts = new HashSet<ShipPart>();
+    private Dictionary<EditorShipPart, List<EditorShipPart>> adjacency = new Dictionary<EditorShipPart, List<EditorShipPart>>();
+    private HashSet<EditorShipPart> allParts = new HashSet<EditorShipPart>();
 
-    private void AddEdge(ShipPart a, ShipPart b)
+    private void AddEdge(EditorShipPart a, EditorShipPart b)
     {
-        if (!adjacency.ContainsKey(a)) adjacency[a] = new List<ShipPart>();
-        if (!adjacency.ContainsKey(b)) adjacency[b] = new List<ShipPart>();
+        if (!adjacency.ContainsKey(a)) adjacency[a] = new List<EditorShipPart>();
+        if (!adjacency.ContainsKey(b)) adjacency[b] = new List<EditorShipPart>();
 
         if (!adjacency[a].Contains(b)) adjacency[a].Add(b);
         if (!adjacency[b].Contains(a)) adjacency[b].Add(a);
     }
 
-    private void RemoveNodeFromGraph(ShipPart part)
+    private void RemoveNodeFromGraph(EditorShipPart part)
     {
         if (!adjacency.ContainsKey(part)) return;
 
@@ -316,11 +316,11 @@ public class BuildArea : MonoBehaviour
         adjacency.Remove(part);
     }
 
-    private void FindConnectingNeighbor(Vector2Int cell, Vector2Int dir, ShipPart part)
+    private void FindConnectingNeighbor(Vector2Int cell, Vector2Int dir, EditorShipPart part)
     {
         Vector2Int connectingCell = cell + dir;
 
-        ShipPart neighbor = GetPartAtCell(connectingCell);
+        EditorShipPart neighbor = GetPartAtCell(connectingCell);
         if (neighbor != null)
         {
             if (NeighborConnectsBack(neighbor, connectingCell, cell))
@@ -330,7 +330,7 @@ public class BuildArea : MonoBehaviour
         }
     }
 
-    private bool NeighborConnectsBack(ShipPart neighbor, Vector2Int neighborCell, Vector2Int thisCell)
+    private bool NeighborConnectsBack(EditorShipPart neighbor, Vector2Int neighborCell, Vector2Int thisCell)
     {
         Vector2Int worldDir = thisCell - neighborCell;
 
@@ -355,14 +355,14 @@ public class BuildArea : MonoBehaviour
         return false;
     }
 
-    private void RegisterPart(ShipPart part)
+    private void RegisterPart(EditorShipPart part)
     {
         allParts.Add(part);
         if (!adjacency.ContainsKey(part))
-            adjacency[part] = new List<ShipPart>();
+            adjacency[part] = new List<EditorShipPart>();
     }
 
-    private void TryConnectSegment(ShipPart part, PartSegment segment, Vector2Int cell)
+    private void TryConnectSegment(EditorShipPart part, PartSegment segment, Vector2Int cell)
     {
         if (segment.topConnection.connectionState == ConnectionState.Enabled)
             FindConnectingNeighbor(cell, TransformDirection(Vector2Int.up, part), part);
@@ -381,12 +381,12 @@ public class BuildArea : MonoBehaviour
 
     #region Connectivity
 
-    private ShipPart centerPart;
+    private EditorShipPart centerPart;
 
-    private bool CanReachCenter(ShipPart start)
+    private bool CanReachCenter(EditorShipPart start)
     {
-        Queue<ShipPart> queue = new Queue<ShipPart>();
-        HashSet<ShipPart> visited = new HashSet<ShipPart>();
+        Queue<EditorShipPart> queue = new Queue<EditorShipPart>();
+        HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
 
         queue.Enqueue(start);
         visited.Add(start);
@@ -411,7 +411,7 @@ public class BuildArea : MonoBehaviour
         return false;
     }
 
-    private void CheckAndPropagateDisconnect(ShipPart startPart)
+    private void CheckAndPropagateDisconnect(EditorShipPart startPart)
     {
         if (startPart == centerPart) return;
 
@@ -424,12 +424,12 @@ public class BuildArea : MonoBehaviour
         foreach (var n in adjacency[startPart]) CheckAndPropagateDisconnect(n);
     }
 
-    private void PropagateConnectedState(ShipPart part)
+    private void PropagateConnectedState(EditorShipPart part)
     {
         if (!adjacency.ContainsKey(part)) return;
 
-        Queue<ShipPart> queue = new Queue<ShipPart>();
-        HashSet<ShipPart> visited = new HashSet<ShipPart>();
+        Queue<EditorShipPart> queue = new Queue<EditorShipPart>();
+        HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
 
         queue.Enqueue(part);
         visited.Add(part);
@@ -458,15 +458,15 @@ public class BuildArea : MonoBehaviour
             return;
         }
 
-        HashSet<ShipPart> visited = new HashSet<ShipPart>();
+        HashSet<EditorShipPart> visited = new HashSet<EditorShipPart>();
 
-        Queue<ShipPart> queue = new Queue<ShipPart>();
+        Queue<EditorShipPart> queue = new Queue<EditorShipPart>();
         queue.Enqueue(centerPart);
         visited.Add(centerPart);
 
         while (queue.Count > 0)
         {
-            ShipPart part = queue.Dequeue();
+            EditorShipPart part = queue.Dequeue();
 
             part.PartConnected();
 

@@ -6,7 +6,7 @@ public class ExitGridModeCommand : ICommand
     bool yFlipped;
     float rotation;
 
-    public ExitGridModeCommand(ICommandContext ctx, ShipPart heldPart)
+    public ExitGridModeCommand(ICommandContext ctx, EditorShipPart heldPart)
     {
         this.ctx = ctx;
 
@@ -24,7 +24,7 @@ public class ExitGridModeCommand : ICommand
         if (partData != null)
         {
             ctx.AddPart(partData);
-            ShipPart heldPart = ctx.GetHeldPart();
+            EditorShipPart heldPart = ctx.GetHeldPart();
             ctx.DestroyPart(heldPart);
         }
 
@@ -38,7 +38,7 @@ public class ExitGridModeCommand : ICommand
 
         if (partData != null)
         {
-            bool success = ctx.TryTakePart(partData, out ShipPart part);
+            bool success = ctx.TryTakePart(partData, out EditorShipPart part);
 
             if (success)
             {

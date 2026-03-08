@@ -3,11 +3,11 @@ using UnityEngine;
 
 public interface IPartGrabber
 {
-    ShipPart GrabFromGrid(Vector2Int cell);
+    EditorShipPart GrabFromGrid(Vector2Int cell);
 
-    void GrabImmediate(ShipPart part, bool fromInv);
+    void GrabImmediate(EditorShipPart part, bool fromInv);
 
-    void GrabFrameLate(ShipPart part, bool fromInv);
+    void GrabFrameLate(EditorShipPart part, bool fromInv);
 
-    void GrabWithLerp(ShipPart part, bool fromInv);
+    void GrabWithLerp(EditorShipPart part, bool fromInv);
 }

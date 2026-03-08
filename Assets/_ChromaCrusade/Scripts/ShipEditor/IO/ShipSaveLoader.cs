@@ -28,7 +28,7 @@ public class ShipSaveLoader
         //Object.Destroy(shipData.shipSprite.texture);
     }
 
-    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<ShipPart> parts, bool dev = false)
+    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<EditorShipPart> parts, bool dev = false)
     {
         SaveShipPresetTexture(shipData, dev);
 

@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewShipPart", menuName = "Data/Ship Part")]

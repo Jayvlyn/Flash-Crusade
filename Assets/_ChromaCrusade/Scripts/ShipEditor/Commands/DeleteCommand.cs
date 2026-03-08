@@ -19,7 +19,7 @@ public class DeleteCommand : ICommand
 
     public void Execute()
     {
-        ShipPart heldPart = ctx.GetHeldPart();
+        EditorShipPart heldPart = ctx.GetHeldPart();
 
         if (heldPart != null)
         {
@@ -38,7 +38,7 @@ public class DeleteCommand : ICommand
         {
             wasPlaced = true;
 
-            ShipPart part = ctx.GrabFromGrid(ctx.GetCurrentGridCell());
+            EditorShipPart part = ctx.GrabFromGrid(ctx.GetCurrentGridCell());
             partData = part.partData;
             partPosition = part.position;
             ctx.AddPart(part.partData);

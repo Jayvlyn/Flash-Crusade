@@ -16,7 +16,7 @@ public class GrabCommand : ICommand
     public void Execute()
     {
         ctx.SetExpanded(true);
-        ShipPart part = ctx.GrabFromGrid(grabbedFromCell);
+        EditorShipPart part = ctx.GrabFromGrid(grabbedFromCell);
         ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)
@@ -30,7 +30,7 @@ public class GrabCommand : ICommand
 
     public void Undo()
     {
-        ShipPart part = ctx.GetHeldPart();
+        EditorShipPart part = ctx.GetHeldPart();
         ctx.PlacePart(part, partCenterCell);
         ctx.ResetScale();
         ctx.SetExpanded(false);

@@ -14,7 +14,7 @@ public class PlaceCommand : ICommand
 
     public void Execute()
     {
-        ShipPart part = ctx.GetHeldPart();
+        EditorShipPart part = ctx.GetHeldPart();
         ctx.PlacePart(part, cell);
 
         cellPlacedAt = part.cellPlacedAt;
@@ -28,7 +28,7 @@ public class PlaceCommand : ICommand
     public void Undo()
     {
         ctx.SetExpanded(true);
-        ShipPart part = ctx.GrabFromGrid(cellPlacedAt);
+        EditorShipPart part = ctx.GrabFromGrid(cellPlacedAt);
         ctx.MatchRectScale(part.rect);
 
         if (UIManager.Smoothing)

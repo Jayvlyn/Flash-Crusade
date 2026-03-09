@@ -14,6 +14,16 @@ public class ImporterFirepoint : MonoBehaviour, IPointerDownHandler
     public GameObject southWestArrow;
     public GameObject southEastArrow;
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ClearImporterEvent>(OnImporterCleared);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<ClearImporterEvent>(OnImporterCleared);
+    }
+
     public void Init()
     {
         DisableArrows();
@@ -90,14 +100,21 @@ public class ImporterFirepoint : MonoBehaviour, IPointerDownHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            EventBus.Publish(new FirepointDeletedEvent
-            {
-                position = refFirepoint.position
-            });
-
-            Destroy(this.gameObject);
+            RemoveThisFirepoint();
         }
     }
+
+    public void RemoveThisFirepoint()
+    {
+        EventBus.Publish(new FirepointDeletedEvent
+        {
+            position = refFirepoint.position
+        });
+
+        Destroy(this.gameObject);
+    }
+
+    public void OnImporterCleared(ClearImporterEvent e) => RemoveThisFirepoint();
 }
 
 public struct FirepointDeletedEvent

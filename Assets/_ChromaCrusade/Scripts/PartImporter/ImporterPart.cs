@@ -307,6 +307,12 @@ public class ImporterPart : MonoBehaviour
             return;
         }
 
+        if(partType == PartType.Weapon && (firePoints == null || firePoints.Count <= 0))
+        {
+            Debug.LogError("Cannot create ScriptableObject: Weapons must have at least one fire point.");
+            return;
+        }
+
         string folder = PartListGenerator.PartsRootFolder +"/"+ FolderNames[partType];
         string assetPath = $"{folder}/{partName}.asset";
 
@@ -368,6 +374,7 @@ public class ImporterPart : MonoBehaviour
             segment.Disable();
         }
         resetClicked = false;
+        EventBus.Publish(new ClearImporterEvent());
     }
 
     bool resetClicked;
@@ -460,4 +467,6 @@ public class ImporterPart : MonoBehaviour
         Debug.Log(mass);
     }
 }
+
+public struct ClearImporterEvent { }
 #endif

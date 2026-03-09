@@ -23,16 +23,15 @@ public class ImporterPart : MonoBehaviour
     [OnValueChanged("OnSpriteChangedCallback")]
     [ValidateInput(nameof(SpriteGiven), "Must assign sprite!")]
     public Sprite partSprite;
+    public int price = 100;
     [ValidateInput(nameof(TypeSelected), "Must select part type!")]
     public PartType partType = PartType.Select;
     private float mass = 1;
-    public int price = 100;
 
     [Header("Weapon Attributes")]
     [ShowIf(nameof(IsWeapon))] public int damage = 10;
     [ShowIf(nameof(IsWeapon))] public float spread = 1;
     [ShowIf(nameof(IsWeapon))] public float fireRate = 1;
-    [ShowIf(nameof(IsWeapon))] public List<FirePoint> firePoints;
     [ShowIf(nameof(IsWeapon))] public FireType fireType = FireType.Projectile;
     public enum FireType
     {
@@ -41,6 +40,8 @@ public class ImporterPart : MonoBehaviour
         Beam = 2,
         Wave = 3,
     }
+    [ShowIf(nameof(IsWeapon))] public List<FirePoint> firePoints;
+    List<ImporterFirepoint> importerFirepoints;
 
     [Header("Energy Core Attributes")]
     [ShowIf(nameof(IsCore))] public int energy = 100;
@@ -84,6 +85,9 @@ public class ImporterPart : MonoBehaviour
     #region References
     [HideInInspector] public Image image;
     [HideInInspector] public ImporterSegment[] segments;
+    [HideInInspector] public GameObject segmentButtonsParent;
+    [HideInInspector] public RectTransform firepointPrefab;
+    [HideInInspector] public Transform firepointsParent;
     #endregion
 
     #region Conditions
@@ -98,9 +102,86 @@ public class ImporterPart : MonoBehaviour
     private bool EmptyName() => partName.IsNullOrWhitespace();
     private bool ResetClicked() => resetClicked == true;
     private bool ResetNotClicked() => resetClicked == false;
+    private bool AddingFirepoint() => addingFirepoint == true;
+    private bool ShouldShowAddFirepoint() => !AddingFirepoint() && IsWeapon();
+    private bool ShouldReadForFirepointPos() => addingFirepoint && !recievedPosition && Input.GetMouseButtonDown(0);
+
+    private bool ShowSavePartsButton() => !addingFirepoint;
+    private bool ShowResetButton() => !addingFirepoint && ResetNotClicked();
+
+    private bool ShowShowSegmentsButton() => segmentsShown == false && !addingFirepoint;
+    private bool ShowHideSegmentsButton() => segmentsShown == true && !addingFirepoint;
+    private bool ShowShowFirepointsButton() => firepointsShown == false && firePoints != null && firePoints.Count > 0 && !addingFirepoint;
+    private bool ShowHideFirepointsButton() => firepointsShown == true && firePoints != null && firePoints.Count > 0 && !addingFirepoint;
+
+    private bool segmentsShown = true;
+    private bool firepointsShown = false;
 
     //private bool IsProjectileWeapon() => weapon
     #endregion
+
+    [ShowIf(nameof(ShowShowFirepointsButton)), Button("Show Firepoints")]
+    private void ShowFirepoints()
+    {
+        firepointsParent.gameObject.SetActive(true);
+        firepointsShown = true;
+    }
+
+    [ShowIf(nameof(ShowHideFirepointsButton)), Button("Hide Firepoints")]
+    private void HideFirepoints()
+    {
+        firepointsParent.gameObject.SetActive(false);
+        firepointsShown = false;
+    }
+
+    [ShowIf(nameof(ShowShowSegmentsButton)), Button("Show Segments")]
+    private void ShowSegments()
+    {
+        segmentButtonsParent.SetActive(true);
+        segmentsShown = true;
+    }
+
+    [ShowIf(nameof(ShowHideSegmentsButton)), Button("Hide Segments")]
+    private void HideSegments()
+    {
+        segmentButtonsParent.SetActive(false);
+        segmentsShown = false;
+    }
+
+    bool addingFirepoint;
+    bool recievedPosition;
+    [ShowIf(nameof(ShouldShowAddFirepoint)), Button("Add Firepoint")]
+    private void AddFirepoint()
+    {
+        addingFirepoint = true;
+        recievedPosition = false;
+        ShowFirepoints();
+        HideSegments();
+    }
+
+    [ShowIf(nameof(AddingFirepoint)), Button("Cancel Adding Firepoint")]
+    private void CancelAddFirepoint()
+    {
+        addingFirepoint = false;
+        recievedPosition = false;
+
+        ShowSegments();
+    }
+
+    void PlaceFirepoint(Vector2Int firepointPos, FirePoint firePoint)
+    {
+        Vector2 pos = FirepointToScreenPos(firepointPos);
+
+        RectTransform fpInstance = Instantiate(firepointPrefab, firepointsParent.transform);
+        fpInstance.anchoredPosition = pos;
+
+        ImporterFirepoint fp = fpInstance.GetComponent<ImporterFirepoint>();
+        fp.refFirepoint = firePoint;
+        fp.Init();
+
+        if (importerFirepoints == null) importerFirepoints = new();
+        importerFirepoints.Add(fp);
+    }
 
     private void Start()
     {
@@ -108,6 +189,59 @@ public class ImporterPart : MonoBehaviour
             image.sprite = partSprite;
         else
             image.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (ShouldReadForFirepointPos())
+        {
+            Vector2 mouse01 = new Vector2(
+                Input.mousePosition.x / Screen.width,
+                Input.mousePosition.y / Screen.height
+            );
+
+            Vector2Int firepointCoord = ScreenToFirepointPos(mouse01);
+
+            if (firepointCoord.x < 0 || firepointCoord.x > 8 || firepointCoord.y < 0 || firepointCoord.y > 8) return;
+
+            recievedPosition = true;
+
+            FirePoint fp = new FirePoint
+            {
+                position = firepointCoord,
+                fireColor = Color.white,
+                fireDirection = FireDirection.North
+            };
+
+            if (firePoints == null) firePoints = new();
+            firePoints.Add(fp);
+
+            PlaceFirepoint(firepointCoord, fp);
+
+            CancelAddFirepoint();
+        }
+    }
+
+    Vector2Int ScreenToFirepointPos(Vector2 pos) // pos should be 0-1
+    {
+        Vector2 posInSquare = new Vector2(pos.x, 1 - pos.y);
+
+        Vector2Int firepointCoord = new Vector2Int(
+            (int)(posInSquare.x * 9),
+            (int)(posInSquare.y * 9));
+
+        return firepointCoord;
+    }
+
+    Vector2 FirepointToScreenPos(Vector2Int pos)
+    {
+        Vector2 screenPos = new Vector3(
+            pos.x / 9f ,
+            pos.y / 9f);
+
+        return new Vector2(
+            screenPos.x * Screen.width + 25, 
+            (1-screenPos.y) * Screen.height - 25);
     }
 
     private void OnSpriteChangedCallback()
@@ -127,7 +261,7 @@ public class ImporterPart : MonoBehaviour
 
     //[HorizontalLine(10, EColor.Green), ReadOnly]
     //public string buttons = "";
-    [Button("Save Part")]
+    [ShowIf(nameof(ShowSavePartsButton)), Button("Save Part")]
     private void SavePart()
     {
         if(EmptyName())
@@ -218,7 +352,7 @@ public class ImporterPart : MonoBehaviour
     }
 
     bool resetClicked;
-    [ShowIf(nameof(ResetNotClicked)),Button("Reset")]
+    [ShowIf(nameof(ShowResetButton)),Button("Reset")]
     private void ResetButton()
     {
         resetClicked = true;

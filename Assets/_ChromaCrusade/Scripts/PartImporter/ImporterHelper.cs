@@ -8,6 +8,10 @@ public class ImporterHelper : MonoBehaviour
     public ImporterPart part;
     public ImporterSegment[] segments;
 
+    public GameObject segmentButtonsParent;
+    public RectTransform firepointPrefab;
+    public Transform firepointsParent;
+
     private void Awake()
     {
         part.image = image;
@@ -17,6 +21,10 @@ public class ImporterHelper : MonoBehaviour
         {
             part.segments[i] = segments[i];
         }
+
+        part.segmentButtonsParent = segmentButtonsParent;
+        part.firepointPrefab = firepointPrefab;
+        part.firepointsParent = firepointsParent;
     }
 }
 #endif

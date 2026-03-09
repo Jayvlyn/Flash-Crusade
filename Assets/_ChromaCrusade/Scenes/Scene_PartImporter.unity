@@ -831,7 +831,7 @@ MonoBehaviour:
   - {fileID: 2050695186}
   segmentButtonsParent: {fileID: 144639394}
   firepointPrefab: {fileID: 2531556036035057891, guid: 922e868444d165b4297a4a02617f8b46, type: 3}
-  firepointsParent: {fileID: 0}
+  firepointsParent: {fileID: 880193584}
 --- !u!1001 &1237723526
 PrefabInstance:
   m_ObjectHideFlags: 0

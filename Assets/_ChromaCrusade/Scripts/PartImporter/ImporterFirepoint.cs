@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ImporterFirepoint : MonoBehaviour
+public class ImporterFirepoint : MonoBehaviour, IPointerDownHandler
 {
     public FirePoint refFirepoint;
 
@@ -84,4 +85,22 @@ public class ImporterFirepoint : MonoBehaviour
         southWestArrow.SetActive(false);
         southEastArrow.SetActive(false);
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            EventBus.Publish(new FirepointDeletedEvent
+            {
+                position = refFirepoint.position
+            });
+
+            Destroy(this.gameObject);
+        }
+    }
+}
+
+public struct FirepointDeletedEvent
+{
+    public Vector2Int position;
 }

@@ -183,6 +183,22 @@ public class ImporterPart : MonoBehaviour
         importerFirepoints.Add(fp);
     }
 
+    private void OnEnable()
+    {
+        EventBus.Subscribe<FirepointDeletedEvent>(OnFirepointDeleted);
+    }
+
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<FirepointDeletedEvent>(OnFirepointDeleted);
+    }
+
+    void OnFirepointDeleted(FirepointDeletedEvent e)
+    {
+        firePoints.RemoveAll(fp => fp.position == e.position);
+    }
+
     private void Start()
     {
         if (partSprite != null)
@@ -204,6 +220,9 @@ public class ImporterPart : MonoBehaviour
 
             if (firepointCoord.x < 0 || firepointCoord.x > 8 || firepointCoord.y < 0 || firepointCoord.y > 8) return;
 
+            foreach(var firepoint in firePoints)
+                if (firepoint.position == firepointCoord) return; // fp already exists here.
+           
             recievedPosition = true;
 
             FirePoint fp = new FirePoint

@@ -9,7 +9,9 @@ using UnityEngine.UI;
 public class ImporterPart : MonoBehaviour
 {
     #region Data
-    public enum PartType { Select = 0, 
+    public enum PartType 
+    { 
+        Select = 0, 
         Cabin = 1, 
         Core = 2,
         Wing = 3, 
@@ -30,6 +32,15 @@ public class ImporterPart : MonoBehaviour
     [ShowIf(nameof(IsWeapon))] public int damage = 10;
     [ShowIf(nameof(IsWeapon))] public float spread = 1;
     [ShowIf(nameof(IsWeapon))] public float fireRate = 1;
+    [ShowIf(nameof(IsWeapon))] public List<FirePoint> firePoints;
+    [ShowIf(nameof(IsWeapon))] public FireType fireType = FireType.Projectile;
+    public enum FireType
+    {
+        Select = 0,
+        Projectile = 1,
+        Beam = 2,
+        Wave = 3,
+    }
 
     [Header("Energy Core Attributes")]
     [ShowIf(nameof(IsCore))] public int energy = 100;
@@ -42,7 +53,9 @@ public class ImporterPart : MonoBehaviour
 
     [Header("Utility Attributes")]
     [ShowIf(nameof(IsUtility))] public UtilityType utilityType;
-    public enum UtilityType { Select = 0,
+    public enum UtilityType 
+    { 
+        Select = 0,
         Dock = 1,       // Other ships can dock here, more options when piloting ship. "space station"
         Enhancer = 2,   // Enhances connected weapons
         Capacitor = 3,    // Recharges energy passively
@@ -85,6 +98,8 @@ public class ImporterPart : MonoBehaviour
     private bool EmptyName() => partName.IsNullOrWhitespace();
     private bool ResetClicked() => resetClicked == true;
     private bool ResetNotClicked() => resetClicked == false;
+
+    //private bool IsProjectileWeapon() => weapon
     #endregion
 
     private void Start()

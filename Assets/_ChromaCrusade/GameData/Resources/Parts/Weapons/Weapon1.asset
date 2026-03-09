@@ -98,5 +98,13 @@ MonoBehaviour:
     bottomConnection:
       connectionState: 2
   damage: 2
-  projectileSpeed: 5
+  spread: 0
   fireRate: 1
+  fireType: 0
+  firePoints:
+  - fireDirection: 0
+    fireColor: {r: 0, g: 0, b: 0, a: 0}
+    position: {x: 0, y: 0}
+  - fireDirection: 0
+    fireColor: {r: 0, g: 0, b: 0, a: 0}
+    position: {x: 0, y: 0}

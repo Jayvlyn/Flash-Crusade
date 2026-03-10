@@ -32,7 +32,7 @@ public class ImporterPart : MonoBehaviour
     [ShowIf(nameof(IsWeapon))] public int damage = 10;
     [ShowIf(nameof(IsWeapon))] public float spread = 1;
     [ShowIf(nameof(IsWeapon))] public float fireRate = 1;
-    [ShowIf(nameof(IsWeapon))] public FireType fireType = FireType.Projectile;
+    [ShowIf(nameof(IsWeapon))] public FireType fireType = FireType.Select;
     public enum FireType
     {
         Select = 0,
@@ -42,6 +42,22 @@ public class ImporterPart : MonoBehaviour
     }
     [ShowIf(nameof(IsWeapon))] public List<FirePoint> firePoints;
     List<ImporterFirepoint> importerFirepoints;
+
+    bool IsProjectile() => fireType == FireType.Projectile && partType == PartType.Weapon;
+    bool IsBeam() => fireType == FireType.Beam && partType == PartType.Weapon;
+    bool IsWave() => fireType == FireType.Wave && partType == PartType.Weapon;
+
+    // Projectile Weapon Data
+    [ShowIf(nameof(IsProjectile))]
+    public ProjectileData projectile;
+
+    [ShowIf(nameof(IsBeam))]
+    public float beamThickness = 3f;
+    [ShowIf(nameof(IsBeam))]
+    public float chargeTime = 0.5f;
+
+    [ShowIf(nameof(IsWave))]
+    public float growSpeed = 1;
 
     [Header("Energy Core Attributes")]
     [ShowIf(nameof(IsCore))] public int energy = 100;
@@ -424,6 +440,24 @@ public class ImporterPart : MonoBehaviour
             shipWeaponData.damage = damage;
             shipWeaponData.spread = spread;
             shipWeaponData.fireRate = fireRate;
+
+            shipWeaponData.fireType = (ShipWeaponData.FireType)(int)fireType;
+
+            shipWeaponData.firePoints = firePoints.ToArray();
+
+            if(IsProjectile())
+            {
+                shipWeaponData.projectile = projectile;
+            }
+            else if(IsBeam())
+            {
+                shipWeaponData.beamThickness = beamThickness;
+                shipWeaponData.chargeTime = chargeTime;
+            }
+            else if(IsWave())
+            {
+                shipWeaponData.growSpeed = growSpeed;
+            }
         }
         else if (partData is ShipUtilityData shipUtilityData)
         {

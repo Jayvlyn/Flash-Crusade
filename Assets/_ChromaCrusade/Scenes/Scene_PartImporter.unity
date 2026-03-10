@@ -1477,12 +1477,16 @@ MonoBehaviour:
   partName: 
   partSprite: {fileID: 0}
   price: 1
-  partType: 0
-  damage: 77
+  partType: 4
+  damage: 10
   spread: 1
   fireRate: 1
   fireType: 1
   firePoints: []
+  projectile: {fileID: 0}
+  beamThickness: 3
+  chargeTime: 0.5
+  growSpeed: 1
   energy: 100
   mobility: 1
   handling: 2

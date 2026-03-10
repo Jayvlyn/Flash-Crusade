@@ -23,10 +23,10 @@ public class ImporterPart : MonoBehaviour
     [OnValueChanged("OnSpriteChangedCallback")]
     [ValidateInput(nameof(SpriteGiven), "Must assign sprite!")]
     public Sprite partSprite;
-    public int price = 100;
     [ValidateInput(nameof(TypeSelected), "Must select part type!")]
     public PartType partType = PartType.Select;
-    private float mass = 1;
+    int mass = 1;
+    public int priceAddon = 0;
 
     [Header("Weapon Attributes")]
     [ShowIf(nameof(IsWeapon))] public int damage = 10;
@@ -377,7 +377,6 @@ public class ImporterPart : MonoBehaviour
         partType = PartType.Select;
         partName = "";
         mass = 1;
-        price = 100;
         damage = 10;
         spread = 1;
         fireRate = 1;
@@ -405,7 +404,7 @@ public class ImporterPart : MonoBehaviour
         partData.sprite = partSprite;
         CheckMass();
         partData.mass = mass;
-        partData.price = price;
+        int price = mass * 5;
 
         partData.segments = new PartSegment[segments.Length];
         for (int i = 0; i < segments.Length; i++)
@@ -426,14 +425,17 @@ public class ImporterPart : MonoBehaviour
         if (partData is ShipWingData shipWingData)
         {
             shipWingData.mobility = mobility;
+            price += mobility * 10;
         }
         else if (partData is ShipCabinData shipCabinData)
         {
             shipCabinData.handling = handling;
+            price += handling * 10;
         }
         else if (partData is ShipCoreData shipCoreData)
         {
             shipCoreData.energy = energy;
+            price += energy * 10;
         }
         else if (partData is ShipWeaponData shipWeaponData)
         {
@@ -458,11 +460,17 @@ public class ImporterPart : MonoBehaviour
             {
                 shipWeaponData.growSpeed = growSpeed;
             }
+
+            price += damage * 5;
+            price += Mathf.RoundToInt(fireRate * 5);
+            price += firePoints.Count * 10;
         }
         else if (partData is ShipUtilityData shipUtilityData)
         {
             shipUtilityData.utilityType = (ShipUtilityData.UtilityType)(int)utilityType;
         }
+
+        partData.price = price + priceAddon;
     }
 
     /// <summary>

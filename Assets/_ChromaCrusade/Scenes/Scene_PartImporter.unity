@@ -1476,12 +1476,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ImporterPart
   partName: 
   partSprite: {fileID: 0}
-  price: 1
-  partType: 4
+  partType: 0
+  priceAddon: 0
   damage: 10
   spread: 1
   fireRate: 1
-  fireType: 1
+  fireType: 0
   firePoints: []
   projectile: {fileID: 0}
   beamThickness: 3

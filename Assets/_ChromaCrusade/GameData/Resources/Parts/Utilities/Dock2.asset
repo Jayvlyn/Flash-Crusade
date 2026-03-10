@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
   sprite: {fileID: -1877425858, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
   mass: 52
-  price: 1000
+  price: 260
   segments:
   - segmentState: 1
     topConnection:
@@ -42,7 +42,7 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   - segmentState: 1
     topConnection:
       connectionState: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 0

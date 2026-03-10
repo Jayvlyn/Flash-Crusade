@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
   sprite: {fileID: 1257370768, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
   mass: 79
-  price: 1500
+  price: 395
   segments:
   - segmentState: 1
     topConnection:

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93adc69edc2f56848a422f29a02a429e, type: 3}
   m_Name: Core1
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipCoreData
-  sprite: {fileID: 832287888, guid: 44a5bafeb54066647b3c2dc2a8869a38, type: 3}
-  mass: 81
-  price: 1000
+  sprite: {fileID: 353650721, guid: 44a5bafeb54066647b3c2dc2a8869a38, type: 3}
+  mass: 72
+  price: 1360
   segments:
   - segmentState: 1
     topConnection:
@@ -69,7 +69,7 @@ MonoBehaviour:
     rightConnection:
       connectionState: 2
     bottomConnection:
-      connectionState: 0
+      connectionState: 2
   - segmentState: 1
     topConnection:
       connectionState: 0
@@ -85,10 +85,10 @@ MonoBehaviour:
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 0
+      connectionState: 2
     bottomConnection:
       connectionState: 2
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 0
     leftConnection:
@@ -97,4 +97,4 @@ MonoBehaviour:
       connectionState: 2
     bottomConnection:
       connectionState: 2
-  energy: 50
+  energy: 100

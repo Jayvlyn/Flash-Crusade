@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93adc69edc2f56848a422f29a02a429e, type: 3}
   m_Name: Core3
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipCoreData
-  sprite: {fileID: 1443066756, guid: 44a5bafeb54066647b3c2dc2a8869a38, type: 3}
-  mass: 36
-  price: 500
+  sprite: {fileID: 1131062558, guid: 44a5bafeb54066647b3c2dc2a8869a38, type: 3}
+  mass: 72
+  price: 1360
   segments:
   - segmentState: 1
     topConnection:
@@ -31,10 +31,10 @@ MonoBehaviour:
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 2
-    bottomConnection:
       connectionState: 0
-  - segmentState: 0
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 1
     topConnection:
       connectionState: 2
     leftConnection:
@@ -42,7 +42,34 @@ MonoBehaviour:
     rightConnection:
       connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 0
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 0
   - segmentState: 1
     topConnection:
       connectionState: 0
@@ -54,47 +81,20 @@ MonoBehaviour:
       connectionState: 2
   - segmentState: 1
     topConnection:
-      connectionState: 0
+      connectionState: 2
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 2
-    bottomConnection:
-      connectionState: 2
-  - segmentState: 0
-    topConnection:
-      connectionState: 1
-    leftConnection:
       connectionState: 0
-    rightConnection:
-      connectionState: 2
     bottomConnection:
-      connectionState: 1
-  - segmentState: 0
+      connectionState: 2
+  - segmentState: 1
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 2
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 2
-  - segmentState: 0
-    topConnection:
       connectionState: 0
-    leftConnection:
-      connectionState: 2
     rightConnection:
       connectionState: 2
     bottomConnection:
       connectionState: 2
-  - segmentState: 0
-    topConnection:
-      connectionState: 1
-    leftConnection:
-      connectionState: 1
-    rightConnection:
-      connectionState: 2
-    bottomConnection:
-      connectionState: 2
-  energy: 25
+  energy: 100

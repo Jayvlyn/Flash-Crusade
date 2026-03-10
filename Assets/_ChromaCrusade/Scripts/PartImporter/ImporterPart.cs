@@ -301,8 +301,10 @@ public class ImporterPart : MonoBehaviour
     {
         if(EmptyName())
         {
-            Debug.LogError("Cannot create ScriptableObject: partName is empty.");
-            return;
+
+
+            //Debug.LogError("Cannot create ScriptableObject: partName is empty.");
+            //return;
         }
 
         if(!SpriteGiven())

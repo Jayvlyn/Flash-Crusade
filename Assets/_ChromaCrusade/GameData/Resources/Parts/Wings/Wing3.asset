@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c1275da390bfa429174c2f7d79119d, type: 3}
   m_Name: Wing3
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipWingData
-  sprite: {fileID: -985200939, guid: c4e27c06523ba1c47bb3b8cb9730fd74, type: 3}
-  mass: 64
-  price: 900
+  sprite: {fileID: -1611125277, guid: c4e27c06523ba1c47bb3b8cb9730fd74, type: 3}
+  mass: 41
+  price: 215
   segments:
   - segmentState: 0
     topConnection:
-      connectionState: 2
+      connectionState: 1
     leftConnection:
-      connectionState: 2
+      connectionState: 1
     rightConnection:
       connectionState: 0
     bottomConnection:
@@ -36,7 +36,7 @@ MonoBehaviour:
       connectionState: 0
   - segmentState: 1
     topConnection:
-      connectionState: 2
+      connectionState: 1
     leftConnection:
       connectionState: 0
     rightConnection:
@@ -51,7 +51,7 @@ MonoBehaviour:
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 0
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
       connectionState: 2
     bottomConnection:
       connectionState: 0
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 0
     leftConnection:
@@ -83,11 +83,11 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 0
+      connectionState: 1
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 0
@@ -96,5 +96,5 @@ MonoBehaviour:
     rightConnection:
       connectionState: 2
     bottomConnection:
-      connectionState: 2
-  mobility: 45
+      connectionState: 1
+  mobility: 1

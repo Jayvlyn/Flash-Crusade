@@ -354,6 +354,18 @@
         "Wing161"
     ],
     "weapons": [
-        "Weapon0"
+        "Weapon0",
+        "Weapon1",
+        "Weapon2",
+        "Weapon3",
+        "Weapon4",
+        "Weapon5",
+        "Weapon6",
+        "Weapon7",
+        "Weapon8",
+        "Weapon9",
+        "Weapon10",
+        "Weapon11",
+        "Weapon12"
     ]
 }

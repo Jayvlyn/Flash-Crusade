@@ -126,6 +126,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         ClearParts();
         SetPage(parts, 0, shownParts);
         EventBus.Publish(new InventoryPageChangedEvent());
+        scrollHelper.OnPageChange();
     }
 
     void SetPage(IReadOnlyList<PartInventoryModel.Entry> parts, int selectorStartIndex, List<EditorShipPart> targetList)

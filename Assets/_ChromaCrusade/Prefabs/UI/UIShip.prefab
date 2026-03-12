@@ -53,10 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: CC.ShipEditor.Preset::ShipPresetItem
   rect: {fileID: 911873583226963430}
   shipImage: {fileID: 6464883171420042033}
-  shipSprite: {fileID: 0}
-  presetSave:
-    shipName: 
-    partList: []
 --- !u!222 &6876772178103905442
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -77,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 1762a8e838912494d8eb38def39b31e6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -85,7 +81,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1181701792632826591, guid: a2b3faf4d67fc23479b7e2eddd2c4615, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a950468b044624e4bb397a46fb88241c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

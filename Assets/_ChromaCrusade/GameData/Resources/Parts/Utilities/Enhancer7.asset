@@ -78,23 +78,23 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   - segmentState: 0
     topConnection:
       connectionState: 0
     leftConnection:
       connectionState: 2
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   utilityType: 2

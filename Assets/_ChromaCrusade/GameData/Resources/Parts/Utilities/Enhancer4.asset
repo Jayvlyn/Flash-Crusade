@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Enhancer4
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
   sprite: {fileID: 1572075843, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
-  mass: 48
-  price: 240
+  mass: 27
+  price: 135
   segments:
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 2
     leftConnection:
@@ -24,12 +24,12 @@ MonoBehaviour:
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 0
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 2
     leftConnection:
-      connectionState: 0
+      connectionState: 2
     rightConnection:
       connectionState: 2
     bottomConnection:
@@ -43,20 +43,20 @@ MonoBehaviour:
       connectionState: 2
     bottomConnection:
       connectionState: 1
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
-      connectionState: 0
+      connectionState: 1
     leftConnection:
       connectionState: 2
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 0
+      connectionState: 2
   - segmentState: 1
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 0
+      connectionState: 2
     rightConnection:
       connectionState: 2
     bottomConnection:
@@ -70,9 +70,9 @@ MonoBehaviour:
       connectionState: 2
     bottomConnection:
       connectionState: 1
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
-      connectionState: 0
+      connectionState: 1
     leftConnection:
       connectionState: 2
     rightConnection:
@@ -83,18 +83,18 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 0
+      connectionState: 2
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   utilityType: 2

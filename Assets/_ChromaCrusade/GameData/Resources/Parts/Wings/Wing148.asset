@@ -13,10 +13,37 @@ MonoBehaviour:
   m_Name: Wing148
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipWingData
   sprite: {fileID: -1347131471, guid: 1909edb1602f1f54db8f9b00e4fccb4e, type: 3}
-  mass: 47
-  price: 245
+  mass: 3
+  price: 25
   segments:
-  - segmentState: 1
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
@@ -24,75 +51,48 @@ MonoBehaviour:
     rightConnection:
       connectionState: 0
     bottomConnection:
-      connectionState: 0
+      connectionState: 1
   - segmentState: 1
     topConnection:
       connectionState: 1
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 1
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
     leftConnection:
       connectionState: 2
     rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
       connectionState: 2
     bottomConnection:
+      connectionState: 2
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
       connectionState: 0
-  - segmentState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 1
+    rightConnection:
+      connectionState: 1
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 0
     topConnection:
       connectionState: 0
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 0
+      connectionState: 1
     bottomConnection:
       connectionState: 1
-  - segmentState: 1
+  - segmentState: 0
     topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
       connectionState: 1
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
     leftConnection:
-      connectionState: 0
+      connectionState: 1
     rightConnection:
       connectionState: 1
     bottomConnection:

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wing74
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipWingData
   sprite: {fileID: 1080903216, guid: c4e27c06523ba1c47bb3b8cb9730fd74, type: 3}
-  mass: 5
-  price: 35
+  mass: 12
+  price: 70
   segments:
   - segmentState: 0
     topConnection:
@@ -24,14 +24,14 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 1
+      connectionState: 0
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
       connectionState: 0
   - segmentState: 0
@@ -40,10 +40,10 @@ MonoBehaviour:
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
-  - segmentState: 0
+      connectionState: 0
+  - segmentState: 1
     topConnection:
       connectionState: 1
     leftConnection:
@@ -56,12 +56,12 @@ MonoBehaviour:
     topConnection:
       connectionState: 1
     leftConnection:
-      connectionState: 1
+      connectionState: 0
     rightConnection:
-      connectionState: 2
+      connectionState: 0
     bottomConnection:
-      connectionState: 2
-  - segmentState: 0
+      connectionState: 1
+  - segmentState: 1
     topConnection:
       connectionState: 1
     leftConnection:
@@ -69,10 +69,10 @@ MonoBehaviour:
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   - segmentState: 0
     topConnection:
-      connectionState: 1
+      connectionState: 0
     leftConnection:
       connectionState: 1
     rightConnection:
@@ -85,16 +85,16 @@ MonoBehaviour:
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
       connectionState: 1
   - segmentState: 0
     topConnection:
-      connectionState: 1
+      connectionState: 0
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   mobility: 1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Enhancer2
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
   sprite: {fileID: 932228359, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
-  mass: 60
-  price: 300
+  mass: 54
+  price: 270
   segments:
   - segmentState: 1
     topConnection:
@@ -31,70 +31,70 @@ MonoBehaviour:
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 2
-    leftConnection:
-      connectionState: 0
-    rightConnection:
       connectionState: 2
     bottomConnection:
       connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 2
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 0
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 1
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 2
-    rightConnection:
-      connectionState: 0
-    bottomConnection:
-      connectionState: 2
-  - segmentState: 1
-    topConnection:
-      connectionState: 0
-    leftConnection:
-      connectionState: 0
-    rightConnection:
-      connectionState: 1
-    bottomConnection:
-      connectionState: 1
   - segmentState: 0
     topConnection:
+      connectionState: 2
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 1
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 1
+    topConnection:
       connectionState: 0
     leftConnection:
       connectionState: 0
     rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 0
+  - segmentState: 0
+    topConnection:
       connectionState: 1
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
     bottomConnection:
       connectionState: 1
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 2
+    rightConnection:
+      connectionState: 0
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 1
+    topConnection:
+      connectionState: 0
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 2
+  - segmentState: 0
+    topConnection:
+      connectionState: 1
+    leftConnection:
+      connectionState: 0
+    rightConnection:
+      connectionState: 2
+    bottomConnection:
+      connectionState: 2
   utilityType: 2

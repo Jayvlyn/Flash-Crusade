@@ -507,8 +507,6 @@ public class ImporterPart : MonoBehaviour
         }
 
         mass = count;
-
-        Debug.Log(mass);
     }
 }
 

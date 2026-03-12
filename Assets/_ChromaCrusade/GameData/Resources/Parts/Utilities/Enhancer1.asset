@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Enhancer1
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipUtilityData
   sprite: {fileID: -655459849, guid: b0f8f686069a4da469f30751dd14f5e5, type: 3}
-  mass: 75
-  price: 375
+  mass: 81
+  price: 405
   segments:
   - segmentState: 1
     topConnection:
@@ -94,7 +94,7 @@ MonoBehaviour:
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
-      connectionState: 1
+      connectionState: 2
   utilityType: 2

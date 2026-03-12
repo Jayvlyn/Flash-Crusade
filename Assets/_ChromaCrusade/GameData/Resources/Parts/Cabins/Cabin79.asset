@@ -13,34 +13,34 @@ MonoBehaviour:
   m_Name: Cabin79
   m_EditorClassIdentifier: CC.Data.ShipPart::ShipCabinData
   sprite: {fileID: -723522612, guid: 44452ca424fa6a641a989d570b7990b2, type: 3}
-  mass: 22
-  price: 130
+  mass: 36
+  price: 200
   segments:
   - segmentState: 1
     topConnection:
-      connectionState: 1
+      connectionState: 2
     leftConnection:
-      connectionState: 1
+      connectionState: 2
     rightConnection:
       connectionState: 0
     bottomConnection:
       connectionState: 0
   - segmentState: 1
     topConnection:
-      connectionState: 1
+      connectionState: 2
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
       connectionState: 0
   - segmentState: 0
     topConnection:
-      connectionState: 1
+      connectionState: 2
     leftConnection:
       connectionState: 0
     rightConnection:
-      connectionState: 1
+      connectionState: 2
     bottomConnection:
       connectionState: 1
   - segmentState: 1
@@ -74,27 +74,27 @@ MonoBehaviour:
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 2
+      connectionState: 1
     rightConnection:
       connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 0
     topConnection:
       connectionState: 0
     leftConnection:
-      connectionState: 2
+      connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   - segmentState: 0
     topConnection:
       connectionState: 1
     leftConnection:
       connectionState: 1
     rightConnection:
-      connectionState: 2
+      connectionState: 1
     bottomConnection:
-      connectionState: 2
+      connectionState: 1
   handling: 2

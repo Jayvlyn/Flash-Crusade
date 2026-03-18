@@ -49,8 +49,8 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
         }
         else
         {
-            PartInventory inv = InventoryLoader.Load();
-            partInventory = new PartInventoryModel(inv);
+            //PartInventory inv = InventoryLoader.Load();
+            partInventory = new PartInventoryModel(PlayerSaveManager.ActiveSave.partInventory);
         }
 
         partCounters = new PartCounter[partSelectors.Length];

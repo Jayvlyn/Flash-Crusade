@@ -1704,6 +1704,7 @@ MonoBehaviour:
   newSaveMenu: {fileID: 450093957}
   nav: {fileID: 1131177649}
   nameFactionInput: {fileID: 1990820354}
+  saveNameValidator: {fileID: 1990820359}
   saveManager: {fileID: 450093959}
 --- !u!1 &1231766107
 GameObject:

@@ -3,14 +3,14 @@ using UnityEngine;
 
 public static class InventoryLoader
 {
-    public static PartInventory Load()
-    {
-        if (!File.Exists(Paths.StartInventoryPath))
-            return new PartInventory(); // empty fallback
+    //public static PartInventory Load()
+    //{
+    //    if (!File.Exists(Paths.StartInventoryPath))
+    //        return new PartInventory(); // empty fallback
         
-        string json = File.ReadAllText(Paths.StartInventoryPath);
-        return JsonUtility.FromJson<PartInventory>(json);
-    }
+    //    string json = File.ReadAllText();
+    //    return JsonUtility.FromJson<PartInventory>(json);
+    //}
 
     public static ShipPartList LoadFullList()
     {

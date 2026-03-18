@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSaveManager : MonoBehaviour
 {
+    public static PlayerSave ActiveSave;
+
     public HashSet<string> saveNames;
 
     public void LoadSaveNames()
@@ -18,5 +20,12 @@ public class PlayerSaveManager : MonoBehaviour
             string name = Path.GetFileNameWithoutExtension(file);
             saveNames.Add(name);
         }
+    }
+
+    public void CreateNewSave(string name)
+    {
+        PlayerSave save = new();
+        save.Init(name);
+        ActiveSave = save;
     }
 }

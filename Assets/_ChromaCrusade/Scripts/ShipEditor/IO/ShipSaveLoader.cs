@@ -15,6 +15,32 @@ public class ShipSaveLoader
         Directory.CreateDirectory(Paths.DevPresetDataPath);
     }
 
+    public void SaveShipBuild(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    {
+        PlayerSave playerSave = PlayerSaveManager.ActiveSave;
+        var shipSave = ConstructShipSave(shipData, parts);
+
+        PlayerSaveManager.LoadSaveNames();
+
+        if(PlayerSaveManager.SaveNames.Contains(shipSave.shipName))
+        {
+            for(int i = 0; i < playerSave.shipBuilds.Count; i++)
+            {
+                ShipSave existingShip = playerSave.shipBuilds[i];
+                if(existingShip.shipName == shipSave.shipName)
+                {
+                    existingShip = shipSave;
+                }
+            }
+        }
+        else
+        {
+            playerSave.shipBuilds.Add(shipSave);
+        }
+
+        PlayerSaveManager.SaveToJson(playerSave); // maybe not needed here, needs to happen at some point though
+    }
+
     private void SaveShipPresetTexture(UIShipData shipData, bool dev = false)
     {
         byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
@@ -33,24 +59,7 @@ public class ShipSaveLoader
         SaveShipPresetTexture(shipData, dev);
 
         // Save Build Data
-        var shipSave = new ShipSave
-        {
-            shipName = shipData.shipName,
-            partList = new List<PartStruct>()
-        };
-
-        foreach(var part in parts)
-        {
-            shipSave.partList.Add(new PartStruct
-            {
-                partName = part.partData.name,
-                xPos = part.position.x,
-                yPos = part.position.y,
-                xFlipped = part.xFlipped,
-                yFlipped = part.yFlipped,
-                rotation = Mathf.RoundToInt(part.Rotation) % 360
-            });
-        }
+        var shipSave = ConstructShipSave(shipData, parts);
 
         string json = JsonUtility.ToJson(shipSave, true);
 
@@ -71,12 +80,11 @@ public class ShipSaveLoader
     }
 
 
-    public ShipSave GetShipBuild(string shipName, string activeSave)
-    {
-        return GetShipSave(
-            Path.Combine(Paths.ShipBuildDataPath(activeSave), 
-            $"{shipName}.json"));
-    }
+    //public ShipSave GetShipBuild(string shipName, string activeSave)
+    //{
+    //    return GetShipSave(
+    //        Path.Combine(Paths.Player));
+    //}
 
     public ShipSave GetShipSave(string path)
     {
@@ -97,4 +105,28 @@ public class ShipSaveLoader
     }
 
     #endregion
+
+    ShipSave ConstructShipSave(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    {
+        ShipSave shipSave = new ShipSave
+        {
+            shipName = shipData.shipName,
+            partList = new List<PartStruct>()
+        };
+
+        foreach (var part in parts)
+        {
+            shipSave.partList.Add(new PartStruct
+            {
+                partName = part.partData.name,
+                xPos = part.position.x,
+                yPos = part.position.y,
+                xFlipped = part.xFlipped,
+                yFlipped = part.yFlipped,
+                rotation = Mathf.RoundToInt(part.Rotation) % 360
+            });
+        }
+
+        return shipSave;
+    }
 }

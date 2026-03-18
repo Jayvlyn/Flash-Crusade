@@ -42,6 +42,11 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
     {
         shownParts = new List<EditorShipPart>();
 
+        if(PlayerSaveManager.ActiveSave == null)
+        {
+            EditorState.context = EditorContext.Creative;
+        }
+
         if(InCreativeMode)
         {
             ShipPartList list = InventoryLoader.LoadFullList();

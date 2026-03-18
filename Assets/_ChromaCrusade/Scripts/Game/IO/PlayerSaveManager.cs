@@ -6,23 +6,23 @@ public class PlayerSaveManager : MonoBehaviour
 {
     public static PlayerSave ActiveSave;
 
-    public HashSet<string> saveNames;
+    public static HashSet<string> SaveNames;
 
-    public void LoadSaveNames()
+    public static void LoadSaveNames()
     {
         Directory.CreateDirectory(Paths.PlayerSavesPath);
 
-        saveNames = new();
+        SaveNames = new();
 
         string[] files = Directory.GetFiles(Paths.PlayerSavesPath, "*.json", SearchOption.TopDirectoryOnly);
         foreach (string file in files)
         {
             string name = Path.GetFileNameWithoutExtension(file);
-            saveNames.Add(name);
+            SaveNames.Add(name);
         }
     }
 
-    public void CreateNewSave(string name)
+    public static void CreateNewSave(string name)
     {
         PlayerSave save = new();
         save.Init(name);
@@ -30,7 +30,7 @@ public class PlayerSaveManager : MonoBehaviour
         SaveToJson(save);
     }
 
-    public void SaveToJson(PlayerSave save)
+    public static void SaveToJson(PlayerSave save)
     {
         string json = JsonUtility.ToJson(save, true);
 

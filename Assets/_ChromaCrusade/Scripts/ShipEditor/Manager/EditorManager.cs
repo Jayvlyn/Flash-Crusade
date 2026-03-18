@@ -1,6 +1,4 @@
 using System.Collections;
-using System.IO;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -476,14 +474,18 @@ public class EditorManager : MonoBehaviour, ICommandContext
         {
             if (EditorState.context == EditorContext.Creative)
             {
-                OpenPresetMenu(); // replace this with a confirmation to save as preset
+                EventBus.Publish(new OpenConfirmScreenEvent
+                {
+                    message = $"{nameValidator.GetText()} is complete! Save it as a preset?",
+                    action = SaveBuildAsPresetAfterValidation
+                });
             }
             else
             {
                 EventBus.Publish(new OpenConfirmScreenEvent
                 {
                     message = $"{nameValidator.GetText()} is complete! Finalize the build?",
-                    action = SaveBuildAsPreset
+                    action = SaveBuild
                 });
             }
         }
@@ -655,11 +657,32 @@ public class EditorManager : MonoBehaviour, ICommandContext
     }
 #endif
 
+    public void SaveBuild()
+    {
+        ShipSaveLoader ShipSL = new ShipSaveLoader();
+        ShipSL.SaveShipBuild(GetUIShipData(), buildArea.Parts);
+
+        if(quitRequestRoutine != null) StopCoroutine(quitRequestRoutine);
+        quitRequestRoutine = StartCoroutine(QuitAfterSaveRequest());
+    }
+
+    Coroutine quitRequestRoutine;
+    private IEnumerator QuitAfterSaveRequest()
+    {
+        yield return new WaitForSeconds(0.5f);
+        EventBus.Publish(new OpenConfirmScreenEvent
+        {
+            message = "Ship saved! Would you like to leave the builder?",
+            action = ExitEditor
+        });
+        quitRequestRoutine = null;
+    }
+
     // loads a player save ship without taking from inventory
     public void LoadBuild(string shipName)
     {
         ShipSaveLoader ShipSL = new ShipSaveLoader();
-        //ShipSL.GetShipBuild(shipName, **activeSave??**);
+        //ShipSL.GetShipBuild(shipName);
     }
 
     // loads preset. In creative for free, otherwise requires parts

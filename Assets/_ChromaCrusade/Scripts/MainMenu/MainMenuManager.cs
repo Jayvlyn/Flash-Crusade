@@ -9,7 +9,6 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] UINavigator nav;
     [SerializeField] NavItem nameFactionInput;
     [SerializeField] SaveNameValidator saveNameValidator;
-    [SerializeField] PlayerSaveManager saveManager;
 
     public void OnNewGamePressed()
     {
@@ -21,7 +20,7 @@ public class MainMenuManager : MonoBehaviour
         NavState.PrevScreenItem = NavState.currentItem;
         nav.NavToItem(nameFactionInput);
   
-        saveManager.LoadSaveNames();
+        PlayerSaveManager.LoadSaveNames();
     }
 
     public void OnLoadGamePressed()
@@ -61,7 +60,7 @@ public class MainMenuManager : MonoBehaviour
     {
         EditorState.context = EditorContext.StartGame;
 
-        saveManager.CreateNewSave(saveNameValidator.GetText());
+        PlayerSaveManager.CreateNewSave(saveNameValidator.GetText());
 
         SceneManager.LoadScene("Scene_Builder"); // build first ship
     }

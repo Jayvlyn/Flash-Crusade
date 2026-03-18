@@ -1,0 +1,104 @@
+{
+    "cabins": [
+        {
+            "name": "Cabin39",
+            "count": 1
+        },
+        {
+            "name": "Cabin46",
+            "count": 1
+        },
+        {
+            "name": "Cabin57",
+            "count": 1
+        },
+        {
+            "name": "Cabin59",
+            "count": 1
+        }
+    ],
+    "cores": [
+        {
+            "name": "Core27",
+            "count": 2
+        },
+        {
+            "name": "Core33",
+            "count": 2
+        },
+        {
+            "name": "Core32",
+            "count": 2
+        },
+        {
+            "name": "Core30",
+            "count": 2
+        }
+    ],
+    "wings": [
+        {
+            "name": "Wing0",
+            "count": 2
+        },
+        {
+            "name": "Wing33",
+            "count": 2
+        },
+        {
+            "name": "Wing38",
+            "count": 2
+        },
+        {
+            "name": "Wing49",
+            "count": 2
+        },
+        {
+            "name": "Wing54",
+            "count": 2
+        },
+        {
+            "name": "Wing58",
+            "count": 2
+        },
+        {
+            "name": "Wing64",
+            "count": 2
+        },
+        {
+            "name": "Wing73",
+            "count": 2
+        },
+        {
+            "name": "Wing76",
+            "count": 2
+        },
+        {
+            "name": "Wing94",
+            "count": 2
+        }
+    ],
+    "weapons": [
+        {
+            "name": "Weapon0",
+            "count": 2
+        },
+        {
+            "name": "Weapon1",
+            "count": 2
+        },
+        {
+            "name": "Weapon11",
+            "count": 2
+        }
+    ],
+    "utilities": [
+        {
+            "name": "Capacitor13",
+            "count": 2
+        },
+        {
+            "name": "Capacitor14",
+            "count": 2
+        }
+    ]
+}

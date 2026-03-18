@@ -1,0 +1,53 @@
+{
+    "shipName": "Dawn Mk.1",
+    "partList": [
+        {
+            "partName": "Wing94",
+            "xPos": 0,
+            "yPos": -3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Core32",
+            "xPos": 0,
+            "yPos": -1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing38",
+            "xPos": -1,
+            "yPos": -1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing38",
+            "xPos": 1,
+            "yPos": -1,
+            "xFlipped": true,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Cabin57",
+            "xPos": 0,
+            "yPos": 1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Weapon11",
+            "xPos": 1,
+            "yPos": 1,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        }
+    ]
+}

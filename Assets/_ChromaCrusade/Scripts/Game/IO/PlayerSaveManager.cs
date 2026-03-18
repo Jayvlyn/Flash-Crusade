@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PlayerSaveManager : MonoBehaviour
 {
-    HashSet<string> saveNames;
+    public HashSet<string> saveNames;
 
     public void LoadSaveNames()
     {
+        Directory.CreateDirectory(Paths.PlayerSavesPath);
+
         saveNames = new();
 
-        //string[] dataFiles = Directory.GetFiles(, "*.json", SearchOption.TopDirectoryOnly);
+        string[] files = Directory.GetFiles(Paths.PlayerSavesPath, "*.json", SearchOption.TopDirectoryOnly);
+        foreach (string file in files)
+        {
+            string name = Path.GetFileNameWithoutExtension(file);
+            saveNames.Add(name);
+        }
     }
 }

@@ -14047,7 +14047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CC.ShipEditor.UI::ShipNameValidator
   input: {fileID: 1478069471}
-  image: {fileID: 1478069472}
+  inputFieldBackground: {fileID: 1478069472}
 --- !u!114 &1483751138
 MonoBehaviour:
   m_ObjectHideFlags: 0

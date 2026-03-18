@@ -8,7 +8,7 @@ public static class Paths
 
     public static string ShipPartsPath => Path.Combine(Streaming, "ShipParts");
     public static string PartListPath => Path.Combine(ShipPartsPath, "PartList.json");
-    public static string TestInventoryPath => Path.Combine(ShipPartsPath, "TestInventory.json");
+    public static string StartInventoryPath => Path.Combine(ShipPartsPath, "StartInventory.json");
 
     public static string PlayerPresetsPath => Path.Combine(Persistent, "PlayerPresets");
     public static string PlayerPresetSpritesPath => Path.Combine(PlayerPresetsPath, "PlayerPresetSprites");
@@ -18,7 +18,9 @@ public static class Paths
     public static string DevPresetSpritesPath => Path.Combine(DevPresetsPath, "DevPresetSprites");
     public static string DevPresetDataPath => Path.Combine(DevPresetsPath, "DevPresetData");
 
-    public static string PlayerSavePath(string saveName) => Path.Combine(Persistent, saveName);
+
+    public static string PlayerSavesPath => Path.Combine(Persistent, "PlayerSaves");
+    public static string PlayerSavePath(string saveName) => Path.Combine(PlayerSavesPath, saveName);
 
     public static string ShipBuildsPath(string saveName) => Path.Combine(PlayerSavePath(saveName), "ShipBuilds");
 

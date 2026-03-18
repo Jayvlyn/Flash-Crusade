@@ -5,41 +5,39 @@ using System.IO;
 
 public class InventoryGenerator
 {
-    [MenuItem("Tools/Generate Test Inventory")]
+    [MenuItem("Tools/Generate Start Inventory")]
     public static void Generate()
     {
         Directory.CreateDirectory(Paths.ShipPartsPath);
         var inventory = new PartInventory();
 
-        inventory.Add("Cabin1", PartType.Cabin, 10);
-        inventory.Add("Cabin2", PartType.Cabin, 10);
-        inventory.Add("Cabin3", PartType.Cabin, 10);
-        inventory.Add("Core1", PartType.Core, 10);
-        inventory.Add("Core2", PartType.Core, 10);
-        inventory.Add("Core3", PartType.Core, 10);
-        inventory.Add("Core4", PartType.Core, 10);
-        inventory.Add("Core5", PartType.Core, 10);
-        inventory.Add("Core6", PartType.Core, 10);
-        inventory.Add("Weapon1", PartType.Weapon, 10);
-        inventory.Add("Weapon2", PartType.Weapon, 10);
-        inventory.Add("Weapon3", PartType.Weapon, 10);
-        inventory.Add("Wing1", PartType.Wing, 10);
-        inventory.Add("Wing2", PartType.Wing, 10);
-        inventory.Add("Wing3", PartType.Wing, 10);
-        inventory.Add("Wing4", PartType.Wing, 10);
-        inventory.Add("Wing5", PartType.Wing, 10);
-        inventory.Add("NewWingTest", PartType.Wing, 11);
-        inventory.Add("Capacitor1", PartType.Utility, 10);
-        inventory.Add("Capacitor2", PartType.Utility, 10);
-        inventory.Add("Capacitor3", PartType.Utility, 10);
-        inventory.Add("Dock1", PartType.Utility, 10);
-        inventory.Add("Dock2", PartType.Utility, 10);
-        inventory.Add("Enhancer1", PartType.Utility, 10);
-        inventory.Add("Enhancer2", PartType.Utility, 10);
+        inventory.Add("Cabin39", PartType.Cabin, 1);
+        inventory.Add("Cabin46", PartType.Cabin, 1);
+        inventory.Add("Cabin57", PartType.Cabin, 1);
+        inventory.Add("Cabin59", PartType.Cabin, 1);
+        inventory.Add("Core27", PartType.Core, 2);
+        inventory.Add("Core33", PartType.Core, 2);
+        inventory.Add("Core32", PartType.Core, 2);
+        inventory.Add("Core30", PartType.Core, 2);
+        inventory.Add("Weapon0", PartType.Weapon, 2);
+        inventory.Add("Weapon1", PartType.Weapon, 2);
+        inventory.Add("Weapon11", PartType.Weapon, 2);
+        inventory.Add("Wing0", PartType.Wing, 2);
+        inventory.Add("Wing33", PartType.Wing, 2);
+        inventory.Add("Wing38", PartType.Wing, 2);
+        inventory.Add("Wing49", PartType.Wing, 2);
+        inventory.Add("Wing54", PartType.Wing, 2);
+        inventory.Add("Wing58", PartType.Wing, 2);
+        inventory.Add("Wing64", PartType.Wing, 2);
+        inventory.Add("Wing73", PartType.Wing, 2);
+        inventory.Add("Wing76", PartType.Wing, 2);
+        inventory.Add("Wing94", PartType.Wing, 2);
+        inventory.Add("Capacitor13", PartType.Utility, 2);
+        inventory.Add("Capacitor14", PartType.Utility, 2);
 
         string json = JsonUtility.ToJson(inventory, true);
 
-        File.WriteAllText(Paths.TestInventoryPath, json);
+        File.WriteAllText(Paths.StartInventoryPath, json);
         AssetDatabase.Refresh();
     }
 }

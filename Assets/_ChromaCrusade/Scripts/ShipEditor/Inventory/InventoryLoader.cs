@@ -5,10 +5,10 @@ public static class InventoryLoader
 {
     public static PartInventory Load()
     {
-        if (!File.Exists(Paths.TestInventoryPath))
+        if (!File.Exists(Paths.StartInventoryPath))
             return new PartInventory(); // empty fallback
         
-        string json = File.ReadAllText(Paths.TestInventoryPath);
+        string json = File.ReadAllText(Paths.StartInventoryPath);
         return JsonUtility.FromJson<PartInventory>(json);
     }
 

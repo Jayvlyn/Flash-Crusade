@@ -27,5 +27,16 @@ public class PlayerSaveManager : MonoBehaviour
         PlayerSave save = new();
         save.Init(name);
         ActiveSave = save;
+        SaveToJson(save);
     }
+
+    public void SaveToJson(PlayerSave save)
+    {
+        string json = JsonUtility.ToJson(save, true);
+
+        string path = Paths.PlayerSavePath(save.saveName);
+
+        File.WriteAllText(path,json);
+    }
+
 }

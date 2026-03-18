@@ -20,7 +20,7 @@ public static class Paths
 
 
     public static string PlayerSavesPath => Path.Combine(Persistent, "PlayerSaves");
-    public static string PlayerSavePath(string saveName) => Path.Combine(PlayerSavesPath, saveName);
+    public static string PlayerSavePath(string saveName) => Path.Combine(PlayerSavesPath, $"{saveName}.json");
 
     public static string ShipBuildsPath(string saveName) => Path.Combine(PlayerSavePath(saveName), "ShipBuilds");
 

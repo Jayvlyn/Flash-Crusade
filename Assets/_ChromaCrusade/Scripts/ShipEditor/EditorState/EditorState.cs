@@ -25,7 +25,6 @@ public static class EditorState
 
     public static void Init()
     {
-        context = EditorContext.Creative; // REMOVE LATER
         navMode = NavMode.Item;
         heldPart = null;
         midUndoDelete = false;

@@ -482,7 +482,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             {
                 EventBus.Publish(new OpenConfirmScreenEvent
                 {
-                    message = $"{nameValidator.GetName()} is complete! Finalize the build?",
+                    message = $"{nameValidator.GetText()} is complete! Finalize the build?",
                     action = SaveBuildAsPreset
                 });
             }
@@ -503,7 +503,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             message = $"Load {presetToLoad}? Anything in the build area will be replaced",
             action = LoadPresetAfterConfirmation,
             yesNavItem = buildWindow,
-            noNavItem = NavState.ItemBeforePopupScreen
+            noNavItem = NavState.PrevScreenItem
         });
     }
 
@@ -545,7 +545,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void ClearBuildArea()
     {
-        nameValidator.SetName(string.Empty);
+        nameValidator.SetText(string.Empty);
 
         EditorShipPart[] parts = buildArea.ClearParts();
         foreach (EditorShipPart part in parts)
@@ -586,7 +586,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             new Vector2(0.5f, 0.5f)
         );
 
-        return new UIShipData(sprite, nameValidator.GetName());
+        return new UIShipData(sprite, nameValidator.GetText());
     }
 
     public void OpenPresetMenu()
@@ -614,7 +614,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         string validation = ValidateBuild();
         if (!validation.Equals("Valid")) return;
 
-        string presetName = nameValidator.GetName();
+        string presetName = nameValidator.GetText();
 
         if(presetManager.DevPresetNameExists(presetName))
         {
@@ -676,7 +676,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         ShipSave save = ShipSL.GetShipPreset(shipName, dev);
 
-        nameValidator.SetName(shipName);
+        nameValidator.SetText(shipName);
 
         int partCount = 0;
         int successCount = 0;

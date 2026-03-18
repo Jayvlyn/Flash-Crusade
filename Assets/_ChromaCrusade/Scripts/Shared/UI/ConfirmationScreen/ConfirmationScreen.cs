@@ -28,7 +28,7 @@ public class ConfirmationScreen : MonoBehaviour
 
     void Open(string message, Action action, NavItem yesNavItem, NavItem noNavItem)
     {
-        NavState.ItemBeforePopupScreen = NavState.HoveredItem;
+        NavState.PrevScreenItem = NavState.HoveredItem;
         this.message.text = message;
         this.action = action;
         this.yesNavItem = yesNavItem;
@@ -41,7 +41,7 @@ public class ConfirmationScreen : MonoBehaviour
     void Close(bool yes = false)
     {
         NavItem navTarget = yes ? yesNavItem : noNavItem;
-        if (navTarget == null) navTarget = NavState.ItemBeforePopupScreen;
+        if (navTarget == null) navTarget = NavState.PrevScreenItem;
         EventBus.Publish(new ItemNavEvent { target = navTarget });
         action = null;
         message.text = string.Empty;

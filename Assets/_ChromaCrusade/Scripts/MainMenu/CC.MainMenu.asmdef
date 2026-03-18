@@ -2,7 +2,8 @@
     "name": "CC.MainMenu",
     "rootNamespace": "",
     "references": [
-        "GUID:8162417b1db43304a8e519f382de0521"
+        "GUID:8162417b1db43304a8e519f382de0521",
+        "GUID:199b28df04ec87c448fb2a39cc36ceca"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

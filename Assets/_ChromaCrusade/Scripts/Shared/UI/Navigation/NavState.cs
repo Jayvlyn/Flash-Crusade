@@ -25,11 +25,11 @@ public static class NavState
         set { lastHoveredItem = value; }
     }
 
-    static NavItem itemBeforeConfirmScreen;
-    public static NavItem ItemBeforePopupScreen
+    static NavItem prevScreenItem;
+    public static NavItem PrevScreenItem
     {
-        get => itemBeforeConfirmScreen;
-        set { itemBeforeConfirmScreen = value; }
+        get => prevScreenItem;
+        set { prevScreenItem = value; }
     }
 
     public static void Init()
@@ -40,6 +40,6 @@ public static class NavState
         lastHoveredItem = null;
         Scrolling = false;
         inPopupScreen = false;
-        itemBeforeConfirmScreen = null;
+        prevScreenItem = null;
     }
 }

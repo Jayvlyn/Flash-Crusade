@@ -3,20 +3,29 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject newSaveMenu;
+    [SerializeField] UINavigator nav;
+    [SerializeField] NavItem nameFactionInput;
+
     public void OnNewGamePressed()
     {
         EditorState.context = EditorContext.StartGame;
         //SceneManager.LoadScene("Scene_Opening");
         // then after opening scene:
         //SceneManager.LoadScene("Scene_Builder"); // build first ship
-        SceneManager.LoadScene("Scene_Game"); // temp
+        //SceneManager.LoadScene("Scene_Game"); // temp
+        newSaveMenu.SetActive(true);
+        mainMenu.SetActive(false);
+        NavState.PrevScreenItem = NavState.currentItem;
+        nav.NavToItem(nameFactionInput);
     }
 
     public void OnLoadGamePressed()
     {
         EditorState.context = EditorContext.MidGame;
         //SceneManager.LoadScene("Scene_Game");
-        SceneManager.LoadScene("Scene_Builder"); // temp
+        //SceneManager.LoadScene("Scene_Builder"); // temp
     }
 
     public void OnCreativePressed()
@@ -33,5 +42,21 @@ public class MainMenuManager : MonoBehaviour
     public void OnQuitPressed()
     {
         Application.Quit();
+    }
+
+
+    // New Save Menu Buttons
+
+    public void OnCancelNewSave()
+    {
+        newSaveMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        nav.NavToItem(NavState.PrevScreenItem);
+    }
+
+    public void OnStartNewSave()
+    {
+        EditorState.context = EditorContext.StartGame;
+        SceneManager.LoadScene("Scene_Builder"); // build first ship
     }
 }

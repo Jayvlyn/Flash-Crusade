@@ -24,7 +24,7 @@ public class MessageScreen : MonoBehaviour
 
     void Open(string message)
     {
-        NavState.ItemBeforePopupScreen = NavState.HoveredItem;
+        NavState.PrevScreenItem = NavState.HoveredItem;
         this.message.text = message;
         window.SetActive(true);
         NavState.inPopupScreen = true;
@@ -33,7 +33,7 @@ public class MessageScreen : MonoBehaviour
 
     void Close()
     {
-        NavItem navTarget = NavState.ItemBeforePopupScreen;
+        NavItem navTarget = NavState.PrevScreenItem;
         EventBus.Publish(new ItemNavEvent { target = navTarget });
         message.text = string.Empty;
         window.SetActive(false);

@@ -20,13 +20,12 @@ public class Player : MonoBehaviour
      * 
      * I - Turbo (incrase acceleration and max speed)
      * J - Turn left
-     * K - Break (raise drag from 0 to bring to full stop)
+     * K - Brake (raise drag from 0 to bring to full stop)
      * L - Turn right
      * 
      * Space - Fire weapons
-     * Alternatively
      * 
-     * Esc - Pause or Back (depend on current screen state. paused? in ship editor? flying?)
+     * Esc - Pause or Back (depends on current screen state. paused? in ship editor? flying?)
      * 
      * Combining inputs will offer unique movement, likes curves.
      * 

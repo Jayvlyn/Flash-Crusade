@@ -563,7 +563,15 @@ public class EditorManager : MonoBehaviour, ICommandContext
     void ExitEditor()
     {
         ClearBuildArea();
-        SceneManager.LoadScene("Scene_MainMenu");
+
+        if(EditorState.context == EditorContext.Creative)
+        {
+            SceneManager.LoadScene("Scene_MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("Scene_Game");
+        }
     }
 
     public string ValidateBuild()

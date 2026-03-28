@@ -509,6 +509,4 @@ public class ImporterPart : MonoBehaviour
         mass = count;
     }
 }
-
-public struct ClearImporterEvent { }
 #endif

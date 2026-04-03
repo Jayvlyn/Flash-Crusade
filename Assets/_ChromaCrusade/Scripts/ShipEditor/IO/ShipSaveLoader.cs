@@ -111,7 +111,6 @@ public class ShipSaveLoader
             $"{presetName}.json"));
     }
 
-
     //public ShipSave GetShipBuild(string shipName, string activeSave)
     //{
     //    return GetShipSave(
@@ -164,6 +163,10 @@ public class ShipSaveLoader
 
     ShipGameSave ConstructShipGameSave(string shipName, IEnumerable<EditorShipPart> parts)
     {
+        // this needs some kind of thing to track where the center of the ship was so we know where to place
+        // the weapons on the ship. we save positions of the ship used in builder, but the centerpoint from builder
+        // is lost in this data, no way to restore ship parts without conserving the center point 
+
         ShipGameSave shipGameSave = new ShipGameSave {shipName = shipName};
 
         foreach(var part in parts)

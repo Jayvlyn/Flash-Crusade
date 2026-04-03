@@ -34,7 +34,7 @@ public class PlayerSaveManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(save, true);
 
-        //Directory.CreateDirectory(Paths.PlayerSaveFolder(save.saveName));
+        Directory.CreateDirectory(Paths.PlayerSaveFolder(save.saveName));
 
         string path = Paths.PlayerSavePath(save.saveName);
 

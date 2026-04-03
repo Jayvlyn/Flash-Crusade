@@ -18,34 +18,34 @@ public class ShipSaveLoader
     public void SaveShipBuild(UIShipData shipData, IEnumerable<EditorShipPart> parts)
     {
         PlayerSave playerSave = PlayerSaveManager.ActiveSave;
-        var shipSave = ConstructShipSave(shipData, parts);
 
-        PlayerSaveManager.LoadSaveNames();
+        if(!playerSave.shipBuilds.Contains(shipData.shipName))
+            playerSave.shipBuilds.Add(shipData.shipName);
 
-        if(PlayerSaveManager.SaveNames.Contains(shipSave.shipName))
-        {
-            for(int i = 0; i < playerSave.shipBuilds.Count; i++)
-            {
-                ShipSave existingShip = playerSave.shipBuilds[i];
-                if(existingShip.shipName == shipSave.shipName)
-                {
-                    existingShip = shipSave;
-                }
-            }
-        }
-        else
-        {
-            playerSave.shipBuilds.Add(shipSave);
-        }
+        SaveShipBuildData(shipData, parts);
+
+        SaveShipBuildTexture(shipData);
 
         PlayerSaveManager.SaveToJson(playerSave); // maybe not needed here, needs to happen at some point though
     }
 
+    private void SaveShipBuildTexture(UIShipData shipData)
+    {
+        string path = Paths.ShipBuildSpritesPath(PlayerSaveManager.ActiveSave.saveName);
+        SaveShipTexture(shipData, path);
+    }
+
     private void SaveShipPresetTexture(UIShipData shipData, bool dev = false)
+    {
+        string path = dev ? Paths.DevPresetSpritesPath : Paths.PlayerPresetSpritesPath;
+        SaveShipTexture(shipData, path);
+    }
+
+    private void SaveShipTexture(UIShipData shipData, string path)
     {
         byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
 
-        string path = dev ? Paths.DevPresetSpritesPath : Paths.PlayerPresetSpritesPath;
+        Directory.CreateDirectory(path);
 
         path = Path.Combine(path, $"{shipData.shipName}.png");
 
@@ -68,6 +68,21 @@ public class ShipSaveLoader
         File.WriteAllText(
             Path.Combine(path, $"{shipData.shipName}.json"), 
             json );
+    }
+
+    public void SaveShipBuildData(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    {
+        var shipSave = ConstructShipSave(shipData, parts);
+
+        string json = JsonUtility.ToJson(shipSave, true);
+
+        string path = Paths.ShipBuildDataPath(PlayerSaveManager.ActiveSave.saveName);
+
+        Directory.CreateDirectory(path);
+
+        File.WriteAllText(
+            Path.Combine(path, $"{shipData.shipName}.json"),
+            json);
     }
 
     public ShipSave GetShipPreset(string presetName, bool dev = false)

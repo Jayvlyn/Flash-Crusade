@@ -9,7 +9,7 @@ public class PlayerSave
     public string saveName;
     public int credits;
 
-    public List<ShipSave> shipBuilds;
+    public List<string> shipBuilds;
     public PartInventory partInventory;
     //public MaterialInventory materialInventory;
 

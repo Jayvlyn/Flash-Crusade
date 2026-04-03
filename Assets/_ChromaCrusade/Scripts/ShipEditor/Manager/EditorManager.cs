@@ -705,7 +705,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         bool dev = presetManager.DevPresetNameExists(shipName);
 
-        ShipSave save = ShipSL.GetShipPreset(shipName, dev);
+        ShipBuildSave save = ShipSL.GetShipPreset(shipName, dev);
 
         nameValidator.SetText(shipName);
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 public class ShipSaveLoader
@@ -22,7 +23,9 @@ public class ShipSaveLoader
         if(!playerSave.shipBuilds.Contains(shipData.shipName))
             playerSave.shipBuilds.Add(shipData.shipName);
 
-        SaveShipBuildData(shipData, parts);
+        SaveShipBuildData(shipData.shipName, parts);
+
+        SaveShipGameData(shipData, parts);
 
         SaveShipBuildTexture(shipData);
 
@@ -59,7 +62,7 @@ public class ShipSaveLoader
         SaveShipPresetTexture(shipData, dev);
 
         // Save Build Data
-        var shipSave = ConstructShipSave(shipData, parts);
+        var shipSave = ConstructShipBuildSave(shipData.shipName, parts);
 
         string json = JsonUtility.ToJson(shipSave, true);
 
@@ -70,9 +73,9 @@ public class ShipSaveLoader
             json );
     }
 
-    public void SaveShipBuildData(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    public void SaveShipBuildData(string shipName, IEnumerable<EditorShipPart> parts)
     {
-        var shipSave = ConstructShipSave(shipData, parts);
+        var shipSave = ConstructShipBuildSave(shipName, parts);
 
         string json = JsonUtility.ToJson(shipSave, true);
 
@@ -81,11 +84,26 @@ public class ShipSaveLoader
         Directory.CreateDirectory(path);
 
         File.WriteAllText(
+            Path.Combine(path, $"{shipName}.json"),
+            json);
+    }
+
+    public void SaveShipGameData(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    { 
+        ShipGameSave gameSave = ConstructShipGameSave(shipData.shipName, parts);
+
+        string json = JsonUtility.ToJson(gameSave, true);
+
+        string path = Paths.ShipGameDataPath(PlayerSaveManager.ActiveSave.saveName);
+
+        Directory.CreateDirectory(path);
+
+        File.WriteAllText(
             Path.Combine(path, $"{shipData.shipName}.json"),
             json);
     }
 
-    public ShipSave GetShipPreset(string presetName, bool dev = false)
+    public ShipBuildSave GetShipPreset(string presetName, bool dev = false)
     {
         string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
 
@@ -101,37 +119,37 @@ public class ShipSaveLoader
     //        Path.Combine(Paths.Player));
     //}
 
-    public ShipSave GetShipSave(string path)
+    public ShipBuildSave GetShipSave(string path)
     {
         if (!File.Exists(path))
         {
             Debug.LogError("Ship save not found: " + path);
-            return new ShipSave();
+            return new ShipBuildSave();
         }
 
         string json = File.ReadAllText(path);
 
-        ShipSave shipSave = JsonUtility.FromJson<ShipSave>(json);
+        ShipBuildSave shipSave = JsonUtility.FromJson<ShipBuildSave>(json);
 
         if (shipSave.partList == null)
-            return new ShipSave();
+            return new ShipBuildSave();
 
         return shipSave;
     }
 
     #endregion
 
-    ShipSave ConstructShipSave(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    ShipBuildSave ConstructShipBuildSave(string shipName, IEnumerable<EditorShipPart> parts)
     {
-        ShipSave shipSave = new ShipSave
+        ShipBuildSave shipBuildSave = new ShipBuildSave
         {
-            shipName = shipData.shipName,
+            shipName = shipName,
             partList = new List<PartStruct>()
         };
 
         foreach (var part in parts)
         {
-            shipSave.partList.Add(new PartStruct
+            shipBuildSave.partList.Add(new PartStruct
             {
                 partName = part.partData.name,
                 xPos = part.position.x,
@@ -142,6 +160,35 @@ public class ShipSaveLoader
             });
         }
 
-        return shipSave;
+        return shipBuildSave;
+    }
+
+    ShipGameSave ConstructShipGameSave(string shipName, IEnumerable<EditorShipPart> parts)
+    {
+        ShipGameSave shipGameSave = new ShipGameSave {shipName = shipName};
+
+        foreach(var part in parts)
+        {
+            shipGameSave.mass += part.partData.mass;
+
+            if (part.partData is ShipCoreData core)
+                shipGameSave.maxEnergy += core.energy;
+            else if (part.partData is ShipCabinData cabin)
+                shipGameSave.handling += cabin.handling;
+            else if (part.partData is ShipWingData wing)
+                shipGameSave.mobility += wing.mobility;
+            else if (part.partData is ShipWeaponData weapon)
+            {
+                if (shipGameSave.weapons == null) 
+                    shipGameSave.weapons = new();
+
+                shipGameSave.weapons.Add(new PositionName { 
+                    position = part.position, 
+                    name = part.partData.name
+                });
+            }
+        }
+
+        return shipGameSave;
     }
 }

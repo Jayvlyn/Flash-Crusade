@@ -1,3 +1,17 @@
 {
-	"name": "CC.Shared.IO"
+    "name": "CC.Shared.IO",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c152956743b8dbe49bb7bff605ac8f25",
+        "GUID:d2ee3845b2dc8fc428a3336e433254bb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,10 +1,8 @@
 {
-    "name": "CC.Game.Manager",
+    "name": "CC.Game.Input",
     "rootNamespace": "",
     "references": [
-        "GUID:fd0a12926910c494bb4f6642179608fd",
-        "GUID:fae31d2c7ff6cab43981aa0028fe6884",
-        "GUID:174a50165e7edd24ebce68c58996a127"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

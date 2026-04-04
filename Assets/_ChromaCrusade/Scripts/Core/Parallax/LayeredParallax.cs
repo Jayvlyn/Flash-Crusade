@@ -11,8 +11,6 @@ public class LayeredParallax : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(referenceVelocity);
-
         if (layers.Length != layerDistances.Length) return;
 
         for(int i = 0; i < layers.Length; i++)

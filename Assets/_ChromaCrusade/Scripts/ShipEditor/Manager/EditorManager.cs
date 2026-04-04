@@ -670,20 +670,39 @@ public class EditorManager : MonoBehaviour, ICommandContext
         ShipSaveLoader ShipSL = new ShipSaveLoader();
         ShipSL.SaveShipBuild(GetUIShipData(), buildArea.Parts);
 
-        if(quitRequestRoutine != null) StopCoroutine(quitRequestRoutine);
-        quitRequestRoutine = StartCoroutine(QuitAfterSaveRequest());
+        if(EditorState.context == EditorContext.StartGame)
+        {
+            if (finishFirstShipRoutine != null) StopCoroutine(finishFirstShipRoutine);
+            finishFirstShipRoutine = StartCoroutine(FinishFirstShip());
+        }
+        else
+        {
+            if (quitRequestRoutine != null) StopCoroutine(quitRequestRoutine);
+            quitRequestRoutine = StartCoroutine(QuitAfterSaveRequest());
+        }
     }
 
     Coroutine quitRequestRoutine;
     private IEnumerator QuitAfterSaveRequest()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         EventBus.Publish(new OpenConfirmScreenEvent
         {
             message = "Ship saved! Would you like to leave the builder?",
             action = ExitEditor
         });
         quitRequestRoutine = null;
+    }
+
+    Coroutine finishFirstShipRoutine;
+    private IEnumerator FinishFirstShip()
+    {
+        yield return new WaitForSeconds(0.25f);
+        EventBus.Publish(new OpenMessageScreenEvent
+        {
+            message = "Your first ship is complete! Taking flight...",
+            action = ExitEditor
+        });
     }
 
     // loads a player save ship without taking from inventory

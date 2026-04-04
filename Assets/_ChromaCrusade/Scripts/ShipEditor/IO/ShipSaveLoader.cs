@@ -106,33 +106,44 @@ public class ShipSaveLoader
     {
         string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
 
-        return GetShipSave(
+        return GetShipBuildSave(
             Path.Combine(path, 
             $"{presetName}.json"));
     }
 
-    //public ShipSave GetShipBuild(string shipName, string activeSave)
-    //{
-    //    return GetShipSave(
-    //        Path.Combine(Paths.Player));
-    //}
-
-    public ShipBuildSave GetShipSave(string path)
+    public ShipBuildSave GetShipBuildSave(string path)
     {
         if (!File.Exists(path))
         {
-            Debug.LogError("Ship save not found: " + path);
+            Debug.LogError("Ship build save not found: " + path);
             return new ShipBuildSave();
         }
 
         string json = File.ReadAllText(path);
 
-        ShipBuildSave shipSave = JsonUtility.FromJson<ShipBuildSave>(json);
+        ShipBuildSave shipBuildSave = JsonUtility.FromJson<ShipBuildSave>(json);
 
-        if (shipSave.partList == null)
+        if (shipBuildSave.partList == null)
             return new ShipBuildSave();
 
-        return shipSave;
+        return shipBuildSave;
+    }
+
+    public ShipGameSave GetShipGameSave(string shipName)
+    {
+        string path = Path.Combine(Paths.ShipGameDataPath(PlayerSaveManager.ActiveSave.saveName), $"{shipName}.json");
+
+        if(!File.Exists(path))
+        {
+            Debug.LogError("Ship game save not found: " + path);
+            return new ShipGameSave();
+        }
+
+        string json = File.ReadAllText(path);
+
+        ShipGameSave shipGameSave = JsonUtility.FromJson<ShipGameSave>(json);
+
+        return shipGameSave;
     }
 
     #endregion

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class MessageScreen : MonoBehaviour
     [SerializeField] GameObject window;
     [SerializeField] TMP_Text message;
     [SerializeField] NavItem okayButton;
+    public Action action;
 
     void OnEnable()
     {
@@ -20,12 +22,13 @@ public class MessageScreen : MonoBehaviour
     }
 
     void OnCloseEvent(CloseMessageScreenEvent e) => Close();
-    void OnOpenEvent(OpenMessageScreenEvent e) => Open(e.message);
+    void OnOpenEvent(OpenMessageScreenEvent e) => Open(e.message, e.action);
 
-    void Open(string message)
+    void Open(string message, Action action = null)
     {
         NavState.PrevScreenItem = NavState.HoveredItem;
         this.message.text = message;
+        this.action = action;
         window.SetActive(true);
         NavState.inPopupScreen = true;
         EventBus.Publish(new ItemNavEvent { target = okayButton });
@@ -42,6 +45,7 @@ public class MessageScreen : MonoBehaviour
 
     public void OnOkay()
     {
+        action?.Invoke();
         Close();
     }
 }

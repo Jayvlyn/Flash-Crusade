@@ -9,8 +9,10 @@ public class LayeredParallax : MonoBehaviour
     [SerializeField] private float[] layerDistances;
     [SerializeField] private float speedFactor;
 
-    private void Update()
+    private void FixedUpdate()
     {
+        Debug.Log(referenceVelocity);
+
         if (layers.Length != layerDistances.Length) return;
 
         for(int i = 0; i < layers.Length; i++)

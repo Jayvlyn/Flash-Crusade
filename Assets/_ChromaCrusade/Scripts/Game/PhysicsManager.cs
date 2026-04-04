@@ -21,7 +21,10 @@ public class PhysicsManager : MonoBehaviour
                              dist < 50f ? 0.04f :
                              0.08f;
 
-                obj.SetUpdateInterval(step);
+                if (player.transform == obj.transform) 
+                    obj.SetUpdateInterval(0.01f);
+                else 
+                    obj.SetUpdateInterval(Mathf.Max(0.02f, step));
             }
             obj.Tick(Time.fixedDeltaTime);
         }

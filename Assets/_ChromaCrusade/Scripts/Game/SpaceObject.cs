@@ -5,19 +5,39 @@ using UnityEngine;
 public class SpaceObject : MonoBehaviour
 {
     [SerializeField] private Vector2 velocity;
-    public Vector2 Velocity { get; private set; }
+    public Vector2 Velocity
+    {
+        get => velocity;
+        private set => velocity = value;
+    }
 
     [SerializeField] private float angularVelocity;
-    public float AngularVelocity { get; private set; }
+    public float AngularVelocity
+    {
+        get => angularVelocity;
+        private set => angularVelocity = value;
+    }
 
     [SerializeField] private float mass = 1;
-    public float Mass { get; private set; }
+    public float Mass
+    {
+        get => mass;
+        private set => mass = value;
+    }
 
-    [SerializeField] private float drag = 0; // space objects wouldnt really have any drag but we can use this for braking or something.
-    public float Drag { get; private set; }
+    [SerializeField] private float drag = 0;
+    public float Drag
+    {
+        get => drag;
+        private set => drag = value;
+    }
 
     [SerializeField] private float angularDrag = 0;
-    public float AngularDrag { get; private set; }
+    public float AngularDrag
+    {
+        get => angularDrag;
+        private set => angularDrag = value;
+    }
 
 
     private Rigidbody2D rb;
@@ -35,21 +55,23 @@ public class SpaceObject : MonoBehaviour
 
     public void AddForce(Vector2 force)
     {
-        velocity += (force / mass) * Time.fixedDeltaTime;
+        velocity += (force / mass) * dt;
     }
 
     public void AddTorque(float torque)
     {
-        angularVelocity += (torque / mass) * Time.fixedDeltaTime;
+        angularVelocity += (torque / mass) * dt;
     }
 
     public void SetUpdateInterval(float interval)
     {
-        updateInterval = Mathf.Max(interval, 0.02f); // minimum step for stability
+        updateInterval = interval;
     }
 
+    float dt;
     public void SimulateStep(float dt)
     {
+        this.dt = dt;
         velocity *= 1f - (drag * dt);
         angularVelocity *= 1f - (angularDrag * dt);
 

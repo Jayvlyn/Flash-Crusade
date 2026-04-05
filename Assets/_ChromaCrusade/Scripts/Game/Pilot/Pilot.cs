@@ -26,6 +26,8 @@ public class Pilot : MonoBehaviour
         else
             controlledShip.StopBrake();
 
+        //Debug.Log(commands.brake);
+
         controlledShip.turboActive = commands.turbo;
     }
 

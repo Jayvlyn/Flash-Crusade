@@ -17,12 +17,12 @@ public class Ship : SpaceObject
     {
         dir = dir.normalized;
 
-        AddForce(transform.up * dir * mobility);
+        AddForce(dir * mobility);
     }
 
     public void Turn(float dir)
     {
-        AddTorque(dir * handling);
+        AddTorque(-dir * handling);
     }
 
     public void StartBrake()

@@ -75,23 +75,22 @@ public class PlayerInputManager : MonoBehaviour
 
     void OnTurboPerformed(InputAction.CallbackContext ctx)
     {
-        bool input = ctx.performed;
-        EventBus.Publish(new TurboInputEvent { input = input });
+        float input = ctx.ReadValue<float>();
+        EventBus.Publish(new TurboInputEvent { input = input != 0 });
         //Debug.Log($"Turbo {input}");
     }
 
     void OnBrakePerformed(InputAction.CallbackContext ctx)
     {
-        bool input = ctx.performed;
-        EventBus.Publish(new BrakeInputEvent { input = input });
+        float input = ctx.ReadValue<float>();
+        EventBus.Publish(new BrakeInputEvent { input = input != 0 });
         //Debug.Log($"Brake {input}");
-
     }
 
     void OnFirePerformed(InputAction.CallbackContext ctx)
     {
-        bool input = ctx.performed;
-        EventBus.Publish(new FireInputEvent { input = input });
+        float input = ctx.ReadValue<float>();
+        EventBus.Publish(new FireInputEvent { input = input != 0 });
         //Debug.Log($"Fire {input}");
     }
     #endregion

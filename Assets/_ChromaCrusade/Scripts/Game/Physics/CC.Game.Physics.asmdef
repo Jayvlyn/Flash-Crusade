@@ -1,11 +1,8 @@
 {
-    "name": "CC.Game.Manager",
+    "name": "CC.Game.Physics",
     "rootNamespace": "",
     "references": [
-        "GUID:fd0a12926910c494bb4f6642179608fd",
-        "GUID:174a50165e7edd24ebce68c58996a127",
-        "GUID:1f2ae7b45b77a5846b6f021bf9c92a2c",
-        "GUID:e572944d0ab16cd48995308b2b9a263b"
+        "GUID:1f2ae7b45b77a5846b6f021bf9c92a2c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

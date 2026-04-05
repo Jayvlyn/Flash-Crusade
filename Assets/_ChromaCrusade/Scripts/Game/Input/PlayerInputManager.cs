@@ -22,6 +22,11 @@ public class PlayerInputManager : MonoBehaviour
         EnableActions();
         SubscribeInputs();
     }
+
+    private void OnDisable()
+    {
+        UnsubscribeInputs();
+    }
     #endregion
 
     #region Management
@@ -57,33 +62,37 @@ public class PlayerInputManager : MonoBehaviour
     void OnThrustPerformed(InputAction.CallbackContext ctx)
     {
         Vector2 input = ctx.ReadValue<Vector2>();
-        Debug.Log($"Thrust {input}");
+        EventBus.Publish(new ThrustInputEvent { input = input });
+        //Debug.Log($"Thrust {input}");
     }
 
     void OnTurnPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
-        Debug.Log($"Turn {input}");
+        EventBus.Publish(new TurnInputEvent { input = input });
+        //Debug.Log($"Turn {input}");
     }
 
     void OnTurboPerformed(InputAction.CallbackContext ctx)
     {
         bool input = ctx.performed;
-        Debug.Log($"Turbo {input}");
+        EventBus.Publish(new TurboInputEvent { input = input });
+        //Debug.Log($"Turbo {input}");
     }
 
     void OnBrakePerformed(InputAction.CallbackContext ctx)
     {
         bool input = ctx.performed;
-        Debug.Log($"Brake {input}");
+        EventBus.Publish(new BrakeInputEvent { input = input });
+        //Debug.Log($"Brake {input}");
 
     }
 
     void OnFirePerformed(InputAction.CallbackContext ctx)
     {
         bool input = ctx.performed;
-        Debug.Log($"Fire {input}");
-
+        EventBus.Publish(new FireInputEvent { input = input });
+        //Debug.Log($"Fire {input}");
     }
     #endregion
 }

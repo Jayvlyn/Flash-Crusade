@@ -29,7 +29,11 @@ public class SpaceObject : MonoBehaviour
     public float Drag
     {
         get => drag;
-        private set => drag = value;
+        set
+        {
+            value = Mathf.Clamp(value, 0, value);
+            drag = value;
+        }
     }
 
     [SerializeField] private float angularDrag = 0;

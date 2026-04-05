@@ -561,7 +561,7 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0.000000022351742, y: 0.000000007450581}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.17285435, y: 0.2}
     HardLimits:
       Enabled: 0
@@ -569,11 +569,11 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
+  Damping: {x: 0.2, y: 0.2, z: 0.2}
   Lookahead:
     Enabled: 0
-    Time: 0.4
-    Smoothing: 0.1
+    Time: 0.998
+    Smoothing: 28.2
     IgnoreY: 0
 --- !u!224 &784457453 stripped
 RectTransform:
@@ -735,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CC.Core.Utilities::TransformFollower
   target: {fileID: 0}
-  useFixedUpdate: 0
+  useFixedUpdate: 1
 --- !u!1 &804441477
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   player: {fileID: 1660841318}
   usePlayerDist: 1
   objects:
-  - {fileID: 1660841315}
+  - {fileID: 1660841319}
 --- !u!4 &804441479
 Transform:
   m_ObjectHideFlags: 0
@@ -798,7 +798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df52aeefa6328734a9c6ca63ed95d892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: CC.Game::GameManager
-  playerShip: {fileID: 1660841315}
+  playerShip: {fileID: 1660841319}
   background: {fileID: 794938083}
   backgroundTF: {fileID: 794938084}
   followTarget: {fileID: 1175986112}
@@ -1098,7 +1098,9 @@ GameObject:
   - component: {fileID: 1660841318}
   - component: {fileID: 1660841317}
   - component: {fileID: 1660841316}
-  - component: {fileID: 1660841315}
+  - component: {fileID: 1660841321}
+  - component: {fileID: 1660841320}
+  - component: {fileID: 1660841319}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1106,24 +1108,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1660841315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660841314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f071bded9f4b05f48b1079ee7a6860da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceObject
-  velocity: {x: 3, y: 5}
-  angularVelocity: 0
-  mass: 4
-  drag: 0
-  angularDrag: 0
-  updateInterval: 0.02
 --- !u!50 &1660841316
 Rigidbody2D:
   serializedVersion: 5
@@ -1225,6 +1209,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1660841319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660841314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3093274b35c171944ba30d8485aa9817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.Game.SpaceObjects::Ship
+  velocity: {x: 0, y: 0}
+  angularVelocity: 0
+  mass: 1
+  drag: 0
+  angularDrag: 0
+  updateInterval: 0.02
+  sprite: {fileID: 1660841317}
+  maxEnergy: 0
+  mobility: 10
+  handling: 10
+  energy: 0
+  turboModifier: 1.5
+  turboActive: 0
+--- !u!114 &1660841320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660841314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba70cc20a5fe4444e950e9ea090f946b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.Game.Pilot::PlayerPossessor
+  pilot: {fileID: 1660841321}
+--- !u!114 &1660841321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660841314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42cc8aafd2c3bca409f19037dd3fff1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CC.Game.Pilot::Pilot
+  pilotName: 
+  controlledShip: {fileID: 1660841319}
+  possessor: {fileID: 1660841320}
 --- !u!224 &1769211951 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5447660380826081074, guid: 897969441feaa7a48a1bf38810eff60d, type: 3}

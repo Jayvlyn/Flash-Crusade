@@ -20,6 +20,10 @@ public class Pilot : MonoBehaviour
         {
             controlledShip.Turn(commands.steering);
         }
+        else
+        {
+            controlledShip.StopTurn();
+        }
 
         if (commands.brake)
             controlledShip.StartBrake();

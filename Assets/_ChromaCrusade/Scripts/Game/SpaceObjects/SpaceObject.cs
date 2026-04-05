@@ -40,7 +40,18 @@ public class SpaceObject : MonoBehaviour
     public float AngularDrag
     {
         get => angularDrag;
-        private set => angularDrag = value;
+        set
+        {
+            value = Mathf.Clamp(value, 0, value);
+            angularDrag = value;
+        }
+    }
+
+    [SerializeField] private float maxSpeed = 10f;
+    public float MaxSpeed
+    {
+        get => maxSpeed;
+        set => maxSpeed = Mathf.Max(0f, value);
     }
 
 
@@ -79,8 +90,13 @@ public class SpaceObject : MonoBehaviour
         velocity *= 1f - (drag * dt);
         angularVelocity *= 1f - (angularDrag * dt);
 
+        if (velocity.sqrMagnitude > maxSpeed * maxSpeed) // change to use mass for max speed instad of hard coded max speed
+        {
+            velocity = velocity.normalized * maxSpeed;
+        }
+
         rb.MovePosition(rb.position + velocity * dt);
-        rb.MoveRotation(rb.rotation + angularVelocity * dt);
+        rb.MoveRotation(rb.rotation - angularVelocity * dt); // - angular velocity means positive angVel = clockwise rot
     }
 
     public void Tick(float deltaTime)

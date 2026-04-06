@@ -12,25 +12,17 @@ public class Pilot : MonoBehaviour
     public void ProcessCommands()
     {
         if (commands.thrust != Vector2.zero)
-        {
             controlledShip.Thrust(commands.thrust);
-        }
 
-        if (commands.steering != 0)
-        {
-            controlledShip.Turn(commands.steering);
-        }
-        else
-        {
-            controlledShip.StopTurn();
-        }
+
+        controlledShip.TurnLeft(commands.turnLeft);
+        controlledShip.TurnRight(commands.turnRight);
+        controlledShip.HandleTurning();
 
         if (commands.brake)
             controlledShip.StartBrake();
         else
             controlledShip.StopBrake();
-
-        //Debug.Log(commands.brake);
 
         controlledShip.turboActive = commands.turbo;
     }

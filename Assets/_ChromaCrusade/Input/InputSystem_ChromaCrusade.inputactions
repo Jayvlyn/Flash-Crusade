@@ -43,13 +43,22 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Turn",
-                    "type": "Value",
-                    "id": "9a9eb3b6-16f3-4cc4-9494-6c1ed77fcef0",
-                    "expectedControlType": "Axis",
+                    "name": "TurnLeft",
+                    "type": "Button",
+                    "id": "0c22ac67-2dd9-4e00-afca-cdbddbbfd833",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=2)",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TurnRight",
+                    "type": "Button",
+                    "id": "13b58bfb-cd42-423b-b1a5-78c2f5058dcc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Turbo",
@@ -184,39 +193,6 @@
                     "action": "FireWeapon3",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "a0aa7f6e-515f-408f-8949-e3fb26fc077d",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Turn",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "38e9b565-c6cf-45f4-9d9b-b365549f405b",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Turn",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "fcde9175-c2d0-486c-b3b1-e6eb969b9cd1",
-                    "path": "<Keyboard>/l",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Turn",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -391,6 +367,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98b6081b-7e2d-4e6f-8129-54db49a3dd35",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dbf9678-3d6b-4bbd-8d75-b5a696950112",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

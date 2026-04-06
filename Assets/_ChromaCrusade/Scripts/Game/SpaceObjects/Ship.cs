@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Ship : SpaceObject
 {
@@ -11,7 +12,12 @@ public class Ship : SpaceObject
     public float energy;
 
     public float turboModifier = 1.5f;
+    public float counterSteerPower = 5;
+
     public bool turboActive;
+    public bool turnRight;
+    public bool turnLeft;
+    bool braking;
 
     public void Thrust(Vector2 dir)
     {
@@ -28,52 +34,88 @@ public class Ship : SpaceObject
 
             float alignment = Vector2.Dot(velDir, forward);
 
-            // solution 1
             float misalignment = 1f - Mathf.Clamp01(alignment);
 
-            //Debug.Log(misalignment);
+            float normalizedSpeed = Mathf.Clamp01(Velocity.sqrMagnitude / (MaxVelocity * MaxVelocity));
+            Debug.Log(normalizedSpeed);
 
-            forceMod *= 1f + misalignment * Mathf.Abs(AngularVelocity);
+            forceMod *= 1f + misalignment * (Mathf.Abs(AngularVelocity) * normalizedSpeed);
         }
-        //Debug.Log(forceMod);
-        Debug.Log(worldDir);
 
         AddForce(worldDir * forceMod);
     }
 
+    public void TurnRight(bool turnRight)
+    {
+        this.turnRight = turnRight;
+    }
+
+    public void TurnLeft(bool turnLeft)
+    {
+        this.turnLeft = turnLeft;
+    }
+
+    public void HandleTurning()
+    {
+        if(turnLeft && turnRight)
+        {
+            AngularDrag = 2;
+        }
+        else if (turnLeft)
+        {
+            AngularDrag = 0;
+            Turn(-1);
+        }
+        else if (turnRight)
+        {
+            AngularDrag = 0;
+            Turn(1);
+        }
+        else if (!braking)
+        {
+            AngularDrag = 0;
+        }
+    }
+
     public void Turn(float dir)
     {
-        //turning = true;
-
         float force = handling;
 
-        float absVel = Mathf.Abs(AngularVelocity);
+        float angVel = AngularVelocity;
 
-        if (dir > 0 && AngularVelocity < 0 || dir < 0 && AngularVelocity > 0)
+        // Opposing input detection
+        float opposition = -Mathf.Sign(angVel) * dir; // +1 = fully opposing, -1 = same direction
+
+        if (opposition > 0f)
         {
-            if(absVel > 1)
-                force *= Mathf.Clamp(absVel / 5, 1, absVel);
-        }
+            float absVel = Mathf.Abs(angVel);
 
-        //Debug.Log(force);
+            float t = Mathf.Clamp01(absVel / MaxAngularVelocity);
+            //Debug.Log($"t {t}");
+
+            float curve = t * t;
+
+            float boost = Mathf.Lerp(1f, 30f, curve);
+            //Debug.Log($"Boost {boost}");
+
+            force *= boost;
+        }
 
         AddTorque(dir * force);
     }
 
-    public void StopTurn()
-    {
-        //turning = false;
-    }
-
     public void StartBrake()
     {
-        if (Drag != 0) return;
+        if (braking) return;
+        braking = true;
         Drag = 2; // incorp mass later
         AngularDrag = 2;
     }
 
     public void StopBrake()
     {
+        if (!braking) return;
+        braking = false;
         Drag = 0;
         AngularDrag = 0;
     }

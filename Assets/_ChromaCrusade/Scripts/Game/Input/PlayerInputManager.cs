@@ -5,13 +5,15 @@ public class PlayerInputManager : MonoBehaviour
 {
     [Header("Input Actions")]
     [SerializeField] InputActionReference thrustAction;
-    [SerializeField] InputActionReference turnAction;
+    [SerializeField] InputActionReference turnLeftAction;
+    [SerializeField] InputActionReference turnRightAction;
     [SerializeField] InputActionReference turboAction;
     [SerializeField] InputActionReference brakeAction;
     [SerializeField] InputActionReference fireAction;
 
     public InputActionReference ThrustAction => thrustAction;
-    public InputActionReference TurnAction => turnAction;
+    public InputActionReference TurnLeftAction => turnLeftAction;
+    public InputActionReference TurnRightAction => turnRightAction;
     public InputActionReference TurboAction => turboAction;
     public InputActionReference BrakeAction => brakeAction;
     public InputActionReference FireAction => fireAction;
@@ -33,7 +35,8 @@ public class PlayerInputManager : MonoBehaviour
     void EnableActions()
     {
         thrustAction.action.Enable();
-        turnAction.action.Enable();
+        turnLeftAction.action.Enable();
+        turnRightAction.action.Enable();
         turboAction.action.Enable();
         brakeAction.action.Enable();
         fireAction.action.Enable();
@@ -42,7 +45,8 @@ public class PlayerInputManager : MonoBehaviour
     void SubscribeInputs()
     {
         thrustAction.action.performed += OnThrustPerformed;
-        turnAction.action.performed += OnTurnPerformed;
+        turnLeftAction.action.performed += OnTurnLeftPerformed;
+        turnRightAction.action.performed += OnTurnRightPerformed;
         turboAction.action.performed += OnTurboPerformed;
         brakeAction.action.performed += OnBrakePerformed;
         fireAction.action.performed += OnFirePerformed;
@@ -51,7 +55,8 @@ public class PlayerInputManager : MonoBehaviour
     void UnsubscribeInputs()
     {
         thrustAction.action.performed -= OnThrustPerformed;
-        turnAction.action.performed -= OnTurnPerformed;
+        turnLeftAction.action.performed -= OnTurnLeftPerformed;
+        turnRightAction.action.performed -= OnTurnRightPerformed;
         turboAction.action.performed -= OnTurboPerformed;
         brakeAction.action.performed -= OnBrakePerformed;
         fireAction.action.performed -= OnFirePerformed;
@@ -66,11 +71,16 @@ public class PlayerInputManager : MonoBehaviour
         //Debug.Log($"Thrust {input}");
     }
 
-    void OnTurnPerformed(InputAction.CallbackContext ctx)
+    void OnTurnRightPerformed(InputAction.CallbackContext ctx)
     {
         float input = ctx.ReadValue<float>();
-        EventBus.Publish(new TurnInputEvent { input = input });
-        //Debug.Log($"Turn {input}");
+        EventBus.Publish(new TurnRightInputEvent { input = input != 0 });
+    }
+
+    void OnTurnLeftPerformed(InputAction.CallbackContext ctx)
+    {
+        float input = ctx.ReadValue<float>();
+        EventBus.Publish(new TurnLeftInputEvent { input = input != 0 });
     }
 
     void OnTurboPerformed(InputAction.CallbackContext ctx)

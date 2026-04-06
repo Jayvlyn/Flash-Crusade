@@ -47,13 +47,19 @@ public class SpaceObject : MonoBehaviour
         }
     }
 
-    [SerializeField] private float maxSpeed = 10f;
-    public float MaxSpeed
+    [SerializeField] private float maxVelocity = 100f;
+    public float MaxVelocity
     {
-        get => maxSpeed;
-        set => maxSpeed = Mathf.Max(0f, value);
+        get => maxVelocity;
+        set => maxVelocity = Mathf.Max(0f, value);
     }
 
+    [SerializeField] private float maxAngularVelocity = 400f;
+    public float MaxAngularVelocity
+    {
+        get => maxAngularVelocity;
+        set => maxAngularVelocity = Mathf.Max(0f, value);
+    }
 
     private Rigidbody2D rb;
 
@@ -88,12 +94,15 @@ public class SpaceObject : MonoBehaviour
     {
         this.dt = dt;
         velocity *= 1f - (drag * dt);
+
+        if (velocity.sqrMagnitude > MaxVelocity * MaxVelocity) // change to use mass for max speed instad of hard coded max speed
+            velocity = velocity.normalized * MaxVelocity;
+   
+
         angularVelocity *= 1f - (angularDrag * dt);
 
-        if (velocity.sqrMagnitude > maxSpeed * maxSpeed) // change to use mass for max speed instad of hard coded max speed
-        {
-            velocity = velocity.normalized * maxSpeed;
-        }
+        if (Mathf.Abs(angularVelocity) > MaxAngularVelocity)
+            angularVelocity = Mathf.Sign(angularVelocity) * MaxAngularVelocity;
 
         rb.MovePosition(rb.position + velocity * dt);
         rb.MoveRotation(rb.rotation - angularVelocity * dt); // - angular velocity means positive angVel = clockwise rot

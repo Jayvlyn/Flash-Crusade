@@ -694,7 +694,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CC.Game.Input::PlayerInputManager
   thrustAction: {fileID: 1227902622162017248, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
-  turnAction: {fileID: -7620393131619125048, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  turnLeftAction: {fileID: 3011726281827733891, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
+  turnRightAction: {fileID: -4415322808109726580, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   turboAction: {fileID: -1072056925704014879, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   brakeAction: {fileID: -8512032206318756116, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
   fireAction: {fileID: 1120369429361536294, guid: 65f5f49f0b2dd11418409555f2f51619, type: 3}
@@ -1104,15 +1105,19 @@ MonoBehaviour:
   mass: 1
   drag: 0
   angularDrag: 0
-  maxSpeed: 60
+  maxVelocity: 100
+  maxAngularVelocity: 400
   updateInterval: 0.02
   sprite: {fileID: 1660841317}
   maxEnergy: 0
-  mobility: 5
-  handling: 20
+  mobility: 10
+  handling: 80
   energy: 0
   turboModifier: 1.5
+  counterSteerPower: 5
   turboActive: 0
+  turnRight: 0
+  turnLeft: 0
 --- !u!114 &1660841320
 MonoBehaviour:
   m_ObjectHideFlags: 0

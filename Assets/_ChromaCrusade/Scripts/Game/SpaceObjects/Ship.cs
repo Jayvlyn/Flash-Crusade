@@ -11,8 +11,7 @@ public class Ship : SpaceObject
 
     public float energy;
 
-    public float turboModifier = 1.5f;
-
+    public float turboModifier = 3f;
 
     public float redirect = 10;
 
@@ -21,12 +20,23 @@ public class Ship : SpaceObject
     public bool turnLeft;
     bool braking;
 
+    float turboMaxSpeed;
+    float regularMaxSpeed;
 
     public AnimationCurve redirectVelocityCurve;
     public AnimationCurve redirectAngularVelocityCurve;
 
+    private void Start()
+    {
+        regularMaxSpeed = MaxVelocity;
+        turboMaxSpeed = MaxVelocity * turboModifier;
+    }
+
     public void Thrust(Vector2 dir)
     {
+        if (turboActive) MaxVelocity = turboMaxSpeed;
+        else MaxVelocity = regularMaxSpeed;
+
         dir = dir.normalized;
 
         Vector2 worldDir = transform.up * dir.y + transform.right * dir.x;
@@ -37,24 +47,15 @@ public class Ship : SpaceObject
         {
             Vector2 velocityDirection = Velocity.normalized;
 
-            Vector2 forward = transform.up;
-            Vector2 backward = -forward;
-            Vector2 right = transform.right;
-            Vector2 left = -right;
-            Vector2 frontFacing = forward;
+            Vector2 frontFacing;
 
-            if (dir.y > 0)
-                frontFacing = forward;
-            else if (dir.y < 0)
-                frontFacing = backward;
-            else if (dir.x > 0)
-                frontFacing = right;
-            else if (dir.x < 0)
-                frontFacing = left;
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                frontFacing = dir.x > 0 ? (Vector2)transform.right : -(Vector2)transform.right;
+            else
+                frontFacing = dir.y > 0 ? (Vector2)transform.up : -(Vector2)transform.up;
 
             float alignment = Vector2.Dot(velocityDirection, frontFacing);
             float misalignment = 1f - Mathf.Clamp01(alignment);
-            Debug.Log(misalignment);
 
             float normalizedVelocity = Mathf.Clamp01(Velocity.sqrMagnitude / (MaxVelocity * MaxVelocity));
             float normalizedAngVelocity = Mathf.Clamp01(Mathf.Abs(AngularVelocity) / MaxAngularVelocity);
@@ -65,6 +66,8 @@ public class Ship : SpaceObject
             float calculation = 1f + misalignment * evaluatedVel * (evaluatedAngVel * redirect);
 
             force *= calculation;
+
+            if (turboActive) force *= turboModifier;
         }
 
         AddForce(worldDir * force);

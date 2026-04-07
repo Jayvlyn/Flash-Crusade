@@ -594,9 +594,9 @@ MonoBehaviour:
   - {fileID: 1769211952}
   layerDistances:
   - 4000
-  - 3200
-  - 2300
-  - 1600
+  - 3800
+  - 3600
+  - 3400
   speedFactor: 10
   useFixedUpdate: 0
 --- !u!114 &794938084
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   mobility: 10
   handling: 80
   energy: 0
-  turboModifier: 1.5
+  turboModifier: 3
   redirect: 50
   turboActive: 0
   turnRight: 0

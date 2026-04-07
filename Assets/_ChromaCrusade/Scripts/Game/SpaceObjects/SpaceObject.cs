@@ -96,7 +96,8 @@ public class SpaceObject : MonoBehaviour
         velocity *= 1f - (drag * dt);
 
         if (velocity.sqrMagnitude > MaxVelocity * MaxVelocity) // change to use mass for max speed instad of hard coded max speed
-            velocity = velocity.normalized * MaxVelocity;
+            velocity *= 1f - (2 * dt); // quickly drag down to max
+            //velocity = velocity.normalized * MaxVelocity;
    
 
         angularVelocity *= 1f - (angularDrag * dt);

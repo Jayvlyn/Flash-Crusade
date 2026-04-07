@@ -38,16 +38,23 @@ public class Ship : SpaceObject
             Vector2 velocityDirection = Velocity.normalized;
 
             Vector2 forward = transform.up;
+            Vector2 backward = -forward;
             Vector2 right = transform.right;
+            Vector2 left = -right;
             Vector2 frontFacing = forward;
 
-            if (dir.y != 0) // forward/backwards input
+            if (dir.y > 0)
                 frontFacing = forward;
-            else if (dir.x != 0) // side input
+            else if (dir.y < 0)
+                frontFacing = backward;
+            else if (dir.x > 0)
                 frontFacing = right;
+            else if (dir.x < 0)
+                frontFacing = left;
 
             float alignment = Vector2.Dot(velocityDirection, frontFacing);
             float misalignment = 1f - Mathf.Clamp01(alignment);
+            Debug.Log(misalignment);
 
             float normalizedVelocity = Mathf.Clamp01(Velocity.sqrMagnitude / (MaxVelocity * MaxVelocity));
             float normalizedAngVelocity = Mathf.Clamp01(Mathf.Abs(AngularVelocity) / MaxAngularVelocity);

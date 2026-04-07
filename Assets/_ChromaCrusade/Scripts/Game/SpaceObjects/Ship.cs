@@ -31,7 +31,7 @@ public class Ship : SpaceObject
 
         Vector2 worldDir = transform.up * dir.y + transform.right * dir.x;
 
-        float forceMod = mobility;
+        float force = mobility;
 
         if (Velocity.sqrMagnitude > 0.001f)
         {
@@ -39,63 +39,28 @@ public class Ship : SpaceObject
 
             Vector2 forward = transform.up;
             Vector2 right = transform.right;
+            Vector2 frontFacing = forward;
 
-            float alignment = 0;
+            if (dir.y != 0) // forward/backwards input
+                frontFacing = forward;
+            else if (dir.x != 0) // side input
+                frontFacing = right;
 
-            if(dir.y != 0) // move forward or backwards
-            {
-                alignment = Vector2.Dot(velocityDirection, forward);
-            }
-            else if(dir.x != 0) // sideways
-            {
-                alignment = Vector2.Dot(velocityDirection, right);
-            }
-
-            //float alignment = Vector2.Dot(velocityDirection, forward);
-
-
-
+            float alignment = Vector2.Dot(velocityDirection, frontFacing);
             float misalignment = 1f - Mathf.Clamp01(alignment);
 
             float normalizedVelocity = Mathf.Clamp01(Velocity.sqrMagnitude / (MaxVelocity * MaxVelocity));
             float normalizedAngVelocity = Mathf.Clamp01(Mathf.Abs(AngularVelocity) / MaxAngularVelocity);
 
-            // try 1
-            //forceMod *= 1f + misalignment * (Mathf.Abs(AngularVelocity) * normalizedVelocity);
-            // replace above Angvel * normalizedSpeed with evlauated curves, we can find normalized ang velocity too.
-            // And then use the normalized values and evaluate them on a custom animation curve
-
-            // try 2
-            //forceMod *= 1 + misalignment * (redirect * normalizedVelocity * normalizedAngVelocity);
-
-            // try 3
-            //forceMod *= 1 + misalignment * (Velocity.sqrMagnitude * normalizedAngVelocity);
-
-            // try 4
-            //forceMod *= 1 + misalignment * (redirect * normalizedVelocity);
-
-            // try 5
-            //forceMod *= 1f + misalignment * redirectVelocityCurve.Evaluate(normalizedVelocity) * Mathf.Abs(AngularVelocity); // pretty decent
-
-            // try 6
-
             float evaluatedVel = redirectVelocityCurve.Evaluate(normalizedVelocity);
             float evaluatedAngVel = redirectAngularVelocityCurve.Evaluate(normalizedAngVelocity);
-
-            //forceMod *= 1f + misalignment * evaluatedVel * (evaluatedAngVel * redirect); // pretty decent
             
             float calculation = 1f + misalignment * evaluatedVel * (evaluatedAngVel * redirect);
 
-            forceMod *= calculation;
-
-            Debug.Log("------");
-            Debug.Log($"Misalignment: {misalignment}");
-            Debug.Log($"Eval Vel: {evaluatedVel}");
-            Debug.Log($"Eval Ang: {evaluatedAngVel}");
-            Debug.Log($"Calc: {calculation}");
+            force *= calculation;
         }
 
-        AddForce(worldDir * forceMod);
+        AddForce(worldDir * force);
     }
 
     public void TurnRight(bool turnRight)

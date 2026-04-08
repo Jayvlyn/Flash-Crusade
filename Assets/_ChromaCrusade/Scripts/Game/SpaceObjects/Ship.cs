@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 public class Ship : SpaceObject
 {
+
     public SpriteRenderer sprite;
 
     public int maxEnergy;
@@ -25,6 +26,7 @@ public class Ship : SpaceObject
 
     public AnimationCurve redirectVelocityCurve;
     public AnimationCurve redirectAngularVelocityCurve;
+    public bool goodMovement = true;
 
     private void Start()
     {
@@ -43,7 +45,7 @@ public class Ship : SpaceObject
 
         float force = mobility;
 
-        if (Velocity.sqrMagnitude > 0.001f)
+        if (Velocity.sqrMagnitude > 0.001f && goodMovement)
         {
             Vector2 velocityDirection = Velocity.normalized;
 
@@ -62,7 +64,7 @@ public class Ship : SpaceObject
 
             float evaluatedVel = redirectVelocityCurve.Evaluate(normalizedVelocity);
             float evaluatedAngVel = redirectAngularVelocityCurve.Evaluate(normalizedAngVelocity);
-            
+
             float calculation = 1f + misalignment * evaluatedVel * (evaluatedAngVel * redirect);
 
             force *= calculation;

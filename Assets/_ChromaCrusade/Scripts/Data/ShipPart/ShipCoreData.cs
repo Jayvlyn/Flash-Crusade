@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewShipPart", menuName = "Data/Ship Core")]
 public class ShipCoreData : ShipPartData
 {
-    public int energy;
+    public int energy => mass * 4;
 
     public override PartType PartType => PartType.Core;
 

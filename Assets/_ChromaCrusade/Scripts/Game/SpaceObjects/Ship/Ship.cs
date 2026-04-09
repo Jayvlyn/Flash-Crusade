@@ -11,6 +11,10 @@ public class Ship : SpaceObject
     public float turboModifier = 3f;
     public float redirect = 10;
     public ShipState state;
+    public int mobilityScalar = 10;
+    public int handlingScalar = 100;
+    public float maxVelocityScalar = 0.5f;
+    public float maxAngularVelocityScalar = 3f;
 
     [Header("Ship Build Stats")]
     public int maxEnergy;
@@ -24,6 +28,9 @@ public class Ship : SpaceObject
 
     private void Start()
     {
+        MaxVelocity = mobility * maxVelocityScalar;
+        MaxAngularVelocity = handling * maxAngularVelocityScalar;
+
         regularMaxSpeed = MaxVelocity;
         turboMaxSpeed = MaxVelocity * turboModifier;
     }
@@ -42,7 +49,7 @@ public class Ship : SpaceObject
 
         Vector2 worldDir = transform.up * dir.y + transform.right * dir.x;
 
-        float force = mobility;
+        float force = mobility * mobilityScalar;
 
         if (Velocity.sqrMagnitude > 0.001f)
         {
@@ -76,7 +83,7 @@ public class Ship : SpaceObject
 
     public void Turn(float dir)
     {
-        float force = handling;
+        float force = handling * handlingScalar;
 
         float angVel = AngularVelocity;
 

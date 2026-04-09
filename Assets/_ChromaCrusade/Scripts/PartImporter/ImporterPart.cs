@@ -59,14 +59,14 @@ public class ImporterPart : MonoBehaviour
     [ShowIf(nameof(IsWave))]
     public float growSpeed = 1;
 
-    [Header("Energy Core Attributes")]
-    [ShowIf(nameof(IsCore))] public int energy = 100;
+    //[Header("Energy Core Attributes")]
+    //[ShowIf(nameof(IsCore))] public int energy = 100;
 
-    [Header("Wing Attributes")]
-    [ShowIf(nameof(IsWing))] public int mobility = 1;
+    //[Header("Wing Attributes")]
+    //[ShowIf(nameof(IsWing))] public int mobility = 1;
 
-    [Header("Pilot Cabin Attributes")]
-    [ShowIf(nameof(IsCabin))] public int handling = 1;
+    //[Header("Pilot Cabin Attributes")]
+    //[ShowIf(nameof(IsCabin))] public int handling = 1;
 
     [Header("Utility Attributes")]
     [ShowIf(nameof(IsUtility))] public UtilityType utilityType;
@@ -382,9 +382,9 @@ public class ImporterPart : MonoBehaviour
         damage = 10;
         spread = 1;
         fireRate = 1;
-        energy = 100;
-        mobility = 1;
-        handling = 1;
+        //energy = 100;
+        //mobility = 1;
+        //handling = 1;
         utilityType = UtilityType.Select;
         foreach(var segment in segments)
         {
@@ -426,18 +426,18 @@ public class ImporterPart : MonoBehaviour
 
         if (partData is ShipWingData shipWingData)
         {
-            shipWingData.mobility = mobility;
-            price += mobility * 10;
+            //shipWingData.mobility = mobility;
+            //price += mobility * 10;
         }
         else if (partData is ShipCabinData shipCabinData)
         {
-            shipCabinData.handling = handling;
-            price += handling * 10;
+            //shipCabinData.handling = handling;
+            //price += handling * 10;
         }
         else if (partData is ShipCoreData shipCoreData)
         {
-            shipCoreData.energy = energy;
-            price += energy * 10;
+            //shipCoreData.energy = energy;
+            //price += energy * 10;
         }
         else if (partData is ShipWeaponData shipWeaponData)
         {
@@ -463,16 +463,16 @@ public class ImporterPart : MonoBehaviour
                 shipWeaponData.growSpeed = growSpeed;
             }
 
-            price += damage * 5;
-            price += Mathf.RoundToInt(fireRate * 5);
-            price += firePoints.Count * 10;
+            //price += damage * 5;
+            //price += Mathf.RoundToInt(fireRate * 5);
+            //price += firePoints.Count * 10;
         }
         else if (partData is ShipUtilityData shipUtilityData)
         {
             shipUtilityData.utilityType = (ShipUtilityData.UtilityType)(int)utilityType;
         }
 
-        partData.price = price + priceAddon;
+        //partData.price = price + priceAddon;
     }
 
     /// <summary>

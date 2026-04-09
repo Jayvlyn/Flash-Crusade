@@ -1,10 +1,12 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Ship : SpaceObject
 {
-
+    [Header("Ship Properties")]
     public SpriteRenderer sprite;
+
+    public float brakeDrag = 2;
+    public float steerBrakeDrag = 4;
 
     public int maxEnergy;
     public int mobility;
@@ -16,9 +18,9 @@ public class Ship : SpaceObject
 
     public float redirect = 10;
 
-    public bool turboActive;
-    public bool turnRight;
-    public bool turnLeft;
+    bool turboActive;
+    bool turnRight;
+    bool turnLeft;
     bool braking;
 
     float turboMaxSpeed;
@@ -26,13 +28,21 @@ public class Ship : SpaceObject
 
     public AnimationCurve redirectVelocityCurve;
     public AnimationCurve redirectAngularVelocityCurve;
-    public bool goodMovement = true;
+
+    #region Lifecycle
 
     private void Start()
     {
         regularMaxSpeed = MaxVelocity;
         turboMaxSpeed = MaxVelocity * turboModifier;
     }
+
+    private void Update()
+    {
+        ProcessDrag();
+    }
+
+    #endregion
 
     public void Thrust(Vector2 dir)
     {
@@ -45,7 +55,7 @@ public class Ship : SpaceObject
 
         float force = mobility;
 
-        if (Velocity.sqrMagnitude > 0.001f && goodMovement)
+        if (Velocity.sqrMagnitude > 0.001f)
         {
             Vector2 velocityDirection = Velocity.normalized;
 
@@ -75,38 +85,6 @@ public class Ship : SpaceObject
         AddForce(worldDir * force);
     }
 
-    public void TurnRight(bool turnRight)
-    {
-        this.turnRight = turnRight;
-    }
-
-    public void TurnLeft(bool turnLeft)
-    {
-        this.turnLeft = turnLeft;
-    }
-
-    public void HandleTurning()
-    {
-        if(turnLeft && turnRight)
-        {
-            AngularDrag = 2;
-        }
-        else if (turnLeft)
-        {
-            AngularDrag = 0;
-            Turn(-1);
-        }
-        else if (turnRight)
-        {
-            AngularDrag = 0;
-            Turn(1);
-        }
-        else if (!braking)
-        {
-            AngularDrag = 0;
-        }
-    }
-
     public void Turn(float dir)
     {
         float force = handling;
@@ -121,32 +99,64 @@ public class Ship : SpaceObject
             float absVel = Mathf.Abs(angVel);
 
             float t = Mathf.Clamp01(absVel / MaxAngularVelocity);
-            //Debug.Log($"t {t}");
 
             float curve = t * t;
 
             float boost = Mathf.Lerp(1f, 30f, curve);
-            //Debug.Log($"Boost {boost}");
 
-            force *= boost;
+            force *= boost; // additional force to help counter steer
         }
 
         AddTorque(dir * force);
     }
 
+    public void HandleTurning()
+    {
+        if (turnLeft && !turnRight) Turn(-1);
+        else if (turnRight && !turnLeft) Turn(1);
+    }
+
     public void StartBrake()
     {
-        if (braking) return;
         braking = true;
-        Drag = 2; // incorp mass later
-        AngularDrag = 2;
     }
 
     public void StopBrake()
     {
-        if (!braking) return;
         braking = false;
-        Drag = 0;
-        AngularDrag = 0;
+    }
+
+    public void TurnRight(bool turnRight)
+    {
+        this.turnRight = turnRight;
+    }
+
+    public void TurnLeft(bool turnLeft)
+    {
+        this.turnLeft = turnLeft;
+    }
+
+    public void ToggleTurbo(bool toggle)
+    {
+        turboActive = toggle;
+    }
+
+    public void ProcessDrag()
+    {
+        if(braking) // braking drag both
+        {
+            Drag = brakeDrag;
+            AngularDrag = steerBrakeDrag;
+        }
+        else if(turnLeft && turnRight) // not braking but negating steer
+        {
+            Drag = 0;
+            AngularDrag = steerBrakeDrag;
+        }
+        else // not braking or negating steer
+        {
+            Drag = 0;
+            AngularDrag = 0;
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class SpaceObject : MonoBehaviour
 {
+    [Header("Space Object Properties")]
     [SerializeField] private Vector2 velocity;
     public Vector2 Velocity
     {
@@ -100,7 +101,6 @@ public class SpaceObject : MonoBehaviour
         else if (velocity.sqrMagnitude > MaxVelocity * MaxVelocity) // change to use mass for max speed instad of hard coded max speed
             velocity = velocity.normalized * MaxVelocity;
    
-
         angularVelocity *= 1f - (angularDrag * dt);
 
         if (Mathf.Abs(angularVelocity) > MaxAngularVelocity)

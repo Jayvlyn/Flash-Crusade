@@ -24,7 +24,7 @@ public class Pilot : MonoBehaviour
         else
             controlledShip.StopBrake();
 
-        controlledShip.turboActive = commands.turbo;
+        controlledShip.ToggleTurbo(commands.turbo);
     }
 
     private void Update()

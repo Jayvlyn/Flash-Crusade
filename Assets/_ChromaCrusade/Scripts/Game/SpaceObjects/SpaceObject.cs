@@ -77,12 +77,12 @@ public class SpaceObject : MonoBehaviour
 
     public void AddForce(Vector2 force)
     {
-        velocity += (force / mass) * dt;
+        Velocity += (force / mass) * dt;
     }
 
     public void AddTorque(float torque)
     {
-        angularVelocity += (torque / mass) * dt;
+        AngularVelocity += (torque / mass) * dt;
     }
 
     public void SetUpdateInterval(float interval)
@@ -94,20 +94,20 @@ public class SpaceObject : MonoBehaviour
     public void SimulateStep(float dt)
     {
         this.dt = dt;
-        velocity *= 1f - (drag * dt);
+        Velocity *= 1f - (drag * dt);
 
-        if(velocity.sqrMagnitude > MaxVelocity * MaxVelocity * 2) // way above, smoothly bring back
-            velocity *= 1f - (2 * dt); // quickly drag down to max
-        else if (velocity.sqrMagnitude > MaxVelocity * MaxVelocity) // change to use mass for max speed instad of hard coded max speed
-            velocity = velocity.normalized * MaxVelocity;
+        if(Velocity.sqrMagnitude > MaxVelocity * MaxVelocity * 2) // way above, smoothly bring back
+            Velocity *= 1f - (2 * dt); // quickly drag down to max
+        else if (Velocity.sqrMagnitude > MaxVelocity * MaxVelocity) // change to use mass for max speed instad of hard coded max speed
+            Velocity = Velocity.normalized * MaxVelocity;
    
-        angularVelocity *= 1f - (angularDrag * dt);
+        AngularVelocity *= 1f - (AngularDrag * dt);
 
-        if (Mathf.Abs(angularVelocity) > MaxAngularVelocity)
-            angularVelocity = Mathf.Sign(angularVelocity) * MaxAngularVelocity;
+        if (Mathf.Abs(AngularVelocity) > MaxAngularVelocity)
+            AngularVelocity = Mathf.Sign(AngularVelocity) * MaxAngularVelocity;
 
-        rb.MovePosition(rb.position + velocity * dt);
-        rb.MoveRotation(rb.rotation - angularVelocity * dt); // - angular velocity means positive angVel = clockwise rot
+        rb.MovePosition(rb.position + Velocity * dt);
+        rb.MoveRotation(rb.rotation - AngularVelocity * dt); // - angular velocity means positive angVel = clockwise rot
     }
 
     public void Tick(float deltaTime)

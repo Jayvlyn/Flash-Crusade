@@ -4,30 +4,21 @@ public class Ship : SpaceObject
 {
     [Header("Ship Properties")]
     public SpriteRenderer sprite;
-
     public float brakeDrag = 2;
     public float steerBrakeDrag = 4;
+    public AnimationCurve redirectVelocityCurve;
+    public AnimationCurve redirectAngularVelocityCurve;
+    public float turboModifier = 3f;
+    public float redirect = 10;
+    public ShipState state;
 
+    [Header("Ship Build Stats")]
     public int maxEnergy;
     public int mobility;
     public int handling;
 
-    public float energy;
-
-    public float turboModifier = 3f;
-
-    public float redirect = 10;
-
-    bool turboActive;
-    bool turnRight;
-    bool turnLeft;
-    bool braking;
-
     float turboMaxSpeed;
     float regularMaxSpeed;
-
-    public AnimationCurve redirectVelocityCurve;
-    public AnimationCurve redirectAngularVelocityCurve;
 
     #region Lifecycle
 
@@ -40,15 +31,13 @@ public class Ship : SpaceObject
     private void Update()
     {
         ProcessDrag();
+        ProcessMaxVelocity();
     }
 
     #endregion
 
     public void Thrust(Vector2 dir)
     {
-        if (turboActive) MaxVelocity = turboMaxSpeed;
-        else MaxVelocity = regularMaxSpeed;
-
         dir = dir.normalized;
 
         Vector2 worldDir = transform.up * dir.y + transform.right * dir.x;
@@ -79,7 +68,7 @@ public class Ship : SpaceObject
 
             force *= calculation;
 
-            if (turboActive) force *= turboModifier;
+            if (state.turboActive) force *= turboModifier;
         }
 
         AddForce(worldDir * force);
@@ -112,43 +101,28 @@ public class Ship : SpaceObject
 
     public void HandleTurning()
     {
-        if (turnLeft && !turnRight) Turn(-1);
-        else if (turnRight && !turnLeft) Turn(1);
+        if (state.TurningOnlyLeft) Turn(-1);
+        else if (state.TurningOnlyRight) Turn(1);
     }
 
-    public void StartBrake()
-    {
-        braking = true;
-    }
+    public void StartBrake() => state.braking = true;
 
-    public void StopBrake()
-    {
-        braking = false;
-    }
+    public void StopBrake() => state.braking = false;
 
-    public void TurnRight(bool turnRight)
-    {
-        this.turnRight = turnRight;
-    }
+    public void TurnRight(bool turnRight) => state.turnRight = turnRight;
 
-    public void TurnLeft(bool turnLeft)
-    {
-        this.turnLeft = turnLeft;
-    }
+    public void TurnLeft(bool turnLeft) => state.turnLeft = turnLeft;
 
-    public void ToggleTurbo(bool toggle)
-    {
-        turboActive = toggle;
-    }
+    public void ToggleTurbo(bool toggle) => state.turboActive = toggle;
 
     public void ProcessDrag()
     {
-        if(braking) // braking drag both
+        if(state.braking) // braking drag both
         {
             Drag = brakeDrag;
             AngularDrag = steerBrakeDrag;
         }
-        else if(turnLeft && turnRight) // not braking but negating steer
+        else if(state.NeutralizingSteer) // not braking but negating steer
         {
             Drag = 0;
             AngularDrag = steerBrakeDrag;
@@ -158,5 +132,11 @@ public class Ship : SpaceObject
             Drag = 0;
             AngularDrag = 0;
         }
+    }
+
+    public void ProcessMaxVelocity()
+    {
+        if (state.turboActive) MaxVelocity = turboMaxSpeed;
+        else MaxVelocity = regularMaxSpeed;
     }
 }

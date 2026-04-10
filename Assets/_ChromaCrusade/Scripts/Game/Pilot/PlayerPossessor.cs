@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerPossessor : Possessor
 {
-    public Pilot pilot;
+    [HideInInspector] public Pilot pilot;
 
     private void OnEnable()
     {

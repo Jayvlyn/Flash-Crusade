@@ -35,9 +35,9 @@ public class InputValidator : MonoBehaviour
     protected void OnValueChanged(string value)
     {
         if (IsValid())
-            inputFieldBackground.color = Assets.i.uiGreen;
+            inputFieldBackground.color = Assets.Instance.uiGreen;
         else
-            inputFieldBackground.color = Assets.i.uiRed;
+            inputFieldBackground.color = Assets.Instance.uiRed;
     }
 
     public void SetText(string newText)

@@ -1,3 +1,17 @@
 {
-	"name": "CC.Game.SpaceObjects"
+    "name": "CC.Game.SpaceObjects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9e6805803d0da0846be839969f4bc9e6",
+        "GUID:3b1be6901878f13458e0631e65ce592f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

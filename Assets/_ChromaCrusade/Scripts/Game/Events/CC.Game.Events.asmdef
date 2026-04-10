@@ -1,5 +1,5 @@
 {
-    "name": "CC.Game.Physics",
+    "name": "CC.Game.Events",
     "rootNamespace": "",
     "references": [
         "GUID:1f2ae7b45b77a5846b6f021bf9c92a2c"

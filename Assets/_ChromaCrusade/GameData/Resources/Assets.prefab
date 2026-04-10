@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: StudioLeo.Utilities::CodeMonkey.Assets
   editorShipPartPrefab: {fileID: 7175469603136724573, guid: 39a71316016edc44b9a19e9fa051676c, type: 3}
+  gameShipPrefab: {fileID: 5533246162554469037, guid: 2a53797144d00dc4597c97e0ff584978, type: 3}
+  pilotPrefab: {fileID: 8985967275980204332, guid: 294e165b34fd004469b6ea79dee85ee5, type: 3}
   uiShipPrefab: {fileID: 911873583226963430, guid: b98a39b0c5aecc34e8b4e7d1b23032c7, type: 3}
   uiGreen: {r: 0.3764706, g: 0.8862745, b: 0.42352942, a: 0.5019608}
   uiRed: {r: 0.84705883, g: 0.21176471, b: 0.21176471, a: 0.5019608}

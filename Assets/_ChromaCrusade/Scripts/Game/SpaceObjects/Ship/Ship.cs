@@ -26,15 +26,6 @@ public class Ship : SpaceObject
 
     #region Lifecycle
 
-    private void Start()
-    {
-        MaxVelocity = mobility * maxVelocityScalar;
-        MaxAngularVelocity = handling * maxAngularVelocityScalar;
-
-        regularMaxSpeed = MaxVelocity;
-        turboMaxSpeed = MaxVelocity * turboModifier;
-    }
-
     private void Update()
     {
         ProcessDrag();
@@ -42,6 +33,15 @@ public class Ship : SpaceObject
     }
 
     #endregion
+
+    public void Init()
+    {
+        MaxVelocity = mobility * maxVelocityScalar;
+        MaxAngularVelocity = handling * maxAngularVelocityScalar;
+
+        regularMaxSpeed = MaxVelocity;
+        turboMaxSpeed = MaxVelocity * turboModifier;
+    }
 
     public void Thrust(Vector2 dir)
     {

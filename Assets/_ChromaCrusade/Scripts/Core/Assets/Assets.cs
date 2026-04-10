@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class Assets : MonoBehaviour
 {
-    private static Assets _i;
+    private static Assets instance;
 
-    public static Assets i
+    public static Assets Instance
     {
         get
         {
-            if (_i == null) _i = Instantiate(Resources.Load<Assets>("Assets"));
-            return _i;
+            if (instance == null) instance = Instantiate(Resources.Load<Assets>("Assets"));
+            return instance;
         }
     }
 
-    // All references:
     public GameObject editorShipPartPrefab;
+    public GameObject gameShipPrefab;
+    public GameObject pilotPrefab;
     public RectTransform uiShipPrefab;
     public Color uiGreen;
     public Color uiRed;

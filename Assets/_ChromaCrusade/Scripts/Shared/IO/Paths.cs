@@ -25,7 +25,7 @@ public static class Paths
 
     public static string ShipPath(string saveName) => Path.Combine(PlayerSaveFolder(saveName), "Ships");
 
-    public static string ShipBuildSpritesPath(string saveName) => Path.Combine(ShipPath(saveName), "Sprites");
+    public static string ShipSpritesPath(string saveName) => Path.Combine(ShipPath(saveName), "Sprites");
     public static string ShipBuildDataPath(string saveName) =>    Path.Combine(ShipPath(saveName), "BuildData");
     public static string ShipGameDataPath(string saveName) =>     Path.Combine(ShipPath(saveName), "GameData");
 }

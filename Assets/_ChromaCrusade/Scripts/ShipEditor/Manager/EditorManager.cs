@@ -492,7 +492,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
         else
         {
             SetResponseText(validationResult);
-            SetResponseColor(Assets.i.uiRed);
+            SetResponseColor(Assets.Instance.uiRed);
         }
     }
 
@@ -554,7 +554,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
             inventoryManager.AddPart(part.partData);
 
         SetResponseText("Build area cleared!");
-        SetResponseColor(Assets.i.uiGreen);
+        SetResponseColor(Assets.Instance.uiGreen);
 
         CommandHistory.ClearStacks();
     }
@@ -651,24 +651,21 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     public void SaveBuildAsPreset()
     {
-        ShipSaveLoader ShipSL = new ShipSaveLoader();
-        ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts);
+        ShipSaveLoader.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts);
         presetManager.DisplayPresets();
     }
 
 #if UNITY_EDITOR
     public void SaveBuildAsDevPreset(SaveDevPresetEvent e)
     {
-        ShipSaveLoader ShipSL = new ShipSaveLoader();
-        ShipSL.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts, true);
+        ShipSaveLoader.SaveBuildAsPreset(GetUIShipData(), buildArea.Parts, true);
         presetManager.DisplayPresets();
     }
 #endif
 
     public void SaveBuild()
     {
-        ShipSaveLoader ShipSL = new ShipSaveLoader();
-        ShipSL.SaveShipBuild(GetUIShipData(), buildArea.Parts);
+        ShipSaveLoader.SaveShipBuild(GetUIShipData(), buildArea.Parts);
 
         if(EditorState.context == EditorContext.StartGame)
         {
@@ -705,13 +702,6 @@ public class EditorManager : MonoBehaviour, ICommandContext
         });
     }
 
-    // loads a player save ship without taking from inventory
-    public void LoadBuild(string shipName)
-    {
-        ShipSaveLoader ShipSL = new ShipSaveLoader();
-        //ShipSL.GetShipBuild(shipName);
-    }
-
     // loads preset. In creative for free, otherwise requires parts
     string presetToLoad;
     public void LoadPresetAfterConfirmation() => LoadBuildPreset(presetToLoad);
@@ -720,11 +710,9 @@ public class EditorManager : MonoBehaviour, ICommandContext
     {
         ClearBuildArea();
 
-        ShipSaveLoader ShipSL = new ShipSaveLoader();
-
         bool dev = presetManager.DevPresetNameExists(shipName);
 
-        ShipBuildSave save = ShipSL.GetShipPreset(shipName, dev);
+        ShipBuildSave save = ShipSaveLoader.GetShipPreset(shipName, dev);
 
         nameValidator.SetText(shipName);
 
@@ -743,17 +731,17 @@ public class EditorManager : MonoBehaviour, ICommandContext
         if(successCount == 0) // couldnt load ANY parts
         {
             SetResponseText($"Preset \"{shipName}\" could not be loaded, no necessary parts were found in inventory.");
-            SetResponseColor(Assets.i.uiRed);
+            SetResponseColor(Assets.Instance.uiRed);
         }
         else if(partCount > successCount) // couldnt load all parts
         {
             SetResponseText($"Preset \"{shipName}\" partially loaded, not enough parts in inventory to finish.");
-            SetResponseColor(Assets.i.uiRed);
+            SetResponseColor(Assets.Instance.uiRed);
         }
         else
         {
             SetResponseText($"Preset \"{shipName}\" loaded!");
-            SetResponseColor(Assets.i.uiGreen);
+            SetResponseColor(Assets.Instance.uiGreen);
         }
 
         ClosePresetMenu();

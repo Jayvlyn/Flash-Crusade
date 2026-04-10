@@ -1,26 +1,14 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] SpaceObject playerShip;
-
     [SerializeField] LayeredParallax background;
-    [SerializeField] TransformFollower backgroundTF;
-
-    [SerializeField] InterpolatedFollowTarget followTarget;
-
-    [SerializeField] PhysicsManager physicsManager;
+    [SerializeField] PlayerPossessor player;
 
     private void FixedUpdate()
     {
-        background.referenceVelocity = playerShip.Velocity;
+        background.referenceVelocity = player.pilot.controlledShip.Velocity;
     }
 
-    private void Awake()
-    {
-        followTarget.SetTarget(playerShip.transform);
-
-        backgroundTF.target = playerShip.transform;
-        physicsManager.player = playerShip.transform;
-    }
 }

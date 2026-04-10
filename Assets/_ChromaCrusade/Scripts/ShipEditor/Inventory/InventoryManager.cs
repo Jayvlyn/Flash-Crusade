@@ -156,7 +156,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
             NavItem selector = partSelectors[selectorIndex];
             NavItem primarySelector = partSelectors[primarySelectorIndex];
 
-            GameObject obj = Instantiate(Assets.i.editorShipPartPrefab, selector.transform);
+            GameObject obj = Instantiate(Assets.Instance.editorShipPartPrefab, selector.transform);
             obj.transform.SetAsFirstSibling();
 
             EditorShipPart part = obj.GetComponent<EditorShipPart>();
@@ -347,7 +347,7 @@ public class InventoryManager : MonoBehaviour, IInventoryManager
 
     EditorShipPart CreateInventoryPart(ShipPartData data)
     {
-        var obj = Instantiate(Assets.i.editorShipPartPrefab);
+        var obj = Instantiate(Assets.Instance.editorShipPartPrefab);
         var part = obj.GetComponent<EditorShipPart>();
         part.Init(data);
         return part;

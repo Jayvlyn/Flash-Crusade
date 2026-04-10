@@ -1,21 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ShipSaveLoader
+public static class ShipSaveLoader
 {
     #region Public API
-
-    public ShipSaveLoader()
-    {
-        Directory.CreateDirectory(Paths.PlayerPresetSpritesPath);
-        Directory.CreateDirectory(Paths.PlayerPresetDataPath);
-
-        Directory.CreateDirectory(Paths.DevPresetSpritesPath);
-        Directory.CreateDirectory(Paths.DevPresetDataPath);
-    }
-
-    public void SaveShipBuild(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    public static void SaveShipBuild(UIShipData shipData, IEnumerable<EditorShipPart> parts)
     {
         PlayerSave playerSave = PlayerSaveManager.ActiveSave;
 
@@ -31,19 +22,21 @@ public class ShipSaveLoader
         PlayerSaveManager.SaveToJson(playerSave); // maybe not needed here, needs to happen at some point though
     }
 
-    private void SaveShipBuildTexture(UIShipData shipData)
+    private static void SaveShipBuildTexture(UIShipData shipData)
     {
-        string path = Paths.ShipBuildSpritesPath(PlayerSaveManager.ActiveSave.saveName);
+        string path = Paths.ShipSpritesPath(PlayerSaveManager.ActiveSave.saveName);
         SaveShipTexture(shipData, path);
     }
 
-    private void SaveShipPresetTexture(UIShipData shipData, bool dev = false)
+    private static void SaveShipPresetTexture(UIShipData shipData, bool dev = false)
     {
+        Directory.CreateDirectory(Paths.PlayerPresetSpritesPath);
+        Directory.CreateDirectory(Paths.DevPresetSpritesPath);
         string path = dev ? Paths.DevPresetSpritesPath : Paths.PlayerPresetSpritesPath;
         SaveShipTexture(shipData, path);
     }
 
-    private void SaveShipTexture(UIShipData shipData, string path)
+    private static void SaveShipTexture(UIShipData shipData, string path)
     {
         byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
 
@@ -56,7 +49,7 @@ public class ShipSaveLoader
         //Object.Destroy(shipData.shipSprite.texture);
     }
 
-    public void SaveBuildAsPreset(UIShipData shipData, IEnumerable<EditorShipPart> parts, bool dev = false)
+    public static void SaveBuildAsPreset(UIShipData shipData, IEnumerable<EditorShipPart> parts, bool dev = false)
     {
         SaveShipPresetTexture(shipData, dev);
 
@@ -65,6 +58,8 @@ public class ShipSaveLoader
 
         string json = JsonUtility.ToJson(shipSave, true);
 
+        Directory.CreateDirectory(Paths.PlayerPresetDataPath);
+        Directory.CreateDirectory(Paths.DevPresetDataPath);
         string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
 
         File.WriteAllText(
@@ -72,7 +67,7 @@ public class ShipSaveLoader
             json );
     }
 
-    public void SaveShipBuildData(string shipName, IEnumerable<EditorShipPart> parts)
+    public static void SaveShipBuildData(string shipName, IEnumerable<EditorShipPart> parts)
     {
         var shipSave = ConstructShipBuildSave(shipName, parts);
 
@@ -87,7 +82,7 @@ public class ShipSaveLoader
             json);
     }
 
-    public void SaveShipGameData(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    public static void SaveShipGameData(UIShipData shipData, IEnumerable<EditorShipPart> parts)
     { 
         ShipGameSave gameSave = ConstructShipGameSave(shipData.shipName, parts);
 
@@ -102,8 +97,10 @@ public class ShipSaveLoader
             json);
     }
 
-    public ShipBuildSave GetShipPreset(string presetName, bool dev = false)
+    public static ShipBuildSave GetShipPreset(string presetName, bool dev = false)
     {
+        Directory.CreateDirectory(Paths.DevPresetDataPath);
+        Directory.CreateDirectory(Paths.PlayerPresetDataPath);
         string path = dev ? Paths.DevPresetDataPath : Paths.PlayerPresetDataPath;
 
         return GetShipBuildSave(
@@ -111,7 +108,7 @@ public class ShipSaveLoader
             $"{presetName}.json"));
     }
 
-    public ShipBuildSave GetShipBuildSave(string path)
+    public static ShipBuildSave GetShipBuildSave(string path)
     {
         if (!File.Exists(path))
         {
@@ -129,7 +126,7 @@ public class ShipSaveLoader
         return shipBuildSave;
     }
 
-    public ShipGameSave GetShipGameSave(string shipName)
+    public static ShipGameSave GetShipGameSave(string shipName)
     {
         string path = Path.Combine(Paths.ShipGameDataPath(PlayerSaveManager.ActiveSave.saveName), $"{shipName}.json");
 
@@ -148,7 +145,7 @@ public class ShipSaveLoader
 
     #endregion
 
-    ShipBuildSave ConstructShipBuildSave(string shipName, IEnumerable<EditorShipPart> parts)
+    static ShipBuildSave ConstructShipBuildSave(string shipName, IEnumerable<EditorShipPart> parts)
     {
         ShipBuildSave shipBuildSave = new ShipBuildSave
         {
@@ -172,7 +169,7 @@ public class ShipSaveLoader
         return shipBuildSave;
     }
 
-    ShipGameSave ConstructShipGameSave(string shipName, IEnumerable<EditorShipPart> parts)
+    static ShipGameSave ConstructShipGameSave(string shipName, IEnumerable<EditorShipPart> parts)
     {
         // this needs some kind of thing to track where the center of the ship was so we know where to place
         // the weapons on the ship. we save positions of the ship used in builder, but the centerpoint from builder
@@ -203,5 +200,25 @@ public class ShipSaveLoader
         }
 
         return shipGameSave;
+    }
+
+    public static Sprite GetShipBuildSprite(string shipName)
+    {
+        string path = Path.Combine(Paths.ShipSpritesPath(PlayerSaveManager.ActiveSave.saveName), $"{shipName}.png");
+
+        byte[] spriteBytes = File.ReadAllBytes(path);
+
+        Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        texture.LoadImage(spriteBytes); // auto-resizes so 2,2 doesnt matter
+        texture.filterMode = FilterMode.Point;
+
+        Sprite sprite = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f),
+            9
+        );
+
+        return sprite;
     }
 }

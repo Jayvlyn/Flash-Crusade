@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PhysicsManager : MonoBehaviour
+public class PhysicsManager : Singleton<PhysicsManager>
 {
     public Transform player;
     public bool usePlayerDist;

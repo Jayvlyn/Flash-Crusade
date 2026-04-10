@@ -2,8 +2,7 @@
     "name": "CC.Game",
     "rootNamespace": "",
     "references": [
-        "GUID:c152956743b8dbe49bb7bff605ac8f25",
-        "GUID:b83ae634df8eaf14faf376b9ac857438"
+        "GUID:1f2ae7b45b77a5846b6f021bf9c92a2c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

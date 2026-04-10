@@ -94,7 +94,7 @@ public class ShipPresetManager : MonoBehaviour
                 new Vector2(0.5f, 0.5f)
             );
 
-            RectTransform obj = Instantiate(Assets.i.uiShipPrefab);
+            RectTransform obj = Instantiate(Assets.Instance.uiShipPrefab);
             var uiShip = obj.GetComponent<UIShip>();
             uiShip.Init(sprite, name);
             presetItems.Add(obj);
@@ -169,7 +169,7 @@ public class ShipPresetManager : MonoBehaviour
 
     public void ShowDefaultPreview()
     {
-        SetPresetPreview("Invalid Build", Assets.i.shipSilhouette);
+        SetPresetPreview("Invalid Build", Assets.Instance.shipSilhouette);
         saveAsPresetButton.Disabled = true;
     }
 

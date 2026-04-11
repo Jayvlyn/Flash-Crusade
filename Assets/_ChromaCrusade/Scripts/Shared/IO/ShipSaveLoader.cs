@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,24 +37,49 @@ public static class ShipSaveLoader
         SaveShipTexture(shipData, path);
     }
 
+    private static void SaveShipTestTexture(UIShipData shipData)
+    {
+        string path = Paths.TestBuildPath;
+        Directory.CreateDirectory(path);
+        SaveShipTexture(shipData, path);
+    }
+
     private static void SaveShipTexture(UIShipData shipData, string path)
     {
         byte[] pngBytes = shipData.shipSprite.texture.EncodeToPNG();
 
         Directory.CreateDirectory(path);
 
-        path = Path.Combine(path, $"{shipData.shipName}.png");
+        path = Path.Combine(path, $"Test_Game.png");
 
         File.WriteAllBytes(path, pngBytes);
 
         //Object.Destroy(shipData.shipSprite.texture);
     }
 
+    public static void SaveBuildAsTest(UIShipData shipData, IEnumerable<EditorShipPart> parts)
+    {
+        SaveShipTestTexture(shipData);
+
+        ShipBuildSave buildSave = ConstructShipBuildSave(shipData.shipName, parts);
+        ShipGameSave gameSave = ConstructShipGameSave(shipData.shipName, parts);
+
+        string buildJson = JsonUtility.ToJson(buildSave, true);
+        string gameJson = JsonUtility.ToJson(gameSave, true);
+
+        File.WriteAllText(
+            Path.Combine(Paths.TestBuildPath, $"Test_Build.json"),
+            buildJson);
+
+        File.WriteAllText(
+            Path.Combine(Paths.TestBuildPath, $"Test_Game.json"),
+            gameJson);
+    }
+
     public static void SaveBuildAsPreset(UIShipData shipData, IEnumerable<EditorShipPart> parts, bool dev = false)
     {
         SaveShipPresetTexture(shipData, dev);
 
-        // Save Build Data
         var shipSave = ConstructShipBuildSave(shipData.shipName, parts);
 
         string json = JsonUtility.ToJson(shipSave, true);
@@ -143,6 +169,23 @@ public static class ShipSaveLoader
         return shipGameSave;
     }
 
+    public static ShipGameSave GetTestGameSave()
+    {
+        string path = Path.Combine(Paths.TestBuildPath, $"Test_Game.json");
+
+        if (!File.Exists(path))
+        {
+            Debug.LogError("Ship game save not found: " + path);
+            return new ShipGameSave();
+        }
+
+        string json = File.ReadAllText(path);
+
+        ShipGameSave shipGameSave = JsonUtility.FromJson<ShipGameSave>(json);
+
+        return shipGameSave;
+    }
+
     #endregion
 
     static ShipBuildSave ConstructShipBuildSave(string shipName, IEnumerable<EditorShipPart> parts)
@@ -206,6 +249,18 @@ public static class ShipSaveLoader
     {
         string path = Path.Combine(Paths.ShipSpritesPath(PlayerSaveManager.ActiveSave.saveName), $"{shipName}.png");
 
+        return GetShipSprite(path);
+    }
+
+    public static Sprite GetTestBuildSprite()
+    {
+        string path = Path.Combine(Paths.TestBuildPath, $"Test_Game.png");
+
+        return GetShipSprite(path);
+    }
+
+    static Sprite GetShipSprite(string path)
+    {
         byte[] spriteBytes = File.ReadAllBytes(path);
 
         Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);

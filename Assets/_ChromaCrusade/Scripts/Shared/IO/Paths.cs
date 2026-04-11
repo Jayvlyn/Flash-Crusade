@@ -18,6 +18,7 @@ public static class Paths
     public static string DevPresetSpritesPath => Path.Combine(DevPresetsPath, "DevPresetSprites");
     public static string DevPresetDataPath => Path.Combine(DevPresetsPath, "DevPresetData");
 
+    public static string TestBuildPath => Path.Combine(Persistent, "TestBuild");
 
     public static string PlayerSavesPath => Path.Combine(Persistent, "PlayerSaves");
     public static string PlayerSaveFolder(string saveName) => Path.Combine(PlayerSavesPath, saveName);

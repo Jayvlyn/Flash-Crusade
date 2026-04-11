@@ -457,45 +457,6 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
     void OnInventoryPartGrabbedEvent(InventoryPartGrabbedEvent e) => CommandHistory.Execute(new InventoryGrabCommand(this, e.part));
 
-    public void OnExitButtonSelected()
-    {
-        EventBus.Publish(new OpenConfirmScreenEvent
-        {
-            message = "Are you sure you want to exit the editor? The current build will be discarded.",
-            action = ExitEditor
-        });
-    }
-
-    public void OnCompleteButtonSelected()
-    {
-        string validationResult = ValidateBuild();
-
-        if (validationResult.Equals("Valid"))
-        {
-            if (EditorState.context == EditorContext.Creative)
-            {
-                EventBus.Publish(new OpenConfirmScreenEvent
-                {
-                    message = $"{nameValidator.GetText()} is complete! Save it as a preset?",
-                    action = SaveBuildAsPresetAfterValidation
-                });
-            }
-            else
-            {
-                EventBus.Publish(new OpenConfirmScreenEvent
-                {
-                    message = $"{nameValidator.GetText()} is complete! Finalize the build?",
-                    action = SaveBuild
-                });
-            }
-        }
-        else
-        {
-            SetResponseText(validationResult);
-            SetResponseColor(Assets.Instance.uiRed);
-        }
-    }
-
     void OnPresetSelected(PresetSelectedEvent e)
     {
         presetToLoad = e.presetName;
@@ -537,7 +498,7 @@ public class EditorManager : MonoBehaviour, ICommandContext
     #endregion
 
     #region Clearing
-    public void OnClearButtonPressed()
+    public void OnClearButtonSelected()
     {
         EventBus.Publish(new OpenConfirmScreenEvent {
             message = "Clear the build area?",
@@ -558,6 +519,75 @@ public class EditorManager : MonoBehaviour, ICommandContext
 
         CommandHistory.ClearStacks();
     }
+    #endregion
+
+    #region Buttons
+
+    public void OnExitButtonSelected()
+    {
+        EventBus.Publish(new OpenConfirmScreenEvent
+        {
+            message = "Are you sure you want to exit the editor? The current build will be discarded.",
+            action = ExitEditor
+        });
+    }
+
+    public void OnCompleteButtonSelected()
+    {
+        string validationResult = ValidateBuild();
+
+        if (validationResult.Equals("Valid"))
+        {
+            if (EditorState.context == EditorContext.Creative)
+            {
+                EventBus.Publish(new OpenConfirmScreenEvent
+                {
+                    message = $"{nameValidator.GetText()} is complete! Save it as a preset?",
+                    action = SaveBuildAsPresetAfterValidation
+                });
+            }
+            else
+            {
+                EventBus.Publish(new OpenConfirmScreenEvent
+                {
+                    message = $"{nameValidator.GetText()} is complete! Finalize the build?",
+                    action = SaveBuild
+                });
+            }
+        }
+        else
+        {
+            SetResponseText(validationResult);
+            SetResponseColor(Assets.Instance.uiRed);
+        }
+    }
+
+    public void OnTestFlyButtonSelected()
+    {
+        string validationResult = ValidateBuild();
+
+        if (validationResult.Equals("Valid"))
+        {
+            EventBus.Publish(new OpenConfirmScreenEvent
+            {
+                message = $"Test fly {nameValidator.GetText()}?",
+                action = TestFlyBuild
+            });
+        }
+        else
+        {
+            SetResponseText(validationResult);
+            SetResponseColor(Assets.Instance.uiRed);
+        }
+    }
+
+    void TestFlyBuild()
+    {
+        ShipSaveLoader.SaveBuildAsTest(GetUIShipData(), buildArea.Parts);
+
+        SceneManager.LoadScene("Scene_TestFly");
+    }
+
     #endregion
 
     void ExitEditor()

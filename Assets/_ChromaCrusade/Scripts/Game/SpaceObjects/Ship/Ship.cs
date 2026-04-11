@@ -36,8 +36,8 @@ public class Ship : SpaceObject
 
     public void Init()
     {
-        MaxVelocity = mobility * maxVelocityScalar;
-        MaxAngularVelocity = handling * maxAngularVelocityScalar;
+        MaxVelocity = (mobility * maxVelocityScalar) / (Mass / mobility);
+        MaxAngularVelocity = (handling * maxAngularVelocityScalar) / (Mass / handling);
 
         regularMaxSpeed = MaxVelocity;
         turboMaxSpeed = MaxVelocity * turboModifier;

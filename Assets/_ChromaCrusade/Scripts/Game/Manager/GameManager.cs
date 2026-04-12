@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +9,21 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         background.referenceVelocity = player.pilot.controlledShip.Velocity;
+    }
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<CancelInputEvent>(OnCancelInput);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<CancelInputEvent>(OnCancelInput);
+    }
+
+    private void OnCancelInput(CancelInputEvent e)
+    {
+        SceneManager.LoadScene("Scene_Builder");
     }
 
 }

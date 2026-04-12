@@ -11,6 +11,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] InputActionReference brakeAction;
     [SerializeField] InputActionReference fireAction;
 
+    //[SerializeField] InputActionReference escapeAction;
+
     public InputActionReference ThrustAction => thrustAction;
     public InputActionReference TurnLeftAction => turnLeftAction;
     public InputActionReference TurnRightAction => turnRightAction;

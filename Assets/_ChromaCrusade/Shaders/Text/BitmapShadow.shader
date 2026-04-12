@@ -28,11 +28,15 @@ Shader "TextMeshPro/BitmapShadow"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile __ UNITY_UI_CLIP_RECT
             #include "UnityCG.cginc"
+            #include "UnityUI.cginc"
+
 
             sampler2D _MainTex;
             float4 _MainTex_TexelSize;
 
+            float4 _ClipRect;
             fixed4 _FaceColor;
             fixed4 _OutlineColor;
             float _OutlineSize;
@@ -50,6 +54,7 @@ Shader "TextMeshPro/BitmapShadow"
                 float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 fixed4 color : COLOR;
+                float4 worldPos : TEXCOORD1;
             };
 
             v2f vert (appdata v)
@@ -58,6 +63,7 @@ Shader "TextMeshPro/BitmapShadow"
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 o.color = v.color;
+                o.worldPos = v.vertex;
                 return o;
             }
 
@@ -89,6 +95,10 @@ Shader "TextMeshPro/BitmapShadow"
                 fixed4 col = outlineCol * outline;
                 col = lerp(col, face, center);
                 col.a *= max(center, outline);
+
+                #ifdef UNITY_UI_CLIP_RECT
+                col.a *= UnityGet2DClipping(i.worldPos.xy, _ClipRect);
+                #endif
 
                 return col;
             }

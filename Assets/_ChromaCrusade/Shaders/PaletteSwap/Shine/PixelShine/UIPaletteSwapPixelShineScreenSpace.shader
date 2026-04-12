@@ -51,8 +51,8 @@ Shader "Custom/UI/UIPaletteSwapPixelShine"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma shader_feature_local __ UNITY_UI_CLIP_RECT
-            #pragma shader_feature_local __ UNITY_UI_ALPHACLIP
+            #pragma multi_compile __ UNITY_UI_CLIP_RECT
+            #pragma multi_compile __ UNITY_UI_ALPHACLIP
 
             #include "UnityCG.cginc"
             #include "UnityUI.cginc"
@@ -98,7 +98,7 @@ Shader "Custom/UI/UIPaletteSwapPixelShine"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.color = v.color * _Color;
 
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+                o.worldPos = v.vertex;
                 o.screenPos = ComputeScreenPos(o.vertex);
 
                 return o;

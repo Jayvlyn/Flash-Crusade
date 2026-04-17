@@ -53,14 +53,14 @@ public class SpaceObject : MonoBehaviour
     }
 
     [SerializeField] private float maxVelocity = 100f;
-    public float MaxVelocity
+    public virtual float MaxVelocity
     {
         get => maxVelocity;
         set => maxVelocity = Mathf.Max(0f, value);
     }
 
     [SerializeField] private float maxAngularVelocity = 400f;
-    public float MaxAngularVelocity
+    public virtual float MaxAngularVelocity
     {
         get => maxAngularVelocity;
         set => maxAngularVelocity = Mathf.Max(0f, value);

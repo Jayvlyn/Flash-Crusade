@@ -24,6 +24,15 @@ public class Ship : SpaceObject
     float turboMaxSpeed;
     float regularMaxSpeed;
 
+    float MassMobilityRatio => Mass / mobility;
+    float MassHandlingRatio => Mass / handling;
+
+    public override float MaxVelocity => Mathf.Clamp(maxPossibleVelocity / MassMobilityRatio, 1, maxPossibleVelocity);
+    public override float MaxAngularVelocity => Mathf.Clamp(maxPossibleAngularVelocity / MassMobilityRatio, 1, maxPossibleAngularVelocity);
+
+    static float maxPossibleVelocity = 500;
+    static float maxPossibleAngularVelocity = 720;
+
     #region Lifecycle
 
     private void Update()
@@ -36,9 +45,6 @@ public class Ship : SpaceObject
 
     public void Init()
     {
-        MaxVelocity = (mobility * maxVelocityScalar) / (Mass / mobility);
-        MaxAngularVelocity = (handling * maxAngularVelocityScalar) / (Mass / handling);
-
         regularMaxSpeed = MaxVelocity;
         turboMaxSpeed = MaxVelocity * turboModifier;
     }
@@ -83,7 +89,9 @@ public class Ship : SpaceObject
 
     public void Turn(float dir)
     {
-        float force = handling * handlingScalar;
+        Debug.Log(MassHandlingRatio);
+
+        float force = handling * (handlingScalar / MassHandlingRatio);
 
         float angVel = AngularVelocity;
 

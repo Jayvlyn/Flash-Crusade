@@ -156,13 +156,13 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.5
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 4.0830183
+      outSlope: 4.0830183
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.09796673
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -202,7 +202,7 @@ MonoBehaviour:
   mobilityScalar: 10
   handlingScalar: 100
   maxVelocityScalar: 0.5
-  maxAngularVelocityScalar: 3
+  maxAngularVelocityScalar: 1
   maxEnergy: 0
   mobility: 238
   handling: 125

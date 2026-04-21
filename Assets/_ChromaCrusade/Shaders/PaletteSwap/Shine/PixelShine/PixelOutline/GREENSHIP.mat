@@ -38,7 +38,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _OutlineSize: 1
-    - _ShineFrequency: 9
+    - _ShineFrequency: 80.63
     - _ShineThreshold: 0.85
     - _Tolerance: 0.001
     - _UseCorners: 0

@@ -1,0 +1,261 @@
+{
+    "shipName": "Decimator Mk.1",
+    "partList": [
+        {
+            "partName": "Cabin0",
+            "xPos": 0,
+            "yPos": -5,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core30",
+            "xPos": -1,
+            "yPos": 3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing20",
+            "xPos": -1,
+            "yPos": 6,
+            "xFlipped": false,
+            "yFlipped": true,
+            "rotation": 90
+        },
+        {
+            "partName": "Wing132",
+            "xPos": 0,
+            "yPos": 3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Wing6",
+            "xPos": -3,
+            "yPos": -3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Wing20",
+            "xPos": 1,
+            "yPos": 6,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Core30",
+            "xPos": 1,
+            "yPos": 3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing45",
+            "xPos": -2,
+            "yPos": 2,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Wing45",
+            "xPos": 2,
+            "yPos": 2,
+            "xFlipped": false,
+            "yFlipped": true,
+            "rotation": 270
+        },
+        {
+            "partName": "Core0",
+            "xPos": -3,
+            "yPos": -6,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core0",
+            "xPos": -3,
+            "yPos": -9,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing49",
+            "xPos": -3,
+            "yPos": 4,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Wing49",
+            "xPos": 3,
+            "yPos": 4,
+            "xFlipped": false,
+            "yFlipped": true,
+            "rotation": 270
+        },
+        {
+            "partName": "Weapon7",
+            "xPos": -3,
+            "yPos": 6,
+            "xFlipped": true,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Weapon7",
+            "xPos": 3,
+            "yPos": 6,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core33",
+            "xPos": 2,
+            "yPos": 4,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core33",
+            "xPos": -2,
+            "yPos": 4,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing6",
+            "xPos": 3,
+            "yPos": -11,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Core0",
+            "xPos": 3,
+            "yPos": -6,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing126",
+            "xPos": 0,
+            "yPos": -8,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Core0",
+            "xPos": 0,
+            "yPos": 0,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Wing6",
+            "xPos": 3,
+            "yPos": -3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Core0",
+            "xPos": 3,
+            "yPos": -9,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 0
+        },
+        {
+            "partName": "Core30",
+            "xPos": 0,
+            "yPos": -2,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Wing6",
+            "xPos": -3,
+            "yPos": -11,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 270
+        },
+        {
+            "partName": "Core30",
+            "xPos": 0,
+            "yPos": -3,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Core30",
+            "xPos": 3,
+            "yPos": -4,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Core30",
+            "xPos": -3,
+            "yPos": -4,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 90
+        },
+        {
+            "partName": "Weapon11",
+            "xPos": 5,
+            "yPos": -10,
+            "xFlipped": true,
+            "yFlipped": false,
+            "rotation": 180
+        },
+        {
+            "partName": "Weapon11",
+            "xPos": -5,
+            "yPos": -10,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 180
+        },
+        {
+            "partName": "Weapon11",
+            "xPos": -1,
+            "yPos": -10,
+            "xFlipped": true,
+            "yFlipped": false,
+            "rotation": 180
+        },
+        {
+            "partName": "Weapon11",
+            "xPos": 1,
+            "yPos": -10,
+            "xFlipped": false,
+            "yFlipped": false,
+            "rotation": 180
+        }
+    ]
+}

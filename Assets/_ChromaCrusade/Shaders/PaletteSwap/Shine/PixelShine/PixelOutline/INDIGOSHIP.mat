@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BLUESHIP
+  m_Name: INDIGOSHIP
   m_Shader: {fileID: 4800000, guid: 6fec1f76b009f7842adb2371ff243294, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -32,13 +32,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutPalette:
-        m_Texture: {fileID: 2800000, guid: 3aaf89af4d83b4943ade135c70378c50, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8a9294ff72cb4e94eb93ee430e2c38b5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _OutlineSize: 1
-    - _ShineFrequency: 1.26
+    - _ShineFrequency: 9
     - _ShineThreshold: 0.85
     - _Tolerance: 0.001
     - _UseCorners: 0
